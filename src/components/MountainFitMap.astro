@@ -68,14 +68,15 @@ const findIndustry = (slugFragment: string) =>
         <path d="M0 310 L120 240 L280 290 L400 200 L560 270 L720 180 L880 240 L1040 160 L1200 230 L1360 170 L1480 260 L1600 200" stroke="#33bbdc" stroke-width="1.5" stroke-opacity="0.45" fill="none" />
       </svg>
 
-      <!-- Peaks as absolutely-positioned dots/labels -->
+      <!-- Peaks as absolutely-positioned dots/labels — native <a> so clicks
+           always navigate, even before any JS runs / after view transitions. -->
       {PEAKS.map((p, i) => {
         const ind = findIndustry(p.slug);
         const size = 18 + p.size * 14; // px diameter — bigger for visibility
         return (
-          <button
-            type="button"
-            class="peak group absolute z-10"
+          <a
+            href={ind.href}
+            class="peak group absolute z-10 block"
             style={`left: ${p.x}%; top: ${p.y}%; transform: translate(-50%, -50%);`}
             data-peak-id={p.slug}
             aria-label={ind.title}
@@ -85,7 +86,7 @@ const findIndustry = (slugFragment: string) =>
               <span class="absolute inset-0 rounded-full border-2 border-navy-900 bg-paper transition-all duration-200 group-hover:scale-110 group-hover:border-teal-500 group-hover:bg-teal-500 group-focus-visible:bg-teal-500"></span>
             </span>
             <span class="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-800 opacity-90 transition-opacity group-hover:opacity-100">{ind.title}</span>
-          </button>
+          </a>
         );
       })}
 
@@ -120,14 +121,18 @@ const findIndustry = (slugFragment: string) =>
   </div>
 
   <script define:vars={{ PEAKS, industries: [...industries] }}>
-    const map = document.getElementById('fit-map');
-    const card = document.getElementById('peak-card');
-    if (map && card) {
+    // Peaks are native <a> tags, so click-to-navigate works without JS and
+    // survives view-transition swaps. This script only powers the hover/
+    // focus popover.
+    function bindFitMap() {
+      const map = document.getElementById('fit-map');
+      const card = document.getElementById('peak-card');
+      if (!map || !card) return;
+
       const titleEl = card.querySelector('[data-peak-title]');
       const kpiEl = card.querySelector('[data-peak-kpi]');
       const descEl = card.querySelector('[data-peak-desc]');
       const rankEl = card.querySelector('[data-peak-rank]');
-      let activeHref = null;
 
       function findIndustry(slug) {
         return industries.find((i) => i.href.includes(slug));
@@ -141,9 +146,7 @@ const findIndustry = (slugFragment: string) =>
         descEl.textContent = ind.desc;
         const idx = PEAKS.findIndex((p) => p.slug === peak.slug);
         rankEl.textContent = String(idx + 1).padStart(2, '0');
-        activeHref = ind.href;
 
-        // Position card above the peak, clamped to the map
         const mapRect = map.getBoundingClientRect();
         const peakRect = el.getBoundingClientRect();
         const cardW = 280;
@@ -153,23 +156,19 @@ const findIndustry = (slugFragment: string) =>
         card.style.top = Math.max(top - card.offsetHeight - 14, 8) + 'px';
         card.classList.remove('hidden');
       }
+      function hide() { card.classList.add('hidden'); }
 
-      function hide() {
-        card.classList.add('hidden');
-      }
-
-      document.querySelectorAll('.peak').forEach((el) => {
+      map.querySelectorAll('.peak').forEach((el) => {
         const slug = el.dataset.peakId;
         const peak = PEAKS.find((p) => p.slug === slug);
         if (!peak) return;
         el.addEventListener('mouseenter', () => show(peak, el));
         el.addEventListener('focus', () => show(peak, el));
-        el.addEventListener('click', () => {
-          if (activeHref) window.location.href = activeHref;
-        });
       });
       map.addEventListener('mouseleave', hide);
       map.addEventListener('blur', hide, true);
     }
+    bindFitMap();
+    document.addEventListener('astro:after-swap', bindFitMap);
   </script>
 </section>
