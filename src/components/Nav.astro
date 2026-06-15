@@ -224,84 +224,101 @@ const popularServices = [
 
 <script>
   // JS-driven mega menu with hover bridge + small close delay.
-  // Open on hover/focus of trigger or panel. Close after 180 ms once cursor
+  // Open on hover/focus of trigger or panel. Close after 200 ms once cursor
   // leaves BOTH. Esc closes immediately.
+  //
+  // Re-binds on each Astro View-Transition swap so the menu keeps working
+  // when navigating between pages.
 
-  const hosts = document.querySelectorAll<HTMLElement>('.mega-host');
-  const panels = new Map<string, HTMLElement>();
-  document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((p) => {
-    panels.set(p.dataset.megaPanel!, p);
-  });
-
-  const closeTimers = new Map<string, number>();
-
-  function open(key: string) {
-    panels.forEach((p, k) => {
-      const isThis = k === key;
-      p.dataset.open = isThis ? '1' : '0';
+  function bindMega() {
+    const hosts = document.querySelectorAll<HTMLElement>('.mega-host');
+    if (!hosts.length) return;
+    const panels = new Map<string, HTMLElement>();
+    document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((p) => {
+      panels.set(p.dataset.megaPanel!, p);
     });
-    hosts.forEach((h) => {
-      const isThis = h.dataset.mega === key;
-      h.dataset.open = isThis ? '1' : '0';
-      h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', String(isThis));
+
+    const closeTimers = new Map<string, number>();
+
+    function open(key: string) {
+      panels.forEach((p, k) => { p.dataset.open = k === key ? '1' : '0'; });
+      hosts.forEach((h) => {
+        const isThis = h.dataset.mega === key;
+        h.dataset.open = isThis ? '1' : '0';
+        h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', String(isThis));
+      });
+    }
+
+    function closeAll() {
+      panels.forEach((p) => { p.dataset.open = '0'; });
+      hosts.forEach((h) => {
+        h.dataset.open = '0';
+        h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+      const t = window.setTimeout(() => {
+        const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
+        const panel = panels.get(key);
+        const stillHovered = host?.matches(':hover') || panel?.matches(':hover');
+        if (!stillHovered) closeAll();
+      }, 200);
+      closeTimers.set(key, t);
+    }
+
+    function cancelClose(key: string) {
+      clearTimeout(closeTimers.get(key));
+    }
+
+    hosts.forEach((host) => {
+      const key = host.dataset.mega!;
+      host.addEventListener('mouseenter', () => { cancelClose(key); open(key); });
+      host.addEventListener('mouseleave', () => scheduleClose(key));
+      host.addEventListener('focusin', () => { cancelClose(key); open(key); });
+      host.addEventListener('focusout', (e) => {
+        const next = e.relatedTarget as Node | null;
+        const panel = panels.get(key);
+        if (!host.contains(next) && !panel?.contains(next)) scheduleClose(key);
+      });
+    });
+
+    panels.forEach((panel, key) => {
+      panel.addEventListener('mouseenter', () => cancelClose(key));
+      panel.addEventListener('mouseleave', () => scheduleClose(key));
+      panel.addEventListener('focusin', () => cancelClose(key));
+      panel.addEventListener('focusout', (e) => {
+        const next = e.relatedTarget as Node | null;
+        const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
+        if (!panel.contains(next) && !host?.contains(next)) scheduleClose(key);
+      });
     });
   }
 
-  function closeAll() {
-    panels.forEach((p) => { p.dataset.open = '0'; });
-    hosts.forEach((h) => {
-      h.dataset.open = '0';
-      h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+  bindMega();
+  document.addEventListener('astro:after-swap', bindMega);
+
+  // Escape closes any open mega — global, single binding
+  if (!(window as any).__navEscBound) {
+    (window as any).__navEscBound = true;
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((p) => { p.dataset.open = '0'; });
+      document.querySelectorAll<HTMLElement>('.mega-host').forEach((h) => {
+        h.dataset.open = '0';
+        h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 
-  function scheduleClose(key: string) {
-    clearTimeout(closeTimers.get(key));
-    const t = window.setTimeout(() => {
-      const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
-      const panel = panels.get(key);
-      const stillHovered = host?.matches(':hover') || panel?.matches(':hover');
-      if (!stillHovered) closeAll();
-    }, 200);
-    closeTimers.set(key, t);
-  }
-
-  function cancelClose(key: string) {
-    clearTimeout(closeTimers.get(key));
-  }
-
-  hosts.forEach((host) => {
-    const key = host.dataset.mega!;
-    host.addEventListener('mouseenter', () => { cancelClose(key); open(key); });
-    host.addEventListener('mouseleave', () => scheduleClose(key));
-    host.addEventListener('focusin', () => { cancelClose(key); open(key); });
-    host.addEventListener('focusout', (e) => {
-      const next = e.relatedTarget as Node | null;
-      const panel = panels.get(key);
-      if (!host.contains(next) && !panel?.contains(next)) scheduleClose(key);
+  // Mobile toggle — delegated so it survives swaps
+  if (!(window as any).__navMobileBound) {
+    (window as any).__navMobileBound = true;
+    document.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement | null)?.closest('#nav-toggle');
+      if (!t) return;
+      const menu = document.getElementById('mobile-menu');
+      const open = menu?.classList.toggle('hidden') === false;
+      t.setAttribute('aria-expanded', String(open));
     });
-  });
-
-  panels.forEach((panel, key) => {
-    panel.addEventListener('mouseenter', () => cancelClose(key));
-    panel.addEventListener('mouseleave', () => scheduleClose(key));
-    panel.addEventListener('focusin', () => cancelClose(key));
-    panel.addEventListener('focusout', (e) => {
-      const next = e.relatedTarget as Node | null;
-      const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
-      if (!panel.contains(next) && !host?.contains(next)) scheduleClose(key);
-    });
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeAll();
-  });
-
-  // Mobile toggle
-  const toggle = document.getElementById('nav-toggle');
-  const menu = document.getElementById('mobile-menu');
-  toggle?.addEventListener('click', () => {
-    const open = menu?.classList.toggle('hidden') === false;
-    toggle.setAttribute('aria-expanded', String(open));
-  });
+  }
 </script>

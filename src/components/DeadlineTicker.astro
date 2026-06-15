@@ -35,7 +35,7 @@
 </div>
 
 <script is:inline>
-  (() => {
+  function initDeadlineTicker() {
     // IRS deadlines through 2027 — most-relevant ones for owner-operators.
     // Format: [Mon-DD-YYYY, label]
     const cal = [
@@ -82,5 +82,7 @@
       bar.classList.add('hidden');
       localStorage.setItem('dl_dismissed_at', String(Date.now()));
     });
-  })();
+  }
+  initDeadlineTicker();
+  document.addEventListener('astro:after-swap', initDeadlineTicker);
 </script>

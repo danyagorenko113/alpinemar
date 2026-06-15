@@ -101,46 +101,79 @@ import Icon from './Icon.astro';
 </div>
 
 <script>
-  const launchers = document.querySelectorAll<HTMLButtonElement>('#ask-cpa-launcher, #ask-cpa-launcher-mobile');
-  const panel = document.getElementById('ask-cpa-panel') as HTMLDivElement | null;
-  const closeBtn = document.getElementById('ask-cpa-close') as HTMLButtonElement | null;
-  const form = document.getElementById('ask-cpa-form') as HTMLFormElement | null;
-  const success = document.getElementById('ask-cpa-success') as HTMLDivElement | null;
+  // Event-delegation approach so the pillow keeps working across Astro
+  // View-Transition swaps (DOM is replaced; per-node listeners would die).
 
-  // Show desktop pillow after 6s (less intrusive) — unless dismissed this session
-  const sessionDismissed = sessionStorage.getItem('ask_cpa_session_dismissed') === '1';
-  if (!sessionDismissed) {
-    setTimeout(() => {
-      document.getElementById('ask-cpa-launcher')?.classList.remove('hidden');
-    }, 6000);
-  } else {
-    // Even when dismissed earlier, keep the mobile FAB visible.
-    document.getElementById('ask-cpa-launcher')?.classList.add('hidden');
+  function panelEl() { return document.getElementById('ask-cpa-panel') as HTMLDivElement | null; }
+  function launcherEl() { return document.getElementById('ask-cpa-launcher'); }
+
+  function openPanel() {
+    const p = panelEl(); if (!p) return;
+    p.classList.remove('hidden');
+    p.classList.add('flex');
+    document.querySelectorAll('#ask-cpa-launcher, #ask-cpa-launcher-mobile')
+      .forEach((b) => b.setAttribute('aria-expanded', 'true'));
+    requestAnimationFrame(() => {
+      (document.querySelector('#ask-cpa-form textarea') as HTMLTextAreaElement | null)?.focus();
+    });
   }
 
-  const open = () => {
-    panel?.classList.remove('hidden');
-    panel?.classList.add('flex');
-    launchers.forEach((b) => b.setAttribute('aria-expanded', 'true'));
-    (document.querySelector('#ask-cpa-form textarea') as HTMLTextAreaElement | null)?.focus();
-  };
-  const close = () => {
-    panel?.classList.add('hidden');
-    panel?.classList.remove('flex');
-    launchers.forEach((b) => b.setAttribute('aria-expanded', 'false'));
-    sessionStorage.setItem('ask_cpa_session_dismissed', '1');
-  };
+  function closePanel(remember = true) {
+    const p = panelEl(); if (!p) return;
+    p.classList.add('hidden');
+    p.classList.remove('flex');
+    document.querySelectorAll('#ask-cpa-launcher, #ask-cpa-launcher-mobile')
+      .forEach((b) => b.setAttribute('aria-expanded', 'false'));
+    if (remember) sessionStorage.setItem('ask_cpa_session_dismissed', '1');
+  }
 
-  launchers.forEach((b) => b.addEventListener('click', open));
-  closeBtn?.addEventListener('click', close);
-  panel?.addEventListener('click', (e) => { if (e.target === panel) close(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel?.classList.contains('hidden')) close(); });
+  // Reveal the desktop pillow after 4s on first page load. After each Astro
+  // swap, surface it again immediately (it's already attached to the new
+  // DOM; just unhide it unless explicitly dismissed).
+  function revealLauncher(delay: number) {
+    if (sessionStorage.getItem('ask_cpa_session_dismissed') === '1') return;
+    setTimeout(() => launcherEl()?.classList.remove('hidden'), delay);
+  }
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    // Stub — production should POST to /api/ask-cpa or similar
-    form.classList.add('hidden');
-    success?.classList.remove('hidden');
-  });
+  // Bind once via delegation — survives any number of view-transition swaps.
+  if (!(window as any).__askCpaBound) {
+    (window as any).__askCpaBound = true;
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target?.closest) return;
+      if (target.closest('#ask-cpa-launcher, #ask-cpa-launcher-mobile')) {
+        e.preventDefault();
+        openPanel();
+        return;
+      }
+      if (target.closest('#ask-cpa-close')) {
+        e.preventDefault();
+        closePanel();
+        return;
+      }
+      // Click outside the modal body closes
+      const panel = panelEl();
+      if (panel && !panel.classList.contains('hidden') && e.target === panel) {
+        closePanel();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const p = panelEl();
+      if (e.key === 'Escape' && p && !p.classList.contains('hidden')) closePanel();
+    });
+
+    document.addEventListener('submit', (e) => {
+      const form = (e.target as HTMLElement)?.closest('#ask-cpa-form') as HTMLFormElement | null;
+      if (!form) return;
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      form.classList.add('hidden');
+      document.getElementById('ask-cpa-success')?.classList.remove('hidden');
+    });
+  }
+
+  revealLauncher(4000);
+  document.addEventListener('astro:after-swap', () => revealLauncher(0));
 </script>
