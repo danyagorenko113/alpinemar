@@ -48,6 +48,17 @@ const fmt = (d: Date) =>
 const pageTitle = isFirstPage
   ? 'Insights, Tax & Accounting Articles | Alpine Mar'
   : `Insights · Page ${page.currentPage} | Alpine Mar`;
+
+// Lightweight search index — title, excerpt, tags, date, cover, href —
+// across the full archive. Powers the inline search on this page.
+const searchIndex = allPosts.map((p) => ({
+  t: p.data.title,
+  e: p.data.excerpt,
+  d: p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+  c: p.data.cover ?? '',
+  h: `/blog/${p.id}/`,
+  g: p.data.tags ?? [],
+}));
 ---
 
 <BaseLayout
@@ -78,6 +89,31 @@ const pageTitle = isFirstPage
         </p>
       </div>
 
+      <!-- Inline search — soft, real-time, no submit -->
+      <div class="relative mt-12" data-reveal>
+        <label class="relative block">
+          <span class="sr-only">Search articles</span>
+          <span class="pointer-events-none absolute left-5 top-1/2 flex -translate-y-1/2 items-center gap-3 text-navy-300">
+            <Icon name="search" class="h-4 w-4" />
+          </span>
+          <input
+            id="blog-search"
+            type="search"
+            autocomplete="off"
+            placeholder="Search 88 articles — e.g. burn rate, S-Corp, 1031, R&D credit…"
+            class="block w-full border border-line bg-paper py-4 pl-14 pr-32 text-base text-navy-900 placeholder:text-navy-400 transition-[border-color,box-shadow] duration-200 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/15"
+          />
+          <span class="pointer-events-none absolute right-5 top-1/2 hidden -translate-y-1/2 items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-navy-400 sm:flex">
+            <kbd class="border border-line bg-paper px-1.5 py-0.5">/</kbd>
+            <span>or just start typing</span>
+          </span>
+          <button id="blog-search-clear" type="button" aria-label="Clear search" class="absolute right-3 top-1/2 hidden size-7 -translate-y-1/2 items-center justify-center text-navy-400 transition-colors hover:text-navy-900">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+          </button>
+        </label>
+        <p id="blog-search-meta" class="mt-3 hidden font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500"></p>
+      </div>
+
       <!-- Tag filter strip — links into tag-routes for full-collection filtering -->
       {topTags.length > 0 && (
         <div class="relative mt-12 border-t border-line pt-6" data-reveal>
@@ -101,9 +137,22 @@ const pageTitle = isFirstPage
     </Container>
   </section>
 
-  <!-- ═══════════════ Featured (page 1 only) ═══════════════ -->
+  <!-- ═══════════════ Search results (only when query present) ═══════════════ -->
+  <section id="blog-search-section" class="hidden border-t border-line bg-paper py-12 lg:py-16">
+    <Container width="xl">
+      <div id="blog-search-results" class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+        <!-- populated by JS -->
+      </div>
+      <p id="blog-search-empty" class="hidden py-16 text-center text-lg text-navy-500">
+        Nothing matched <span id="blog-search-empty-q" class="font-medium text-navy-900"></span>.
+        <span class="block mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">Try a topic above — or call us and just ask.</span>
+      </p>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Featured (page 1 only) — hidden while searching ═══════════════ -->
   {featured && (
-    <section class="border-t border-line bg-navy-50 py-16 lg:py-20" data-filter-host>
+    <section id="blog-featured-section" class="border-t border-line bg-navy-50 py-16 lg:py-20" data-filter-host>
       <Container width="xl">
         <a href={`/blog/${featured.id}/`} data-tags={(featured.data.tags ?? []).join(',')} class="filterable group grid items-center gap-10 lg:grid-cols-2 lg:gap-x-14" data-reveal>
           {featured.data.cover && (
@@ -131,7 +180,7 @@ const pageTitle = isFirstPage
   )}
 
   <!-- ═══════════════ Article grid ═══════════════ -->
-  <section class="border-t border-line bg-paper py-12 lg:py-16" data-filter-host>
+  <section id="blog-grid-section" class="border-t border-line bg-paper py-12 lg:py-16" data-filter-host>
     <Container width="xl">
       {rest.length === 0 && (
         <p class="py-16 text-center text-lg text-navy-500">No articles match this filter — try another topic.</p>
@@ -165,7 +214,7 @@ const pageTitle = isFirstPage
   </section>
 
   <!-- ═══════════════ Pagination ═══════════════ -->
-  <section class="border-t border-line bg-paper pb-24">
+  <section id="blog-pagination-section" class="border-t border-line bg-paper pb-24">
     <Container width="xl">
       <nav aria-label="Pagination" class="flex flex-col items-center gap-6 pt-12 sm:flex-row sm:justify-between">
         <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
@@ -190,4 +239,147 @@ const pageTitle = isFirstPage
   </section>
 
   <CtaSection variant="post" />
+
+  <script define:vars={{ INDEX: searchIndex }}>
+    // Soft, real-time inline search across the full archive (88 articles).
+    // No submit; no jumping; debounced typing. Esc / cross clears.
+
+    function bindBlogSearch() {
+      const input = document.getElementById('blog-search');
+      if (!input) return;
+      const clearBtn = document.getElementById('blog-search-clear');
+      const meta = document.getElementById('blog-search-meta');
+      const resultsSection = document.getElementById('blog-search-section');
+      const resultsGrid = document.getElementById('blog-search-results');
+      const emptyEl = document.getElementById('blog-search-empty');
+      const emptyQ  = document.getElementById('blog-search-empty-q');
+      // Hide-on-search sections:
+      const hideOnSearch = [
+        document.getElementById('blog-featured-section'),
+        document.getElementById('blog-grid-section'),
+        document.getElementById('blog-pagination-section'),
+      ].filter(Boolean);
+
+      if (input.dataset.bound === '1') return;
+      input.dataset.bound = '1';
+
+      const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+      function highlight(text, terms) {
+        if (!terms.length) return escapeHtml(text);
+        let html = escapeHtml(text);
+        for (const t of terms) {
+          if (!t) continue;
+          const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')})`, 'ig');
+          html = html.replace(re, '<mark class="bg-teal-500/25 text-navy-900 not-italic">$1</mark>');
+        }
+        return html;
+      }
+
+      function render(q) {
+        const tokens = q.toLowerCase().split(/\\s+/).filter(Boolean);
+        if (!tokens.length) {
+          resultsSection.classList.add('hidden');
+          hideOnSearch.forEach((s) => s && s.classList.remove('hidden'));
+          meta.classList.add('hidden');
+          clearBtn.classList.add('hidden');
+          clearBtn.classList.remove('flex');
+          return;
+        }
+
+        // Score each post; require all tokens to appear somewhere
+        const scored = [];
+        for (const p of INDEX) {
+          const hay = (p.t + ' ' + p.e + ' ' + p.g.join(' ')).toLowerCase();
+          let ok = true;
+          let s = 0;
+          for (const t of tokens) {
+            const idx = hay.indexOf(t);
+            if (idx < 0) { ok = false; break; }
+            s += 100 - Math.min(idx, 99);
+            if (p.t.toLowerCase().includes(t)) s += 60;
+            if (p.g.some((g) => g.toLowerCase().includes(t))) s += 30;
+          }
+          if (ok) scored.push({ p, s });
+        }
+        scored.sort((a, b) => b.s - a.s);
+
+        // Show results section, hide grid sections
+        resultsSection.classList.remove('hidden');
+        hideOnSearch.forEach((s) => s && s.classList.add('hidden'));
+        meta.classList.remove('hidden');
+        clearBtn.classList.remove('hidden');
+        clearBtn.classList.add('flex');
+
+        meta.innerHTML = scored.length
+          ? '↳ ' + scored.length + ' article' + (scored.length === 1 ? '' : 's') + ' matching <span class="text-teal-700">' + escapeHtml(q) + '</span>'
+          : '↳ No matches for <span class="text-teal-700">' + escapeHtml(q) + '</span>';
+
+        if (!scored.length) {
+          resultsGrid.innerHTML = '';
+          emptyEl.classList.remove('hidden');
+          emptyQ.textContent = '"' + q + '"';
+          return;
+        }
+        emptyEl.classList.add('hidden');
+
+        resultsGrid.innerHTML = scored.slice(0, 60).map(({ p }) => {
+          const title = highlight(p.t, tokens);
+          const excerpt = highlight(p.e, tokens);
+          const tags = p.g.slice(0, 3).map((t) =>
+            '<span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-500">' + escapeHtml(t) + '</span>'
+          ).join('');
+          const cover = p.c
+            ? '<div class="relative aspect-[16/10] overflow-hidden"><img src="' + escapeHtml(p.c) + '" alt="" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/></div>'
+            : '';
+          return '<a href="' + p.h + '" class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper transition-colors duration-300 hover:bg-white">' +
+            '<span class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-teal-500 transition-transform duration-300 group-hover:scale-x-100"></span>' +
+            cover +
+            '<div class="flex flex-1 flex-col p-7 lg:p-8">' +
+              '<span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">' + escapeHtml(p.d) + '</span>' +
+              '<h3 class="mt-3 text-xl leading-snug tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">' + title + '</h3>' +
+              '<p class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-navy-600">' + excerpt + '</p>' +
+              (tags ? '<div class="mt-5 flex flex-wrap gap-1.5">' + tags + '</div>' : '') +
+              '<span class="mt-6 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-teal-700">Read more</span>' +
+            '</div>' +
+          '</a>';
+        }).join('');
+      }
+
+      // Debounced input
+      let dt;
+      input.addEventListener('input', (e) => {
+        clearTimeout(dt);
+        const v = e.target.value;
+        dt = setTimeout(() => render(v), 60);
+      });
+
+      // Esc clears
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && input.value) {
+          input.value = '';
+          render('');
+        }
+      });
+
+      // × clear
+      clearBtn?.addEventListener('click', () => {
+        input.value = '';
+        render('');
+        input.focus();
+      });
+
+      // "/" focuses search from anywhere on the page
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== '/' || e.metaKey || e.ctrlKey) return;
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName ?? '')) return;
+        e.preventDefault();
+        input.focus();
+      });
+    }
+
+    bindBlogSearch();
+    document.addEventListener('astro:after-swap', bindBlogSearch);
+  </script>
 </BaseLayout>
