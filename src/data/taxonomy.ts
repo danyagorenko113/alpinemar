@@ -149,31 +149,34 @@ export const latestPosts = [
 ] as const;
 
 // Team — verbatim names & roles from alpinemar.com/about-us/ (SEO parity).
+// `photo` = real headshot file in /public/images/team/ when available; absent
+// when a headshot has not yet been provided by the firm (the UI falls back
+// to a monogram tile in that case).
 export const team = [
-  { name: 'Pablo Martell, CPA', role: 'CEO & Managing Partner' },
-  { name: 'Kevin DeCicco, CPA', role: 'COO & Managing Tax Partner' },
-  { name: 'Cristina DeCicco, CPA', role: 'Partner' },
-  { name: 'Brian Fine, CPA', role: 'Partner' },
-  { name: 'Ian Schlakman', role: 'CIO and Head of IT Services' },
-  { name: 'Emily Bradey', role: 'Director – Client Accounting Services' },
-  { name: 'Jennifer Lopez', role: 'Director – Compliance Services' },
-  { name: 'Derby Norvilus', role: 'Director – Audit & Assurance' },
-  { name: 'Kirill Reznik, CPA', role: 'Director – Tax' },
-  { name: 'Matthew Senger', role: 'Director – Financial Advisory Services' },
-  { name: 'Vanessa Holub', role: 'IT Director' },
-  { name: 'Ashley Quintal-Schwab', role: 'Director – Tax' },
-  { name: 'Reymar Gulan', role: 'Manager – Client Accounting Services' },
-  { name: 'Brian Hancock, CPA', role: 'Manager – Tax' },
-  { name: 'Dana Muntean, CPA', role: 'Manager – Tax & Client Accounting Services' },
-  { name: 'Kathleen Lax', role: 'Office Manager' },
-  { name: 'Diane Spinelli', role: 'Manager – Tax & Client Accounting Services' },
-  { name: 'Luis Alberto Marquez', role: 'Manager – Audit & Assurance' },
-  { name: 'Javier Villa Rivas', role: 'Senior Manager – Tax' },
-  { name: 'Sean Maloney', role: 'Manager – Tax' },
-  { name: 'Devin Christie', role: 'Associate – Tax & Client Accounting Services' },
-  { name: 'Rommel Linatoc', role: 'Associate – Client Accounting Services' },
-  { name: 'Jessica Lawrence', role: 'Associate – Client Accounting Services' },
-  { name: 'Marileisi Hernandez', role: 'Senior Associate – Tax' },
+  { name: 'Pablo Martell, CPA',     role: 'CEO & Managing Partner',                          photo: '/images/team/Pablo.jpeg' },
+  { name: 'Kevin DeCicco, CPA',     role: 'COO & Managing Tax Partner',                      photo: '/images/team/Kevin.jpeg' },
+  { name: 'Cristina DeCicco, CPA',  role: 'Partner',                                          photo: '/images/team/Cristina.jpeg' },
+  { name: 'Brian Fine, CPA',        role: 'Partner',                                          photo: '/images/team/Brian.jpeg' },
+  { name: 'Ian Schlakman',          role: 'CIO and Head of IT Services',                      photo: '/images/team/Ian.jpg' },
+  { name: 'Emily Bradey',           role: 'Director – Client Accounting Services',            photo: '/images/team/Emily.jpeg' },
+  { name: 'Jennifer Lopez',         role: 'Director – Compliance Services',                   photo: '/images/team/Jennifer.jpeg' },
+  { name: 'Derby Norvilus',         role: 'Director – Audit & Assurance',                     photo: '/images/team/Derby.jpeg' },
+  { name: 'Kirill Reznik, CPA',     role: 'Director – Tax',                                   photo: '/images/team/Kirill.jpeg' },
+  { name: 'Matthew Senger',         role: 'Director – Financial Advisory Services',           photo: '/images/team/Matt-Senger.jpeg' },
+  { name: 'Vanessa Holub',          role: 'IT Director',                                      photo: '/images/team/Vanessa.jpeg' },
+  { name: 'Ashley Quintal-Schwab',  role: 'Director – Tax' },
+  { name: 'Reymar Gulan',           role: 'Manager – Client Accounting Services',             photo: '/images/team/Reymar.jpeg' },
+  { name: 'Brian Hancock, CPA',     role: 'Manager – Tax',                                    photo: '/images/team/Brian-Hancock.jpeg' },
+  { name: 'Dana Muntean, CPA',      role: 'Manager – Tax & Client Accounting Services',       photo: '/images/team/Dana.jpeg' },
+  { name: 'Kathleen Lax',           role: 'Office Manager',                                   photo: '/images/team/Kathy.jpeg' },
+  { name: 'Diane Spinelli',         role: 'Manager – Tax & Client Accounting Services',       photo: '/images/team/Diane.jpeg' },
+  { name: 'Luis Alberto Marquez',   role: 'Manager – Audit & Assurance' },
+  { name: 'Javier Villa Rivas',     role: 'Senior Manager – Tax' },
+  { name: 'Sean Maloney',           role: 'Manager – Tax' },
+  { name: 'Devin Christie',         role: 'Associate – Tax & Client Accounting Services',     photo: '/images/team/Devin.jpeg' },
+  { name: 'Rommel Linatoc',         role: 'Associate – Client Accounting Services',           photo: '/images/team/Rommel.jpeg' },
+  { name: 'Jessica Lawrence',       role: 'Associate – Client Accounting Services' },
+  { name: 'Marileisi Hernandez',    role: 'Senior Associate – Tax' },
 ] as const;
 
 export const valueProps = [
