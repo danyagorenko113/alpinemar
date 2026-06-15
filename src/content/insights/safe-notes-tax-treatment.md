@@ -2,7 +2,7 @@
 title: "Tax Treatment of SAFE Notes Explained"
 date: 2025-09-03
 author: "The Alpine Mar editorial team"
-excerpt: "SAFE tax treatment is an important consideration for investors looking…"
+excerpt: "SAFE tax treatment is an important consideration for investors looking to finance startup businesses and their founding members. Simple Agreements for Future Equity, or SAFE notes, offer an alternative to convertible notes by allowing investors to convert their investment into…"
 cover: "/images/blog/safe-notes-tax-treatment.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]
 ---

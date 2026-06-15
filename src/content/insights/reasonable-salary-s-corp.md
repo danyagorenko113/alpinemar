@@ -2,7 +2,7 @@
 title: "What Is a Reasonable Salary for an S Corp?"
 date: 2023-12-27
 author: "The Alpine Mar editorial team"
-excerpt: "S-corp shareholder-employees must pay themselves a reasonable salary and remit…"
+excerpt: "S-corp shareholder-employees must pay themselves a reasonable salary and remit the corresponding federal self-employment taxes or risk heavy penalties from the IRS."
 cover: "/images/blog/reasonable-salary-s-corp.jpg"
 tags: ["Payroll", "Tax"]
 ---

@@ -90,8 +90,12 @@ const findIndustry = (slugFragment: string) =>
         );
       })}
 
-      <!-- Hover overlay card — populated by JS -->
-      <div id="peak-card" class="pointer-events-none absolute left-0 top-0 z-20 hidden w-[280px] -translate-x-1/2 border border-navy-900 bg-navy-900 p-5 text-paper shadow-[0_24px_60px_rgba(10,10,28,0.35)]">
+      <!-- Hover overlay card — native <a> so the whole card is clickable -->
+      <a
+        id="peak-card"
+        href="/industries/"
+        class="group/card absolute left-0 top-0 z-20 hidden w-[280px] -translate-x-1/2 border border-navy-900 bg-navy-900 p-5 text-paper shadow-[0_24px_60px_rgba(10,10,28,0.35)] transition-colors hover:bg-navy-800"
+      >
         <div class="flex items-center gap-2">
           <span class="block h-px w-6 bg-teal-400"></span>
           <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-teal-400">Industry · <span data-peak-rank>—</span> / 11</p>
@@ -100,9 +104,9 @@ const findIndustry = (slugFragment: string) =>
         <p class="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-300" data-peak-kpi>—</p>
         <p class="mt-3 line-clamp-3 text-[0.85rem] leading-relaxed text-navy-200" data-peak-desc>—</p>
         <span class="mt-4 inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-teal-300">
-          Explore <Icon name="arrow-right" class="h-3.5 w-3.5" />
+          Explore <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform group-hover/card:translate-x-1" />
         </span>
-      </div>
+      </a>
     </div>
 
     <!-- ═══════════════ Mobile fallback grid ═══════════════ -->
@@ -146,6 +150,8 @@ const findIndustry = (slugFragment: string) =>
         descEl.textContent = ind.desc;
         const idx = PEAKS.findIndex((p) => p.slug === peak.slug);
         rankEl.textContent = String(idx + 1).padStart(2, '0');
+        // Make the card click navigate to this peak's industry
+        card.setAttribute('href', ind.href);
 
         const mapRect = map.getBoundingClientRect();
         const peakRect = el.getBoundingClientRect();
@@ -156,17 +162,30 @@ const findIndustry = (slugFragment: string) =>
         card.style.top = Math.max(top - card.offsetHeight - 14, 8) + 'px';
         card.classList.remove('hidden');
       }
-      function hide() { card.classList.add('hidden'); }
+      let hideTimer = 0;
+      function scheduleHide() {
+        clearTimeout(hideTimer);
+        hideTimer = window.setTimeout(() => {
+          // Keep open if the cursor is hovering either a peak or the card
+          if (map.querySelector('.peak:hover') || card.matches(':hover')) return;
+          card.classList.add('hidden');
+        }, 80);
+      }
+      function cancelHide() { clearTimeout(hideTimer); }
 
       map.querySelectorAll('.peak').forEach((el) => {
         const slug = el.dataset.peakId;
         const peak = PEAKS.find((p) => p.slug === slug);
         if (!peak) return;
-        el.addEventListener('mouseenter', () => show(peak, el));
-        el.addEventListener('focus', () => show(peak, el));
+        el.addEventListener('mouseenter', () => { cancelHide(); show(peak, el); });
+        el.addEventListener('focus',      () => { cancelHide(); show(peak, el); });
+        el.addEventListener('mouseleave', scheduleHide);
       });
-      map.addEventListener('mouseleave', hide);
-      map.addEventListener('blur', hide, true);
+      // Keep card visible while the cursor is over it; hide once the cursor
+      // truly leaves both the peak and the card.
+      card.addEventListener('mouseenter', cancelHide);
+      card.addEventListener('mouseleave', scheduleHide);
+      map.addEventListener('blur', scheduleHide, true);
     }
     bindFitMap();
     document.addEventListener('astro:after-swap', bindFitMap);

@@ -2,7 +2,7 @@
 title: "Consolidated Tax Return Overview"
 date: 2025-09-25
 author: "The Alpine Mar editorial team"
-excerpt: "A consolidated tax return is a single tax return filed…"
+excerpt: "A consolidated tax return is a single tax return filed by a group of affiliated corporations as if it were a single entity. Consolidated filing offers a strategic way for corporate groups to manage their tax liabilities by offsetting the income of profitable members with the…"
 cover: "/images/blog/consolidated-tax-return.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]
 ---

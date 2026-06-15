@@ -2,7 +2,7 @@
 title: "S Corp vs C Corp Tax Advantages Overview"
 date: 2023-10-11
 author: "The Alpine Mar editorial team"
-excerpt: "When establishing a business, choosing between two prominent corporate structures—S…"
+excerpt: "When establishing a business, choosing between two prominent corporate structures—S corporation (S corp) and C corporation (C corp)—is a pivotal decision."
 cover: "/images/blog/s-corp-vs-c-corp-tax-advantages.jpg"
 tags: ["Advisory", "Compliance", "Startups", "Tax"]
 ---

@@ -2,7 +2,7 @@
 title: "Tax-Free Gifting"
 date: 2026-01-07
 author: "The Alpine Mar editorial team"
-excerpt: "The Internal Revenue Service (IRS) allows certain gifts to be…"
+excerpt: "The Internal Revenue Service (IRS) allows certain gifts to be made tax-free when specific requirements are met. Understanding how these rules work and planning ahead ensures your gifts support others without triggering unexpected taxes."
 cover: "/images/blog/how-to-gift-money-tax-free.jpg"
 tags: ["Crypto", "Compliance", "Estate Planning", "HNW"]
 ---

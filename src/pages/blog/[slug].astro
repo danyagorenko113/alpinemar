@@ -121,9 +121,10 @@ const schema = [
     <section class="border-t border-line bg-paper py-16 lg:py-24">
       <Container width="wide" class="grid gap-12 lg:grid-cols-12 lg:gap-x-14">
         <div class="lg:col-span-8" data-reveal>
-          <BlogSummarizer excerpt={post.data.excerpt} title={post.data.title} />
+          {/* AI summarizer hidden for now — re-enable when wired to a real API.
+              <BlogSummarizer excerpt={post.data.excerpt} title={post.data.title} /> */}
 
-          <div class="prose-am mt-10">
+          <div class="prose-am">
             <Content />
           </div>
 

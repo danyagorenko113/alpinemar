@@ -2,7 +2,7 @@
 title: "Beneficial Ownership Reporting &#038; Information Guide"
 date: 2024-08-01
 author: "The Alpine Mar editorial team"
-excerpt: "In 2021, Congress enacted the Corporate Transparency Act (CTA), mandating…"
+excerpt: "In 2021, Congress enacted the Corporate Transparency Act (CTA), mandating that companies report their beneficial ownership information (BOI) to the Financial Crimes Enforcement Network (FinCEN)."
 cover: "/images/blog/beneficial-ownership-reporting-guide.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "M&A"]
 ---

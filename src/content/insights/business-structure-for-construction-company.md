@@ -2,7 +2,7 @@
 title: "Best Business Structure for a Construction Company"
 date: 2023-12-15
 author: "The Alpine Mar editorial team"
-excerpt: "The best business structure for your construction company will depend…"
+excerpt: "The best business structure for your construction company will depend on many factors. The answer will also vary from business to business. That’s why it’s essential to get professional advice on the different business structures and which might be more suitable for you."
 cover: "/images/blog/business-structure-for-construction-company.jpg"
 tags: ["Compliance", "Tax"]
 ---

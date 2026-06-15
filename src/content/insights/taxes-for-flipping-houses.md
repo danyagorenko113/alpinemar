@@ -2,7 +2,7 @@
 title: "Taxes for Flipping Houses"
 date: 2024-09-23
 author: "The Alpine Mar editorial team"
-excerpt: "Flipping houses offers the potential for quick profits, but those…"
+excerpt: "Flipping houses offers the potential for quick profits, but those profits come with tax implications that every house flipper must understand."
 cover: "/images/blog/taxes-for-flipping-houses.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]
 ---

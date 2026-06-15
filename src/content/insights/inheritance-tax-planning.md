@@ -2,7 +2,7 @@
 title: "Inheritance Tax Planning &#038; Reducing Exposure"
 date: 2026-01-21
 author: "The Alpine Mar editorial team"
-excerpt: "Inheritance tax planning is the process of preparing for taxes…"
+excerpt: "Inheritance tax planning is the process of preparing for taxes that apply in some states when someone receives assets after a death. It focuses on reducing tax exposure for beneficiaries and ensuring assets pass as intended."
 cover: "/images/blog/inheritance-tax-planning.jpg"
 tags: ["Compliance", "Estate Planning", "HNW", "Real Estate"]
 ---

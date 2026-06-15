@@ -2,7 +2,7 @@
 title: "Professional Guide to Startup Taxes"
 date: 2025-05-27
 author: "The Alpine Mar editorial team"
-excerpt: "If you’re launching a VC-backed startup, chances are you’ll organize…"
+excerpt: "If you’re launching a VC-backed startup, chances are you’ll organize as a C corporation. Investors prefer this structure because it offers flexibility and some tax advantages, but it also comes with rules you should understand early on."
 cover: "/images/blog/startup-tax-guide.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Payroll"]
 ---

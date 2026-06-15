@@ -2,7 +2,7 @@
 title: "Top 11 Money-Saving Tax Strategies for Small Business Owners"
 date: 2024-01-03
 author: "The Alpine Mar editorial team"
-excerpt: "Tax strategies for small business owners help you protect as…"
+excerpt: "Tax strategies for small business owners help you protect as much of your business income as possible so that you can achieve your financial goals. Reducing your tax burden strategically should therefore be a high priority."
 cover: "/images/blog/best-tax-strategies-for-small-business-owners.jpg"
 tags: ["Advisory", "Estate Planning", "Payroll", "Real Estate"]
 ---

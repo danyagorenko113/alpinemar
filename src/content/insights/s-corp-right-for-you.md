@@ -2,7 +2,7 @@
 title: "Is an S-Corporation right for you?"
 date: 2022-02-23
 author: "The Alpine Mar editorial team"
-excerpt: "Overall, the number one reason from a tax perspective that an S-election is typically made is to legally minimize the impact of self-employment tax."
+excerpt: "Self-employment tax for tax year 2021 is 15.3% and is comprised of two components, social security (12.4%) and Medicare (2.9%). In short, the IRC (Internal Revenue Code) essentially deems all payments made to shareholders of an S corporation as wages that are subject to…"
 cover: "/images/blog/s-corp-right-for-you.jpg"
 tags: ["Payroll", "Tax"]
 ---

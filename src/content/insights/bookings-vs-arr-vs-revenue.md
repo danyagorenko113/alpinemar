@@ -2,7 +2,7 @@
 title: "Bookings vs ARR vs Revenue in SaaS Finance"
 date: 2025-07-21
 author: "The Alpine Mar editorial team"
-excerpt: "Understanding bookings vs ARR vs revenue is key to making…"
+excerpt: "Understanding bookings vs ARR vs revenue is key to making smart decisions in SaaS finance. These terms may sound similar, but each metric tells a very different story about your business."
 cover: "/images/blog/bookings-vs-arr-vs-revenue.jpg"
 tags: ["Audit", "Compliance", "Estate Planning", "M&A"]
 ---

@@ -2,7 +2,7 @@
 title: "Construction Job Costing – Overview &#038; Tips"
 date: 2024-02-07
 author: "The Alpine Mar editorial team"
-excerpt: "Construction job costing is a fundamentally important process used in…"
+excerpt: "Construction job costing is a fundamentally important process used in the construction industry. Construction project managers, estimators, accountants, contractors, owners, clients, regulatory authorities, and insurance companies all rely on accurate job costing for their…"
 cover: "/images/blog/construction-job-costing-guide.jpg"
 tags: ["Accounting", "Compliance", "Estate Planning", "Real Estate"]
 ---
