@@ -257,6 +257,8 @@ const popularServices = [
       });
     }
 
+    function scheduleClose(key: string) {
+      clearTimeout(closeTimers.get(key));
       const t = window.setTimeout(() => {
         const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
         const panel = panels.get(key);
