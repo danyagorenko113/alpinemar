@@ -174,12 +174,22 @@ import CtaSection from '@/components/CtaSection.astro';
 
     function render() {
       document.querySelectorAll<HTMLElement>('.quiz-step').forEach((el) => {
-        el.classList.toggle('hidden', el.dataset.step !== steps[idx]);
+        const isThis = el.dataset.step === steps[idx];
+        el.classList.toggle('hidden', !isThis);
+        // Fade-in the newly revealed step
+        if (isThis && el.animate) {
+          el.animate(
+            [
+              { opacity: 0, transform: 'translateY(10px)' },
+              { opacity: 1, transform: 'translateY(0)' },
+            ],
+            { duration: 320, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' }
+          );
+        }
       });
       if (stepEl) stepEl.textContent = String(Math.min(idx + 1, 4));
       if (barEl) barEl.style.width = `${((idx + 1) / steps.length) * 100}%`;
       if (currentLabel) currentLabel.textContent = stepLabels[idx];
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function recommend() {

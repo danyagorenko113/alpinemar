@@ -84,6 +84,54 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         }, 1400);
       }
 
+      // Smooth <details> open/close — site-wide accordion polish.
+      // Wraps each non-summary child in an animated container and animates
+      // height + opacity via Web Animations API. Falls back to native if WAA
+      // is unavailable or the user prefers reduced motion.
+      function enhanceDetails(root: ParentNode = document) {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        root.querySelectorAll<HTMLDetailsElement>('details').forEach((d) => {
+          if ((d as any).__amSmooth) return;
+          (d as any).__amSmooth = true;
+          const summary = d.querySelector('summary');
+          if (!summary) return;
+
+          // Gather the body — every non-summary child wrapped in one container
+          let body = d.querySelector<HTMLElement>(':scope > .am-details-body');
+          if (!body) {
+            body = document.createElement('div');
+            body.className = 'am-details-body';
+            body.style.overflow = 'hidden';
+            const kids = Array.from(d.children).filter((c) => c !== summary);
+            kids.forEach((k) => body!.appendChild(k));
+            d.appendChild(body);
+          }
+
+          summary.addEventListener('click', (e) => {
+            if (reduced || !(body as any).animate) return; // native behaviour
+            e.preventDefault();
+            const open = d.open;
+            const target = open ? 0 : body!.scrollHeight;
+            const from = open ? body!.scrollHeight : 0;
+            if (!open) d.open = true;
+            const anim = body!.animate(
+              [
+                { height: from + 'px', opacity: open ? 1 : 0 },
+                { height: target + 'px', opacity: open ? 0 : 1 },
+              ],
+              { duration: 320, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+            );
+            anim.onfinish = () => {
+              if (open) d.open = false;
+              body!.style.height = '';
+              body!.style.opacity = '';
+            };
+          });
+        });
+      }
+      enhanceDetails();
+      document.addEventListener('astro:after-swap', () => enhanceDetails());
+
       // Count-up for [data-counter] (value held in data-to, optional data-suffix/prefix)
       const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
       if (counters.length) {
