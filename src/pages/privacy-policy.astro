@@ -1,0 +1,164 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { site } from '@/data/site';
+
+const effective = 'January 1, 2026';
+
+const sections = [
+  {
+    id: 'overview',
+    eyebrow: '01 · Overview',
+    title: 'Our commitment',
+    body: [
+      'Your privacy is of the utmost importance at Alpine Mar and maintaining your trust and confidence is one of our top priorities. We collect sensitive non-public information throughout our engagements and adhere to strict security protocol during the transmitting and handling of information.',
+    ],
+  },
+  {
+    id: 'information',
+    eyebrow: '02 · Information',
+    title: 'Information we collect',
+    body: [
+      'In the course of providing tax, accounting, and advisory services, we collect non-public personal information from a variety of sources, including: forms and documents you share with us, returns and statements we prepare on your behalf, and communications with you and authorised third parties.',
+      'We do not collect more than is necessary to deliver the service you have engaged us for.',
+    ],
+  },
+  {
+    id: 'use',
+    eyebrow: '03 · Use',
+    title: 'How we use your information',
+    body: [
+      'As Certified Public Accountants, we adhere to the highest level of professional responsibility and obligations to protect the integrity and confidentiality of your information. We use your information only to deliver the engaged services, comply with our professional and legal obligations, and respond to your requests.',
+      'Internally, we restrict access to your information to the team members involved in your engagement, on a need-to-know basis.',
+    ],
+  },
+  {
+    id: 'sharing',
+    eyebrow: '04 · Sharing',
+    title: 'Sharing & third parties',
+    body: [
+      'As a matter of practice, we will not transmit information to unaffiliated third parties outside the scope of work without your knowledge or consent. Furthermore, we will not engage with unaffiliated third parties that do not adhere to similar security protocols with respect to the transmitting and handling of sensitive non-public information.',
+    ],
+  },
+  {
+    id: 'rights',
+    eyebrow: '05 · Your rights',
+    title: 'Access, correction, and deletion',
+    body: [
+      'You may request a summary of the personal information we hold about you, request that we correct inaccuracies, or — subject to our legal and professional retention obligations — request that we delete it. To exercise any of these rights, please contact us at the address below.',
+    ],
+  },
+  {
+    id: 'contact',
+    eyebrow: '06 · Contact',
+    title: 'Questions or concerns',
+    body: [
+      'If you have any questions or concerns about this policy or how we handle your information, please contact us — we are happy to answer in plain language.',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  rawTitle="Privacy Policy - Alpine Mar"
+  description="Read the privacy policy for using the Alpine Mar website."
+>
+  <!-- ═══════════════ Hero ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-80" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block text-[10rem] leading-none lg:text-[14rem]">01</span>
+    </div>
+    <Container width="xl" class="relative pb-20 lg:pb-28">
+      <div class="max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Legal · Effective {effective}</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">Privacy Policy</h1>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
+          A short, plain-language summary of what we collect, why we collect it, and what your
+          rights are. The detail is below — written so you can actually read it.
+        </p>
+      </div>
+
+      <!-- TLDR strip -->
+      <div class="mt-12 grid gap-px border-l border-t border-line sm:grid-cols-3" data-stagger>
+        <div class="border-b border-r border-line bg-paper/80 p-6">
+          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">What we collect</p>
+          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Only what's needed to deliver your engaged engagement.</p>
+        </div>
+        <div class="border-b border-r border-line bg-paper/80 p-6">
+          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">Who sees it</p>
+          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Only the team members on your engagement — never sold, never shared without consent.</p>
+        </div>
+        <div class="border-b border-r border-line bg-paper/80 p-6">
+          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">Your rights</p>
+          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Access, correct, or delete — within our professional retention rules.</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Body + sticky TOC ═══════════════ -->
+  <section class="border-t border-line bg-paper py-20 lg:py-24">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+      <aside class="lg:col-span-3" data-reveal data-from="left">
+        <nav aria-label="On this page" class="sticky top-28">
+          <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">In this policy</p>
+          <ul class="mt-4 space-y-2.5">
+            {sections.map((s, i) => (
+              <li class="flex items-baseline gap-3">
+                <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                <a href={`#${s.id}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{s.title}</a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-7 border-t border-line pt-4 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">
+            Effective {effective}
+          </p>
+        </nav>
+      </aside>
+
+      <article class="lg:col-span-9" data-reveal>
+        <div class="space-y-16">
+          {sections.map((s, i) => (
+            <section id={s.id} class="scroll-mt-28 border-t border-line pt-10 first:border-t-0 first:pt-0">
+              <div class="flex items-center gap-3">
+                <span class="block h-px w-10 bg-teal-500"></span>
+                <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">{s.eyebrow}</p>
+              </div>
+              <h2 class="mt-5 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">{s.title}</h2>
+              <div class="mt-7 space-y-5 text-lg leading-relaxed text-navy-700">
+                {s.body.map((p) => (
+                  <p set:html={p.replace('{email}', `<a href="mailto:${site.email}" class="text-teal-700 underline underline-offset-4 hover:text-teal-600">${site.email}</a>`)} />
+                ))}
+                {s.id === 'contact' && (
+                  <div class="mt-8 border border-line bg-navy-50/60 p-6">
+                    <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Privacy contact</p>
+                    <ul class="mt-4 space-y-2.5 text-base text-navy-800">
+                      <li class="flex items-center gap-2.5"><Icon name="message-circle" class="h-4 w-4 text-teal-700" /><a href={`mailto:${site.email}`} class="hover:text-teal-700">{site.email}</a></li>
+                      <li class="flex items-center gap-2.5"><Icon name="phone" class="h-4 w-4 text-teal-700" /><a href={`tel:${site.phoneHref}`} class="hover:text-teal-700">{site.phone}</a></li>
+                      <li class="flex items-center gap-2.5"><Icon name="award" class="h-4 w-4 text-teal-700" /><span>515 E Las Olas Blvd, Suite 120 · Fort Lauderdale, FL 33301</span></li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </section>
+          ))}
+        </div>
+
+        <p class="mt-16 border-t border-line pt-6 text-sm leading-relaxed text-navy-400">
+          Members of the American Institute of Certified Public Accountants and the Florida Institute of Certified Public Accountants.
+        </p>
+      </article>
+    </Container>
+  </section>
+
+  <CtaSection />
+</BaseLayout>

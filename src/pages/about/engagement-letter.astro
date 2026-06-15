@@ -1,0 +1,144 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+
+const clauses = [
+  {
+    title: 'Scope of work',
+    body: 'We will prepare and file the federal and state income tax returns for the entity types and jurisdictions listed in Schedule A. Anything not listed in Schedule A is out of scope and requires a separate engagement letter.',
+    note: 'Why: surprises happen when scope is fuzzy. We name what is in, you know exactly what is out.',
+  },
+  {
+    title: 'Fee structure',
+    body: 'Engagements are billed as a fixed fee, not hourly. The fee is agreed before work starts and does not change unless the scope changes. If scope changes, we issue a written addendum first — never a surprise invoice.',
+    note: 'Why: hourly billing makes asking us questions expensive. Fixed fee removes that friction.',
+  },
+  {
+    title: 'Who works on your file',
+    body: 'Your engagement is led by the partner you met during the intro call. A senior associate supports day-to-day execution; every deliverable carries partner sign-off. We do not transfer engagements to junior teams.',
+    note: 'Why: the person who quoted the work owns the work. End of story.',
+  },
+  {
+    title: 'Response time',
+    body: 'We respond to client communications within one business day. During filing-season weeks (March + April for individuals, October for extensions), the SLA shifts to two business days for non-urgent matters.',
+    note: 'Why: most CPAs go quiet around their deadlines. We promise the response window we can actually keep.',
+  },
+  {
+    title: 'Documents & data',
+    body: 'You provide documents requested in the kickoff checklist via our secure portal. We retain working papers for seven years per AICPA standards. After seven years, papers are destroyed unless you request otherwise.',
+    note: 'Why: we want you to know exactly how long we keep what — IRS audits can reach back, and you should be able to ask "do you still have X?" and get a yes.',
+  },
+  {
+    title: 'Confidentiality',
+    body: 'We treat all client information as confidential. We will not share it with any third party — including affiliates — without your written consent, except where compelled by subpoena, regulatory examination, or peer review.',
+    note: 'Why: CPA-client privilege is narrower than attorney-client. We tell you the boundary up front.',
+  },
+  {
+    title: 'Conflicts',
+    body: 'Before accepting a new engagement, we run a conflicts check against existing clients. If a conflict exists, we disclose it. You may waive minor conflicts in writing; material conflicts disqualify us.',
+    note: 'Why: in a state as commercially small as ours, conflicts come up. Disclosure is the only honest approach.',
+  },
+  {
+    title: 'Use of AI tools',
+    body: 'We use AI tools (LLMs) internally for drafting, classification, and review acceleration. AI is never the sole signoff — every output is reviewed by a credentialed CPA. We do not feed client data to public AI services.',
+    note: 'Why: 2026 is the year your CPA either tells you how they use AI, or pretends they do not. We tell you.',
+  },
+  {
+    title: 'Termination',
+    body: 'Either party may terminate this engagement with 14 days written notice. On termination, we deliver your books, files, and working papers to you or your successor firm at no additional cost.',
+    note: 'Why: leaving should be as easy as joining. We do not hold your data hostage.',
+  },
+  {
+    title: 'Limitation of liability',
+    body: 'Our maximum aggregate liability under this engagement is limited to the fees you paid us in the 12 months preceding the claim. This limit does not apply to gross negligence or willful misconduct.',
+    note: 'Why: limit is industry-standard, but the carve-out is real. We are accountable for actual harm.',
+  },
+];
+---
+
+<BaseLayout
+  rawTitle="Engagement Letter (Public Template) | Alpine Mar"
+  description="The actual Alpine Mar engagement letter — clause by clause, annotated. Radical transparency: see exactly what you're agreeing to before you sign anything."
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-70" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">{String(clauses.length).padStart(2, '0')}</span>
+    </div>
+    <Container width="xl" class="relative pb-16 lg:pb-20">
+      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
+        <a href="/about-us/" class="text-navy-500 hover:text-navy-900">About</a><span aria-hidden="true">/</span><span class="text-navy-700">Engagement Letter</span>
+      </nav>
+      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Public template · radical transparency</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">
+          The actual <span class="italic text-teal-600">engagement letter.</span>
+        </h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">
+          The {clauses.length} clauses we ask every client to sign — public, in plain English, with our own commentary on why each one exists. Read it now so there are no surprises later.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact/" data-magnetic class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+            Start an engagement <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+          <button type="button" onclick="window.print()" class="inline-flex items-center gap-2.5 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
+            <Icon name="file-text" class="h-4 w-4" /> Save as PDF
+          </button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Clauses -->
+  <section class="border-t border-line bg-paper py-16 lg:py-24">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+      <aside class="lg:col-span-3" data-reveal data-from="left">
+        <nav aria-label="Clause index" class="sticky top-28">
+          <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">Index</p>
+          <ul class="mt-4 space-y-2.5">
+            {clauses.map((c, i) => (
+              <li class="flex items-baseline gap-3">
+                <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                <a href={`#clause-${i + 1}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{c.title}</a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-7 border-t border-line pt-4 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">
+            ↳ This template is for review only · final engagement letter customised per client
+          </p>
+        </nav>
+      </aside>
+
+      <div class="space-y-12 lg:col-span-9" data-reveal>
+        {clauses.map((c, i) => (
+          <section id={`clause-${i + 1}`} class="scroll-mt-28 border-t border-line pt-10 first:border-t-0 first:pt-0">
+            <div class="flex items-center gap-3">
+              <span class="block h-px w-10 bg-teal-500"></span>
+              <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Clause {String(i + 1).padStart(2, '0')} of {String(clauses.length).padStart(2, '0')}</p>
+            </div>
+            <h2 class="mt-5 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">{c.title}</h2>
+            <p class="mt-7 max-w-3xl text-lg leading-relaxed text-navy-700">{c.body}</p>
+            <div class="mt-6 border-l-2 border-teal-500 bg-navy-50/60 px-5 py-4">
+              <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">↳ Our commentary</p>
+              <p class="mt-2 text-base leading-relaxed text-navy-700">{c.note}</p>
+            </div>
+          </section>
+        ))}
+
+        <p class="mt-12 border-t border-line pt-6 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">
+          ↳ This is a template excerpt. The final document includes signature blocks, schedules listing the specific engagement scope, and any state-required addenda. We will send a clean version for review during onboarding.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="default" eyebrow="Ready to start?" />
+</BaseLayout>

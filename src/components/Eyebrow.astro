@@ -1,0 +1,25 @@
+---
+interface Props {
+  align?: 'left' | 'center';
+  tone?: 'light' | 'dark'; // light = on dark bg, dark = on light bg
+  class?: string;
+}
+const { align = 'left', tone = 'dark', class: className = '' } = Astro.props;
+// tone="light" = on dark bg; tone="dark" = on light bg
+const lineColor = tone === 'light' ? 'bg-teal-500/60' : 'bg-teal-600';
+const textColor = tone === 'light' ? 'text-teal-400' : 'text-teal-700';
+---
+
+<div
+  class:list={[
+    'flex items-center gap-3',
+    align === 'center' ? 'justify-center' : '',
+    className,
+  ]}
+>
+  <span class:list={['block h-px w-10', lineColor]} aria-hidden="true"></span>
+  <span class:list={['font-mono text-xs font-medium uppercase tracking-[0.2em]', textColor]}>
+    <slot />
+  </span>
+  {align === 'center' && <span class:list={['block h-px w-10', lineColor]} aria-hidden="true" />}
+</div>

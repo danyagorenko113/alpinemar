@@ -1,0 +1,203 @@
+---
+// Glossary inline tooltips.
+// Auto-decorates ~30 CPA terms found in [.prose-am] containers with a hoverable
+// dotted underline + popover showing definition + relevant link.
+// Runs on page load and after View Transition swaps.
+---
+
+<style>
+  .am-glossary {
+    cursor: help;
+    text-decoration: underline dotted;
+    text-decoration-color: var(--color-teal-500);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    background: linear-gradient(transparent 60%, rgba(51,187,220,0.10) 60%);
+  }
+  .am-glossary:hover { color: var(--color-teal-700); }
+  .am-glossary-pop {
+    position: absolute; z-index: 60;
+    max-width: 320px;
+    border: 1px solid var(--color-navy-900);
+    background: var(--color-navy-900);
+    color: var(--color-paper);
+    padding: 1rem 1.1rem;
+    box-shadow: 0 24px 60px rgba(10, 10, 28, 0.45);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    pointer-events: none;
+  }
+  .am-glossary-pop[data-shown="1"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .am-glossary-pop .am-term { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-teal-400); }
+  .am-glossary-pop .am-def { margin-top: 0.5rem; color: var(--color-navy-200); }
+  .am-glossary-pop .am-link {
+    margin-top: 0.7rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--color-teal-300);
+    border-bottom: 1px solid var(--color-teal-500); padding-bottom: 1px;
+  }
+</style>
+
+<div id="am-glossary-pop" class="am-glossary-pop" role="tooltip" aria-hidden="true">
+  <p class="am-term"><span data-term>—</span></p>
+  <p class="am-def" data-def>—</p>
+  <a class="am-link" data-link href="#">Open tool / service →</a>
+</div>
+
+<script>
+  type Entry = { term: string; aliases?: string[]; def: string; link?: { label: string; href: string } };
+  const GLOSSARY: Entry[] = [
+    { term: 'S-Corp',     aliases: ['S corporation', 'S-Corporation'], def: 'A pass-through tax election (subchapter S) that splits owner income into W-2 salary + distributions, avoiding self-employment tax on the distribution portion.', link: { label: 'Compare with LLC', href: '/tools/s-corp-vs-llc/' } },
+    { term: 'LLC',        def: 'Limited Liability Company — a state-formed entity that, by default, is taxed as a sole prop (one owner) or partnership (multi-owner). Can elect S-Corp or C-Corp taxation.', link: { label: 'S-Corp vs LLC calculator', href: '/tools/s-corp-vs-llc/' } },
+    { term: 'C-Corp',     aliases: ['C corporation'], def: 'A separate taxpaying entity (21% federal rate) whose distributions to shareholders are taxed again at the personal level — i.e. "double taxation".' },
+    { term: 'QBI',        aliases: ['Qualified Business Income', 'Section 199A'], def: 'Up to a 20% deduction on qualifying pass-through business income (LLC, S-Corp, sole prop). Subject to income limits and SSTB phase-outs.' },
+    { term: 'SE tax',     aliases: ['self-employment tax', 'self employment tax'], def: '15.3% combined Social Security + Medicare tax on self-employed earnings. The big lever an S-Corp election helps you sidestep.' },
+    { term: 'basis',      aliases: ['cost basis', 'adjusted basis'], def: 'The amount of after-tax money you have in an asset — affects gain/loss on sale. Goes up with improvements, down with depreciation.' },
+    { term: '1031',       aliases: ['1031 exchange', 'like-kind exchange', 'Section 1031'], def: 'A like-kind exchange that defers federal capital gains + depreciation recapture when you swap investment real estate for other investment real estate.', link: { label: '1031 calculator', href: '/tools/1031-exchange-savings/' } },
+    { term: 'depreciation recapture', def: 'When you sell depreciated real estate, the portion of gain attributable to past depreciation is taxed at up to 25% (vs the 20% long-term capital gains rate).' },
+    { term: 'capital gains', aliases: ['long-term capital gains', 'short-term capital gains'], def: 'Tax on profits from selling investments held over 1 year (long-term: 0/15/20%) or under 1 year (short-term: ordinary rates).' },
+    { term: 'NIIT',       aliases: ['Net Investment Income Tax'], def: 'A 3.8% additional tax on net investment income (interest, dividends, capital gains, rental income) for taxpayers above income thresholds.' },
+    { term: 'BOI',        aliases: ['Beneficial Ownership Information'], def: 'Federal disclosure required under the Corporate Transparency Act — most US entities must file beneficial-owner info with FinCEN.', link: { label: 'BOI Reporting service', href: '/services/boi-reporting-services/' } },
+    { term: 'FinCEN',     def: 'Financial Crimes Enforcement Network — the Treasury bureau that collects BOI filings.' },
+    { term: 'AICPA',      def: 'American Institute of Certified Public Accountants — the national professional body for US CPAs. Alpine Mar is a member firm.' },
+    { term: 'FICPA',      def: 'Florida Institute of CPAs — the state professional body. Alpine Mar is a member firm.' },
+    { term: 'CPA',        def: 'Certified Public Accountant — state-licensed, passed the uniform CPA exam, and meets experience requirements.' },
+    { term: 'EBP audit',  aliases: ['Employee Benefit Plan audit'], def: 'A specialised audit of 401(k) and similar plans, required when the plan crosses 100 participants. Strict DOL requirements.' },
+    { term: 'GAAP',       def: 'Generally Accepted Accounting Principles — the US standard for how financial statements must be prepared.' },
+    { term: 'GAAS',       def: 'Generally Accepted Auditing Standards — the rules CPAs must follow when performing an audit.' },
+    { term: 'IFRS',       def: 'International Financial Reporting Standards — the global counterpart to GAAP, used outside the US.' },
+    { term: 'R&D credit', aliases: ['R&D tax credit', 'Section 41'], def: 'A federal income-tax credit for qualified research expenditures — dollar-for-dollar offset, up to $500k can be applied against payroll tax for early-stage companies.', link: { label: 'R&D credit calculator', href: '/tools/r-and-d-credit/' } },
+    { term: 'Section 174', def: 'The IRC section now requiring R&D expenses to be capitalized and amortized (5 years US, 15 foreign) instead of expensed immediately. Partly reversed in 2026.' },
+    { term: 'burn rate',  def: 'The pace at which a company consumes cash, net of revenue. Drives runway calculations.', link: { label: 'Burn rate calculator', href: '/tools/burn-rate-calculator/' } },
+    { term: 'runway',     def: 'How many months a company can operate before cash runs out at current burn.', link: { label: 'Burn rate calculator', href: '/tools/burn-rate-calculator/' } },
+    { term: 'fractional CFO', def: 'A senior finance leader who works with multiple companies part-time — strategic CFO experience at a fraction of full-time cost.', link: { label: 'Fractional CFO service', href: '/services/fractional-cfo-services/' } },
+    { term: 'cost segregation', aliases: ['cost seg'], def: 'A study that reclassifies parts of real estate into shorter depreciation lives (5/7/15 years), accelerating deductions in the early years of ownership.' },
+    { term: 'cap table',  def: 'Capitalization table — record of who owns what percentage of a startup, including dilution from new rounds.' },
+    { term: 'QSBS',       aliases: ['Qualified Small Business Stock', 'Section 1202'], def: 'Stock in qualifying C-Corps held for 5+ years can exclude up to $10M (or 10x basis) from federal capital gains tax. Big lever for founders + investors.' },
+    { term: 'accountable plan', def: 'An IRS-recognised arrangement that lets a business reimburse employees (including owner-employees) for legitimate expenses tax-free.' },
+    { term: 'Augusta rule', aliases: ['Section 280A'], def: 'IRC §280A(g) — you can rent your personal home to your business for up to 14 days/year tax-free.' },
+    { term: 'multistate tax', def: 'Tax compliance across multiple US states — driven by where you have nexus (offices, employees, sales).', link: { label: 'Multistate Tax service', href: '/services/multistate-tax-services/' } },
+  ];
+
+  function highlight() {
+    // Build a single regex that matches any term or alias, longest first.
+    const all: { src: Entry; phrase: string }[] = [];
+    for (const g of GLOSSARY) {
+      all.push({ src: g, phrase: g.term });
+      for (const a of (g.aliases || [])) all.push({ src: g, phrase: a });
+    }
+    all.sort((a, b) => b.phrase.length - a.phrase.length);
+    const escaped = all.map((x) => x.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const re = new RegExp(`\\b(${escaped.join('|')})\\b`, 'i');
+
+    const containers = document.querySelectorAll('.prose-am');
+    containers.forEach((root) => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: (n) => {
+          const parent = n.parentElement;
+          if (!parent) return NodeFilter.FILTER_REJECT;
+          if (parent.closest('a, code, pre, .am-glossary')) return NodeFilter.FILTER_REJECT;
+          return re.test(n.nodeValue || '') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        },
+      });
+      const seen = new Set<string>();
+      const nodes: Text[] = [];
+      let cur: Node | null;
+      while ((cur = walker.nextNode())) nodes.push(cur as Text);
+      for (const node of nodes) {
+        const txt = node.nodeValue || '';
+        const m = txt.match(new RegExp(`\\b(${escaped.join('|')})\\b`, 'i'));
+        if (!m) continue;
+        const phrase = m[0];
+        const key = phrase.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const idx = m.index!;
+        const before = txt.slice(0, idx);
+        const after = txt.slice(idx + phrase.length);
+        const span = document.createElement('span');
+        span.className = 'am-glossary';
+        span.tabIndex = 0;
+        span.textContent = phrase;
+        const entry = all.find((x) => x.phrase.toLowerCase() === key)?.src;
+        if (!entry) continue;
+        span.dataset.def = entry.def;
+        span.dataset.term = entry.term;
+        if (entry.link) {
+          span.dataset.linkLabel = entry.link.label;
+          span.dataset.linkHref = entry.link.href;
+        }
+        const frag = document.createDocumentFragment();
+        frag.appendChild(document.createTextNode(before));
+        frag.appendChild(span);
+        frag.appendChild(document.createTextNode(after));
+        node.parentElement?.replaceChild(frag, node);
+      }
+    });
+  }
+
+  function bindPopover() {
+    const pop = document.getElementById('am-glossary-pop');
+    if (!pop) return;
+    const termEl = pop.querySelector('[data-term]') as HTMLElement;
+    const defEl = pop.querySelector('[data-def]') as HTMLElement;
+    const linkEl = pop.querySelector('[data-link]') as HTMLAnchorElement;
+    let hideTimer = 0;
+
+    function show(el: HTMLElement) {
+      clearTimeout(hideTimer);
+      termEl.textContent = el.dataset.term || '';
+      defEl.textContent = el.dataset.def || '';
+      if (el.dataset.linkHref) {
+        linkEl.href = el.dataset.linkHref;
+        linkEl.textContent = (el.dataset.linkLabel || 'Open') + ' →';
+        linkEl.style.display = '';
+      } else {
+        linkEl.style.display = 'none';
+      }
+      const r = el.getBoundingClientRect();
+      const popW = 320;
+      const left = Math.min(Math.max(r.left + r.width / 2 - popW / 2, 8), window.innerWidth - popW - 8);
+      pop.style.left = left + 'px';
+      pop.style.top = (r.top + window.scrollY - pop.offsetHeight - 12) + 'px';
+      pop.setAttribute('data-shown', '1');
+      pop.setAttribute('aria-hidden', 'false');
+    }
+    function hide() {
+      hideTimer = window.setTimeout(() => {
+        pop?.setAttribute('data-shown', '0');
+        pop?.setAttribute('aria-hidden', 'true');
+      }, 120);
+    }
+    document.addEventListener('mouseover', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.classList?.contains?.('am-glossary')) show(t);
+    });
+    document.addEventListener('focusin', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.classList?.contains?.('am-glossary')) show(t);
+    });
+    document.addEventListener('mouseout', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.classList?.contains?.('am-glossary')) hide();
+    });
+    document.addEventListener('focusout', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.classList?.contains?.('am-glossary')) hide();
+    });
+    pop.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    pop.addEventListener('mouseleave', hide);
+  }
+
+  function run() { highlight(); }
+  if (document.readyState === 'complete' || document.readyState === 'interactive') run();
+  else document.addEventListener('DOMContentLoaded', run);
+  document.addEventListener('astro:after-swap', run);
+
+  bindPopover();
+</script>

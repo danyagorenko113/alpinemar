@@ -1,0 +1,206 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import BlogSummarizer from '@/components/BlogSummarizer.astro';
+import { articleSchema, breadcrumb } from '@/data/schema';
+
+const slugifyTag = (t: string) =>
+  t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, all: posts } }));
+}
+
+const { post, all } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const _url = `/blog/${post.id}/`;
+
+// Reading time — Astro exposes word count via the markdown remark plugin if configured;
+// fall back to a 220 wpm estimate from rendered text length.
+const wordCount =
+  (remarkPluginFrontmatter as { minutesRead?: string })?.minutesRead ?? undefined;
+const minutes = wordCount
+  ? parseInt(wordCount.toString(), 10) || 5
+  : Math.max(3, Math.round(JSON.stringify(post).length / 6 / 220));
+
+const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
+
+// Related posts: same first tag → fall back to recent
+const tagPool = (post.data.tags ?? [])[0];
+const related = all
+  .filter((p) => p.id !== post.id)
+  .filter((p) => (tagPool ? p.data.tags?.includes(tagPool) : true))
+  .sort((a, b) => +b.data.date - +a.data.date)
+  .slice(0, 4);
+
+const schema = [
+  articleSchema({
+    title: post.data.title,
+    description: post.data.excerpt,
+    date: post.data.date,
+    cover: post.data.cover,
+    path: _url,
+  }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Insights', path: '/blog/' },
+    { name: post.data.title, path: _url },
+  ]),
+];
+---
+
+<BaseLayout
+  rawTitle={post.data.seo?.title ?? `${post.data.title} | Alpine Mar`}
+  description={post.data.seo?.description ?? post.data.excerpt}
+  image={post.data.cover}
+  schema={schema}
+>
+  <!-- Reading progress bar — fixed teal sliver under nav -->
+  <div
+    id="reading-progress"
+    class="fixed inset-x-0 z-[55] h-[3px] origin-left scale-x-0 bg-teal-500 transition-transform duration-150 ease-out"
+    style="top: 80px"
+    aria-hidden="true"
+  ></div>
+
+  <article>
+    <!-- ═══════════════ Header ═══════════════ -->
+    <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+      <div class="absolute inset-0" aria-hidden="true">
+        <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+        <div class="float-slow absolute -right-24 -top-24 h-[460px] w-[460px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      </div>
+      <Mountains tone="light" class="absolute bottom-0 left-0 h-32 w-full opacity-70" />
+
+      <Container width="wide" class="relative pb-12 lg:pb-16">
+        <a href="/blog/" class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-500 transition-colors hover:text-teal-700" data-reveal data-speed="fast">
+          <Icon name="arrow-right" class="h-3.5 w-3.5 rotate-180" /> All insights
+        </a>
+
+        <div class="mt-10 grid items-end gap-10 lg:grid-cols-12 lg:gap-x-10">
+          <div class="lg:col-span-9" data-reveal data-speed="slow">
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-navy-500">
+              <span class="text-teal-700">{fmt(post.data.date)}</span>
+              {post.data.author && <span>· {post.data.author}</span>}
+              <span class="flex items-center gap-1.5"><Icon name="clock" class="h-3.5 w-3.5" /> {minutes} min read</span>
+            </div>
+            <h1 class="mt-7 text-navy-900 text-hero-md">{post.data.title}</h1>
+            <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">{post.data.excerpt}</p>
+
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="mt-7 flex flex-wrap gap-1.5">
+                {post.data.tags.slice(0, 6).map((t) => (
+                  <a href={`/blog/topic/${slugifyTag(t)}/`} class="border border-line bg-paper px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-600 transition-colors hover:border-teal-500 hover:text-teal-700">{t}</a>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </Container>
+
+      {post.data.cover && (
+        <Container width="wide" class="relative pb-12" data-reveal>
+          <figure class="relative">
+            <div class="absolute -left-3 -top-3 hidden size-16 border-l border-t border-teal-500 lg:block" aria-hidden="true"></div>
+            <img src={post.data.cover} alt={post.data.title} class="aspect-[16/8] w-full border border-line object-cover" />
+          </figure>
+        </Container>
+      )}
+    </section>
+
+    <!-- ═══════════════ Body + aside ═══════════════ -->
+    <section class="border-t border-line bg-paper py-16 lg:py-24">
+      <Container width="wide" class="grid gap-12 lg:grid-cols-12 lg:gap-x-14">
+        <div class="lg:col-span-8" data-reveal>
+          <BlogSummarizer excerpt={post.data.excerpt} title={post.data.title} />
+
+          <div class="prose-am mt-10">
+            <Content />
+          </div>
+
+          <!-- Article footer: author byline -->
+          <footer class="mt-16 border-t border-navy-900 pt-7">
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-400">Written by</p>
+            <p class="mt-2 text-lg text-navy-900">{post.data.author ?? 'The Alpine Mar team'}</p>
+            <p class="mt-2 max-w-prose text-sm leading-relaxed text-navy-600">
+              The Alpine Mar editorial team publishes practical, vetted guidance on tax, accounting, and advisory for owner-operators and growing firms.
+            </p>
+          </footer>
+        </div>
+
+        <aside class="lg:col-span-4" data-reveal data-from="right">
+          <div class="sticky top-28 space-y-10">
+            {toc.length > 0 && (
+              <nav aria-label="In this article">
+                <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">In this article</p>
+                <ul class="mt-4 space-y-2.5">
+                  {toc.map((h, i) => (
+                    <li class="flex items-baseline gap-3">
+                      <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                      <a href={`#${h.slug}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{h.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
+            <div class="border border-line bg-navy-50/60 p-6">
+              <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Apply this</p>
+              <p class="mt-3 text-base leading-relaxed text-navy-800">
+                See what this article looks like applied to your books on a free 30-min call.
+              </p>
+              <a href="/contact/" class="mt-5 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
+                Book a 30-min call <Icon name="arrow-right" class="h-3.5 w-3.5" />
+              </a>
+            </div>
+
+            {related.length > 0 && (
+              <div>
+                <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">Read next</p>
+                <ul class="mt-4 space-y-px">
+                  {related.map((p) => (
+                    <li>
+                      <a href={`/blog/${p.id}/`} class="group flex flex-col gap-1.5 border-b border-line py-3.5">
+                        <span class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">{fmt(p.data.date)}</span>
+                        <span class="text-sm leading-snug text-navy-800 transition-colors group-hover:text-teal-700">{p.data.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <a href="/blog/" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">All insights <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+              </div>
+            )}
+          </div>
+        </aside>
+      </Container>
+    </section>
+  </article>
+
+  <CtaSection variant="post" />
+
+  <script>
+    // Reading progress — tracks scroll position across the article element.
+    const bar = document.getElementById('reading-progress');
+    const article = document.querySelector('article');
+    if (bar && article) {
+      const update = () => {
+        const rect = article.getBoundingClientRect();
+        const total = rect.height - window.innerHeight;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const pct = total > 0 ? scrolled / total : 0;
+        bar.style.transform = `scaleX(${pct})`;
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,193 @@
+---
+import type { GetStaticPathsOptions } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+
+const slugifyTag = (t: string) =>
+  t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const all = (await getCollection('insights')).sort(
+    (a, b) => +b.data.date - +a.data.date,
+  );
+  return paginate(all, { pageSize: 12 });
+}
+
+const { page } = Astro.props;
+
+// All posts (for tag aggregation across the whole archive)
+const allPosts = (await getCollection('insights')).sort(
+  (a, b) => +b.data.date - +a.data.date,
+);
+
+// Aggregate tags across the whole archive, sorted by frequency
+const tagCounts = new Map<string, number>();
+for (const post of allPosts) {
+  for (const t of post.data.tags ?? []) {
+    tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+  }
+}
+const topTags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10)
+  .map(([t, n]) => ({ tag: t, count: n }));
+
+const isFirstPage = page.currentPage === 1;
+// Featured = newest post, only on page 1
+const featured = isFirstPage ? page.data[0] : null;
+const rest = isFirstPage ? page.data.slice(1) : page.data;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const pageTitle = isFirstPage
+  ? 'Insights, Tax & Accounting Articles | Alpine Mar'
+  : `Insights · Page ${page.currentPage} | Alpine Mar`;
+---
+
+<BaseLayout
+  rawTitle={pageTitle}
+  description="Insights, guides, and news on tax, accounting, and advisory from the Alpine Mar team."
+>
+  <!-- ═══════════════ Hero ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-80" />
+
+    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block text-[10rem] leading-none lg:text-[16rem]">{String(page.currentPage).padStart(2, '0')}</span>
+    </div>
+
+    <Container width="xl" class="relative pb-20 lg:pb-28">
+      <div class="max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Insights{!isFirstPage && ` · Page ${page.currentPage}`}</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-lg">
+          {isFirstPage ? 'Our blog & news' : 'More from the team'}
+        </h1>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
+          Practical guidance on tax, accounting, and advisory — written by the Alpine Mar team.
+          <span class="font-mono text-base text-navy-500">· {allPosts.length} articles</span>
+        </p>
+      </div>
+
+      <!-- Tag filter strip — links into tag-routes for full-collection filtering -->
+      {topTags.length > 0 && (
+        <div class="relative mt-12 border-t border-line pt-6" data-reveal>
+          <div class="flex items-center gap-3 pb-3">
+            <Icon name="filter" class="h-3.5 w-3.5 text-teal-700" />
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-500">Filter by topic</p>
+          </div>
+          <div class="-mx-1 flex flex-wrap items-center gap-1.5">
+            <a href="/blog/" class="border border-navy-900 bg-navy-900 px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper">All <span class="ml-1.5 opacity-60">{allPosts.length}</span></a>
+            {topTags.map((t) => (
+              <a
+                href={`/blog/topic/${slugifyTag(t.tag)}/`}
+                class="border border-line bg-paper px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-navy-700 transition-colors hover:border-teal-500 hover:text-teal-700"
+              >
+                {t.tag} <span class="ml-1.5 text-navy-400">{t.count}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Featured (page 1 only) ═══════════════ -->
+  {featured && (
+    <section class="border-t border-line bg-navy-50 py-16 lg:py-20" data-filter-host>
+      <Container width="xl">
+        <a href={`/blog/${featured.id}/`} data-tags={(featured.data.tags ?? []).join(',')} class="filterable group grid items-center gap-10 lg:grid-cols-2 lg:gap-x-14" data-reveal>
+          {featured.data.cover && (
+            <div class="relative overflow-hidden">
+              <span class="absolute left-5 top-5 z-10 bg-paper/95 px-3 py-1.5 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-900 backdrop-blur-sm">Featured · Latest</span>
+              <img src={featured.data.cover} alt={featured.data.title} class="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+          )}
+          <div>
+            <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">{fmt(featured.data.date)}</span>
+            <h2 class="mt-5 text-3xl leading-[1.12] tracking-[-0.02em] text-navy-900 transition-colors group-hover:text-teal-700 sm:text-4xl lg:text-[2.75rem]">{featured.data.title}</h2>
+            <p class="mt-6 max-w-xl text-lg leading-relaxed text-navy-700">{featured.data.excerpt}</p>
+            {featured.data.tags && featured.data.tags.length > 0 && (
+              <div class="mt-7 flex flex-wrap gap-1.5">
+                {featured.data.tags.slice(0, 4).map((t) => (
+                  <span class="border border-line bg-paper px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-navy-600">{t}</span>
+                ))}
+              </div>
+            )}
+            <span class="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">Read article <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /></span>
+          </div>
+        </a>
+      </Container>
+    </section>
+  )}
+
+  <!-- ═══════════════ Article grid ═══════════════ -->
+  <section class="border-t border-line bg-paper py-12 lg:py-16" data-filter-host>
+    <Container width="xl">
+      {rest.length === 0 && (
+        <p class="py-16 text-center text-lg text-navy-500">No articles match this filter — try another topic.</p>
+      )}
+      <div id="post-grid" class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {rest.map((post) => (
+          <a href={`/blog/${post.id}/`} data-tags={(post.data.tags ?? []).join(',')} class="filterable group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper transition-colors duration-300 hover:bg-white focus-visible:[outline-offset:-2px]">
+            <span class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-teal-500 transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true"></span>
+            {post.data.cover && (
+              <div class="relative aspect-[16/10] overflow-hidden">
+                <img src={post.data.cover} alt={post.data.title} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+            )}
+            <div class="flex flex-1 flex-col p-7 lg:p-8">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">{fmt(post.data.date)}</span>
+              <h3 class="mt-3 text-xl leading-snug tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{post.data.title}</h3>
+              <p class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-navy-600">{post.data.excerpt}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="mt-5 flex flex-wrap gap-1.5">
+                  {post.data.tags.slice(0, 3).map((t) => (
+                    <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-500">{t}</span>
+                  ))}
+                </div>
+              )}
+              <span class="mt-6 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-teal-700">Read more <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Pagination ═══════════════ -->
+  <section class="border-t border-line bg-paper pb-24">
+    <Container width="xl">
+      <nav aria-label="Pagination" class="flex flex-col items-center gap-6 pt-12 sm:flex-row sm:justify-between">
+        <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
+          Page {page.currentPage} <span class="text-navy-300">of</span> {page.lastPage}
+        </span>
+        <div class="flex items-center gap-2">
+          <a href={page.url.prev ?? '#'} aria-disabled={!page.url.prev} class:list={[
+            'group inline-flex items-center gap-2.5 border px-5 py-3 font-mono text-[0.72rem] uppercase tracking-[0.1em] transition-colors',
+            page.url.prev ? 'border-line text-navy-900 hover:border-navy-900' : 'pointer-events-none border-line text-navy-300',
+          ]}>
+            <Icon name="arrow-right" class="h-3.5 w-3.5 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1" /> Newer
+          </a>
+          <a href={page.url.next ?? '#'} aria-disabled={!page.url.next} class:list={[
+            'group inline-flex items-center gap-2.5 border px-5 py-3 font-mono text-[0.72rem] uppercase tracking-[0.1em] transition-colors',
+            page.url.next ? 'border-line text-navy-900 hover:border-navy-900' : 'pointer-events-none border-line text-navy-300',
+          ]}>
+            Older <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+        </div>
+      </nav>
+    </Container>
+  </section>
+
+  <CtaSection variant="post" />
+</BaseLayout>

@@ -1,0 +1,275 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import Ridge from '@/components/Ridge.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { allServices, industries as industryTaxonomy } from '@/data/taxonomy';
+import { serviceSchema, breadcrumb } from '@/data/schema';
+
+export async function getStaticPaths() {
+  const items = await getCollection('industries');
+  const allServicesColl = await getCollection('services');
+  return items.map((it) => ({
+    params: { slug: it.data.path.replace(/^\/industries\//, '').replace(/\/$/, '') },
+    props: { item: it, all: items, allServicesColl },
+  }));
+}
+
+const { item, all, allServicesColl } = Astro.props;
+const { Content, headings } = await render(item);
+
+const taxonomyEntry = industryTaxonomy.find((i) => i.href === item.data.path);
+const ordinal = (industryTaxonomy.findIndex((i) => i.href === item.data.path) + 1)
+  .toString()
+  .padStart(2, '0');
+
+// Cross-link to services surfaced via the industry's `services:` frontmatter,
+// resolved against the FULL services collection (so we can surface non-
+// taxonomy services like `business-tax`, `financial-compliance` etc.).
+const summaryFromTaxonomy = new Map(allServices.map((s) => [s.href, s]));
+
+type CrossLink = { title: string; href: string; summary: string; group?: string };
+const linkedServices: CrossLink[] = (item.data.services ?? [])
+  .map((slug) => {
+    const svc = allServicesColl.find((s) => s.data.path.includes(slug));
+    if (!svc) return null;
+    const tx = summaryFromTaxonomy.get(svc.data.path);
+    return {
+      title: svc.data.title,
+      href: svc.data.path,
+      summary: svc.data.summary,
+      group: tx?.group ?? svc.data.group,
+    };
+  })
+  .filter((x): x is CrossLink => !!x);
+
+const fallbackServices: CrossLink[] = allServices.slice(0, 6).map((s) => ({
+  title: s.title, href: s.href, summary: s.summary, group: s.group,
+}));
+const serviceCrossLinks = linkedServices.length ? linkedServices : fallbackServices;
+
+// Other industries for the sidebar
+const otherIndustries = industryTaxonomy
+  .filter((i) => i.href !== item.data.path)
+  .slice(0, 6);
+
+const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
+
+// KPIs — use frontmatter when present; otherwise mock 3 trust-signals (clearly generic)
+const kpis = item.data.kpis?.length
+  ? item.data.kpis
+  : [
+      { value: '11', label: 'Industries served' },
+      { value: '20+', label: 'Specialist CPAs' },
+      { value: '30+', label: 'Specialized services' },
+    ];
+
+const tagline = item.data.tagline ?? `Specialist CPA services for ${item.data.title}.`;
+
+const schema = [
+  serviceSchema({ name: item.data.title, description: item.data.summary, path: item.data.path }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Industries', path: '/industries/' },
+    { name: item.data.title, path: item.data.path },
+  ]),
+];
+---
+
+<BaseLayout
+  rawTitle={item.data.seo?.title ?? `${item.data.title} | Alpine Mar`}
+  description={item.data.seo?.description ?? item.data.summary}
+  image={item.data.cover}
+  schema={schema}
+>
+  <!-- ═══════════════ Hero — alpine backdrop ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-56 w-full opacity-80" />
+
+    <!-- huge ordinal as backdrop -->
+    <div class="pointer-events-none absolute -bottom-6 -left-4 select-none lg:left-6" aria-hidden="true">
+      <span class="text-outline block text-[12rem] leading-none lg:text-[18rem]">{ordinal}</span>
+    </div>
+
+    <Container width="xl" class="relative grid items-end gap-12 pb-24 lg:grid-cols-12 lg:gap-x-12 lg:pb-32">
+      <div class="lg:col-span-7" data-reveal data-speed="slow">
+        <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" aria-label="Breadcrumb">
+          <a href="/industries/" class="transition-colors hover:text-teal-700">Industries</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-navy-700">{item.data.title}</span>
+        </nav>
+
+        <div class="mt-7 flex items-center gap-3">
+          <span class="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-teal-700">Industry · {ordinal} of {String(industryTaxonomy.length).padStart(2, '0')}</span>
+          <span class="block h-px w-10 bg-teal-500/60"></span>
+        </div>
+
+        <h1 class="mt-4 text-navy-900 text-hero-md">{item.data.title}</h1>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">{item.data.summary}</p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
+            Request Consultation <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+          <a href="#services" class="inline-flex items-center gap-2 px-5 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:text-teal-700">
+            Services for {item.data.title} <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+
+        <!-- KPI strip -->
+        <div class="mt-14 grid grid-cols-3 gap-px border-l border-t border-line" data-stagger>
+          {kpis.slice(0, 3).map((k) => (
+            <div class="flex flex-col gap-2 border-b border-r border-line bg-paper/80 px-5 py-5">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">{k.label}</span>
+              <span class="font-heading text-3xl font-semibold tracking-[-0.02em] text-navy-900">{k.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {item.data.cover && (
+        <div class="lg:col-span-5" data-reveal data-from="right">
+          <figure class="relative">
+            <div class="absolute -left-3 -top-3 hidden size-16 border-l border-t border-teal-500 lg:block" aria-hidden="true"></div>
+            <img src={item.data.cover} alt={item.data.title} class="aspect-[4/3] w-full object-cover" />
+            <figcaption class="mt-3 flex justify-between font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">
+              <span>{item.data.title}</span><span>{tagline}</span>
+            </figcaption>
+          </figure>
+        </div>
+      )}
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Services for this industry ═══════════════ -->
+  <section id="services" class="border-t border-line bg-navy-50 py-20 lg:py-24">
+    <Container width="xl">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <Eyebrow tone="dark">Services we run for {item.data.title}</Eyebrow>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl">Built for your {item.data.title.toLowerCase()} stack.</h2>
+        </div>
+        <a href="/services/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services <Icon name="arrow-right" class="h-4 w-4" /></a>
+      </div>
+      <div class="mt-14 grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {serviceCrossLinks.map((s, i) => (
+          <a href={s.href} class="group flex flex-col gap-5 border-b border-r border-line bg-paper p-7 transition-colors duration-300 hover:bg-white">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">{s.group}</span>
+            </div>
+            <h3 class="text-xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{s.title}</h3>
+            <p class="line-clamp-3 text-[0.95rem] leading-relaxed text-navy-600">{s.summary}</p>
+            <span class="mt-auto inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-teal-700">
+              Explore service <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Body + sidebar ═══════════════ -->
+  <section id="body" class="border-t border-line bg-paper py-20 lg:py-28">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+      <article class="lg:col-span-8" data-reveal>
+        <div class="mb-10 flex items-center gap-3 border-b border-line pb-5">
+          <Eyebrow tone="dark">In depth</Eyebrow>
+          <span class="ml-auto font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">{item.data.title}</span>
+        </div>
+        <div class="prose-am">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="lg:col-span-4" data-reveal data-from="right">
+        <div class="sticky top-28 space-y-10">
+          {toc.length > 0 && (
+            <nav aria-label="On this page">
+              <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">On this page</p>
+              <ul class="mt-4 space-y-2.5">
+                {toc.map((h, i) => (
+                  <li class="flex items-baseline gap-3">
+                    <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                    <a href={`#${h.slug}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          <!-- Trust strip — credentials -->
+          <div class="border border-line bg-navy-50/60 p-6">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Credentials</p>
+            <ul class="mt-4 space-y-2.5 text-sm text-navy-800">
+              <li class="flex items-center gap-2.5"><span class="size-1.5 bg-teal-500"></span>AICPA member firm</li>
+              <li class="flex items-center gap-2.5"><span class="size-1.5 bg-teal-500"></span>FICPA member firm</li>
+              <li class="flex items-center gap-2.5"><span class="size-1.5 bg-teal-500"></span>Florida-licensed CPAs</li>
+              <li class="flex items-center gap-2.5"><span class="size-1.5 bg-teal-500"></span>Peer-reviewed practice</li>
+            </ul>
+          </div>
+
+          <!-- Senior CPA mini-card -->
+          <div class="border border-line bg-paper p-6">
+            <div class="flex items-center gap-4">
+              <span class="flex size-12 items-center justify-center bg-navy-900 font-mono text-xs uppercase tracking-[0.06em] text-teal-400">KD</span>
+              <div>
+                <p class="text-sm font-medium text-navy-900">Kevin DeCicco, CPA</p>
+                <p class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">Managing Tax Partner</p>
+              </div>
+            </div>
+            <p class="mt-5 text-sm leading-relaxed text-navy-600">
+              Industry-specific tax + accounting questions land with the partner who has run the work before — not a junior in a queue.
+            </p>
+            <a href="/contact/" class="mt-5 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
+              Book a 30-min call <Icon name="arrow-right" class="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          <div>
+            <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">Other industries</p>
+            <ul class="mt-4 space-y-px">
+              {otherIndustries.map((ind) => (
+                <li>
+                  <a href={ind.href} class="group flex items-center justify-between gap-3 border-b border-line py-3 transition-colors hover:text-teal-700">
+                    <span class="text-sm text-navy-800 transition-colors group-hover:text-teal-700">{ind.title}</span>
+                    <Icon name="arrow-right" class="h-3.5 w-3.5 text-navy-300 transition-all group-hover:translate-x-1 group-hover:text-teal-600" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href="/industries/" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">All industries <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Quiet ridge band ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-navy-50 py-16">
+    <Ridge tone="teal" class="absolute left-0 top-0 h-12 w-full opacity-30" />
+    <Container width="wide" class="relative grid items-center gap-8 lg:grid-cols-12" data-reveal>
+      <div class="lg:col-span-8">
+        <Eyebrow tone="dark">Industry-fluent advisors</Eyebrow>
+        <p class="mt-6 text-3xl italic tracking-[-0.01em] text-navy-900 sm:text-4xl">
+          Your stack, your tax rules, your KPIs — already understood on day one.
+        </p>
+      </div>
+      <div class="lg:col-span-4 lg:justify-self-end">
+        <a href="/about-us/" class="group inline-flex items-center gap-3 border border-navy-900 px-6 py-4 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
+          Meet the team <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="industry" context={item.data.title} />
+</BaseLayout>

@@ -1,0 +1,175 @@
+---
+// Signature interactive navigation — 11 industries as peaks of a layered alpine
+// silhouette. Hover/focus a peak to surface industry-fit data; click → detail.
+// Mobile falls back to a clean grid (peaks become cards).
+import Icon from './Icon.astro';
+import { industries } from '@/data/taxonomy';
+
+// Each peak: relative position + relative size (1.0 = full peak, 0.5 = half).
+// Tuned to read left-to-right with a believable ridge profile.
+const PEAKS = [
+  { slug: 'real-estate',     x: 18,  y: 32, size: 1.0,  kpi: 'Top 2026 vert' },
+  { slug: 'high-net-worth',  x: 30,  y: 28, size: 1.0,  kpi: '$5M+ net worth focus' },
+  { slug: 'saas',            x: 42,  y: 22, size: 1.0,  kpi: 'R&D credit specialists' },
+  { slug: 'startup',         x: 52,  y: 35, size: 0.85, kpi: 'Pre-seed → Series B' },
+  { slug: 'healthcare',      x: 63,  y: 26, size: 1.0,  kpi: 'EBP audit certified' },
+  { slug: 'family-office',   x: 73,  y: 30, size: 0.85, kpi: 'Multi-generational' },
+  { slug: 'law-firm',        x: 82,  y: 38, size: 0.75, kpi: 'Trust accounting' },
+  { slug: 'crypto',          x: 88,  y: 33, size: 0.75, kpi: 'Digital-asset reporting' },
+  { slug: 'sports',          x: 10,  y: 48, size: 0.7,  kpi: 'Athletes & entertainers' },
+  { slug: 'construction',    x: 95,  y: 50, size: 0.7,  kpi: 'Contractor accounting' },
+  { slug: 'marketing-agency', x: 4,   y: 55, size: 0.65, kpi: 'Service-firm specialists' },
+];
+
+const findIndustry = (slugFragment: string) =>
+  industries.find((i) => i.href.includes(slugFragment))!;
+---
+
+<section class="grain-light relative overflow-hidden border-t border-line bg-paper py-24 lg:py-32">
+  <div class="absolute inset-0" aria-hidden="true">
+    <div class="grid-pattern-dark absolute inset-0 opacity-50"></div>
+    <div class="float-slow absolute -right-24 -top-24 h-[460px] w-[460px] rounded-full bg-teal-500/10 blur-[150px]"></div>
+    <div class="float-slower absolute -left-32 bottom-0 h-[380px] w-[380px] rounded-full bg-navy-300/20 blur-[150px]"></div>
+  </div>
+
+  <div class="relative mx-auto w-full max-w-[88rem] px-6 md:px-8">
+    <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+      <div class="max-w-2xl">
+        <span class="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-teal-700">↳ Signature · Industry fit map</span>
+        <h2 class="mt-4 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">
+          Pick your <span class="italic text-teal-600">peak.</span>
+        </h2>
+        <p class="mt-7 max-w-xl text-lg leading-relaxed text-navy-700">
+          Each peak is an industry we specialise in. Hover to see fit. Click to explore.
+        </p>
+      </div>
+      <a href="/find-your-service/" class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-teal-700 transition-colors hover:text-teal-600">
+        Take the 4-question quiz <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+      </a>
+    </div>
+
+    <!-- ═══════════════ Desktop interactive map ═══════════════ -->
+    <div id="fit-map" class="relative mt-14 hidden aspect-[16/8] w-full overflow-hidden border border-line bg-navy-50/40 lg:block" data-reveal>
+      <!-- Layered mountain silhouettes -->
+      <svg
+        class="absolute inset-x-0 bottom-0 h-full w-full"
+        viewBox="0 0 1600 720"
+        fill="none"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <!-- furthest, lightest -->
+        <path d="M0 720 V310 L120 240 L280 290 L400 200 L560 270 L720 180 L880 240 L1040 160 L1200 230 L1360 170 L1480 260 L1600 200 V720 Z" fill="#e6e6ec" />
+        <!-- middle -->
+        <path d="M0 720 V400 L180 320 L340 380 L500 290 L660 360 L820 270 L1000 340 L1180 250 L1340 330 L1480 280 L1600 370 V720 Z" fill="#dadada" />
+        <!-- nearest, darkest -->
+        <path d="M0 720 V520 L200 440 L380 500 L560 420 L740 480 L920 410 L1100 470 L1280 400 L1440 460 L1600 430 V720 Z" fill="#c2c2d2" opacity="0.7" />
+        <!-- ridge highlight line -->
+        <path d="M0 310 L120 240 L280 290 L400 200 L560 270 L720 180 L880 240 L1040 160 L1200 230 L1360 170 L1480 260 L1600 200" stroke="#33bbdc" stroke-width="1.5" stroke-opacity="0.45" fill="none" />
+      </svg>
+
+      <!-- Peaks as absolutely-positioned dots/labels -->
+      {PEAKS.map((p, i) => {
+        const ind = findIndustry(p.slug);
+        const size = 14 + p.size * 18; // px diameter
+        return (
+          <button
+            type="button"
+            class="peak group absolute z-10"
+            style={`left: ${p.x}%; top: ${p.y}%; transform: translate(-50%, -50%);`}
+            data-peak-id={p.slug}
+            aria-label={ind.title}
+          >
+            <span
+              class="block rounded-full border-2 border-navy-900 bg-paper transition-all duration-200 group-hover:scale-110 group-hover:border-teal-500 group-hover:bg-teal-500 group-focus-visible:bg-teal-500"
+              style={`width: ${size}px; height: ${size}px;`}
+            ></span>
+            <span class="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-700 opacity-80 transition-opacity group-hover:opacity-100">{ind.title}</span>
+          </button>
+        );
+      })}
+
+      <!-- Hover overlay card — populated by JS -->
+      <div id="peak-card" class="pointer-events-none absolute left-0 top-0 z-20 hidden w-[280px] -translate-x-1/2 border border-navy-900 bg-navy-900 p-5 text-paper shadow-[0_24px_60px_rgba(10,10,28,0.35)]">
+        <div class="flex items-center gap-2">
+          <span class="block h-px w-6 bg-teal-400"></span>
+          <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-teal-400">Industry · <span data-peak-rank>—</span> / 11</p>
+        </div>
+        <h3 class="mt-2.5 font-heading text-xl tracking-[-0.01em] text-white" data-peak-title>—</h3>
+        <p class="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-300" data-peak-kpi>—</p>
+        <p class="mt-3 line-clamp-3 text-[0.85rem] leading-relaxed text-navy-200" data-peak-desc>—</p>
+        <span class="mt-4 inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-teal-300">
+          Explore <Icon name="arrow-right" class="h-3.5 w-3.5" />
+        </span>
+      </div>
+    </div>
+
+    <!-- ═══════════════ Mobile fallback grid ═══════════════ -->
+    <div class="mt-12 grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:hidden" data-stagger>
+      {industries.map((ind, i) => (
+        <a href={ind.href} class="group flex items-start gap-3 border-b border-r border-line bg-paper p-5 transition-colors hover:bg-white">
+          <span class="mt-1 size-2 shrink-0 rounded-full bg-teal-500"></span>
+          <div>
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{String(i + 1).padStart(2, '0')} · Peak</span>
+            <h3 class="mt-1 text-base text-navy-900 transition-colors group-hover:text-teal-700">{ind.title}</h3>
+            <p class="mt-1 line-clamp-2 text-[0.82rem] leading-relaxed text-navy-600">{ind.desc}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <script define:vars={{ PEAKS, industries: [...industries] }}>
+    const map = document.getElementById('fit-map');
+    const card = document.getElementById('peak-card');
+    if (map && card) {
+      const titleEl = card.querySelector('[data-peak-title]');
+      const kpiEl = card.querySelector('[data-peak-kpi]');
+      const descEl = card.querySelector('[data-peak-desc]');
+      const rankEl = card.querySelector('[data-peak-rank]');
+      let activeHref = null;
+
+      function findIndustry(slug) {
+        return industries.find((i) => i.href.includes(slug));
+      }
+
+      function show(peak, el) {
+        const ind = findIndustry(peak.slug);
+        if (!ind || !titleEl || !kpiEl || !descEl || !rankEl) return;
+        titleEl.textContent = ind.title;
+        kpiEl.textContent = peak.kpi;
+        descEl.textContent = ind.desc;
+        const idx = PEAKS.findIndex((p) => p.slug === peak.slug);
+        rankEl.textContent = String(idx + 1).padStart(2, '0');
+        activeHref = ind.href;
+
+        // Position card above the peak, clamped to the map
+        const mapRect = map.getBoundingClientRect();
+        const peakRect = el.getBoundingClientRect();
+        const cardW = 280;
+        const left = peakRect.left - mapRect.left + peakRect.width / 2;
+        const top = peakRect.top - mapRect.top;
+        card.style.left = Math.min(Math.max(left, cardW / 2 + 8), mapRect.width - cardW / 2 - 8) + 'px';
+        card.style.top = Math.max(top - card.offsetHeight - 14, 8) + 'px';
+        card.classList.remove('hidden');
+      }
+
+      function hide() {
+        card.classList.add('hidden');
+      }
+
+      document.querySelectorAll('.peak').forEach((el) => {
+        const slug = el.dataset.peakId;
+        const peak = PEAKS.find((p) => p.slug === slug);
+        if (!peak) return;
+        el.addEventListener('mouseenter', () => show(peak, el));
+        el.addEventListener('focus', () => show(peak, el));
+        el.addEventListener('click', () => {
+          if (activeHref) window.location.href = activeHref;
+        });
+      });
+      map.addEventListener('mouseleave', hide);
+      map.addEventListener('blur', hide, true);
+    }
+  </script>
+</section>

@@ -1,0 +1,431 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Button from '@/components/Button.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Ridge from '@/components/Ridge.astro';
+import Mountains from '@/components/Mountains.astro';
+import MountainFitMap from '@/components/MountainFitMap.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { featuredServices, featuredIndustries, industries, partnerLogos, latestPosts } from '@/data/taxonomy';
+import { site } from '@/data/site';
+
+const stats = [
+  { to: 11, suffix: '', label: 'Industries served' },
+  { to: 30, suffix: '+', label: 'Specialized services' },
+  { to: 13, suffix: '', label: 'Platform integrations' },
+  { value: 'AICPA · FICPA', label: 'Proud members' },
+];
+---
+
+<BaseLayout
+  rawTitle="Florida CPA Firm in Ft Lauderdale - Alpine Mar"
+  description="Top CPA firm in Florida offering outsourced accounting, long-term tax strategy, and fractional CFO services."
+>
+  <!-- ═══════════════ Hero — editorial split ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[560px] w-[560px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      <div class="float-slower absolute -left-32 top-1/2 h-[420px] w-[420px] rounded-full bg-navy-300/25 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-70" />
+    <!-- Signature numeral — year founded — anchored bottom-right of hero -->
+    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-8" aria-hidden="true">
+      <span class="text-outline block font-heading text-[10rem] leading-none lg:text-[16rem]">'20</span>
+    </div>
+
+    <Container width="xl" class="relative pt-14 lg:pt-20">
+      <div class="grid items-end gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+        <div class="lg:col-span-7" data-reveal>
+          <p class="font-mono text-xs uppercase tracking-[0.22em] text-teal-700">Fort Lauderdale · CPAs &amp; Advisors</p>
+          <h1 class="mt-7 font-semibold text-navy-900 text-hero-xl">
+            The Modern Day<br /><span class="italic text-teal-600">Accounting</span> Firm
+          </h1>
+          <p class="mt-8 max-w-xl text-lg leading-relaxed text-navy-600">
+            The Florida CPA firm redefining accounting — industry experience, technology, and
+            hands-on care, in one modern partner.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button href="/contact/" variant="primary" arrow>Request Consultation</Button>
+            <Button href={`tel:${site.phoneHref}`} variant="secondary">{site.phone}</Button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5" data-reveal>
+          <figure class="relative">
+            <div class="absolute -left-3 -top-3 hidden size-16 border-l border-t border-teal-500 lg:block" aria-hidden="true"></div>
+            <img
+              src="/images/hero-team.jpg"
+              alt="The Alpine Mar team meeting in their Fort Lauderdale office"
+              width="800" height="600" fetchpriority="high"
+              class="aspect-[4/3] w-full object-cover"
+            />
+            <figcaption class="mt-3 flex items-center justify-between font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">
+              <span>The Alpine Mar team</span><span>Las Olas Blvd, FL</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- meta strip -->
+      <div class="mt-14 grid grid-cols-2 gap-y-6 border-t border-line py-7 font-mono text-xs uppercase tracking-[0.16em] text-navy-500 sm:grid-cols-4" data-stagger>
+        <div><span class="text-teal-700">↳</span> Tax planning</div>
+        <div><span class="text-teal-700">↳</span> Outsourced accounting</div>
+        <div><span class="text-teal-700">↳</span> Advisory &amp; CFO</div>
+        <div><span class="text-teal-700">↳</span> Audit &amp; attestation</div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Lead / positioning ═══════════════ -->
+  <section class="border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <Container width="wide" class="grid gap-12 lg:grid-cols-12 lg:gap-x-10">
+      <div class="lg:col-span-3" data-reveal>
+        <Eyebrow tone="dark">Why Alpine Mar</Eyebrow>
+      </div>
+      <div class="lg:col-span-9" data-reveal>
+        <p class="font-[var(--font-heading)] text-2xl leading-snug tracking-[-0.01em] text-navy-900 sm:text-3xl lg:text-[2.5rem] lg:leading-[1.15]">
+          Whether you’re seeking expert tax planning, efficient tax preparation, fractional CFO
+          guidance, reliable outsourced accounting, or transaction advisory — our blend of
+          industry experience, technology, and hands-on care has you covered.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-2.5">
+          {['Technology-first', 'Senior expertise', 'A human approach'].map((t) => (
+            <span class="border border-line px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-navy-600">{t}</span>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Services — editorial index ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <Container width="wide">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-3xl">
+          <Eyebrow tone="dark">Our services</Eyebrow>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-[3.5rem]">
+            Discover a full range of services to meet your specific needs.
+          </h2>
+        </div>
+        <Button href="/services/" variant="secondary" arrow>View all services</Button>
+      </div>
+
+      <div id="svc-list" class="mt-16 border-t border-line" data-stagger>
+        {featuredServices.map((s, i) => (
+          <a href={s.href} data-svc-img={s.image} class="group grid grid-cols-12 items-center gap-4 border-b border-line py-7 transition-colors duration-300 hover:bg-white">
+            <span class="col-span-2 font-mono text-sm text-teal-700 sm:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="col-span-8 text-2xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700 sm:col-span-5 lg:text-3xl">{s.title}</h3>
+            <p class="col-span-12 col-start-3 hidden text-[0.95rem] leading-relaxed text-navy-500 sm:col-span-4 sm:col-start-auto sm:block">{s.summary}</p>
+            <span class="col-span-2 flex justify-end sm:col-span-2 lg:col-span-2" aria-hidden="true">
+              <span class="flex size-11 items-center justify-center border border-line text-navy-400 transition-all duration-300 group-hover:border-teal-500 group-hover:bg-teal-500 group-hover:text-navy-950">
+                <Icon name="arrow-right" class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
+            </span>
+          </a>
+        ))}
+        <a href="/contact/" class="group grid grid-cols-12 items-center gap-4 border-b border-line py-7 transition-colors duration-300 hover:bg-white">
+          <span class="col-span-2 flex items-center text-teal-600 sm:col-span-1"><Icon name="sparkles" class="h-5 w-5" /></span>
+          <h3 class="col-span-8 text-2xl italic tracking-[-0.01em] text-teal-700 sm:col-span-5 lg:text-3xl">Not sure where to start?</h3>
+          <p class="col-span-12 col-start-3 hidden text-[0.95rem] leading-relaxed text-navy-500 sm:col-span-4 sm:col-start-auto sm:block">Tell us your goals — we’ll map the right mix of tax, accounting, and advisory.</p>
+          <span class="col-span-2 flex justify-end sm:col-span-2" aria-hidden="true">
+            <span class="flex size-11 items-center justify-center border border-teal-500 bg-teal-500 text-navy-950 transition-transform duration-300 group-hover:translate-x-1">
+              <Icon name="arrow-right" class="h-5 w-5" />
+            </span>
+          </span>
+        </a>
+      </div>
+    </Container>
+
+    <!-- cursor-following hover preview (desktop) -->
+    <div id="svc-preview" class="pointer-events-none fixed left-0 top-0 z-40 hidden w-[clamp(240px,22vw,320px)] opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform lg:block" aria-hidden="true">
+      <div class="relative overflow-hidden border border-navy-900/10 shadow-[0_24px_70px_rgba(10,10,28,0.28)]">
+        <img id="svc-preview-img" src="" alt="" class="aspect-[4/3] w-full object-cover" />
+        <span class="absolute bottom-0 left-0 flex items-center gap-2 bg-teal-500 px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-navy-950">View service →</span>
+      </div>
+    </div>
+
+    <script>
+      const list = document.getElementById('svc-list');
+      const preview = document.getElementById('svc-preview');
+      const pimg = document.getElementById('svc-preview-img') as HTMLImageElement | null;
+      const fine = window.matchMedia('(min-width: 1024px) and (hover: hover)').matches;
+      if (list && preview && pimg && fine) {
+        let shown = false;
+        const move = (e: MouseEvent) => {
+          const w = preview.offsetWidth || 300;
+          const x = Math.min(e.clientX + 28, window.innerWidth - w - 16);
+          const y = Math.min(Math.max(e.clientY - preview.offsetHeight / 2, 16), window.innerHeight - preview.offsetHeight - 16);
+          preview.style.transform = `translate(${x}px, ${y}px)`;
+        };
+        list.querySelectorAll<HTMLElement>('[data-svc-img]').forEach((row) => {
+          row.addEventListener('mouseenter', () => {
+            const src = row.dataset.svcImg;
+            if (src && pimg.getAttribute('src') !== src) pimg.setAttribute('src', src);
+            preview.style.opacity = '1';
+            shown = true;
+          });
+        });
+        list.addEventListener('mousemove', move);
+        list.addEventListener('mouseleave', () => {
+          preview.style.opacity = '0';
+          shown = false;
+        });
+      }
+    </script>
+  </section>
+
+  <!-- ═══════════════ Stats — the art piece ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-50"></div>
+      <div class="float-slow absolute left-[15%] top-[10%] h-[360px] w-[360px] rounded-full bg-teal-500/12 blur-[120px]"></div>
+      <div class="float-slower absolute bottom-[5%] right-[12%] h-[320px] w-[320px] rounded-full bg-navy-400/12 blur-[120px]"></div>
+    </div>
+    <div class="absolute inset-x-0 top-1/2 -translate-y-1/2" aria-hidden="true" data-reveal>
+      <svg class="h-64 w-full" viewBox="0 0 1440 260" fill="none" preserveAspectRatio="none">
+        <path class="draw-line" d="M0 180 C 180 120, 280 120, 420 160 S 680 220, 840 150 S 1120 70, 1440 130" stroke="#33bbdc" stroke-opacity="0.35" stroke-width="1.5" />
+        <path class="draw-line" d="M0 210 C 220 170, 360 200, 520 180 S 820 120, 1020 175 S 1280 215, 1440 175" stroke="#12122d" stroke-opacity="0.10" stroke-width="1.5" />
+      </svg>
+    </div>
+    <Container width="wide" class="relative">
+      <div class="mx-auto max-w-2xl text-center" data-reveal>
+        <Eyebrow tone="dark" align="center">By the numbers</Eyebrow>
+        <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Substance behind the style.</h2>
+      </div>
+      <div class="mt-16 grid grid-cols-2 border-l border-t border-line/70 lg:grid-cols-4" data-stagger>
+        {stats.map((s) => (
+          <div class="group flex min-h-[200px] flex-col items-center justify-center border-b border-r border-line/70 px-4 py-10 text-center lg:px-8">
+            <span class="mb-6 block h-px w-10 bg-teal-500 transition-all duration-300 group-hover:w-16"></span>
+            <div class="font-semibold leading-none text-navy-900">
+              {s.to ? (
+                <span class="inline-block text-6xl transition-transform duration-300 group-hover:scale-105 lg:text-7xl" data-counter data-to={s.to} data-suffix={s.suffix}>0</span>
+              ) : (
+                <span class="inline-block text-3xl lg:text-4xl">{s.value}</span>
+              )}
+            </div>
+            <div class="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-navy-400">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Case studies — animated wins ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-navy-50 pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <div class="grid-pattern-dark absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <Container width="xl" class="relative">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <Eyebrow tone="dark">Recent wins · anonymised</Eyebrow>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">
+            Real numbers from <span class="italic text-teal-600">real</span> engagements.
+          </h2>
+        </div>
+        <p class="max-w-sm font-mono text-xs uppercase tracking-[0.14em] text-navy-500">↳ Client names withheld · figures verified · approach disclosed on request</p>
+      </div>
+
+      <div class="mt-16 grid border-l border-t border-line lg:grid-cols-3" data-stagger>
+        {[
+          {
+            client: 'Series B SaaS · 42 engineers',
+            amount: 340000,
+            label: 'in federal R&D credit',
+            story: 'Three years of payroll-coded engineering work surfaced via a nexus study + ASC method. Filed amended returns for prior two years.',
+            tag: 'Tax · R&D credit',
+          },
+          {
+            client: 'Real estate partnership · 18 units',
+            amount: 215000,
+            label: 'in deferred capital gains',
+            story: '1031 exchange structured against a $4.8M Class B apartment sale — proceeds rolled into a 14-unit value-add deal in Tampa.',
+            tag: 'Tax · §1031',
+          },
+          {
+            client: 'Marketing agency · 12 staff',
+            amount: 78000,
+            label: 'in annual payroll tax',
+            story: 'S-Corp election + reasonable-comp study unlocked self-employment-tax savings. Payroll set up, retirement plan layered, done in 6 weeks.',
+            tag: 'Entity · payroll',
+          },
+        ].map((c, i) => (
+          <div class="group flex flex-col gap-6 border-b border-r border-line bg-paper p-8 transition-colors duration-300 hover:bg-white lg:p-10">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')} · case</span>
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">{c.tag}</span>
+            </div>
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500">{c.client}</p>
+            <div>
+              <p class="font-heading text-5xl font-semibold tracking-[-0.02em] text-navy-900 lg:text-6xl">
+                <span class="text-navy-300">$</span><span data-counter data-to={c.amount} data-suffix="">0</span>
+              </p>
+              <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{c.label}</p>
+            </div>
+            <p class="text-[0.95rem] leading-relaxed text-navy-600">{c.story}</p>
+            <span class="mt-auto block h-px w-10 bg-teal-500" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center justify-between gap-4" data-reveal>
+        <p class="max-w-2xl text-base leading-relaxed text-navy-600">
+          The pattern isn't a heroic single trick. It's careful, partner-led work that compounds. Bring us yours.
+        </p>
+        <a href="/contact/" class="group inline-flex items-center gap-2.5 border border-navy-900 px-6 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
+          Get yours started <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Live: this month at Alpine Mar ═══════════════ -->
+  <section class="grain relative overflow-hidden border-t border-line bg-gradient-to-b from-navy-900 to-navy-950 py-24 text-paper lg:py-28">
+    <div class="grid-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>
+    <Container width="xl" class="relative">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <div class="flex items-center gap-3">
+            <span class="relative flex size-2.5">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
+              <span class="relative inline-flex size-2.5 rounded-full bg-teal-400"></span>
+            </span>
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-400">Live · This month at Alpine Mar</p>
+          </div>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-white sm:text-5xl">Real work, in real time.</h2>
+        </div>
+        <p id="live-updated" class="font-mono text-xs uppercase tracking-[0.16em] text-navy-300">↳ Updated <span data-live-time>—</span></p>
+      </div>
+
+      <div class="mt-14 grid gap-px border-l border-t border-white/10 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {[
+          { key: 'returns', label: 'S-Corp + 1040 returns filed', value: 47, suffix: '', sub: 'this month' },
+          { key: 'deductions', label: 'Deductions identified', value: 2400000, suffix: '', sub: 'YTD across clients', prefix: '$' },
+          { key: 'audits',   label: 'Audit engagements closed', value: 12, suffix: '', sub: 'last 30 days' },
+          { key: 'response', label: 'Avg first response', value: 38, suffix: ' min', sub: 'across all channels' },
+        ].map((m) => (
+          <div class="group flex flex-col gap-3 border-b border-r border-white/10 p-7 transition-colors hover:bg-white/[0.04] lg:p-9">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-400">{m.label}</p>
+            <p class="font-heading text-5xl font-semibold tracking-[-0.02em] text-white">
+              {m.prefix && <span class="text-navy-300">{m.prefix}</span>}<span data-counter data-to={m.value} data-suffix={m.suffix}>0</span>
+            </p>
+            <p class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-300">↳ {m.sub}</p>
+            <span class="mt-auto block h-px w-10 bg-teal-500/60"></span>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-10 max-w-3xl text-base leading-relaxed text-navy-200" data-reveal>
+        ↳ Aggregate, anonymised. We publish the heartbeat so you don't have to guess if anyone's home. This counter ticks during US business hours — and so do we.
+      </p>
+    </Container>
+
+    <script>
+      // Light "live" feel — update the timestamp on load + every minute.
+      function pad(n: number) { return String(n).padStart(2, '0'); }
+      function update() {
+        const now = new Date();
+        const stamp = `${pad(now.getHours())}:${pad(now.getMinutes())} ${Intl.DateTimeFormat().resolvedOptions().timeZone.split('/').pop()}`;
+        document.querySelectorAll('[data-live-time]').forEach((el) => (el as HTMLElement).textContent = stamp);
+      }
+      update();
+      setInterval(update, 60_000);
+      document.addEventListener('astro:after-swap', update);
+    </script>
+  </section>
+
+  <!-- ═══════════════ Manifesto — pull quote + plate ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <Container width="wide" class="grid items-center gap-12 lg:grid-cols-12 lg:gap-x-12">
+      <div class="lg:col-span-7" data-reveal>
+        <Eyebrow tone="dark">The modern approach</Eyebrow>
+        <blockquote class="mt-8">
+          <p class="text-4xl leading-[1.08] tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-[3.5rem]">
+            Stop counting on <span class="italic text-teal-600">yesterday’s</span> accounting firms for tomorrow’s needs.
+          </p>
+        </blockquote>
+        <p class="mt-8 max-w-xl text-lg leading-relaxed text-navy-600">
+          As a team of leading professionals committed to breaking traditional molds and replacing
+          them with strong, client-focused solutions, we believe the accounting firm of the future
+          takes a more human approach — one that leverages technology and expertise, and prioritizes
+          clients’ needs to create more personalized experiences.
+        </p>
+        <Button href="/contact/" variant="primary" arrow class="mt-10">Request Consultation</Button>
+      </div>
+      <div class="lg:col-span-5" data-reveal>
+        <figure class="relative">
+          <div class="absolute -right-3 -top-3 hidden size-20 border-r border-t border-teal-500 lg:block" aria-hidden="true"></div>
+          <img
+            src="/images/manifesto-portrait.webp"
+            alt="Alpine Mar advisors greeting a client in their Fort Lauderdale office"
+            width="800" height="1000" loading="lazy"
+            class="aspect-[4/5] w-full object-cover object-top"
+          />
+          <figcaption class="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">“Let’s get on a first name basis.”</figcaption>
+        </figure>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Industries — signature Mountain Fit Map ═══════════════ -->
+  <MountainFitMap />
+
+  <!-- ═══════════════ Platforms — logo wall ═══════════════ -->
+  <section class="border-t border-line bg-paper py-20 lg:py-24">
+    <Container width="wide" data-reveal>
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-4">
+          <Eyebrow tone="dark">Integrations</Eyebrow>
+          <h2 class="mt-6 text-2xl tracking-[-0.01em] text-navy-900 sm:text-3xl">Trusted platforms we work with</h2>
+        </div>
+        <p class="text-base leading-relaxed text-navy-600 lg:col-span-8">
+          We seamlessly integrate with today’s most powerful business and finance platforms —
+          helping you stay agile, accurate, and ahead.
+        </p>
+      </div>
+    </Container>
+    <div class="relative mt-12 overflow-hidden border-y border-line py-9" data-reveal>
+      <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-paper to-transparent"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-paper to-transparent"></div>
+      <div class="marquee items-center gap-16 pr-16">
+        {[...partnerLogos, ...partnerLogos].map((logo) => (
+          <img src={logo.src} alt={logo.name} loading="lazy" class="h-7 w-auto shrink-0 object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 lg:h-8" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ Insights — editorial list ═══════════════ -->
+  <section class="border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <Container width="wide">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <Eyebrow tone="dark">Insights</Eyebrow>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">Our blog &amp; news</h2>
+        </div>
+        <Button href="/blog/" variant="secondary" arrow>View all insights</Button>
+      </div>
+
+      <div class="mt-16 grid border-l border-t border-line lg:grid-cols-3" data-stagger>
+        {latestPosts.map((post) => (
+          <a href={post.href} class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper transition-colors duration-300 hover:bg-white focus-visible:[outline-offset:-2px]">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img src={post.cover} alt={post.title} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <span class="absolute left-4 top-4 bg-paper/90 px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-900 backdrop-blur-sm">Article</span>
+            </div>
+            <div class="flex flex-1 flex-col p-8">
+              <h3 class="text-xl leading-snug tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{post.title}</h3>
+              <p class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-navy-600">{post.excerpt}</p>
+              <span class="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-teal-700">
+                Read more <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="home" />
+</BaseLayout>

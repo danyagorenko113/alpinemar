@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/blog/team-member/pablo-martell-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/kevin-decicco-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/cristina-decicco-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/brian-fine-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/ian-schlakman", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/emily-bradey", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/jennifer-lopez", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/derby-norvilus", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/kirill-reznik-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/matthew-senger", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/vanessa-holub", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/reymar-gulan", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/brian-hancock-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/dana-muntean-cpa", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/kathleen-lax", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/diane-spinelli", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/devin-christie", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/rommel-linatoc", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/jessica-lawrence", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/marileisi-hernandez", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/luis-alberto-marquez", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/javier-villa-rivas", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/sean-maloney", "destination": "/about-us/", "permanent": true },
+    { "source": "/blog/team-member/ashley-quintal-schwab", "destination": "/about-us/", "permanent": true },
+
+    { "source": "/in-the-media-backup", "destination": "/in-the-media/", "permanent": true },
+    { "source": "/blog-old", "destination": "/blog/", "permanent": true },
+    { "source": "/services-trial2", "destination": "/services/", "permanent": true },
+    { "source": "/services-trial3", "destination": "/services/", "permanent": true },
+    { "source": "/services-trial4", "destination": "/services/", "permanent": true },
+    { "source": "/html-sitemap", "destination": "/", "permanent": true },
+    { "source": "/services/boi-reporting-updated", "destination": "/services/boi-reporting-services/", "permanent": true }
+  ]
+}

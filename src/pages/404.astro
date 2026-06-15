@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import { industries } from '@/data/taxonomy';
+import { site } from '@/data/site';
+
+// Quick-jump destinations
+const destinations = [
+  { name: 'Home',         href: '/',             icon: 'sparkles' },
+  { name: 'All services', href: '/services/',    icon: 'briefcase' },
+  { name: 'Industries',   href: '/industries/',  icon: 'layers' },
+  { name: 'Insights',     href: '/blog/',        icon: 'file-text' },
+  { name: 'About us',     href: '/about-us/',    icon: 'users' },
+  { name: 'Contact',      href: '/contact/',     icon: 'message-circle' },
+];
+
+// Popular landing pages — five industries (most-searched per live alpinemar.com)
+const popular = [
+  industries[6], // Real Estate
+  industries[3], // High Net Worth
+  industries[9], // SaaS
+  industries[10], // Startups
+  industries[2], // Healthcare
+];
+---
+
+<BaseLayout
+  rawTitle="Page not found — Alpine Mar"
+  description="The page you were looking for has moved or no longer exists. Head back to services, industries, or contact."
+  noindex
+>
+  <section class="grain-light relative flex flex-1 overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-32 -top-24 h-[560px] w-[560px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      <div class="float-slower absolute -left-24 top-1/3 h-[360px] w-[360px] rounded-full bg-navy-300/25 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-80" />
+
+    <!-- Background outline numeral — fills the right half -->
+    <div class="pointer-events-none absolute right-[-4rem] top-1/2 -translate-y-1/2 select-none" aria-hidden="true">
+      <span class="text-outline block text-[28rem] leading-none lg:text-[40rem]">404</span>
+    </div>
+
+    <Container width="xl" class="relative flex flex-col justify-center pb-24 pt-16 lg:pt-20">
+      <div class="grid items-end gap-12 lg:grid-cols-12 lg:gap-x-12">
+        <div class="lg:col-span-7" data-reveal data-speed="slow">
+          <Eyebrow tone="dark">Error · 404 · Page not found</Eyebrow>
+          <h1 class="mt-7 text-navy-900 text-hero-xl">
+            You went <span class="italic text-teal-600">off the map.</span>
+          </h1>
+          <p class="mt-8 max-w-xl text-xl leading-relaxed text-navy-700">
+            The page you were looking for has either moved, been retired, or never lived at this
+            URL. Use the trail markers below — or just call us; we'll point you the right way.
+          </p>
+
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <a href="/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
+              <Icon name="arrow-right" class="h-4 w-4 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1" />
+              Back to safety
+            </a>
+            <a href={`tel:${site.phoneHref}`} class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-900 transition-colors hover:border-navy-900">
+              <Icon name="phone" class="h-4 w-4" /> {site.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trail markers — quick-jump grid -->
+      <div class="mt-20 border-t border-line pt-12" data-reveal>
+        <div class="flex items-center gap-3">
+          <span class="block h-px w-10 bg-teal-500"></span>
+          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Trail markers · where to next</p>
+        </div>
+        <div class="mt-8 grid gap-px border-l border-t border-line bg-line sm:grid-cols-3 lg:grid-cols-6" data-stagger>
+          {destinations.map((d, i) => (
+            <a href={d.href} class="group flex flex-col items-start gap-4 border-b border-r border-line bg-paper p-6 transition-colors duration-300 hover:bg-white">
+              <span class="flex size-10 items-center justify-center border border-line text-navy-500 transition-all duration-300 group-hover:border-teal-500 group-hover:bg-teal-500 group-hover:text-navy-950">
+                <Icon name={d.icon} class="h-4 w-4" />
+              </span>
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="text-base tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{d.name}</h2>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Popular industries -->
+      <div class="mt-12 grid gap-8 border-t border-line pt-10 lg:grid-cols-12 lg:gap-x-12" data-reveal>
+        <div class="lg:col-span-3">
+          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-navy-500">Popular industries</p>
+          <p class="mt-3 text-sm leading-relaxed text-navy-600">If you came here looking for industry-specific tax + accounting help.</p>
+        </div>
+        <ul class="space-y-px lg:col-span-9" data-stagger>
+          {popular.map((ind, i) => (
+            <li>
+              <a href={ind.href} class="group grid grid-cols-12 items-baseline gap-x-6 gap-y-1 border-b border-line py-4 transition-colors hover:bg-white">
+                <span class="col-span-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-300 sm:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+                <span class="col-span-10 text-lg tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700 sm:col-span-9">{ind.title}</span>
+                <span class="col-span-12 sm:col-span-2 sm:flex sm:justify-end">
+                  <span class="inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-teal-700">
+                    Explore <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

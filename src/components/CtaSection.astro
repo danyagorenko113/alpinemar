@@ -1,0 +1,169 @@
+---
+import Container from './Container.astro';
+import Button from './Button.astro';
+import Eyebrow from './Eyebrow.astro';
+import Icon from './Icon.astro';
+import Ridge from './Ridge.astro';
+import Mountains from './Mountains.astro';
+import { site } from '@/data/site';
+
+type Variant = 'default' | 'service' | 'industry' | 'post' | 'home';
+
+interface Props {
+  variant?: Variant;
+  /** Override the main eyebrow ("Let's talk" by default). */
+  eyebrow?: string;
+  /** Override the headline. Use html string for an italic span. */
+  headline?: string;
+  /** Override the sub-line. */
+  body?: string;
+  /** Used to colour variant-specific eyebrow context (service title / industry name / post topic). */
+  context?: string;
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  eyebrow,
+  headline,
+  body,
+  context,
+  class: className = '',
+} = Astro.props;
+
+// Footer-grid items per variant — these MUST differ visually so the CTA isn't
+// the same exact block 5x in a row across the site.
+type Cell = { label: string; value: string; icon: string; href?: string };
+const footerByVariant: Record<Variant, { kicker: string; cells: Cell[] }> = {
+  default: {
+    kicker: 'Reach us',
+    cells: [
+      { label: 'Phone',   value: site.phone, icon: 'phone',           href: `tel:${site.phoneHref}` },
+      { label: 'Email',   value: site.email, icon: 'message-circle',  href: `mailto:${site.email}` },
+      { label: 'Office',  value: 'Fort Lauderdale, FL',  icon: 'award' },
+    ],
+  },
+  home: {
+    kicker: 'Reach us',
+    cells: [
+      { label: 'Phone',   value: site.phone, icon: 'phone',           href: `tel:${site.phoneHref}` },
+      { label: 'Email',   value: site.email, icon: 'message-circle',  href: `mailto:${site.email}` },
+      { label: 'Office',  value: 'Fort Lauderdale, FL',  icon: 'award' },
+    ],
+  },
+  service: {
+    kicker: 'On the call we’ll cover',
+    cells: [
+      { label: 'Scope',   value: 'Deliverables & timeline',  icon: 'target' },
+      { label: 'Pricing', value: 'Fixed-fee range',          icon: 'briefcase' },
+      { label: 'Fit',     value: 'Senior CPA, next steps',   icon: 'check-circle' },
+    ],
+  },
+  industry: {
+    kicker: 'Working with you means',
+    cells: [
+      { label: 'Industry fluency', value: 'No spin-up time',     icon: 'layers' },
+      { label: 'Response time',    value: 'Within one business day', icon: 'clock' },
+      { label: 'Engagement model', value: 'Fixed-fee, partner-led',  icon: 'briefcase' },
+    ],
+  },
+  post: {
+    kicker: 'On the call we’ll',
+    cells: [
+      { label: 'Translate',   value: 'Plain-language answer',         icon: 'message-circle' },
+      { label: 'Apply',       value: 'Map it to your numbers',        icon: 'target' },
+      { label: 'Recommend',   value: '30-min, no obligation',         icon: 'check-circle' },
+    ],
+  },
+};
+
+const variants = {
+  default: {
+    eyebrow: 'Let’s talk',
+    headline: 'Let’s get on a <span class="italic text-teal-400">first name</span> basis.',
+    body: 'Reach out and we’ll show you what a modern accounting partner can do for you.',
+    chips: ['30-min intro', 'Senior CPA, not a queue', 'No pressure'],
+  },
+  home: {
+    eyebrow: 'Let’s talk',
+    headline: 'Let’s get on a <span class="italic text-teal-400">first name</span> basis.',
+    body: 'Reach out and we’ll show you what a modern accounting partner can do for you.',
+    chips: ['30-min intro', 'Senior CPA, not a queue', 'No pressure'],
+  },
+  service: {
+    eyebrow: context ? `Talk to a ${context} expert` : 'Talk to a senior CPA',
+    headline: 'Bring the right <span class="italic text-teal-400">people</span> to the problem.',
+    body: 'Scope, timeline, fee range — answered on a 30-minute consultation, with the partner who would run the engagement.',
+    chips: ['Free 30-min consultation', 'Partner-led, not handed off', 'NDA on request'],
+  },
+  industry: {
+    eyebrow: context ? `Built for ${context}` : 'Built for your industry',
+    headline: 'Talk to a <span class="italic text-teal-400">CPA</span> who knows your business.',
+    body: 'Your industry has its own playbook — taxes, KPIs, audit triggers. Meet the senior CPA who has run it before.',
+    chips: ['Industry-fluent advisors', 'No spin-up time', 'Fixed-fee engagements'],
+  },
+  post: {
+    eyebrow: 'Apply this to your books',
+    headline: 'See what this looks like for <span class="italic text-teal-400">your</span> numbers.',
+    body: 'Insights are great. Specifics are better. Bring us your situation and we’ll show you the next move.',
+    chips: ['30-min intro', 'Bring your P&L', 'Plain-language answers'],
+  },
+} as const;
+
+const v = variants[variant];
+const eb = eyebrow ?? v.eyebrow;
+const hd = headline ?? v.headline;
+const bd = body ?? v.body;
+const footer = footerByVariant[variant];
+---
+<section class:list={['grain relative overflow-hidden bg-gradient-to-b from-navy-900 to-navy-950 py-28 text-white lg:py-36', className]}>
+  <Ridge tone="light" class="absolute left-0 top-0 h-16 w-full opacity-40" />
+  <Mountains tone="dark" class="absolute bottom-0 left-0 h-40 w-full opacity-60" />
+  <div class="absolute left-1/2 top-0 h-[420px] w-[760px] -translate-x-1/2 rounded-full bg-teal-500/15 blur-[150px]" aria-hidden="true"></div>
+  <div class="grid-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>
+  <Container width="wide" class="relative text-center" data-reveal>
+    <Eyebrow tone="light" align="center">{eb}</Eyebrow>
+    <h2 class="mx-auto mt-8 max-w-4xl text-5xl tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl" set:html={hd} />
+    <p class="mx-auto mt-7 max-w-xl text-lg text-navy-200">{bd}</p>
+
+    <ul class="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-300" aria-label="What to expect">
+      {v.chips.map((c) => (
+        <li class="flex items-center gap-2">
+          <span class="block h-px w-5 bg-teal-500/70" aria-hidden="true"></span>{c}
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-9 flex flex-wrap justify-center gap-3">
+      <Button href="/contact/" variant="primary" arrow>Request Consultation</Button>
+      <Button href={`tel:${site.phoneHref}`} variant="ghost">{site.phone}</Button>
+    </div>
+
+    <!-- Variant-typed footer rail -->
+    <div class="mx-auto mt-14 max-w-3xl">
+      <p class="mb-4 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-navy-400">↳ {footer.kicker}</p>
+      <div class="grid border-l border-t border-white/10 sm:grid-cols-3">
+        {footer.cells.map((cell) => {
+          const inner = (
+            <>
+              <span class="flex size-9 shrink-0 items-center justify-center bg-teal-500/15 text-teal-400"><Icon name={cell.icon} class="h-4 w-4" /></span>
+              <span class="text-left">
+                <span class="block font-mono text-[0.6rem] uppercase tracking-[0.16em] text-navy-400">{cell.label}</span>
+                <span class="block text-sm text-white">{cell.value}</span>
+              </span>
+            </>
+          );
+          return cell.href ? (
+            <a href={cell.href} class="flex items-center gap-3 border-b border-r border-white/10 px-5 py-5 transition-colors hover:bg-white/[0.04]">
+              {inner}
+            </a>
+          ) : (
+            <div class="flex items-center gap-3 border-b border-r border-white/10 px-5 py-5">
+              {inner}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </Container>
+</section>

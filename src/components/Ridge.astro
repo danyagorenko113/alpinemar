@@ -1,0 +1,16 @@
+---
+// Decorative alpine contour line — draws itself when scrolled into view.
+interface Props {
+  class?: string;
+  tone?: 'teal' | 'navy' | 'light';
+}
+const { class: className = '', tone = 'teal' } = Astro.props;
+const stroke = tone === 'light' ? '#ffffff' : tone === 'navy' ? '#12122d' : '#33bbdc';
+const op = tone === 'light' ? '0.22' : tone === 'navy' ? '0.08' : '0.30';
+---
+<div class:list={['pointer-events-none', className]} aria-hidden="true" data-reveal>
+  <svg class="h-full w-full" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none">
+    <path class="draw-line" d="M0 78 C 220 28, 360 72, 560 60 S 900 18, 1120 72 S 1320 92, 1440 58" stroke={stroke} stroke-opacity={op} stroke-width="1.5" />
+    <path class="draw-line" d="M0 98 C 240 64, 380 96, 560 84 S 880 44, 1080 92 S 1300 110, 1440 84" stroke={stroke} stroke-opacity={String(Number(op) * 0.5)} stroke-width="1.5" />
+  </svg>
+</div>

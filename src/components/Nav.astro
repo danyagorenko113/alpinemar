@@ -1,0 +1,124 @@
+---
+import Container from './Container.astro';
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { serviceMenu, industryMenu } from '@/data/navigation';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+const chev =
+  'ml-1.5 inline-block transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180';
+const trigger =
+  'inline-flex items-center font-body text-sm font-medium text-navy-900 transition-colors hover:text-teal-700';
+const megaWrap =
+  'invisible absolute left-0 right-0 top-full z-40 translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100';
+---
+
+<header class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
+  <Container width="wide" class="flex h-20 items-center justify-between gap-6">
+    <Logo />
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      <!-- Services mega -->
+      <div class="group static">
+        <button type="button" class={trigger} aria-haspopup="true">
+          Services
+          <svg class={chev} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+        </button>
+        <div class={megaWrap}>
+          <Container width="wide" class="grid grid-cols-5 gap-x-6 gap-y-8 py-10">
+            {serviceMenu.map((group) => (
+              <div>
+                <a href="/services/" class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] text-teal-700">{group.label}</a>
+                <ul class="mt-4 space-y-2.5">
+                  {group.items.map((it) => (
+                    <li><a href={it.href} class="block text-sm leading-snug text-navy-600 transition-colors hover:text-teal-700">{it.name}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </Container>
+          <div class="border-t border-line">
+            <Container width="wide" class="flex items-center justify-between py-4">
+              <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-400">Tailored solutions for every need</span>
+              <a href="/services/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services <Icon name="arrow-right" class="h-4 w-4" /></a>
+            </Container>
+          </div>
+        </div>
+      </div>
+
+      <!-- Industries mega -->
+      <div class="group static">
+        <button type="button" class={trigger} aria-haspopup="true">
+          Industries
+          <svg class={chev} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+        </button>
+        <div class={megaWrap}>
+          <Container width="wide" class="grid grid-cols-3 gap-x-6 gap-y-3 py-10 sm:grid-cols-4">
+            {industryMenu.map((it) => (
+              <a href={it.href} class="group/i flex items-center justify-between border-b border-line py-2.5 text-sm text-navy-600 transition-colors hover:text-teal-700">
+                {it.name}
+                <Icon name="arrow-right" class="h-3.5 w-3.5 text-navy-300 transition-all group-hover/i:translate-x-1 group-hover/i:text-teal-600" />
+              </a>
+            ))}
+          </Container>
+          <div class="border-t border-line">
+            <Container width="wide" class="flex justify-end py-4">
+              <a href="/industries/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all industries <Icon name="arrow-right" class="h-4 w-4" /></a>
+            </Container>
+          </div>
+        </div>
+      </div>
+
+      <a href="/blog/" class:list={['font-body text-sm font-medium transition-colors hover:text-teal-700', isActive('/blog/') ? 'text-teal-700' : 'text-navy-900']}>Insights</a>
+      <a href="/about-us/" class:list={['font-body text-sm font-medium transition-colors hover:text-teal-700', isActive('/about-us/') ? 'text-teal-700' : 'text-navy-900']}>About Us</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Request Consultation</Button>
+      <button type="button" id="nav-toggle" class="inline-flex size-11 items-center justify-center border border-line lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-navy-900"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+      </button>
+    </div>
+  </Container>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-paper lg:hidden">
+    <Container width="wide" class="flex flex-col py-4">
+      <details class="border-b border-line">
+        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Services <span class="font-mono text-xs text-navy-400">+</span></summary>
+        <div class="pb-4">
+          {serviceMenu.map((group) => (
+            <div class="mt-2">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{group.label}</span>
+              <ul class="mt-2 space-y-2">
+                {group.items.map((it) => <li><a href={it.href} class="block text-sm text-navy-600">{it.name}</a></li>)}
+              </ul>
+            </div>
+          ))}
+          <a href="/services/" class="mt-3 inline-block font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services →</a>
+        </div>
+      </details>
+      <details class="border-b border-line">
+        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Industries <span class="font-mono text-xs text-navy-400">+</span></summary>
+        <div class="grid grid-cols-2 gap-2 pb-4">
+          {industryMenu.map((it) => <a href={it.href} class="text-sm text-navy-600">{it.name}</a>)}
+        </div>
+      </details>
+      <a href="/blog/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Insights</a>
+      <a href="/about-us/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">About Us</a>
+      <a href="/contact/" class="py-3.5 font-body text-sm font-medium text-navy-900">Contact</a>
+      <Button href="/contact/" variant="primary" class="mt-3 w-full">Request Consultation</Button>
+    </Container>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

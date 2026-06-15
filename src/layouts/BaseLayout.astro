@@ -1,0 +1,135 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '@/styles/global.css';
+import SEO from '@/components/SEO.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Schema from '@/components/Schema.astro';
+import DeadlineTicker from '@/components/DeadlineTicker.astro';
+import AskCpaPillow from '@/components/AskCpaPillow.astro';
+import CustomCursor from '@/components/CustomCursor.astro';
+import CmdKSearch from '@/components/CmdKSearch.astro';
+import SoundToggle from '@/components/SoundToggle.astro';
+import Glossary from '@/components/Glossary.astro';
+import { orgSchema, websiteSchema } from '@/data/schema';
+
+interface Props {
+  title?: string;
+  rawTitle?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  schema?: unknown | unknown[];
+}
+const { title, rawTitle, description, image, noindex, schema } = Astro.props;
+const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // Seasonal tint — set [data-season] for hero accent + watermark colour.
+      (() => {
+        const m = new Date().getMonth();
+        const s = m < 2 || m === 11 ? 'winter'
+                : m < 5            ? 'spring'
+                : m < 8            ? 'summer'
+                :                    'autumn';
+        document.documentElement.dataset.season = s;
+      })();
+    </script>
+    <meta name="theme-color" content="#fbfbfa" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO {title} {rawTitle} {description} {image} {noindex} />
+    <Schema data={[orgSchema, websiteSchema, ...pageSchema]} />
+    <ClientRouter fallback="swap" />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <DeadlineTicker />
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <AskCpaPillow />
+    <CmdKSearch />
+    <CustomCursor />
+    <SoundToggle />
+    <Glossary />
+
+    <script>
+      // Scroll reveal — adds .is-visible when elements enter the viewport
+      const reveals = document.querySelectorAll('[data-reveal], [data-stagger]');
+      if (reveals.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0, rootMargin: '0px 0px -10% 0px' }
+        );
+        reveals.forEach((el) => io.observe(el));
+        // Safety net: never leave content hidden if the observer doesn't fire.
+        setTimeout(() => {
+          reveals.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight) el.classList.add('is-visible');
+          });
+        }, 1400);
+      }
+
+      // Count-up for [data-counter] (value held in data-to, optional data-suffix/prefix)
+      const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+      if (counters.length) {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const run = (el: HTMLElement) => {
+          const to = Number(el.dataset.to || '0');
+          const suffix = el.dataset.suffix || '';
+          const prefix = el.dataset.prefix || '';
+          if (reduced) {
+            el.textContent = `${prefix}${to.toLocaleString()}${suffix}`;
+            return;
+          }
+          const start = performance.now();
+          const dur = 1600;
+          const tick = (now: number) => {
+            const p = Math.min((now - start) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = `${prefix}${Math.round(eased * to).toLocaleString()}${suffix}`;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        const cio = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                run(entry.target as HTMLElement);
+                cio.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0, rootMargin: '0px 0px -80px 0px' }
+        );
+        counters.forEach((el) => cio.observe(el));
+        // Safety net: ensure counters never stay on "0".
+        setTimeout(() => {
+          counters.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight && el.textContent === '0') run(el);
+          });
+        }, 1600);
+      }
+    </script>
+  </body>
+</html>

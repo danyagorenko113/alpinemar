@@ -1,0 +1,241 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+---
+
+<BaseLayout
+  rawTitle="Tax Savings Estimator — Free Calculator | Alpine Mar"
+  description="Estimate what proactive tax planning could save you. 3 questions, no signup, CPA-built. Florida-aware."
+>
+  <!-- ═══════════════ Hero ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-70" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">01</span>
+    </div>
+    <Container width="xl" class="relative pb-12 lg:pb-16">
+      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" aria-label="Breadcrumb" data-reveal data-speed="fast">
+        <a href="/tools/" class="text-navy-500 transition-colors hover:text-navy-900">Tools</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-navy-700">Tax Savings Estimator</span>
+      </nav>
+      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Tool · 60 seconds · no signup</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">
+          What could proactive tax planning <span class="italic text-teal-600">unlock</span> for you?
+        </h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">
+          Three quick questions. We'll estimate how much of your current effective rate is recoverable
+          with strategy — versus how much is just the cost of doing business.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Calculator ═══════════════ -->
+  <section class="border-t border-line bg-paper py-12 lg:py-20">
+    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+      <!-- Inputs -->
+      <form id="tax-form" class="lg:col-span-7 space-y-8" data-reveal novalidate>
+        <fieldset class="border-t border-navy-900 pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 03</span>
+            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">Your projected annual income.</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">Business net income (after expenses) or total taxable comp. Estimate fine.</p>
+          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
+            <span class="font-heading text-3xl text-navy-300">$</span>
+            <input id="t-income" type="number" inputmode="numeric" min="0" step="1000" value="250000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium tracking-[-0.01em] text-navy-900 focus:outline-none placeholder:text-navy-300" />
+            <span class="shrink-0 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / year</span>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {[100000, 250000, 500000, 1000000, 2500000].map((v) => (
+              <button type="button" data-preset-income={v} class="border border-line bg-paper px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-600 transition-colors hover:border-teal-500 hover:text-teal-700">${(v / 1000).toLocaleString()}k</button>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="border-t border-line pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 03</span>
+            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">Entity type.</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">Drives how the income is taxed and which strategies apply.</p>
+          <div class="mt-6 grid gap-2 sm:grid-cols-2">
+            {[
+              { id: 'sole', label: 'Sole prop / 1099', sub: 'Schedule C, SE tax' },
+              { id: 'llc',  label: 'Single-member LLC', sub: 'Same as sole prop' },
+              { id: 'scorp', label: 'S-Corp', sub: 'W-2 salary + K-1' },
+              { id: 'ccorp', label: 'C-Corp', sub: 'Corporate 21% + dividends' },
+              { id: 'partner', label: 'Partnership / multi-LLC', sub: 'K-1 pass-through' },
+              { id: 'w2',   label: 'W-2 employee', sub: 'High earner · benefits-heavy' },
+            ].map((opt) => (
+              <label class="group flex cursor-pointer items-start gap-3 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900 has-[:checked]:text-paper">
+                <input type="radio" name="entity" value={opt.id} class="peer mt-1 accent-teal-500" checked={opt.id === 'scorp'} />
+                <span>
+                  <span class="block text-sm font-medium leading-tight text-navy-900 peer-checked:text-paper group-has-[:checked]:text-paper">{opt.label}</span>
+                  <span class="mt-1 block font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">{opt.sub}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="border-t border-line pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q3 / 03</span>
+            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">State of residence.</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">State tax + reciprocity can move 4–13% of taxable income.</p>
+          <div class="mt-6 grid gap-2 sm:grid-cols-3">
+            {[
+              { id: 'fl',   label: 'Florida',    rate: 0 },
+              { id: 'tx',   label: 'Texas',      rate: 0 },
+              { id: 'nh',   label: 'No-tax (NV, WY, TN, SD, AK, WA)', rate: 0 },
+              { id: 'mid',  label: 'Mid (avg 5%)', rate: 5 },
+              { id: 'high', label: 'NY · CA · NJ (10%+)', rate: 10 },
+              { id: 'oth',  label: 'Other US state', rate: 5 },
+            ].map((opt) => (
+              <label class="group flex cursor-pointer flex-col gap-1 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
+                <input type="radio" name="state" value={opt.id} data-rate={opt.rate} class="peer sr-only" checked={opt.id === 'fl'} />
+                <span class="text-sm font-medium leading-tight text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">State rate · {opt.rate}%</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- Result panel — sticky -->
+      <aside class="lg:col-span-5" data-reveal data-from="right">
+        <div class="sticky top-28 border border-navy-900 bg-navy-900 p-7 text-paper lg:p-9">
+          <div class="flex items-center gap-3">
+            <span class="block h-px w-8 bg-teal-400"></span>
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">Live estimate</p>
+          </div>
+
+          <p class="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Current effective rate</p>
+          <p class="mt-2 font-heading text-5xl font-semibold tracking-[-0.02em] text-white"><span id="r-current">—</span><span class="text-navy-300">%</span></p>
+
+          <p class="mt-7 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-300">Achievable with planning</p>
+          <p class="mt-2 font-heading text-5xl font-semibold tracking-[-0.02em] text-teal-300"><span id="r-target">—</span><span class="text-teal-400/60">%</span></p>
+
+          <div class="mt-8 grid grid-cols-2 gap-px border-l border-t border-white/10">
+            <div class="border-b border-r border-white/10 p-4">
+              <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">Annual delta</p>
+              <p class="mt-1 font-heading text-2xl text-white"><span id="r-savings">—</span></p>
+            </div>
+            <div class="border-b border-r border-white/10 p-4">
+              <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">5-year delta</p>
+              <p class="mt-1 font-heading text-2xl text-teal-300"><span id="r-savings-5y">—</span></p>
+            </div>
+          </div>
+
+          <ul id="r-strategies" class="mt-8 space-y-2.5 text-sm leading-relaxed text-navy-200">
+            <!-- populated by JS -->
+          </ul>
+
+          <a href="/contact/?service=Tax%20Planning" class="group mt-8 inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
+            Verify this with a partner <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+          <p class="mt-3 text-center font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">↳ Estimate only · not tax advice</p>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Methodology / disclaimer ═══════════════ -->
+  <section class="border-t border-line bg-navy-50 py-16 lg:py-20">
+    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+      <div class="lg:col-span-4" data-reveal>
+        <Eyebrow tone="dark">How this works</Eyebrow>
+        <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Math, not magic.</h2>
+      </div>
+      <div class="lg:col-span-8 text-base leading-relaxed text-navy-700 space-y-5" data-reveal>
+        <p>The estimate is a marginal-rate model: federal brackets (2026) + the state rate you select + entity-specific adjustments (SE tax for sole prop / LLC, payroll-tax split for S-Corp, double tax for C-Corp). The "achievable" rate assumes typical planning levers we use on actual engagements — entity election, retirement plan layering, accountable-plan reimbursements, R&D / QBI / depreciation positioning.</p>
+        <p>Real numbers depend on your full situation — state nexus, deductible benefits, family structure, prior-year carryovers. The tool exists to start the conversation, not to replace one.</p>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="service" context="Tax Planning" eyebrow="Run it with the real numbers" />
+
+  <script>
+    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
+    const income = $('#t-income') as HTMLInputElement | null;
+    const rCur = $('#r-current'), rTgt = $('#r-target');
+    const rSav = $('#r-savings'), rSav5 = $('#r-savings-5y');
+    const rList = $('#r-strategies');
+
+    // Marginal federal rate (rough effective on the marginal income block for 2026 single)
+    const federalEffective = (inc: number, entity: string) => {
+      let base: number;
+      if (inc < 50_000)        base = 12;
+      else if (inc < 110_000)  base = 18;
+      else if (inc < 200_000)  base = 22;
+      else if (inc < 400_000)  base = 28;
+      else if (inc < 750_000)  base = 32;
+      else                     base = 36;
+
+      // Entity-specific overlay
+      if (entity === 'sole' || entity === 'llc') base += 9; // SE tax (~15.3% on ~half of net)
+      if (entity === 'scorp')                    base += 3; // payroll tax on reasonable salary only
+      if (entity === 'ccorp')                    base += 6; // double-tax leak on dividends
+      if (entity === 'partner')                  base += 6; // SE on guaranteed payments
+      if (entity === 'w2')                       base += 7.65; // FICA
+
+      return base;
+    };
+
+    // Strategies surfaced by entity — order = expected impact
+    const playbook: Record<string, string[]> = {
+      sole:    ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
+      llc:     ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
+      scorp:   ['Reasonable-compensation review', 'SEP / Solo 401(k) layered with profit-sharing', 'Accountable plan reimbursements', 'Augusta rule (§280A) for home rental'],
+      ccorp:   ['Salary vs dividend mix to avoid double tax', 'Section 1202 QSBS positioning', 'Accountable plan reimbursements', 'R&D credit (ASC method)'],
+      partner: ['Guaranteed payment vs distribution mix', 'Solo 401(k) / cash-balance plan', 'Section 199A QBI optimisation', 'State PTET election (if available)'],
+      w2:      ['Mega-backdoor Roth (if plan allows)', 'HSA layering + investment', 'Donor-advised fund / charitable bunching', 'Real estate professional status (if applicable)'],
+    };
+
+    function calc() {
+      const inc = Math.max(0, +(income?.value || 0));
+      const entity = (document.querySelector('input[name="entity"]:checked') as HTMLInputElement)?.value || 'scorp';
+      const stateRate = +(document.querySelector('input[name="state"]:checked') as HTMLInputElement)?.dataset.rate! || 0;
+      const fedCurrent = federalEffective(inc, entity);
+      const current = Math.min(45, fedCurrent + stateRate);
+      // Typical planning win — 4-9 pts depending on entity
+      const headroom = entity === 'w2' ? 3 : entity === 'sole' || entity === 'llc' ? 8.5 : 6.5;
+      const target = Math.max(8, Math.round((current - headroom) * 10) / 10);
+      const savings = Math.round((inc * (current - target)) / 100);
+      const savings5 = savings * 5;
+
+      if (rCur)  rCur.textContent  = current.toFixed(1);
+      if (rTgt)  rTgt.textContent  = target.toFixed(1);
+      if (rSav)  rSav.textContent  = '$' + savings.toLocaleString();
+      if (rSav5) rSav5.textContent = '$' + savings5.toLocaleString();
+
+      if (rList) {
+        const moves = playbook[entity] || playbook.scorp;
+        rList.innerHTML = moves.map((m, i) => `
+          <li class="flex items-start gap-2.5">
+            <span class="mt-1.5 size-1.5 shrink-0 bg-teal-400"></span>
+            <span><span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-teal-400 mr-2">${String(i+1).padStart(2,'0')}</span>${m}</span>
+          </li>`).join('');
+      }
+    }
+
+    document.querySelectorAll('#tax-form input').forEach((el) => el.addEventListener('input', calc));
+    document.querySelectorAll('[data-preset-income]').forEach((b) => b.addEventListener('click', () => {
+      if (income) { income.value = (b as HTMLElement).dataset.presetIncome!; calc(); }
+    }));
+    calc();
+  </script>
+</BaseLayout>

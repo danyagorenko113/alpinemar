@@ -1,0 +1,117 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { REPORTS } from '@/data/reports';
+
+export async function getStaticPaths() {
+  const { REPORTS } = await import('@/data/reports');
+  return REPORTS.map((r) => ({ params: { slug: r.slug }, props: { report: r } }));
+}
+
+const { report } = Astro.props;
+---
+
+<BaseLayout
+  rawTitle={`${report.title} ${report.year} | Alpine Mar Report`}
+  description={report.subtitle}
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-44 w-full opacity-80" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">{report.year}</span>
+    </div>
+
+    <Container width="xl" class="relative pb-20 lg:pb-28">
+      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
+        <a href="/reports/" class="text-navy-500 hover:text-navy-900">Reports</a><span aria-hidden="true">/</span><span class="text-navy-700">{report.industry}</span>
+      </nav>
+      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Report · {report.year} · {report.pages} pages</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">{report.title}</h1>
+        <p class="mt-7 max-w-2xl text-xl leading-relaxed text-navy-700">{report.subtitle}</p>
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <button type="button" onclick="window.print()" data-magnetic class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+            <Icon name="file-text" class="h-4 w-4" /> Save as PDF
+          </button>
+          <a href={report.industryHref} class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
+            Industry page <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Intro + key takeaways -->
+  <section class="border-t border-line bg-paper py-16 lg:py-20">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-14">
+      <div class="lg:col-span-7" data-reveal>
+        <Eyebrow tone="dark">Foreword</Eyebrow>
+        <p class="mt-6 text-lg leading-relaxed text-navy-700">{report.intro}</p>
+      </div>
+      <div class="lg:col-span-5" data-reveal data-from="right">
+        <Eyebrow tone="dark">Key takeaways</Eyebrow>
+        <ol class="mt-6 grid border-l border-t border-line">
+          {report.takeaways.map((t, i) => (
+            <li class="flex items-start gap-4 border-b border-r border-line p-5">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+              <span class="text-base leading-relaxed text-navy-800">{t}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Sections -->
+  <section class="border-t border-line bg-paper py-16 lg:py-20">
+    <Container width="xl">
+      <div class="space-y-20" data-stagger>
+        {report.sections.map((s) => (
+          <div class="grid gap-10 lg:grid-cols-12 lg:gap-x-14">
+            <div class="lg:col-span-4">
+              <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">{s.heading}</p>
+            </div>
+            <div class="space-y-5 lg:col-span-8">
+              {s.body.map((p) => <p class="text-base leading-relaxed text-navy-700">{p}</p>)}
+              {s.data && (
+                <div class="mt-7 grid gap-px border-l border-t border-line bg-line sm:grid-cols-3">
+                  {s.data.map((d) => (
+                    <div class="border-b border-r border-line bg-paper p-5">
+                      <p class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">{d.label}</p>
+                      <p class="mt-2 font-heading text-2xl tracking-[-0.02em] text-navy-900">{d.value}</p>
+                      {d.sub && <p class="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-navy-500">{d.sub}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  {report.ctaTool && (
+    <section class="border-t border-line bg-navy-50 py-16">
+      <Container width="xl" class="flex flex-wrap items-center justify-between gap-6" data-reveal>
+        <div>
+          <Eyebrow tone="dark">Run the numbers</Eyebrow>
+          <p class="mt-5 max-w-xl text-2xl tracking-[-0.01em] text-navy-900">Calculate this for your own situation.</p>
+        </div>
+        <a href={report.ctaTool.href} data-magnetic class="group inline-flex items-center gap-2.5 bg-navy-900 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-paper transition-all duration-200 hover:bg-navy-800">
+          {report.ctaTool.label} <Icon name="arrow-right" class="h-4 w-4" />
+        </a>
+      </Container>
+    </section>
+  )}
+
+  <CtaSection variant="industry" context={report.industry} />
+</BaseLayout>

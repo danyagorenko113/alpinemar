@@ -1,0 +1,192 @@
+---
+// Cmd-K / Ctrl-K everywhere search.
+// Builds a static index at build-time from services / industries / insights
+// collections plus hand-curated tools & static pages.
+import { getCollection } from 'astro:content';
+import { industries } from '@/data/taxonomy';
+
+type Entry = { kind: string; title: string; href: string; summary?: string; tag?: string };
+
+const services = await getCollection('services');
+const posts = await getCollection('insights');
+const indItems = await getCollection('industries');
+
+const index: Entry[] = [
+  // Tools
+  { kind: 'Tool', title: 'Tax Savings Estimator', href: '/tools/tax-savings-estimator/', summary: '3 questions, live current vs achievable rate' },
+  { kind: 'Tool', title: 'Burn Rate Calculator', href: '/tools/burn-rate-calculator/', summary: 'Cash + monthly burn → runway in months' },
+  { kind: 'Tool', title: 'Quarterly Tax Estimator', href: '/tools/quarterly-tax-estimator/', summary: 'Income + entity → 4 IRS payment dates' },
+  { kind: 'Tool', title: 'S-Corp vs LLC', href: '/tools/s-corp-vs-llc/', summary: 'Side-by-side tax delta, break-even slider' },
+  { kind: 'Tool', title: '1031 Exchange Savings', href: '/tools/1031-exchange-savings/', summary: 'Deferred capital gains on RE sale' },
+  { kind: 'Tool', title: 'R&D Credit Estimator', href: '/tools/r-and-d-credit/', summary: 'Federal R&D credit via ASC method' },
+  { kind: 'Tool', title: 'Find your service (4-question quiz)', href: '/find-your-service/', summary: 'Recommended Alpine Mar service bundle' },
+
+  // Static pages
+  { kind: 'Page', title: 'Home', href: '/' },
+  { kind: 'Page', title: 'About Us', href: '/about-us/', summary: 'Team, values, comparison vs Big 4 / traditional CPA' },
+  { kind: 'Page', title: 'All services', href: '/services/' },
+  { kind: 'Page', title: 'All industries', href: '/industries/' },
+  { kind: 'Page', title: 'Insights / Blog', href: '/blog/' },
+  { kind: 'Page', title: 'In the Media', href: '/in-the-media/' },
+  { kind: 'Page', title: 'Contact', href: '/contact/' },
+  { kind: 'Page', title: 'Privacy Policy', href: '/privacy-policy/' },
+];
+
+for (const s of services) {
+  if (s.id.startsWith('servicios-') || s.id === 'creacion-de-empresas') continue;
+  index.push({ kind: 'Service', title: s.data.title, href: s.data.path, summary: s.data.summary, tag: s.data.group });
+}
+for (const ind of indItems) {
+  const tx = industries.find((i) => i.href === ind.data.path);
+  index.push({ kind: 'Industry', title: ind.data.title, href: ind.data.path, summary: tx?.desc ?? ind.data.summary });
+}
+for (const p of posts) {
+  index.push({ kind: 'Insight', title: p.data.title, href: `/blog/${p.id}/`, summary: p.data.excerpt, tag: (p.data.tags ?? [])[0] });
+}
+---
+
+<button
+  type="button"
+  id="cmdk-launcher"
+  class="fixed bottom-6 left-6 z-50 hidden items-center gap-2 border border-line bg-paper/95 backdrop-blur px-3 py-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-700 shadow-[0_12px_40px_rgba(10,10,28,0.08)] transition-colors hover:border-navy-900 lg:flex"
+  aria-haspopup="dialog"
+  aria-controls="cmdk-panel"
+>
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  Search
+  <kbd class="ml-1.5 inline-flex items-center gap-0.5 border border-line bg-navy-50 px-1.5 py-0.5 text-[0.62rem] text-navy-700">⌘K</kbd>
+</button>
+
+<div
+  id="cmdk-panel"
+  class="fixed inset-0 z-[80] hidden items-start justify-center bg-navy-950/40 backdrop-blur-md p-4 pt-[18vh]"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Search Alpine Mar"
+>
+  <div class="grain w-full max-w-2xl overflow-hidden border border-navy-900 bg-paper shadow-[0_30px_80px_rgba(10,10,28,0.45)]">
+    <header class="relative flex items-center gap-3 border-b border-line px-5 py-4">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="text-teal-700" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        id="cmdk-input"
+        type="search"
+        autocomplete="off"
+        placeholder="Search services, industries, articles, tools…"
+        class="flex-1 bg-transparent text-base text-navy-900 placeholder:text-navy-300 focus:outline-none"
+      />
+      <kbd class="hidden border border-line bg-navy-50 px-2 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-500 sm:inline-block">ESC</kbd>
+    </header>
+    <div class="max-h-[60vh] overflow-y-auto" id="cmdk-list">
+      <!-- populated by JS -->
+    </div>
+    <footer class="flex items-center justify-between border-t border-line bg-navy-50/60 px-5 py-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-500">
+      <span class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5"><kbd class="border border-line bg-paper px-1.5 py-0.5">↑↓</kbd>navigate</span>
+        <span class="flex items-center gap-1.5"><kbd class="border border-line bg-paper px-1.5 py-0.5">↵</kbd>open</span>
+      </span>
+      <span>Powered by Alpine Mar · {index.length} entries</span>
+    </footer>
+  </div>
+</div>
+
+<script define:vars={{ INDEX: index }}>
+  (() => {
+    const launcher = document.getElementById('cmdk-launcher');
+    const panel = document.getElementById('cmdk-panel');
+    const input = document.getElementById('cmdk-input');
+    const list = document.getElementById('cmdk-list');
+    if (!launcher || !panel || !input || !list) return;
+
+    // Reveal launcher after a short delay so it doesn't compete with hero
+    setTimeout(() => launcher.classList.remove('hidden'), 1200);
+
+    let activeIdx = 0;
+    let filtered = [...INDEX];
+
+    function score(item, q) {
+      if (!q) return 0;
+      const hay = (item.title + ' ' + (item.summary || '') + ' ' + (item.kind || '') + ' ' + (item.tag || '')).toLowerCase();
+      let s = 0;
+      const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+      for (const t of tokens) {
+        const idx = hay.indexOf(t);
+        if (idx < 0) return -1;
+        s += 100 - Math.min(idx, 99);
+        if (item.title.toLowerCase().startsWith(t)) s += 80;
+        if (item.title.toLowerCase().includes(' ' + t)) s += 40;
+      }
+      return s;
+    }
+
+    function render() {
+      list.innerHTML = filtered.length
+        ? filtered.slice(0, 30).map((item, i) => `
+            <a href="${item.href}" data-idx="${i}"
+               class="cmdk-row flex items-center gap-4 border-b border-line px-5 py-3.5 transition-colors ${i === activeIdx ? 'bg-navy-900 text-paper' : 'hover:bg-navy-50'}">
+              <span class="font-mono text-[0.6rem] uppercase tracking-[0.16em] ${i === activeIdx ? 'text-teal-300' : 'text-teal-700'}">${item.kind}</span>
+              <span class="flex-1 truncate">
+                <span class="block truncate text-sm ${i === activeIdx ? 'text-white' : 'text-navy-900'}">${item.title}</span>
+                ${item.summary ? `<span class="mt-0.5 block truncate text-[0.78rem] ${i === activeIdx ? 'text-navy-300' : 'text-navy-500'}">${item.summary}</span>` : ''}
+              </span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="${i === activeIdx ? 'text-teal-300' : 'text-navy-300'}"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          `).join('')
+        : `<div class="px-5 py-12 text-center text-navy-500">
+             <p class="text-sm">No results.</p>
+             <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">Try <span class="text-teal-700">"tax planning"</span> or <span class="text-teal-700">"runway"</span></p>
+           </div>`;
+    }
+
+    function search(q) {
+      if (!q.trim()) { filtered = [...INDEX]; activeIdx = 0; render(); return; }
+      const scored = INDEX.map((it) => ({ it, s: score(it, q) })).filter((x) => x.s > 0);
+      scored.sort((a, b) => b.s - a.s);
+      filtered = scored.map((x) => x.it);
+      activeIdx = 0;
+      render();
+    }
+
+    function open() {
+      panel.classList.remove('hidden');
+      panel.classList.add('flex');
+      input.focus();
+      input.select();
+    }
+    function close() {
+      panel.classList.add('hidden');
+      panel.classList.remove('flex');
+    }
+
+    launcher.addEventListener('click', open);
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        panel.classList.contains('hidden') ? open() : close();
+        return;
+      }
+      if (panel.classList.contains('hidden')) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIdx = Math.min(activeIdx + 1, Math.min(filtered.length, 30) - 1);
+        render();
+        document.querySelector('.cmdk-row.bg-navy-900')?.scrollIntoView({ block: 'nearest' });
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIdx = Math.max(activeIdx - 1, 0);
+        render();
+        document.querySelector('.cmdk-row.bg-navy-900')?.scrollIntoView({ block: 'nearest' });
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const href = filtered[activeIdx]?.href;
+        if (href) window.location.href = href;
+      }
+    });
+    panel.addEventListener('click', (e) => { if (e.target === panel) close(); });
+    input.addEventListener('input', (e) => search(e.target.value));
+
+    render();
+  })();
+</script>

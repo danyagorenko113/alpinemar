@@ -1,0 +1,232 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Ridge from '@/components/Ridge.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { allServices } from '@/data/taxonomy';
+
+type Group = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance';
+const groupMeta = [
+  { name: 'Tax',        icon: 'trending-up',  blurb: 'Year-round strategy, planning, and preparation.', tagline: 'Owe less, sleep better.', image: '/images/ind-high-net-worth.png' },
+  { name: 'Accounting', icon: 'calculator',   blurb: 'A full back office — books, close, and reporting.', tagline: 'A book you can read.', image: '/images/hero-team.jpg' },
+  { name: 'Advisory',   icon: 'repeat',       blurb: 'CFO-level guidance for the decisions that matter.', tagline: 'Decisions on better data.', image: '/images/manifesto-portrait.webp' },
+  { name: 'Compliance', icon: 'shield-check', blurb: 'Structure, filings, and payroll, handled.', tagline: 'No surprises from the IRS.', image: '/images/ind-construction.png' },
+] as const;
+
+// Build category groups from the full services collection (34 MDX), not the
+// 14-item curated `allServices` taxonomy. Each service supplies its `group`
+// via frontmatter (see scripts/assign-service-groups.mjs). Drop Spanish slugs
+// — they ship but live outside the EN hub navigation.
+const collection = await getCollection('services');
+const SPANISH = new Set(['creacion-de-empresas', 'servicios-contables', 'servicios-tributarios-en-florida']);
+const summaryMap = new Map(allServices.map((s) => [s.href, { image: s.image, summary: s.summary }]));
+
+const items = collection
+  .filter((s) => !SPANISH.has(s.id))
+  .map((s) => {
+    const meta = summaryMap.get(s.data.path);
+    return {
+      title: s.data.title,
+      href: s.data.path,
+      summary: s.data.summary,
+      image: meta?.image ?? '/images/hero-team.jpg',
+      group: s.data.group as Group | undefined,
+    };
+  })
+  .filter((s) => !!s.group);
+
+const byGroup = groupMeta.map((g) => ({
+  ...g,
+  items: items.filter((s) => s.group === g.name),
+}));
+const totalServices = items.length;
+---
+
+<BaseLayout
+  rawTitle="Our Services - List of Services We Offer | Alpine Mar"
+  description="Alpine Mar offers an extensive range of accounting, tax, and consulting services that are tailored to your individual business needs."
+>
+  <!-- ═══════════════ Hero ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-16 lg:pt-24">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-70"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[560px] w-[560px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      <div class="float-slower absolute -left-32 top-1/2 h-[420px] w-[420px] rounded-full bg-navy-300/20 blur-[150px]"></div>
+    </div>
+    <div class="pointer-events-none absolute -bottom-6 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block text-[12rem] leading-none lg:text-[18rem]">{totalServices}</span>
+    </div>
+    <Container width="xl" class="relative pb-20 lg:pb-28">
+      <div class="max-w-4xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Our services · {totalServices} in total</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-lg">
+          The solutions you need offered by <span class="italic text-teal-600">leading professionals</span> you want.
+        </h1>
+        <p class="mt-9 max-w-2xl text-xl leading-relaxed text-navy-700">
+          Explore our extensive range of services designed to be tailored to your specific needs.
+        </p>
+      </div>
+      <!-- Quick-jump strip -->
+      <div class="mt-14 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.14em] text-navy-500" data-stagger>
+        {byGroup.map((g, i) => (
+          <a href={`#${g.name.toLowerCase()}`} class="inline-flex items-center gap-2 transition-colors hover:text-teal-700">
+            <span class="text-teal-700">{String(i + 1).padStart(2, '0')}</span> {g.name}
+            <span class="text-navy-300">({g.items.length})</span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Category bento (scannable overview) ═══════════════ -->
+  <section class="border-t border-line bg-navy-50 py-20 lg:py-24">
+    <Container width="xl">
+      <div class="mb-12 max-w-2xl" data-reveal>
+        <Eyebrow tone="dark">Four pillars</Eyebrow>
+        <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Our practice, at a glance.</h2>
+      </div>
+
+      <div class="grid gap-px border border-line bg-line lg:grid-cols-12" data-stagger>
+        <!-- Big plate: Tax (largest category) -->
+        <a href={`#${byGroup[0].name.toLowerCase()}`} class="group relative flex flex-col bg-paper lg:col-span-7">
+          <div class="relative min-h-[260px] flex-1 overflow-hidden">
+            <img src={byGroup[0].image} alt={byGroup[0].name} loading="lazy" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/65 via-navy-950/10 to-transparent" aria-hidden="true"></div>
+            <div class="absolute left-5 top-5 flex items-center gap-3">
+              <span class="font-mono text-xs uppercase tracking-[0.18em] text-white/80">01</span>
+              <span class="block h-px w-8 bg-teal-400/70"></span>
+              <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-300">{byGroup[0].items.length} services</span>
+            </div>
+            <div class="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+              <p class="font-heading text-2xl italic tracking-[-0.01em] text-white">{byGroup[0].tagline}</p>
+              <span class="flex size-11 items-center justify-center border border-white/30 text-white transition-all duration-300 group-hover:border-teal-400 group-hover:bg-teal-500 group-hover:text-navy-950"><Icon name="arrow-right" class="h-5 w-5" /></span>
+            </div>
+          </div>
+          <div class="p-8 lg:p-10">
+            <div class="flex items-center gap-3">
+              <span class="flex size-10 items-center justify-center bg-teal-500/10 text-teal-700"><Icon name={byGroup[0].icon} class="h-5 w-5" /></span>
+              <h3 class="text-3xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{byGroup[0].name}</h3>
+            </div>
+            <p class="mt-4 max-w-md text-base leading-relaxed text-navy-600">{byGroup[0].blurb}</p>
+          </div>
+        </a>
+
+        <!-- Right stack: 3 remaining categories -->
+        <div class="flex flex-col gap-px bg-line lg:col-span-5">
+          {byGroup.slice(1).map((g, k) => (
+            <a href={`#${g.name.toLowerCase()}`} class="group flex flex-1 items-stretch bg-paper">
+              <div class="relative w-2/5 shrink-0 overflow-hidden">
+                <img src={g.image} alt={g.name} loading="lazy" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <span class="absolute left-4 top-4 font-mono text-xs uppercase tracking-[0.16em] text-white/80">{String(k + 2).padStart(2, '0')}</span>
+              </div>
+              <div class="flex flex-1 flex-col justify-center p-6 lg:p-7">
+                <div class="flex items-center gap-2.5">
+                  <span class="flex size-8 items-center justify-center bg-teal-500/10 text-teal-700"><Icon name={g.icon} class="h-4 w-4" /></span>
+                  <h3 class="text-xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{g.name}</h3>
+                </div>
+                <p class="mt-2 line-clamp-2 text-[0.9rem] leading-relaxed text-navy-600">{g.blurb}</p>
+                <span class="mt-3 inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-teal-700">{g.items.length} services <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Grouped service index (with hover preview) ═══════════════ -->
+  <section class="border-t border-line bg-paper pb-28 lg:pb-36">
+    <Container width="xl">
+      <div id="svc-list">
+        {byGroup.map((g, gi) => (
+          <div id={g.name.toLowerCase()} class="scroll-mt-28 pt-20 lg:pt-24">
+            <div class="relative grid items-end gap-6 border-b border-navy-900 pb-5 lg:grid-cols-12" data-reveal>
+              <span class="pointer-events-none absolute -top-8 right-0 select-none font-heading text-7xl font-semibold text-navy-100 lg:text-[8rem]" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+              <div class="lg:col-span-2 flex items-center gap-3">
+                <span class="flex size-12 items-center justify-center border border-teal-500 text-teal-700"><Icon name={g.icon} class="h-5 w-5" /></span>
+                <span class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-teal-700">{String(gi + 1).padStart(2, '0')} · {g.name}</span>
+              </div>
+              <div class="lg:col-span-7">
+                <h2 class="font-heading text-3xl italic tracking-[-0.01em] text-navy-900 sm:text-4xl">{g.tagline}</h2>
+                <p class="mt-3 max-w-xl text-base leading-relaxed text-navy-600">{g.blurb}</p>
+              </div>
+              <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400 lg:col-span-3 lg:text-right">{g.items.length} services</span>
+            </div>
+            <div data-stagger>
+              {g.items.map((s, i) => (
+                <a href={s.href} data-svc-img={s.image} class="group grid grid-cols-12 items-center gap-x-6 gap-y-2 border-b border-line py-9 transition-colors duration-300 hover:bg-white">
+                  <span class="col-span-2 font-mono text-xs uppercase tracking-[0.12em] text-navy-300 sm:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 class="col-span-10 text-[1.75rem] tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700 sm:col-span-5 lg:text-[2rem]">{s.title}</h3>
+                  <p class="col-span-12 max-w-prose text-base leading-relaxed text-navy-700 sm:col-span-5">{s.summary}</p>
+                  <span class="col-span-12 flex sm:col-span-1 sm:justify-end" aria-hidden="true">
+                    <span class="flex size-12 items-center justify-center border border-line text-navy-400 transition-all duration-300 group-hover:border-teal-500 group-hover:bg-teal-500 group-hover:text-navy-950">
+                      <Icon name="arrow-right" class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+
+    <div id="svc-preview" class="pointer-events-none fixed left-0 top-0 z-40 hidden w-[clamp(240px,22vw,320px)] opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform lg:block" aria-hidden="true">
+      <div class="relative overflow-hidden border border-navy-900/10 shadow-[0_24px_70px_rgba(10,10,28,0.28)]">
+        <img id="svc-preview-img" src="" alt="" class="aspect-[4/3] w-full object-cover" />
+        <span class="absolute bottom-0 left-0 flex items-center gap-2 bg-teal-500 px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-navy-950">View service →</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ Closing band ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-navy-50 pt-24 pb-28 lg:pt-32 lg:pb-36">
+    <Ridge tone="teal" class="absolute left-0 top-0 h-16 w-full opacity-30" />
+    <Container width="wide" class="relative grid items-center gap-10 lg:grid-cols-12" data-reveal>
+      <div class="lg:col-span-8">
+        <Eyebrow tone="dark">Tailored, not templated</Eyebrow>
+        <h2 class="mt-6 text-5xl italic tracking-[-0.02em] text-navy-900 sm:text-6xl lg:text-7xl">One size does not fit all.</h2>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
+          Every engagement starts with your goals. Tell us where you’re headed and we’ll assemble
+          the right mix of tax, accounting, advisory, and compliance around them.
+        </p>
+      </div>
+      <div class="lg:col-span-4 lg:justify-self-end">
+        <a href="/contact/" class="group inline-flex items-center gap-3 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
+          Request Consultation
+          <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection />
+
+  <script>
+    const list = document.getElementById('svc-list');
+    const preview = document.getElementById('svc-preview');
+    const pimg = document.getElementById('svc-preview-img') as HTMLImageElement | null;
+    const fine = window.matchMedia('(min-width: 1024px) and (hover: hover)').matches;
+    if (list && preview && pimg && fine) {
+      const move = (e: MouseEvent) => {
+        const w = preview.offsetWidth || 300;
+        const x = Math.min(e.clientX + 28, window.innerWidth - w - 16);
+        const y = Math.min(Math.max(e.clientY - preview.offsetHeight / 2, 16), window.innerHeight - preview.offsetHeight - 16);
+        preview.style.transform = `translate(${x}px, ${y}px)`;
+      };
+      list.querySelectorAll<HTMLElement>('[data-svc-img]').forEach((row) => {
+        row.addEventListener('mouseenter', () => {
+          const src = row.dataset.svcImg;
+          if (src && pimg.getAttribute('src') !== src) pimg.setAttribute('src', src);
+          preview.style.opacity = '1';
+        });
+      });
+      list.addEventListener('mousemove', move);
+      list.addEventListener('mouseleave', () => { preview.style.opacity = '0'; });
+    }
+  </script>
+</BaseLayout>

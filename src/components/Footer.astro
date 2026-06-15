@@ -1,0 +1,94 @@
+---
+import Container from './Container.astro';
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { companyMenu } from '@/data/navigation';
+import { site } from '@/data/site';
+
+const year = 2026;
+
+const footerServices = [
+  { name: 'Tax Planning', href: '/services/tax-planning-services/' },
+  { name: 'Outsourced Accounting', href: '/services/outsourced-accounting-services/' },
+  { name: 'Fractional CFO', href: '/services/fractional-cfo-services/' },
+  { name: 'Transaction Advisory', href: '/services/transaction-advisory-services/' },
+  { name: 'Audit & Attestation', href: '/services/audit-attestation-services/' },
+  { name: 'All services', href: '/services/' },
+];
+const footerIndustries = [
+  { name: 'High Net Worth', href: '/industries/high-net-worth-accounting-cpa/' },
+  { name: 'Healthcare', href: '/industries/healthcare-accounting-services/' },
+  { name: 'Real Estate', href: '/industries/real-estate-cpa-services/' },
+  { name: 'Crypto', href: '/industries/crypto-cpa-services/' },
+  { name: 'Startups', href: '/industries/startup-cpa-services/' },
+  { name: 'All industries', href: '/industries/' },
+];
+const socials = [
+  { label: 'LinkedIn', href: site.socials.linkedin },
+  { label: 'Facebook', href: site.socials.facebook },
+  { label: 'Instagram', href: site.socials.instagram },
+  { label: 'X', href: site.socials.twitter },
+];
+---
+
+<footer class="bg-navy-950 text-navy-200">
+  <Container width="wide" class="py-16 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
+      <!-- brand -->
+      <div class="max-w-xs">
+        <Logo variant="light" />
+        <p class="mt-5 text-sm leading-relaxed text-navy-300">
+          The modern day accounting firm — blending industry experience, technology, and hands-on
+          care for businesses and individuals across Florida.
+        </p>
+        <div class="mt-6 flex gap-2">
+          {socials.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} class="flex size-9 items-center justify-center border border-white/15 font-mono text-[0.6rem] uppercase tracking-wide text-navy-200 transition-colors hover:border-teal-400 hover:text-teal-400">{s.label[0]}</a>
+          ))}
+        </div>
+      </div>
+
+      <!-- services -->
+      <nav aria-label="Footer services">
+        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Services</h2>
+        <ul class="mt-5 space-y-2.5 text-sm">
+          {footerServices.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <!-- industries -->
+      <nav aria-label="Footer industries">
+        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Industries</h2>
+        <ul class="mt-5 space-y-2.5 text-sm">
+          {footerIndustries.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <!-- company -->
+      <nav aria-label="Footer company">
+        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Company</h2>
+        <ul class="mt-5 space-y-2.5 text-sm">
+          {companyMenu.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <!-- contact -->
+      <div>
+        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Contact</h2>
+        <ul class="mt-5 space-y-2.5 text-sm">
+          <li><a href={`tel:${site.phoneHref}`} class="text-navy-300 transition-colors hover:text-teal-400">{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`} class="text-navy-300 transition-colors hover:text-teal-400">{site.email}</a></li>
+          <li class="pt-1 leading-relaxed text-navy-300">{site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-navy-400">© {year} {site.legalName}. All rights reserved.</p>
+      <div class="flex flex-wrap items-center gap-5">
+        <span class="font-mono uppercase tracking-[0.14em] text-navy-400">Members · {site.memberships.join(' · ')}</span>
+        <a href="/privacy-policy/" class="text-navy-300 transition-colors hover:text-teal-400">Privacy Policy</a>
+      </div>
+    </div>
+  </Container>
+</footer>

@@ -1,0 +1,60 @@
+---
+// Layered alpine ridge silhouette — decorative depth for dark or light sections.
+// Each <path> reacts to mouse / scroll parallax via data-parallax-depth (0..1).
+interface Props {
+  class?: string;
+  tone?: 'dark' | 'light';
+  /** Set false to disable parallax for the instance (e.g. inside CTA). */
+  parallax?: boolean;
+}
+const { class: className = '', tone = 'dark', parallax = true } = Astro.props;
+const palette = tone === 'light'
+  ? { far: '#e6e6ec', mid: '#dadada', near: '#c2c2d2', accent: '#33bbdc', accentOpacity: 0.5, midOpacity: 0.85 }
+  : { far: '#1b1b3d', mid: '#26264d', near: '#0a0a1c', accent: '#33bbdc', accentOpacity: 0.4, midOpacity: 0.9 };
+---
+<svg
+  class={['am-mountains', className].filter(Boolean).join(' ')}
+  viewBox="0 0 1440 320"
+  fill="none"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  data-parallax={parallax ? '1' : '0'}
+>
+  <path d="M0 320V210l180-110 150 90 130-70 180 130 160-100 200 140 150-80 140 70v150z" fill={palette.far} data-parallax-depth="0.25" />
+  <path d="M0 320V250l210-120 170 110 160-80 190 120 180-110 180 130 140-70v60z" fill={palette.mid} opacity={palette.midOpacity} data-parallax-depth="0.5" />
+  <path d="M0 320V285l260-90 200 70 220-60 230 80 270-70v100z" fill={palette.near} data-parallax-depth="0.9" />
+  <path d="M180 100l150 90 130-70" stroke={palette.accent} stroke-width="2" opacity={palette.accentOpacity} fill="none" data-parallax-depth="0.4" />
+</svg>
+
+<script>
+  // Mouse parallax for mountain layers — once globally, runs after View Transition swaps.
+  function bind() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if ((window as any).__mountainParallaxBound) return;
+    (window as any).__mountainParallaxBound = true;
+
+    let mx = 0.5, my = 0.5;
+    let tx = 0.5, ty = 0.5;
+    window.addEventListener('mousemove', (e) => {
+      tx = e.clientX / window.innerWidth;
+      ty = e.clientY / window.innerHeight;
+    }, { passive: true });
+
+    function frame() {
+      mx += (tx - mx) * 0.08;
+      my += (ty - my) * 0.08;
+      const dx = (mx - 0.5);  // -0.5 .. 0.5
+      const dy = (my - 0.5);
+      document.querySelectorAll<SVGSVGElement>('svg.am-mountains[data-parallax="1"]').forEach((svg) => {
+        svg.querySelectorAll<SVGElement>('[data-parallax-depth]').forEach((el) => {
+          const d = parseFloat(el.dataset.parallaxDepth || '0');
+          el.style.transform = `translate(${-dx * 20 * d}px, ${-dy * 8 * d}px)`;
+        });
+      });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  bind();
+  document.addEventListener('astro:after-swap', bind);
+</script>

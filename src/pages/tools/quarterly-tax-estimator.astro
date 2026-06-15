@@ -1,0 +1,181 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+---
+
+<BaseLayout
+  rawTitle="Quarterly Estimated Tax Calculator | Alpine Mar"
+  description="Free quarterly tax estimator for self-employed, S-Corps, and consultants. Get your quarterly payment + all four IRS due dates."
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-70" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">03</span>
+    </div>
+    <Container width="xl" class="relative pb-12 lg:pb-16">
+      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
+        <a href="/tools/" class="text-navy-500 hover:text-navy-900">Tools</a><span aria-hidden="true">/</span><span class="text-navy-700">Quarterly Tax Estimator</span>
+      </nav>
+      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Tool · 45 seconds · no signup</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">Don't get caught at <span class="italic text-teal-600">April 15.</span></h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">
+          The IRS expects 4 payments per year. Miss one and you owe penalties even if you pay in full
+          by April 15. We'll estimate each one — and remind you when they're due.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-t border-line bg-paper py-12 lg:py-20">
+    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+      <form id="q-form" class="lg:col-span-7 space-y-8" data-reveal>
+        <fieldset class="border-t border-navy-900 pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 03</span>
+            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Projected annual taxable income.</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">Net of business expenses. Skip W-2 withholding if any.</p>
+          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
+            <span class="font-heading text-3xl text-navy-300">$</span>
+            <input id="q-income" type="number" inputmode="numeric" min="0" step="1000" value="180000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
+            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / year</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="border-t border-line pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 03</span>
+            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Entity & income source.</span>
+          </legend>
+          <div class="mt-6 grid gap-2 sm:grid-cols-2">
+            {[
+              { v: 'sole',  label: 'Sole prop / 1099', sub: 'Schedule C · SE tax applies' },
+              { v: 'scorp', label: 'S-Corp owner-employee', sub: 'Distributions · no SE' },
+              { v: 'partner', label: 'Partnership K-1', sub: 'Guaranteed payments + SE' },
+              { v: 'mixed', label: 'W-2 + side income', sub: 'Need top-up payments only' },
+            ].map((opt) => (
+              <label class="group flex cursor-pointer items-start gap-3 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
+                <input type="radio" name="q-entity" value={opt.v} class="peer mt-1 accent-teal-500" checked={opt.v === 'sole'} />
+                <span>
+                  <span class="block text-sm font-medium leading-tight text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
+                  <span class="mt-1 block font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">{opt.sub}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="border-t border-line pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q3 / 03</span>
+            <span class="font-heading text-xl text-navy-900 sm:text-2xl">State tax rate.</span>
+          </legend>
+          <div class="mt-6 grid gap-2 sm:grid-cols-3">
+            {[
+              { v: 0,  label: 'FL · TX · No-tax' },
+              { v: 5,  label: 'Mid (5%)' },
+              { v: 10, label: 'NY · CA · NJ (10%+)' },
+            ].map((opt) => (
+              <label class="group flex cursor-pointer items-center gap-3 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
+                <input type="radio" name="q-state" value={opt.v} class="peer accent-teal-500" checked={opt.v === 0} />
+                <span class="text-sm font-medium text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </form>
+
+      <aside class="lg:col-span-5" data-reveal data-from="right">
+        <div class="sticky top-28 border border-navy-900 bg-navy-900 p-7 text-paper lg:p-9">
+          <div class="flex items-center gap-3">
+            <span class="block h-px w-8 bg-teal-400"></span>
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">Each quarter you owe</p>
+          </div>
+          <p class="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Approximate per-quarter payment</p>
+          <p class="mt-2 font-heading text-6xl font-semibold tracking-[-0.02em] text-white"><span id="q-result">—</span></p>
+          <p class="mt-3 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Annual total <span id="q-annual" class="text-teal-300">—</span></p>
+
+          <div class="mt-8 border-l border-t border-white/10">
+            <ul id="q-dates" class="grid grid-cols-2 gap-px">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <p class="mt-6 text-sm leading-relaxed text-navy-200">
+            ↳ If you owe more than <span class="text-white font-medium">$1,000</span> at year-end without estimated payments, the IRS levies an underpayment penalty — currently around <span class="text-white font-medium">8% APR</span>.
+          </p>
+
+          <a href="/contact/?service=Tax%20Planning" class="group mt-7 inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+            Set this up properly <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <CtaSection variant="service" context="Tax Planning" />
+
+  <script>
+    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
+    const income = $('#q-income') as HTMLInputElement | null;
+    const result = $('#q-result'), annual = $('#q-annual'), dates = $('#q-dates');
+
+    // IRS Form 1040-ES deadlines — adjust year as needed
+    const DUE_DATES = [
+      { label: 'Q1', date: 'Apr 15' },
+      { label: 'Q2', date: 'Jun 16' },
+      { label: 'Q3', date: 'Sep 15' },
+      { label: 'Q4', date: 'Jan 15' },
+    ];
+
+    function calc() {
+      const inc = Math.max(0, +(income?.value || 0));
+      const entity = (document.querySelector('input[name="q-entity"]:checked') as HTMLInputElement)?.value || 'sole';
+      const stateRate = +(document.querySelector('input[name="q-state"]:checked') as HTMLInputElement)?.value || 0;
+
+      let fed = 18;
+      if (inc < 50_000)        fed = 12;
+      else if (inc < 110_000)  fed = 18;
+      else if (inc < 200_000)  fed = 22;
+      else if (inc < 400_000)  fed = 28;
+      else if (inc < 750_000)  fed = 32;
+      else                     fed = 36;
+
+      let se = 0;
+      if (entity === 'sole' || entity === 'partner') se = 12; // approx SE tax effective on full income
+      if (entity === 'scorp')                        se = 0;
+      if (entity === 'mixed')                        se = 6; // partial on side-income only
+
+      const totalRate = fed + stateRate + se;
+      const annualTax = Math.round((inc * totalRate) / 100);
+      const perQ      = Math.round(annualTax / 4);
+
+      if (result) result.textContent = '$' + perQ.toLocaleString();
+      if (annual) annual.textContent = '$' + annualTax.toLocaleString() + ' / year';
+      const now = new Date();
+      const year = now.getFullYear();
+      const nextYear = year + 1;
+      if (dates) {
+        dates.innerHTML = DUE_DATES.map((d, i) => {
+          const labelYear = d.label === 'Q4' ? nextYear : year;
+          return `<li class="border-b border-r border-white/10 p-3">
+            <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">${d.label} · Due</p>
+            <p class="mt-1 font-heading text-base text-white">${d.date}, ${labelYear}</p>
+          </li>`;
+        }).join('');
+      }
+    }
+
+    document.querySelectorAll('#q-form input').forEach((el) => el.addEventListener('input', calc));
+    calc();
+  </script>
+</BaseLayout>

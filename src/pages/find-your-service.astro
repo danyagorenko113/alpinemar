@@ -1,0 +1,268 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+---
+
+<BaseLayout
+  rawTitle="Find Your Alpine Mar Service · 4-question quiz"
+  description="Not sure which Alpine Mar service fits? 4 quick questions and we'll recommend a 1–3 service bundle. Free, no signup."
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-44 w-full opacity-80" />
+    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">04</span>
+    </div>
+
+    <Container width="xl" class="relative pb-20 lg:pb-24">
+      <div class="max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Service navigator · 4 questions</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-lg">
+          Not sure where to <span class="italic text-teal-600">start?</span>
+        </h1>
+        <p class="mt-7 max-w-2xl text-xl leading-relaxed text-navy-700">
+          Four quick questions. We'll point you at the 1–3 Alpine Mar services that fit your
+          situation — then you decide whether to book a 30-min call to confirm.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Quiz ═══════════════ -->
+  <section class="border-t border-line bg-paper py-12 lg:py-20">
+    <Container width="xl">
+      <!-- Progress -->
+      <div class="mx-auto max-w-3xl" data-reveal>
+        <div class="mb-3 flex items-center justify-between font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
+          <span><span id="q-step">1</span> / 4</span>
+          <span id="q-current-label" class="text-teal-700">Tell us about you</span>
+        </div>
+        <div class="h-1 w-full bg-line">
+          <div id="q-bar" class="h-full bg-teal-500 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]" style="width: 25%;"></div>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <div class="mx-auto mt-12 max-w-3xl" data-reveal>
+        <!-- Q1 -->
+        <div data-step="1" class="quiz-step space-y-7">
+          <h2 class="font-heading text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">What best describes you?</h2>
+          <div class="grid gap-2 sm:grid-cols-2">
+            {[
+              { v: 'startup',   label: 'Startup founder', sub: 'Pre-revenue to Series B' },
+              { v: 'sb',        label: 'Small business owner', sub: '<$5M revenue · 1–25 staff' },
+              { v: 'midsize',   label: 'Mid-market operator', sub: '$5M–$50M revenue' },
+              { v: 'hnw',       label: 'High-net-worth individual', sub: '$5M+ net worth · multi-vehicle' },
+              { v: 'investor',  label: 'Real estate investor', sub: 'Rental · syndication · 1031s' },
+              { v: 'self',      label: 'Self-employed / 1099', sub: 'Consultant · creator · agent' },
+            ].map((opt) => (
+              <button type="button" data-answer="role" data-value={opt.v} class="quiz-opt group flex items-start gap-3 border border-line bg-paper p-5 text-left transition-colors hover:border-navy-900 hover:bg-white">
+                <span class="mt-1 flex size-5 shrink-0 items-center justify-center border border-line transition-colors group-hover:border-navy-900"></span>
+                <span>
+                  <span class="block text-base font-medium leading-tight text-navy-900">{opt.label}</span>
+                  <span class="mt-1 block font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">{opt.sub}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div data-step="2" class="quiz-step hidden space-y-7">
+          <h2 class="font-heading text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">What's the most painful problem right now?</h2>
+          <div class="grid gap-2 sm:grid-cols-2">
+            {[
+              { v: 'taxes',    label: 'Tax bill is too high',         sub: 'Surprise quarterly · effective rate creeping' },
+              { v: 'books',    label: "Books aren't reliable",        sub: 'Closing late · catch-up needed' },
+              { v: 'cashflow', label: "Cashflow / runway concerns",   sub: 'Hard to predict the next 6 months' },
+              { v: 'audit',    label: "Audit / financial review needed", sub: 'Investor · lender · grant' },
+              { v: 'transaction', label: 'M&A or fundraise prep',     sub: 'Buying · selling · raising' },
+              { v: 'entity',   label: 'Wrong entity structure',       sub: 'Hit ceiling on current LLC / S-Corp' },
+            ].map((opt) => (
+              <button type="button" data-answer="pain" data-value={opt.v} class="quiz-opt group flex items-start gap-3 border border-line bg-paper p-5 text-left transition-colors hover:border-navy-900 hover:bg-white">
+                <span class="mt-1 flex size-5 shrink-0 items-center justify-center border border-line transition-colors group-hover:border-navy-900"></span>
+                <span>
+                  <span class="block text-base font-medium leading-tight text-navy-900">{opt.label}</span>
+                  <span class="mt-1 block font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">{opt.sub}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div data-step="3" class="quiz-step hidden space-y-7">
+          <h2 class="font-heading text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">What's the urgency?</h2>
+          <div class="grid gap-2 sm:grid-cols-3">
+            {[
+              { v: 'now',    label: 'Now', sub: 'Need to start this month' },
+              { v: 'soon',   label: 'Soon', sub: '1–3 months out' },
+              { v: 'plan',   label: 'Planning', sub: 'Building 12-month roadmap' },
+            ].map((opt) => (
+              <button type="button" data-answer="urgency" data-value={opt.v} class="quiz-opt group flex flex-col items-start gap-1 border border-line bg-paper p-5 text-left transition-colors hover:border-navy-900 hover:bg-white">
+                <span class="text-base font-medium text-navy-900">{opt.label}</span>
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">{opt.sub}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div data-step="4" class="quiz-step hidden space-y-7">
+          <h2 class="font-heading text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Type of engagement?</h2>
+          <div class="grid gap-2 sm:grid-cols-3">
+            {[
+              { v: 'project',  label: 'One-time project', sub: 'Discrete deliverable' },
+              { v: 'ongoing',  label: 'Ongoing monthly',  sub: 'Long-term partner' },
+              { v: 'open',     label: 'Open to either',   sub: "Whatever fits best" },
+            ].map((opt) => (
+              <button type="button" data-answer="engagement" data-value={opt.v} class="quiz-opt group flex flex-col items-start gap-1 border border-line bg-paper p-5 text-left transition-colors hover:border-navy-900 hover:bg-white">
+                <span class="text-base font-medium text-navy-900">{opt.label}</span>
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">{opt.sub}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div data-step="result" class="quiz-step hidden space-y-7">
+          <div class="flex items-center gap-3">
+            <span class="block h-px w-10 bg-teal-500"></span>
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Your recommended stack</p>
+          </div>
+          <h2 class="font-heading text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl">
+            Start with these <span class="italic text-teal-600">three.</span>
+          </h2>
+
+          <div id="result-list" class="mt-8 grid gap-px border-l border-t border-line bg-line sm:grid-cols-3">
+            <!-- populated by JS -->
+          </div>
+
+          <p id="result-blurb" class="mt-8 max-w-2xl text-lg leading-relaxed text-navy-700">—</p>
+
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a id="result-cta" href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+              Book a 30-min consultation <Icon name="arrow-right" class="h-4 w-4" />
+            </a>
+            <button type="button" id="quiz-reset" class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
+              Start over <Icon name="repeat" class="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="default" eyebrow="Skip the quiz" headline="Just <span class='italic text-teal-400'>talk</span> to us." body="A 30-minute call is faster than the quiz if you'd rather just describe the situation." />
+
+  <script>
+    type Answers = { role?: string; pain?: string; urgency?: string; engagement?: string };
+    const answers: Answers = {};
+    const steps = ['1', '2', '3', '4', 'result'];
+    let idx = 0;
+
+    const stepLabels = ['Tell us about you', 'What hurts', 'When', 'How', 'Your stack'];
+    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
+    const stepEl = $('#q-step'), barEl = $('#q-bar'), currentLabel = $('#q-current-label');
+
+    function render() {
+      document.querySelectorAll<HTMLElement>('.quiz-step').forEach((el) => {
+        el.classList.toggle('hidden', el.dataset.step !== steps[idx]);
+      });
+      if (stepEl) stepEl.textContent = String(Math.min(idx + 1, 4));
+      if (barEl) barEl.style.width = `${((idx + 1) / steps.length) * 100}%`;
+      if (currentLabel) currentLabel.textContent = stepLabels[idx];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function recommend() {
+      const ROLE = answers.role!, PAIN = answers.pain!;
+      type Rec = { title: string; href: string; why: string };
+      const all: Rec[] = [];
+
+      // Pain-driven primary (always weighted top)
+      const PRIMARY: Record<string, Rec> = {
+        taxes:     { title: 'Tax Planning',      href: '/services/tax-planning-services/',    why: 'Year-round strategy to drop your effective rate, before April panics.' },
+        books:     { title: 'Outsourced Accounting', href: '/services/outsourced-accounting-services/', why: 'Senior team owns the close, the books, and the reporting cadence.' },
+        cashflow:  { title: 'Fractional CFO',    href: '/services/fractional-cfo-services/',  why: 'Partner-level financial leadership without the full-time hire.' },
+        audit:     { title: 'Audit & Attestation', href: '/services/audit-attestation-services/', why: 'Financial statement audits, reviews, and EBP audits that hold up.' },
+        transaction: { title: 'Transaction Advisory', href: '/services/transaction-advisory-services/', why: 'Buy- and sell-side support across the deal lifecycle.' },
+        entity:    { title: 'Entity Structuring', href: '/services/business-structure-consulting/', why: 'Pick the right vehicle now — change costs more later.' },
+      };
+      all.push(PRIMARY[PAIN]);
+
+      // Role-driven secondary
+      const SECONDARY: Record<string, Rec> = {
+        startup:    { title: 'Financial Modeling', href: '/services/financial-modeling-services/', why: 'A board-ready model investors actually trust.' },
+        sb:         { title: 'Outsourced Bookkeeping', href: '/services/outsourced-bookkeeping-services/', why: 'Pristine books that hold up as you scale.' },
+        midsize:    { title: 'Fractional CFO', href: '/services/fractional-cfo-services/', why: 'Strategic finance leadership at a fraction of full-time cost.' },
+        hnw:        { title: 'Private Client Services', href: '/services/private-client-services/', why: 'Integrated tax, estate, and wealth planning for complex situations.' },
+        investor:   { title: 'Real Estate CPA Services', href: '/industries/real-estate-cpa-services/', why: 'Depreciation, 1031s, cost segregation — done right.' },
+        self:       { title: 'Tax Strategy', href: '/services/tax-advisory-and-compliance/', why: 'Long-term tax positioning for solo earners and consultants.' },
+      };
+      if (PRIMARY[PAIN].title !== SECONDARY[ROLE].title) all.push(SECONDARY[ROLE]);
+
+      // Tertiary — universal, only added if we have less than 3
+      if (all.length < 3) {
+        all.push({ title: 'BOI Reporting',    href: '/services/boi-reporting-services/',    why: 'Federal beneficial-ownership compliance, handled.' });
+      }
+
+      const list = $('#result-list');
+      if (list) {
+        list.innerHTML = all.map((r, i) => `
+          <a href="${r.href}" class="group flex flex-col gap-4 border-b border-r border-line bg-paper p-6 transition-colors duration-300 hover:bg-white">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">${String(i + 1).padStart(2, '0')} · Recommended</span>
+            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">${r.title}</span>
+            <span class="flex-1 text-[0.95rem] leading-relaxed text-navy-600">${r.why}</span>
+            <span class="mt-auto inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-teal-700">
+              Explore →
+            </span>
+          </a>
+        `).join('');
+      }
+
+      const blurb = $('#result-blurb');
+      if (blurb) {
+        const urg = answers.urgency === 'now' ? 'You said this is urgent.' :
+                    answers.urgency === 'soon' ? 'You said this is 1–3 months out.' :
+                    'You said you are in planning mode.';
+        blurb.textContent = `${urg} A 30-minute consultation will confirm scope, timing, and fee — with the partner who would run the engagement.`;
+      }
+
+      // Pre-fill the contact service in the CTA query string
+      const cta = $('#result-cta') as HTMLAnchorElement | null;
+      if (cta) cta.href = `/contact/?service=${encodeURIComponent(all[0].title)}`;
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((b) => {
+      b.addEventListener('click', () => {
+        const k = b.dataset.answer as keyof Answers;
+        answers[k] = b.dataset.value!;
+        if (idx < steps.indexOf('result') - 1) {
+          idx++;
+        } else if (steps[idx + 1] === 'result') {
+          idx = steps.indexOf('result');
+          recommend();
+        } else {
+          idx++;
+        }
+        render();
+      });
+    });
+
+    $('#quiz-reset')?.addEventListener('click', () => {
+      idx = 0;
+      Object.keys(answers).forEach((k) => delete (answers as any)[k]);
+      render();
+    });
+
+    render();
+  </script>
+</BaseLayout>

@@ -1,0 +1,76 @@
+# Alpine Mar
+
+> Alpine Mar CPAs & Advisors is a Fort Lauderdale, Florida CPA firm providing tax
+> planning, outsourced accounting, fractional CFO, transaction advisory, and audit
+> & attestation services to businesses and high-net-worth individuals. Members of
+> AICPA and FICPA. Phone (954) 743-0147 · hello@alpinemar.com.
+
+## Services
+
+### Tax
+- [Tax Planning](https://alpinemar.com/services/tax-planning-services/)
+- [Tax Strategy](https://alpinemar.com/services/tax-advisory-and-compliance/)
+- [Individual Tax](https://alpinemar.com/services/individual-tax-services/)
+- [Partnership Tax](https://alpinemar.com/services/partnership-tax-services/)
+- [Corporate Tax](https://alpinemar.com/services/corporate-tax-services/)
+- [S Corps](https://alpinemar.com/services/s-corp-cpa-services/)
+- [Estate & Trust Tax Planning](https://alpinemar.com/services/estate-trust-tax-planning/)
+- [Private Client Services](https://alpinemar.com/services/private-client-services/)
+- [Small Business Tax](https://alpinemar.com/services/small-business-tax-services/)
+- [International Tax](https://alpinemar.com/services/international-tax-services/)
+- [Non-Profit Tax](https://alpinemar.com/services/non-profit-tax-services/)
+- [Multistate Tax](https://alpinemar.com/services/multistate-tax-services/)
+- [Business Tax](https://alpinemar.com/services/business-tax/)
+
+### Accounting
+- [Outsourced Accounting](https://alpinemar.com/services/outsourced-accounting-services/)
+- [Outsourced Bookkeeping](https://alpinemar.com/services/outsourced-bookkeeping-services/)
+- [Financial Statement Preparation](https://alpinemar.com/services/financial-statement-preparation-services/)
+- [Accounting Software Implementation](https://alpinemar.com/services/accounting-software-implementation/)
+- [Business Accounting](https://alpinemar.com/services/business-accounting/)
+- [Trust Accounting](https://alpinemar.com/services/trust-accounting-cpa/)
+
+### Advisory
+- [Fractional CFO](https://alpinemar.com/services/fractional-cfo-services/)
+- [Transaction Advisory](https://alpinemar.com/services/transaction-advisory-services/)
+- [Financial Modeling](https://alpinemar.com/services/financial-modeling-services/)
+- [Financial Advisory](https://alpinemar.com/services/financial-advisory/)
+
+### Compliance
+- [Entity Structuring](https://alpinemar.com/services/business-structure-consulting/)
+- [BOI Reporting](https://alpinemar.com/services/boi-reporting-services/)
+- [Payroll Compliance](https://alpinemar.com/services/payroll-compliance-services/)
+- [Financial Compliance](https://alpinemar.com/services/financial-compliance/)
+
+### Audit & Attestation
+- [Audit & Attestation Services](https://alpinemar.com/services/audit-attestation-services/)
+- [Financial Statement Audits](https://alpinemar.com/services/audit-attestation-services/financial-statement-audits/)
+- [Reviews & Compilations](https://alpinemar.com/services/audit-attestation-services/reviews-compilations/)
+- [Employee Benefit Plan Audits](https://alpinemar.com/services/audit-attestation-services/employee-benefit-plan-audits/)
+
+### Hub
+- [All services](https://alpinemar.com/services/)
+
+## Industries
+- [Construction CPA Services](https://alpinemar.com/industries/construction-cpa-services/)
+- [Family Office Accounting Services](https://alpinemar.com/industries/family-office-accounting-services/)
+- [Healthcare Accounting Services](https://alpinemar.com/industries/healthcare-accounting-services/)
+- [High Net Worth Accounting CPA](https://alpinemar.com/industries/high-net-worth-accounting-cpa/)
+- [Law Firm Accounting Services](https://alpinemar.com/industries/law-firm-accounting-services/)
+- [Marketing Agency Accounting Services](https://alpinemar.com/industries/marketing-agency-accounting-services/)
+- [Real Estate CPA Services](https://alpinemar.com/industries/real-estate-cpa-services/)
+- [Sports & Athletes Accounting Services](https://alpinemar.com/industries/sports-accounting-services/)
+- [Crypto CPA Services](https://alpinemar.com/industries/crypto-cpa-services/)
+- [SaaS Accounting Services](https://alpinemar.com/industries/saas-accounting-services/)
+- [Startup CPA Services](https://alpinemar.com/industries/startup-cpa-services/)
+- [All industries](https://alpinemar.com/industries/)
+
+## Insights
+- [Blog & news](https://alpinemar.com/blog/)
+- [Full content corpus](https://alpinemar.com/llms-full.txt)
+
+## Company
+- [About Us](https://alpinemar.com/about-us/)
+- [Contact](https://alpinemar.com/contact/)
+- [In the Media](https://alpinemar.com/in-the-media/)
+- [Privacy Policy](https://alpinemar.com/privacy-policy/)

@@ -1,0 +1,146 @@
+---
+// Floating "Ask a CPA" pillow — async alternative to consultation form.
+// Bottom-right chip that expands into a 2-field modal (question + email).
+// Stays dismissed for the session via sessionStorage.
+import Icon from './Icon.astro';
+---
+
+<!-- Pillow -->
+<button
+  type="button"
+  id="ask-cpa-launcher"
+  class="group fixed bottom-6 right-6 z-50 hidden items-center gap-3 border border-navy-900 bg-navy-900 px-5 py-3 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-paper shadow-[0_12px_40px_rgba(10,10,28,0.25)] transition-all duration-200 hover:bg-navy-800 hover:shadow-[0_18px_50px_rgba(10,10,28,0.35)] lg:flex"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="ask-cpa-panel"
+>
+  <span class="relative flex size-6 items-center justify-center bg-teal-500 text-navy-950">
+    <span class="absolute inset-0 animate-ping rounded-full bg-teal-400/40" aria-hidden="true"></span>
+    <Icon name="message-circle" class="relative h-3.5 w-3.5" />
+  </span>
+  Ask a CPA
+  <span class="hidden text-teal-300 normal-case tracking-normal sm:inline">· answer in 4hrs</span>
+</button>
+
+<!-- Compact mobile chip -->
+<button
+  type="button"
+  id="ask-cpa-launcher-mobile"
+  class="fixed bottom-5 right-5 z-50 flex size-14 items-center justify-center rounded-full border border-navy-900 bg-navy-900 text-paper shadow-[0_12px_40px_rgba(10,10,28,0.3)] lg:hidden"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="ask-cpa-panel"
+  aria-label="Ask a CPA"
+>
+  <Icon name="message-circle" class="h-5 w-5" />
+</button>
+
+<!-- Panel -->
+<div
+  id="ask-cpa-panel"
+  class="fixed inset-0 z-[70] hidden items-end justify-end bg-navy-950/40 backdrop-blur-sm transition-opacity duration-200 sm:items-end sm:justify-end"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="ask-cpa-title"
+>
+  <div class="grain relative w-full max-w-[420px] overflow-hidden border-l border-t border-white/10 bg-navy-900 text-paper shadow-[0_-12px_60px_rgba(10,10,28,0.4)] sm:m-6 sm:border">
+    <header class="relative flex items-start justify-between gap-4 border-b border-white/10 px-6 py-5">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="block h-px w-6 bg-teal-400"></span>
+          <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">Ask a CPA</p>
+        </div>
+        <h2 id="ask-cpa-title" class="mt-2 font-heading text-xl tracking-[-0.01em] text-white">Quick question. Real answer.</h2>
+        <p class="mt-2 text-[0.72rem] text-navy-300">Usually answered within 4 business hours · no sales follow-up.</p>
+      </div>
+      <button id="ask-cpa-close" type="button" class="-mt-1 inline-flex size-7 items-center justify-center text-navy-400 transition-colors hover:text-white" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
+    </header>
+
+    <form id="ask-cpa-form" class="space-y-5 px-6 py-6" novalidate>
+      <label class="block">
+        <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">Your question</span>
+        <textarea
+          required
+          name="question"
+          rows="4"
+          placeholder="E.g. We're switching from LLC to S-Corp mid-year — how do we handle payroll for the first 6 months?"
+          class="mt-2 w-full border border-white/15 bg-navy-950/60 px-3 py-2.5 text-sm leading-relaxed text-white placeholder:text-navy-400 focus:border-teal-500 focus:outline-none"
+        ></textarea>
+      </label>
+
+      <label class="block">
+        <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">Email · where to send the answer</span>
+        <input
+          required
+          type="email"
+          name="email"
+          placeholder="you@company.com"
+          class="mt-2 w-full border border-white/15 bg-navy-950/60 px-3 py-2.5 text-sm text-white placeholder:text-navy-400 focus:border-teal-500 focus:outline-none"
+        />
+      </label>
+
+      <button
+        type="submit"
+        class="group inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]"
+      >
+        Send to a CPA <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+      </button>
+      <p class="text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ We'll reply, not enrol you</p>
+    </form>
+
+    <div id="ask-cpa-success" class="hidden border-t border-teal-500/30 px-6 py-7 text-center">
+      <span class="inline-flex size-9 items-center justify-center bg-teal-500/15 text-teal-400">
+        <Icon name="check-circle" class="h-5 w-5" />
+      </span>
+      <p class="mt-4 font-heading text-lg tracking-[-0.01em] text-white">On it.</p>
+      <p class="mt-2 text-sm text-navy-300">You'll hear back within four business hours from one of our CPAs.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const launchers = document.querySelectorAll<HTMLButtonElement>('#ask-cpa-launcher, #ask-cpa-launcher-mobile');
+  const panel = document.getElementById('ask-cpa-panel') as HTMLDivElement | null;
+  const closeBtn = document.getElementById('ask-cpa-close') as HTMLButtonElement | null;
+  const form = document.getElementById('ask-cpa-form') as HTMLFormElement | null;
+  const success = document.getElementById('ask-cpa-success') as HTMLDivElement | null;
+
+  // Show desktop pillow after 6s (less intrusive) — unless dismissed this session
+  const sessionDismissed = sessionStorage.getItem('ask_cpa_session_dismissed') === '1';
+  if (!sessionDismissed) {
+    setTimeout(() => {
+      document.getElementById('ask-cpa-launcher')?.classList.remove('hidden');
+    }, 6000);
+  } else {
+    // Even when dismissed earlier, keep the mobile FAB visible.
+    document.getElementById('ask-cpa-launcher')?.classList.add('hidden');
+  }
+
+  const open = () => {
+    panel?.classList.remove('hidden');
+    panel?.classList.add('flex');
+    launchers.forEach((b) => b.setAttribute('aria-expanded', 'true'));
+    (document.querySelector('#ask-cpa-form textarea') as HTMLTextAreaElement | null)?.focus();
+  };
+  const close = () => {
+    panel?.classList.add('hidden');
+    panel?.classList.remove('flex');
+    launchers.forEach((b) => b.setAttribute('aria-expanded', 'false'));
+    sessionStorage.setItem('ask_cpa_session_dismissed', '1');
+  };
+
+  launchers.forEach((b) => b.addEventListener('click', open));
+  closeBtn?.addEventListener('click', close);
+  panel?.addEventListener('click', (e) => { if (e.target === panel) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel?.classList.contains('hidden')) close(); });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    // Stub — production should POST to /api/ask-cpa or similar
+    form.classList.add('hidden');
+    success?.classList.remove('hidden');
+  });
+</script>

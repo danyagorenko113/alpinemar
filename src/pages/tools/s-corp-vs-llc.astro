@@ -1,0 +1,186 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+---
+
+<BaseLayout
+  rawTitle="S-Corp vs LLC Tax Calculator | Alpine Mar"
+  description="Free side-by-side comparison: LLC self-employment tax vs S-Corp salary+distribution. See the break-even where S-Corp election starts paying."
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-70" />
+    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">04</span>
+    </div>
+    <Container width="xl" class="relative pb-12 lg:pb-16">
+      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
+        <a href="/tools/" class="text-navy-500 hover:text-navy-900">Tools</a><span aria-hidden="true">/</span><span class="text-navy-700">S-Corp vs LLC</span>
+      </nav>
+      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Tool · 60 seconds · no signup</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-md">Is it time to <span class="italic text-teal-600">elect S-Corp?</span></h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">
+          LLCs pay self-employment tax on every dollar of profit. S-Corps split the income into
+          W-2 salary (which gets payroll tax) and distributions (which don't). The math flips around
+          $50–80k of profit — see exactly where you land.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-t border-line bg-paper py-12 lg:py-20">
+    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
+      <form id="s-form" class="lg:col-span-7 space-y-8" data-reveal>
+        <fieldset class="border-t border-navy-900 pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 02</span>
+            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Annual net business income.</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">Net of expenses, before owner pay. The number you'd take home as profit.</p>
+          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
+            <span class="font-heading text-3xl text-navy-300">$</span>
+            <input id="s-income" type="number" inputmode="numeric" min="0" step="1000" value="150000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
+            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / year</span>
+          </div>
+          <div class="mt-4">
+            <input id="s-slider" type="range" min="20000" max="500000" step="5000" value="150000" class="w-full accent-teal-500" />
+            <div class="mt-1 flex justify-between font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">
+              <span>$20k</span><span>$500k</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="border-t border-line pt-6">
+          <legend class="flex items-baseline gap-3">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 02</span>
+            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Reasonable salary (S-Corp only).</span>
+          </legend>
+          <p class="mt-2 max-w-md text-sm text-navy-500">What you'd be paid as a market-rate W-2 employee doing your role. IRS requires this be "reasonable" — typically 40–60% of profit.</p>
+          <div class="mt-6 grid gap-2 sm:grid-cols-3">
+            {[
+              { v: 40, label: '40% of profit', sub: 'Aggressive' },
+              { v: 50, label: '50% of profit', sub: 'Typical' },
+              { v: 60, label: '60% of profit', sub: 'Conservative' },
+            ].map((opt) => (
+              <label class="group flex cursor-pointer flex-col gap-1 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
+                <input type="radio" name="salary-ratio" value={opt.v} class="peer sr-only" checked={opt.v === 50} />
+                <span class="text-sm font-medium text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">{opt.sub}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </form>
+
+      <aside class="lg:col-span-5" data-reveal data-from="right">
+        <div class="sticky top-28 space-y-px border border-navy-900">
+          <!-- LLC side -->
+          <div class="bg-paper p-6 lg:p-7">
+            <div class="flex items-center gap-3">
+              <span class="block h-px w-8 bg-navy-300"></span>
+              <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-500">LLC · Sole prop</p>
+            </div>
+            <p class="mt-3 text-sm text-navy-500">Total tax on full profit</p>
+            <p class="mt-1 font-heading text-4xl font-semibold tracking-[-0.02em] text-navy-900"><span id="r-llc">—</span></p>
+            <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Effective rate <span id="r-llc-rate" class="text-navy-900">—</span></p>
+          </div>
+          <!-- S-Corp side (highlighted) -->
+          <div class="bg-navy-900 p-6 text-paper lg:p-7">
+            <div class="flex items-center gap-3">
+              <span class="block h-px w-8 bg-teal-400"></span>
+              <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">S-Corp election</p>
+            </div>
+            <p class="mt-3 text-sm text-navy-300">Payroll tax on salary only</p>
+            <p class="mt-1 font-heading text-4xl font-semibold tracking-[-0.02em] text-white"><span id="r-scorp">—</span></p>
+            <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Effective rate <span id="r-scorp-rate" class="text-white">—</span></p>
+          </div>
+          <!-- Verdict -->
+          <div class="bg-teal-500 p-6 text-navy-950 lg:p-7">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-900">Annual S-Corp savings</p>
+            <p class="mt-1 font-heading text-5xl font-semibold tracking-[-0.02em] text-navy-950"><span id="r-savings">—</span></p>
+            <p id="r-verdict" class="mt-3 text-sm leading-snug text-navy-900">—</p>
+          </div>
+          <div class="bg-navy-50 p-6">
+            <a href="/contact/?service=Entity%20Structuring" class="group inline-flex w-full items-center justify-center gap-2.5 border border-navy-900 px-6 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
+              Elect S-Corp properly <Icon name="arrow-right" class="h-4 w-4" />
+            </a>
+            <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">S-Corp adds: payroll setup · $1.5k/yr CPA cost</p>
+          </div>
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <CtaSection variant="service" context="Entity Structuring" />
+
+  <script>
+    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
+    const income = $('#s-income') as HTMLInputElement | null;
+    const slider = $('#s-slider') as HTMLInputElement | null;
+    const llc = $('#r-llc'), scorp = $('#r-scorp'), savings = $('#r-savings');
+    const llcRate = $('#r-llc-rate'), scorpRate = $('#r-scorp-rate'), verdict = $('#r-verdict');
+
+    const SS_BASE = 168_600; // 2026 SS wage base
+    const SE_RATE = 0.153;
+    const PAYROLL_RATE = 0.153; // employer + employee on W-2 salary
+    const FED_BRACKET = (i: number) => {
+      if (i < 50_000) return 0.12;
+      if (i < 110_000) return 0.18;
+      if (i < 200_000) return 0.22;
+      if (i < 400_000) return 0.28;
+      if (i < 750_000) return 0.32;
+      return 0.36;
+    };
+
+    function calc() {
+      const inc = Math.max(20_000, +(income?.value || 0));
+      const salaryRatio = +(document.querySelector('input[name="salary-ratio"]:checked') as HTMLInputElement)?.value / 100 || 0.5;
+      const fed = FED_BRACKET(inc);
+
+      // LLC: SE tax on (full profit × 0.9235), capped at SS base
+      const llcSE = Math.min(inc * 0.9235, SS_BASE) * SE_RATE + Math.max(0, inc * 0.9235 - SS_BASE) * 0.029;
+      const llcIncomeTax = inc * fed;
+      const llcTotal = llcIncomeTax + llcSE;
+      const llcEff = (llcTotal / inc) * 100;
+
+      // S-Corp: payroll tax on salary only
+      const salary = inc * salaryRatio;
+      const distribution = inc - salary;
+      const scorpPayroll = Math.min(salary, SS_BASE) * PAYROLL_RATE + Math.max(0, salary - SS_BASE) * 0.029;
+      const scorpIncomeTax = inc * fed; // both salary + distribution flow through K-1 personal
+      const scorpTotal = scorpIncomeTax + scorpPayroll;
+      const scorpEff = (scorpTotal / inc) * 100;
+
+      const delta = llcTotal - scorpTotal;
+
+      if (llc) llc.textContent = '$' + Math.round(llcTotal).toLocaleString();
+      if (scorp) scorp.textContent = '$' + Math.round(scorpTotal).toLocaleString();
+      if (savings) savings.textContent = '$' + Math.round(delta).toLocaleString();
+      if (llcRate) llcRate.textContent = llcEff.toFixed(1) + '%';
+      if (scorpRate) scorpRate.textContent = scorpEff.toFixed(1) + '%';
+
+      if (verdict) {
+        if (delta < 1500) {
+          verdict.textContent = `At this income, S-Corp savings (~$${Math.round(delta).toLocaleString()}) likely won't cover the extra payroll + CPA cost (~$1,500–2,500). Stick with LLC for now.`;
+        } else if (delta < 4000) {
+          verdict.textContent = `S-Corp starts paying off — but only by $${Math.round(delta).toLocaleString()}/yr. Worth electing if you'll grow into it, otherwise marginal.`;
+        } else {
+          verdict.textContent = `Clear win — $${Math.round(delta).toLocaleString()}/yr in saved payroll tax. Election is a no-brainer at this scale.`;
+        }
+      }
+    }
+
+    income?.addEventListener('input', () => { if (slider) slider.value = income.value; calc(); });
+    slider?.addEventListener('input', () => { if (income) income.value = slider.value; calc(); });
+    document.querySelectorAll('input[name="salary-ratio"]').forEach((el) => el.addEventListener('change', calc));
+    calc();
+  </script>
+</BaseLayout>

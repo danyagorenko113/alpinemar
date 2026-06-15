@@ -1,0 +1,393 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import Ridge from '@/components/Ridge.astro';
+import CtaSection from '@/components/CtaSection.astro';
+import { allServices, industries as industryList } from '@/data/taxonomy';
+import { serviceSchema, breadcrumb } from '@/data/schema';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((s) => ({
+    params: { slug: s.data.path.replace(/^\/services\//, '').replace(/\/$/, '') },
+    props: { service: s, all: services },
+  }));
+}
+
+const { service, all } = Astro.props;
+const { Content, headings } = await render(service);
+
+// Discover the service's group + sibling services from the in-code taxonomy
+const taxonomyEntry = allServices.find((x) => x.href === service.data.path);
+const group = (service.data.group ?? taxonomyEntry?.group) as
+  | 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | undefined;
+const groupMeta: Record<string, { icon: string; numeral: string; blurb: string }> = {
+  Tax:        { icon: 'trending-up',  numeral: '01', blurb: 'Year-round strategy, planning, and preparation.' },
+  Accounting: { icon: 'calculator',   numeral: '02', blurb: 'A full back office — books, close, and reporting.' },
+  Advisory:   { icon: 'repeat',       numeral: '03', blurb: 'CFO-level guidance for the decisions that matter.' },
+  Compliance: { icon: 'shield-check', numeral: '04', blurb: 'Structure, filings, and payroll, handled.' },
+};
+const gm = group ? groupMeta[group] : null;
+
+// Sibling services in the same category (max 5, excluding the current one)
+const siblings = group
+  ? allServices.filter((s) => s.group === group && s.href !== service.data.path).slice(0, 5)
+  : [];
+
+// Fall-back related from the MDX collection (other services)
+const fallbackRelated = all
+  .filter((s) => s.id !== service.id)
+  .slice(0, 5)
+  .map((s) => ({ title: s.data.title, href: s.data.path, summary: s.data.summary }));
+const related = siblings.length
+  ? siblings.map((s) => ({ title: s.title, href: s.href, summary: s.summary }))
+  : fallbackRelated;
+
+// Cross-link to industries surfaced via frontmatter
+const linkedIndustries = (service.data.industries ?? [])
+  .map((slug) => industryList.find((i) => i.href.includes(slug)))
+  .filter((x): x is (typeof industryList)[number] => !!x);
+
+// Build a TOC from H2 headings (skip very short docs)
+const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
+
+const schema = [
+  serviceSchema({ name: service.data.title, description: service.data.summary, path: service.data.path }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+    { name: service.data.title, path: service.data.path },
+  ]),
+];
+
+const takeaways = service.data.takeaways ?? [];
+const included = service.data.included ?? [];
+const process = service.data.process ?? [];
+
+// FAQ — author-supplied via frontmatter OR a sane 4-Q default that fits any
+// service engagement. Keeps every detail page anchored with social-proof Q&A.
+const defaultFaq = [
+  {
+    q: 'How quickly can we start?',
+    a: `We typically schedule a 30-minute intro within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if there's a deadline driving the timeline.`,
+  },
+  {
+    q: 'How are fees structured?',
+    a: `${service.data.title} engagements are quoted as fixed-fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes, and there are no per-call surprises. For ongoing engagements (e.g. monthly close, fractional CFO), pricing is a flat monthly retainer agreed up front.`,
+  },
+  {
+    q: 'Will I work with the same person, or get passed around?',
+    a: 'Every engagement is partner-led — the senior CPA you meet on the intro is the one running your file. Day-to-day work is supported by a senior associate, but partner sign-off is on every deliverable. We do not hand engagements off to junior teams once signed.',
+  },
+  {
+    q: 'Are you taking new clients?',
+    a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting engagements throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.',
+  },
+];
+const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
+---
+
+<BaseLayout
+  rawTitle={service.data.seo?.title ?? `${service.data.title} | Alpine Mar`}
+  description={service.data.seo?.description ?? service.data.summary}
+  image={service.data.cover}
+  schema={schema}
+>
+  <!-- ═══════════════ Hero — typed by category ═══════════════ -->
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-70"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[520px] w-[520px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      <div class="float-slower absolute -left-32 top-1/2 h-[380px] w-[380px] rounded-full bg-navy-300/20 blur-[150px]"></div>
+    </div>
+
+    <!-- Category numeral plate (decoration) -->
+    {gm && (
+      <div class="pointer-events-none absolute -bottom-12 right-2 select-none lg:right-10" aria-hidden="true">
+        <span class="text-outline block text-[14rem] leading-none lg:text-[22rem]">{gm.numeral}</span>
+      </div>
+    )}
+
+    <Container width="xl" class="relative grid items-end gap-12 pb-20 lg:grid-cols-12 lg:gap-x-12 lg:pb-28">
+      <div class="lg:col-span-7" data-reveal data-speed="slow">
+        <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" aria-label="Breadcrumb">
+          <a href="/services/" class="text-navy-500 transition-colors hover:text-navy-900">Services</a>
+          {group && (<><span aria-hidden="true">/</span><span class="text-navy-500">{group}</span></>)}
+          <span aria-hidden="true">/</span>
+          <span class="text-navy-800">{service.data.title}</span>
+        </nav>
+
+        {gm && (
+          <div class="mt-7 flex items-center gap-4">
+            <span class="flex size-12 items-center justify-center border border-teal-500 text-teal-700">
+              <Icon name={gm.icon} class="h-5 w-5" />
+            </span>
+            <div>
+              <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">{group} · {gm.numeral} of 04</p>
+              <p class="mt-1 text-sm text-navy-500">{gm.blurb}</p>
+            </div>
+          </div>
+        )}
+
+        <h1 class="mt-7 text-navy-900 text-hero-md">{service.data.title}</h1>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">{service.data.summary}</p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
+            Request Consultation <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+          <a href="#engagement" class="inline-flex items-center gap-2 px-5 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:text-teal-700">
+            How we work <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+
+        <!-- Meta strip — Tools / Timing / Output -->
+        <div class="mt-12 grid grid-cols-2 gap-y-5 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.14em] text-navy-500 sm:grid-cols-3" data-stagger>
+          <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">Engagement</span><br /><span class="text-navy-700">Partner-led</span></span></div>
+          <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">First call</span><br /><span class="text-navy-700">30 min · free</span></span></div>
+          <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">Pricing</span><br /><span class="text-navy-700">Fixed-fee · scoped</span></span></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5" data-reveal data-from="right">
+        {service.data.cover ? (
+          <figure class="relative">
+            <div class="absolute -left-3 -top-3 hidden size-16 border-l border-t border-teal-500 lg:block" aria-hidden="true"></div>
+            <img src={service.data.cover} alt={service.data.title} class="aspect-[4/3] w-full object-cover" />
+            <figcaption class="mt-3 flex justify-between font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">
+              <span>{group ?? 'Service'}</span><span>Alpine Mar · {gm?.numeral}</span>
+            </figcaption>
+          </figure>
+        ) : (
+          <!-- Typographic fallback when there's no cover -->
+          <figure class="relative aspect-[4/3] w-full overflow-hidden border border-line bg-navy-50/40">
+            <div class="absolute inset-0" aria-hidden="true">
+              <div class="grid-pattern-dark absolute inset-0 opacity-50"></div>
+              <Mountains tone="light" class="absolute bottom-0 left-0 h-2/3 w-full opacity-90" />
+            </div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center" aria-hidden="true">
+              {gm && (
+                <span class="text-outline-teal text-[10rem] leading-none lg:text-[12rem]">{gm.numeral}</span>
+              )}
+              <span class="mt-4 font-mono text-xs uppercase tracking-[0.22em] text-navy-700">{group ?? 'Alpine Mar'}</span>
+            </div>
+          </figure>
+        )}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Key takeaways (optional) ═══════════════ -->
+  {takeaways.length > 0 && (
+    <section class="border-t border-line bg-paper py-20 lg:py-24">
+      <Container width="xl">
+        <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+          <div class="max-w-2xl">
+            <Eyebrow tone="dark">In one minute</Eyebrow>
+            <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">The thing to remember.</h2>
+          </div>
+          <a href="#body" class="font-mono text-xs uppercase tracking-[0.14em] text-teal-700">Full detail ↓</a>
+        </div>
+        <div class="mt-12 grid border-l border-t border-line md:grid-cols-2 lg:grid-cols-3" data-stagger>
+          {takeaways.map((t, i) => (
+            <div class="flex flex-col gap-5 border-b border-r border-line bg-paper p-7 lg:p-9">
+              <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+              <p class="text-lg leading-snug tracking-[-0.005em] text-navy-900">{t}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+  )}
+
+  <!-- ═══════════════ What's included (optional) ═══════════════ -->
+  {included.length > 0 && (
+    <section class="border-t border-line bg-navy-50 py-20 lg:py-24">
+      <Container width="xl" class="grid gap-12 lg:grid-cols-12 lg:gap-x-12">
+        <div class="lg:col-span-4" data-reveal>
+          <Eyebrow tone="dark">What's included</Eyebrow>
+          <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">A defined scope, not a black box.</h2>
+          <p class="mt-6 max-w-md text-lg leading-relaxed text-navy-700">
+            Engagements are scoped before they start. Here's what a typical {service.data.title.toLowerCase()} engagement covers.
+          </p>
+        </div>
+        <ul class="grid gap-px border border-line bg-line sm:grid-cols-2 lg:col-span-8" data-stagger>
+          {included.map((item) => (
+            <li class="flex items-start gap-3 bg-paper p-5 lg:p-6">
+              <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center bg-teal-500/15 text-teal-700">
+                <Icon name="check-circle" class="h-4 w-4" />
+              </span>
+              <span class="text-base leading-relaxed text-navy-800">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  <!-- ═══════════════ Engagement / How we work ═══════════════ -->
+  <section id="engagement" class="relative border-t border-line bg-paper py-20 lg:py-28">
+    <Container width="xl">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <Eyebrow tone="dark">How we work</Eyebrow>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl">From first call to closed loop.</h2>
+        </div>
+        <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400">{(process.length || 4)} steps</span>
+      </div>
+      <div class="mt-14 grid gap-px border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+        {(process.length ? process : [
+          { title: 'Intro call', body: 'A 30-min call with the partner who would run the engagement — scope, timing, fit.' },
+          { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo + flat fee.' },
+          { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence — weekly status by default.' },
+          { title: 'Wrap-up',    body: 'Deliverables ship with a written summary. You keep working with the same team next round.' },
+        ]).map((p, i) => (
+          <div class="group relative flex flex-col gap-4 border-b border-r border-line bg-paper p-7 lg:p-8">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs uppercase tracking-[0.18em] text-teal-700">Step {String(i + 1).padStart(2, '0')}</span>
+              <span class="block h-px w-10 bg-teal-500/60"></span>
+            </div>
+            <h3 class="text-xl tracking-[-0.01em] text-navy-900">{p.title}</h3>
+            <p class="text-[0.95rem] leading-relaxed text-navy-600">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Body + sidebar ═══════════════ -->
+  <section id="body" class="border-t border-line bg-paper py-20 lg:py-28">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+      <article class="lg:col-span-8" data-reveal>
+        <div class="mb-10 flex items-center gap-3 border-b border-line pb-5">
+          <Eyebrow tone="dark">The detail</Eyebrow>
+          <span class="ml-auto font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">{service.data.title}</span>
+        </div>
+        <div class="prose-am">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="lg:col-span-4" data-reveal data-from="right">
+        <div class="sticky top-28 space-y-10">
+          {toc.length > 0 && (
+            <nav aria-label="On this page">
+              <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">On this page</p>
+              <ul class="mt-4 space-y-2.5">
+                {toc.map((h, i) => (
+                  <li class="flex items-baseline gap-3">
+                    <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                    <a href={`#${h.slug}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          <!-- Senior CPA mini-card -->
+          <div class="border border-line bg-paper p-6">
+            <div class="flex items-center gap-4">
+              <span class="flex size-12 items-center justify-center bg-navy-900 font-mono text-xs uppercase tracking-[0.06em] text-teal-400">PM</span>
+              <div>
+                <p class="text-sm font-medium text-navy-900">Pablo Martell, CPA</p>
+                <p class="font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-400">Managing Partner</p>
+              </div>
+            </div>
+            <p class="mt-5 text-sm leading-relaxed text-navy-600">
+              Have a question about {service.data.title.toLowerCase()}? Get a partner-level answer on a 30-min call — no sales handoff.
+            </p>
+            <a href="/contact/" class="mt-5 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
+              Book a 30-min call <Icon name="arrow-right" class="h-3.5 w-3.5" />
+            </a>
+          </div>
+
+          {related.length > 0 && (
+            <div>
+              <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">{group ? `More ${group}` : 'Related services'}</p>
+              <ul class="mt-4 space-y-px">
+                {related.map((s) => (
+                  <li>
+                    <a href={s.href} class="group flex items-center justify-between gap-3 border-b border-line py-3 transition-colors hover:text-teal-700">
+                      <span class="text-sm text-navy-800 transition-colors group-hover:text-teal-700">{s.title}</span>
+                      <Icon name="arrow-right" class="h-3.5 w-3.5 text-navy-300 transition-all group-hover:translate-x-1 group-hover:text-teal-600" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">All services <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+            </div>
+          )}
+
+          {linkedIndustries.length > 0 && (
+            <div>
+              <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">Often paired with</p>
+              <ul class="mt-4 grid grid-cols-2 gap-px">
+                {linkedIndustries.map((ind) => (
+                  <li>
+                    <a href={ind.href} class="block border border-line bg-paper p-3 text-[0.78rem] leading-snug text-navy-800 transition-colors hover:border-teal-500 hover:text-teal-700">
+                      {ind.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </aside>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section id="faq" class="border-t border-line bg-paper py-20 lg:py-24">
+    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
+      <div class="lg:col-span-4" data-reveal>
+        <Eyebrow tone="dark">Common questions</Eyebrow>
+        <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Before you book the call.</h2>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-navy-600">
+          Quick answers to the things most people ask before signing on for {service.data.title.toLowerCase()}.
+        </p>
+        <a href="/contact/" class="mt-8 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
+          Ask your own → <Icon name="arrow-right" class="h-3.5 w-3.5" />
+        </a>
+      </div>
+      <div class="lg:col-span-8" data-stagger>
+        {faq.map((item, i) => (
+          <details class="group border-t border-line py-6 last:border-b" {...(i === 0 ? { open: true } : {})}>
+            <summary class="flex cursor-pointer items-baseline justify-between gap-6 list-none">
+              <span class="flex items-baseline gap-4">
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
+                <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">{item.q}</span>
+              </span>
+              <span class="font-mono text-2xl text-teal-700 transition-transform duration-200 group-open:rotate-45">+</span>
+            </summary>
+            <p class="ml-[3.6rem] mt-4 max-w-2xl text-base leading-relaxed text-navy-700">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═══════════════ Quiet ridge band before CTA ═══════════════ -->
+  <section class="relative overflow-hidden border-t border-line bg-navy-50 py-16">
+    <Ridge tone="teal" class="absolute left-0 top-0 h-12 w-full opacity-30" />
+    <Container width="wide" class="relative grid items-center gap-8 lg:grid-cols-12" data-reveal>
+      <div class="lg:col-span-8">
+        <Eyebrow tone="dark">No queue, no handoff</Eyebrow>
+        <p class="mt-6 text-3xl italic tracking-[-0.01em] text-navy-900 sm:text-4xl">
+          You start with a senior CPA — and you stay with them.
+        </p>
+      </div>
+      <div class="lg:col-span-4 lg:justify-self-end">
+        <a href="/about-us/" class="group inline-flex items-center gap-3 border border-navy-900 px-6 py-4 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
+          Meet the team <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="service" context={service.data.title} />
+</BaseLayout>

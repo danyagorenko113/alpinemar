@@ -1,0 +1,94 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import Icon from '@/components/Icon.astro';
+import Mountains from '@/components/Mountains.astro';
+import CtaSection from '@/components/CtaSection.astro';
+
+const reports = [
+  { slug: 'florida-real-estate-tax-2026',     industry: 'Real Estate',     title: 'State of Florida Real Estate Tax', year: 2026, status: 'live',     pages: 22 },
+  { slug: 'saas-rd-credit-playbook-2026',     industry: 'SaaS',            title: 'SaaS R&D Credit Playbook',         year: 2026, status: 'live',     pages: 18 },
+  { slug: 'hnw-estate-planning-florida-2026', industry: 'High Net Worth',  title: 'HNW Estate Planning in Florida',   year: 2026, status: 'live',     pages: 26 },
+  { slug: 'startup-runway-survey-2026',       industry: 'Startups',        title: 'Startup Runway Survey',            year: 2026, status: 'coming',   pages: 14 },
+  { slug: 'crypto-tax-after-obbb',            industry: 'Crypto',          title: 'Crypto Tax After the OBBB Act',    year: 2026, status: 'coming',   pages: 16 },
+  { slug: 'healthcare-ebp-audit-2026',        industry: 'Healthcare',      title: 'Healthcare EBP Audit Trends',      year: 2026, status: 'coming',   pages: 20 },
+  { slug: 'law-firm-trust-accounting-2026',   industry: 'Law Firms',       title: 'Law Firm Trust Accounting',        year: 2026, status: 'coming',   pages: 18 },
+  { slug: 'agency-s-corp-2026',               industry: 'Marketing Agencies', title: 'Agency S-Corp Election Guide',  year: 2026, status: 'coming',   pages: 12 },
+  { slug: 'family-office-multi-entity-2026',  industry: 'Family Office',   title: 'Family Office Multi-Entity Strategy', year: 2026, status: 'coming',   pages: 24 },
+  { slug: 'sports-image-rights-2026',         industry: 'Sports & Athletes', title: 'Athlete Image Rights & State Tax', year: 2026, status: 'coming', pages: 16 },
+  { slug: 'construction-revenue-rec-2026',    industry: 'Construction',    title: 'Construction Revenue Recognition', year: 2026, status: 'coming',   pages: 14 },
+];
+
+const liveCount = reports.filter((r) => r.status === 'live').length;
+---
+
+<BaseLayout
+  rawTitle="State of [Industry] Reports | Alpine Mar"
+  description="Annual industry reports from Alpine Mar CPAs. Real data, real benchmarks, free to download — for owners, operators, and investors who want primary research."
+>
+  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
+      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+    </div>
+    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-80" />
+    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-hero-xl">{String(reports.length).padStart(2, '0')}</span>
+    </div>
+    <Container width="xl" class="relative pb-20 lg:pb-28">
+      <div class="max-w-3xl" data-reveal data-speed="slow">
+        <Eyebrow tone="dark">Annual reports · primary research</Eyebrow>
+        <h1 class="mt-7 text-navy-900 text-hero-lg">
+          State of <span class="italic text-teal-600">[your industry].</span>
+        </h1>
+        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
+          One report per industry per year. Real tax-rate data, benchmark margins, recurring engagement
+          patterns we see on actual books. Free, no signup, no gate.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4 font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
+          <span><span class="text-teal-700">{liveCount}</span> reports live</span>
+          <span class="text-navy-300">·</span>
+          <span><span class="text-teal-700">{reports.length - liveCount}</span> coming this quarter</span>
+          <span class="text-navy-300">·</span>
+          <span>2026 edition</span>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="border-t border-line bg-paper py-16 lg:py-20">
+    <Container width="xl">
+      <div class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3" data-stagger>
+        {reports.map((r, i) => {
+          const live = r.status === 'live';
+          const Tag = live ? 'a' : 'div';
+          return (
+            <Tag {...(live ? { href: `/reports/${r.slug}/` } : {})} class={`group flex flex-col gap-5 border-b border-r border-line bg-paper p-8 transition-colors duration-300 ${live ? 'hover:bg-white' : 'opacity-70'} lg:p-9`}>
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">{String(i + 1).padStart(2, '0')} · {r.year}</span>
+                {live
+                  ? <span class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-700">↳ Live</span>
+                  : <span class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">Coming Q2</span>}
+              </div>
+              <div>
+                <p class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">{r.industry}</p>
+                <h2 class={`mt-3 text-xl tracking-[-0.01em] text-navy-900 ${live ? 'transition-colors group-hover:text-teal-700' : ''}`}>{r.title}</h2>
+              </div>
+              <span class="mt-auto flex items-center justify-between text-sm">
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400">{r.pages} pages</span>
+                {live && (
+                  <span class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-teal-700">
+                    Read <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                )}
+              </span>
+            </Tag>
+          );
+        })}
+      </div>
+    </Container>
+  </section>
+
+  <CtaSection variant="default" eyebrow="Want it for your industry?" />
+</BaseLayout>
