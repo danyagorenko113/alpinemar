@@ -38,7 +38,7 @@ const { report } = Astro.props;
         <h1 class="mt-7 text-navy-900 text-hero-md">{report.title}</h1>
         <p class="mt-7 max-w-2xl text-xl leading-relaxed text-navy-700">{report.subtitle}</p>
         <div class="mt-9 flex flex-wrap items-center gap-3">
-          <button type="button" onclick="window.print()" data-magnetic class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+          <button type="button" onclick="window.print()" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
             <Icon name="file-text" class="h-4 w-4" /> Save as PDF
           </button>
           <a href={report.industryHref} class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
@@ -106,7 +106,7 @@ const { report } = Astro.props;
           <Eyebrow tone="dark">Run the numbers</Eyebrow>
           <p class="mt-5 max-w-xl text-2xl tracking-[-0.01em] text-navy-900">Calculate this for your own situation.</p>
         </div>
-        <a href={report.ctaTool.href} data-magnetic class="group inline-flex items-center gap-2.5 bg-navy-900 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-paper transition-all duration-200 hover:bg-navy-800">
+        <a href={report.ctaTool.href} class="group inline-flex items-center gap-2.5 bg-navy-900 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-paper transition-all duration-200 hover:bg-navy-800">
           {report.ctaTool.label} <Icon name="arrow-right" class="h-4 w-4" />
         </a>
       </Container>
