@@ -82,6 +82,39 @@ const totalServices = items.length;
     </Container>
   </section>
 
+  <!-- ═══════════════ Core values ═══════════════ -->
+  <section class="border-t border-line bg-paper py-20 lg:py-24">
+    <Container width="xl">
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-x-12" data-reveal>
+        <div class="lg:col-span-4">
+          <Eyebrow tone="dark">Four values</Eyebrow>
+          <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">How we work, in four words.</h2>
+          <p class="mt-6 max-w-md text-base leading-relaxed text-navy-600">
+            The same four principles run through every engagement at Alpine Mar — from a one-time
+            project to an ongoing partnership.
+          </p>
+        </div>
+        <div class="grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:col-span-8" data-stagger>
+          {[
+            { k: 'Innovation', icon: 'sparkles',     body: 'Modern tooling, AI-assisted review, and tested workflows replace clipboards and reminder emails. The work moves faster — without losing rigor.' },
+            { k: 'Efficiency', icon: 'zap',          body: 'Fixed-fee scopes, single-thread partner ownership, and a typed kickoff checklist. We optimise the engagement before it starts.' },
+            { k: 'Confidence', icon: 'check-circle', body: 'Every deliverable signed by the engagement partner. Audit-ready documentation. Clients know exactly what we did and why.' },
+            { k: 'Execution',  icon: 'target',       body: 'A weekly cadence on active engagements. Drafts, not silence. The thing you needed delivered on the date we agreed.' },
+          ].map((v, i) => (
+            <article class="flex flex-col gap-4 border-b border-r border-line bg-paper p-6 lg:p-7">
+              <div class="flex items-center justify-between">
+                <span class="flex size-10 items-center justify-center border border-teal-500 text-teal-700"><Icon name={v.icon} class="h-4 w-4" /></span>
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 class="font-heading text-xl tracking-[-0.01em] text-navy-900">{v.k}</h3>
+              <p class="text-[0.92rem] leading-relaxed text-navy-600">{v.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
   <!-- ═══════════════ Category bento (scannable overview) ═══════════════ -->
   <section class="border-t border-line bg-navy-50 py-20 lg:py-24">
     <Container width="xl">

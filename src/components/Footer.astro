@@ -69,6 +69,15 @@ const socials = [
         <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Company</h2>
         <ul class="mt-5 space-y-2.5 text-sm">
           {companyMenu.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
+          <li><a href="/sitemap/" class="text-navy-300 transition-colors hover:text-teal-400">HTML Sitemap</a></li>
+          <li><a href={site.clientPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-navy-300 transition-colors hover:text-teal-400">
+            Client Portal
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a></li>
+          <li><a href={site.itPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-navy-300 transition-colors hover:text-teal-400">
+            IT Portal
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a></li>
         </ul>
       </nav>
 
@@ -86,6 +95,10 @@ const socials = [
     <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
       <p class="text-navy-400">© {year} {site.legalName}. All rights reserved.</p>
       <div class="flex flex-wrap items-center gap-5">
+        <span class="hidden font-mono uppercase tracking-[0.14em] text-navy-400 lg:inline-flex items-center gap-2">
+          Search anywhere
+          <kbd class="border border-white/15 bg-white/[0.03] px-1.5 py-0.5 text-[0.6rem] text-navy-200">⌘ K</kbd>
+        </span>
         <span class="font-mono uppercase tracking-[0.14em] text-navy-400">Members · {site.memberships.join(' · ')}</span>
         <a href="/privacy-policy/" class="text-navy-300 transition-colors hover:text-teal-400">Privacy Policy</a>
       </div>

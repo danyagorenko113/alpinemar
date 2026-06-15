@@ -23,6 +23,8 @@ export const site = {
     twitter: '',
   },
   memberships: ['AICPA', 'FICPA'],
+  clientPortal: 'https://alpinemar.clientportal.com/#/login',
+  itPortal: 'https://it.alpinemar.com',
 } as const;
 
 export const primaryNav = [

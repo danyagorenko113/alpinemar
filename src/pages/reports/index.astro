@@ -38,13 +38,13 @@ const liveCount = reports.filter((r) => r.status === 'live').length;
     </div>
     <Container width="xl" class="relative pb-20 lg:pb-28">
       <div class="max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Annual reports · primary research</Eyebrow>
+        <Eyebrow tone="dark">Industry reports · illustrative models</Eyebrow>
         <h1 class="mt-7 text-navy-900 text-hero-lg">
           State of <span class="italic text-teal-600">[your industry].</span>
         </h1>
         <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
-          One report per industry per year. Real tax-rate data, benchmark margins, recurring engagement
-          patterns we see on actual books. Free, no signup, no gate.
+          One reference report per industry per year. Tax-rate context, planning levers, and patterns
+          we see most often in practice. Free, no signup, no gate.
         </p>
         <div class="mt-9 flex flex-wrap items-center gap-4 font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
           <span><span class="text-teal-700">{liveCount}</span> reports live</span>
@@ -53,6 +53,17 @@ const liveCount = reports.filter((r) => r.status === 'live').length;
           <span class="text-navy-300">·</span>
           <span>2026 edition</span>
         </div>
+      </div>
+
+      <!-- Illustrative banner -->
+      <div class="relative mt-10 flex items-start gap-3 border-l-2 border-teal-500 bg-navy-50/70 p-4 max-w-3xl" data-reveal data-speed="fast">
+        <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center bg-teal-500/15 text-teal-700"><Icon name="award" class="h-3.5 w-3.5" /></span>
+        <p class="text-[0.85rem] leading-relaxed text-navy-700">
+          <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">↳ Important</span>
+          Figures in these reports are illustrative models — built to show order-of-magnitude impact
+          of common planning moves, not aggregate firm-engagement data. Verify with a CPA before
+          acting on any single number.
+        </p>
       </div>
     </Container>
   </section>

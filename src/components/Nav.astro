@@ -4,6 +4,7 @@ import Logo from './Logo.astro';
 import Button from './Button.astro';
 import Icon from './Icon.astro';
 import { serviceMenu, industryMenu } from '@/data/navigation';
+import { site } from '@/data/site';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
@@ -46,6 +47,15 @@ const popularServices = [
     </nav>
 
     <div class="flex items-center gap-3">
+      <a
+        href={site.clientPortal}
+        target="_blank"
+        rel="noopener"
+        class="hidden items-center gap-1.5 border border-line px-3 py-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-700 transition-colors hover:border-navy-900 hover:text-navy-900 xl:inline-flex"
+      >
+        Client Portal
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
       <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Request Consultation</Button>
       <button type="button" id="nav-toggle" class="inline-flex size-11 items-center justify-center border border-line lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-navy-900"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
@@ -195,7 +205,11 @@ const popularServices = [
       </details>
       <a href="/blog/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Insights</a>
       <a href="/about-us/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">About Us</a>
-      <a href="/contact/" class="py-3.5 font-body text-sm font-medium text-navy-900">Contact</a>
+      <a href="/contact/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Contact</a>
+      <a href={site.clientPortal} target="_blank" rel="noopener" class="flex items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">
+        Client Portal
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="text-navy-400"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
       <Button href="/contact/" variant="primary" class="mt-3 w-full">Request Consultation</Button>
     </Container>
   </div>
