@@ -471,8 +471,7 @@
     size: letter;
   }
   /* Strip every floating control / nav / footer */
-  #deadline-ticker, #ask-cpa-launcher, #ask-cpa-launcher-mobile,
-  #ask-cpa-panel, #cmdk-launcher, #cmdk-panel, #sound-toggle,
+  #deadline-ticker, #cmdk-launcher, #cmdk-panel,
   #cursor-dot, #cursor-ring, #reading-progress,
   #am-glossary-pop {
     display: none !important;

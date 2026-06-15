@@ -6,7 +6,6 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import Schema from '@/components/Schema.astro';
 import DeadlineTicker from '@/components/DeadlineTicker.astro';
-import AskCpaPillow from '@/components/AskCpaPillow.astro';
 import CmdKSearch from '@/components/CmdKSearch.astro';
 import Glossary from '@/components/Glossary.astro';
 import { orgSchema, websiteSchema } from '@/data/schema';
@@ -55,7 +54,6 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       <slot />
     </main>
     <Footer />
-    <AskCpaPillow />
     <CmdKSearch />
     <Glossary />
 
