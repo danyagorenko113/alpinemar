@@ -359,18 +359,15 @@
     html.js [data-reveal] {
       opacity: 0;
       transform: translateY(24px);
-      filter: blur(2px);
       transition:
-        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    html.js [data-reveal].is-visible { opacity: 1; transform: none; filter: none; }
+    html.js [data-reveal].is-visible { opacity: 1; transform: none; }
 
     /* Faster reveal for small / quick elements (chips, tags, eyebrows) */
     html.js [data-reveal][data-speed="fast"] {
       transform: translateY(14px);
-      filter: none;
       transition:
         opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -378,12 +375,10 @@
 
     /* Slower, more dramatic reveal for hero / signature moments */
     html.js [data-reveal][data-speed="slow"] {
-      transform: translateY(40px);
-      filter: blur(6px);
+      transform: translateY(36px);
       transition:
-        opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Side-entry reveal — for left-aside pulls */
