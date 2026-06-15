@@ -1,6 +1,7 @@
 ---
 title: "Is Hurricane Damage Tax Deductible?"
 date: 2024-12-15
+author: "The Alpine Mar editorial team"
 excerpt: "“Is hurricane damage tax deductible?” is an important question for…"
 cover: "/images/blog/hurricane-damage-tax-deductible.jpg"
 tags: ["Advisory", "Estate Planning", "Real Estate", "Tax"]

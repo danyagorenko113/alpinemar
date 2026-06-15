@@ -1,6 +1,7 @@
 ---
 title: "What Is a Fractional CFO?"
 date: 2023-11-21
+author: "The Alpine Mar editorial team"
 excerpt: "In today’s dynamic business landscape, small and large companies seek…"
 cover: "/images/blog/what-is-fractional-cfo.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

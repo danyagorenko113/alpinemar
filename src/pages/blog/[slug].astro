@@ -48,6 +48,7 @@ const schema = [
     date: post.data.date,
     cover: post.data.cover,
     path: _url,
+    author: post.data.author,
   }),
   breadcrumb([
     { name: 'Home', path: '/' },
@@ -155,10 +156,10 @@ const schema = [
             <div class="border border-line bg-navy-50/60 p-6">
               <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Apply this</p>
               <p class="mt-3 text-base leading-relaxed text-navy-800">
-                See what this article looks like applied to your books on a free 30-min call.
+                See what this article looks like applied to your books on a complimentary intro call.
               </p>
               <a href="/contact/" class="mt-5 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
-                Book a 30-min call <Icon name="arrow-right" class="h-3.5 w-3.5" />
+                Book an intro call <Icon name="arrow-right" class="h-3.5 w-3.5" />
               </a>
             </div>
 

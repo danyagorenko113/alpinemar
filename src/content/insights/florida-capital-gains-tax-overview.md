@@ -1,6 +1,7 @@
 ---
 title: "Florida Short-Term Capital Gains Tax Explained"
 date: 2024-01-23
+author: "The Alpine Mar editorial team"
 excerpt: "People who own capital assets in Florida short-term—for less than…"
 cover: "/images/blog/florida-capital-gains-tax-overview.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]

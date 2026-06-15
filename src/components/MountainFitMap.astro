@@ -71,7 +71,7 @@ const findIndustry = (slugFragment: string) =>
       <!-- Peaks as absolutely-positioned dots/labels -->
       {PEAKS.map((p, i) => {
         const ind = findIndustry(p.slug);
-        const size = 14 + p.size * 18; // px diameter
+        const size = 18 + p.size * 14; // px diameter — bigger for visibility
         return (
           <button
             type="button"
@@ -80,11 +80,11 @@ const findIndustry = (slugFragment: string) =>
             data-peak-id={p.slug}
             aria-label={ind.title}
           >
-            <span
-              class="block rounded-full border-2 border-navy-900 bg-paper transition-all duration-200 group-hover:scale-110 group-hover:border-teal-500 group-hover:bg-teal-500 group-focus-visible:bg-teal-500"
-              style={`width: ${size}px; height: ${size}px;`}
-            ></span>
-            <span class="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-700 opacity-80 transition-opacity group-hover:opacity-100">{ind.title}</span>
+            <span class="relative block" style={`width: ${size}px; height: ${size}px;`}>
+              <span class="absolute inset-0 rounded-full bg-teal-400/30 motion-safe:animate-ping"></span>
+              <span class="absolute inset-0 rounded-full border-2 border-navy-900 bg-paper transition-all duration-200 group-hover:scale-110 group-hover:border-teal-500 group-hover:bg-teal-500 group-focus-visible:bg-teal-500"></span>
+            </span>
+            <span class="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-800 opacity-90 transition-opacity group-hover:opacity-100">{ind.title}</span>
           </button>
         );
       })}

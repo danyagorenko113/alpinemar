@@ -1,6 +1,7 @@
 ---
 title: "Inheritance Tax Planning &#038; Reducing Exposure"
 date: 2026-01-21
+author: "The Alpine Mar editorial team"
 excerpt: "Inheritance tax planning is the process of preparing for taxes…"
 cover: "/images/blog/inheritance-tax-planning.jpg"
 tags: ["Compliance", "Estate Planning", "HNW", "Real Estate"]

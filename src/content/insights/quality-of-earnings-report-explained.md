@@ -1,6 +1,7 @@
 ---
 title: "Quality of Earnings Report (QofE Analysis) Overview"
 date: 2024-01-17
+author: "The Alpine Mar editorial team"
 excerpt: "A quality of earnings report—QoE or QofE—is an important financial…"
 cover: "/images/blog/quality-of-earnings-report-explained.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

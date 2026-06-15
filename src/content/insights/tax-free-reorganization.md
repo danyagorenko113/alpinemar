@@ -1,6 +1,7 @@
 ---
 title: "Tax-Free Reorganization Guide for 2026"
 date: 2025-09-11
+author: "The Alpine Mar editorial team"
 excerpt: "A tax-free reorganization allows companies to merge, restructure, or even…"
 cover: "/images/blog/tax-free-reorganization.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Tax"]

@@ -1,6 +1,7 @@
 ---
 title: "How to Create a Budget for Your Tech Startup"
 date: 2026-05-07
+author: "The Alpine Mar editorial team"
 excerpt: "Create a tech startup budget by identifying your core growth…"
 cover: "/images/blog/tech-startup-budget-example.jpg"
 tags: ["Compliance", "M&A", "Payroll", "SaaS"]

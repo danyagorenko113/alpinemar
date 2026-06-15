@@ -1,6 +1,7 @@
 ---
 title: "Business Acquisition Analysis: Process Overview"
 date: 2024-09-11
+author: "The Alpine Mar editorial team"
 excerpt: "Business acquisition analysis is a comprehensive process that evaluates the…"
 cover: "/images/blog/business-acquisition-analysis.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Tax"]

@@ -1,6 +1,7 @@
 ---
 title: "Crypto 1099 Tax Forms: What Investors Need to Know"
 date: 2025-03-05
+author: "The Alpine Mar editorial team"
 excerpt: "Crypto 1099 forms report cryptocurrency income to the IRS to…"
 cover: "/images/blog/crypto-tax-form-1099.jpg"
 tags: ["Audit", "Advisory", "Crypto", "Compliance"]

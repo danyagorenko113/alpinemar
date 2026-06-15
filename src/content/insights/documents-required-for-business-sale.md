@@ -1,6 +1,7 @@
 ---
 title: "Key Documents Required to Sell a Business"
 date: 2025-06-09
+author: "The Alpine Mar editorial team"
 excerpt: "You need a comprehensive set of documents to sell your…"
 cover: "/images/blog/documents-required-for-business-sale.jpg"
 tags: ["Audit", "Accounting", "Advisory", "Compliance"]

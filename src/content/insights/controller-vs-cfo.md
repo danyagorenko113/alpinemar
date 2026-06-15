@@ -1,6 +1,7 @@
 ---
 title: "Controller vs CFO – Which One Do You Need?"
 date: 2024-07-09
+author: "The Alpine Mar editorial team"
 excerpt: "Choosing between a controller and a CFO is crucial for…"
 cover: "/images/blog/controller-vs-cfo.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

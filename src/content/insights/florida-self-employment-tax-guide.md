@@ -1,6 +1,7 @@
 ---
 title: "Guide to Florida Self-Employed Taxes for SMB Owners"
 date: 2024-01-09
+author: "The Alpine Mar editorial team"
 excerpt: "Understanding how the Florida self-employment tax works for small and…"
 cover: "/images/blog/florida-self-employment-tax-guide.jpg"
 tags: ["Advisory", "Estate Planning", "Payroll", "Real Estate"]

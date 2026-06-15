@@ -1,6 +1,7 @@
 ---
 title: "How to Optimize Cash Burn Rate for a Longer Runway"
 date: 2026-05-21
+author: "The Alpine Mar editorial team"
 excerpt: "Cash burn rate determines a startup’s operational lifespan. Precise tracking…"
 cover: "/images/blog/cash-burn-rate-gross-vs-net-burn.jpg"
 tags: ["Audit", "M&A", "Payroll", "Startups"]

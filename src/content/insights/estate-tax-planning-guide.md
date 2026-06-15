@@ -1,6 +1,7 @@
 ---
 title: "Estate Tax Planning Guide"
 date: 2026-03-25
+author: "The Alpine Mar editorial team"
 excerpt: "Estate tax planning is a strategic financial process used to…"
 cover: "/images/blog/estate-tax-planning-guide.jpg"
 tags: ["Estate Planning", "HNW", "Real Estate", "Startups"]

@@ -1,6 +1,7 @@
 ---
 title: "Optimal Family Office Tax Structure in 2024"
 date: 2024-08-07
+author: "The Alpine Mar editorial team"
 excerpt: "Structuring a family office for optimal tax efficiency is essential…"
 cover: "/images/blog/family-office-tax-structure.jpg"
 tags: ["Accounting", "Advisory", "Compliance", "Estate Planning"]

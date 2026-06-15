@@ -110,9 +110,10 @@ import CtaSection from '@/components/CtaSection.astro';
           </div>
           <div class="bg-navy-50 p-6">
             <a href="/contact/?service=Entity%20Structuring" class="group inline-flex w-full items-center justify-center gap-2.5 border border-navy-900 px-6 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
-              Elect S-Corp properly <Icon name="arrow-right" class="h-4 w-4" />
+              Discuss S-Corp election <Icon name="arrow-right" class="h-4 w-4" />
             </a>
-            <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">S-Corp adds: payroll setup · $1.5k/yr CPA cost</p>
+            <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ S-Corp adds payroll setup + ongoing CPA cost ($1,500-2,500/yr typical)</p>
+            <p class="mt-2 text-center font-mono text-[0.6rem] uppercase tracking-[0.12em] text-navy-400">Estimate only · not tax advice · final outcome depends on reasonable-comp study</p>
           </div>
         </div>
       </aside>
@@ -128,7 +129,7 @@ import CtaSection from '@/components/CtaSection.astro';
     const llc = $('#r-llc'), scorp = $('#r-scorp'), savings = $('#r-savings');
     const llcRate = $('#r-llc-rate'), scorpRate = $('#r-scorp-rate'), verdict = $('#r-verdict');
 
-    const SS_BASE = 168_600; // 2026 SS wage base
+    const SS_BASE = 176_100; // 2026 SS wage base (SSA Oct 2025)
     const SE_RATE = 0.153;
     const PAYROLL_RATE = 0.153; // employer + employee on W-2 salary
     const FED_BRACKET = (i: number) => {
@@ -169,11 +170,11 @@ import CtaSection from '@/components/CtaSection.astro';
 
       if (verdict) {
         if (delta < 1500) {
-          verdict.textContent = `At this income, S-Corp savings (~$${Math.round(delta).toLocaleString()}) likely won't cover the extra payroll + CPA cost (~$1,500–2,500). Stick with LLC for now.`;
+          verdict.textContent = `At this income, projected S-Corp savings (~$${Math.round(delta).toLocaleString()}) may not cover the extra payroll + CPA setup costs ($1,500–2,500). Final outcome depends on reasonable-compensation analysis — speak with a CPA before electing.`;
         } else if (delta < 4000) {
-          verdict.textContent = `S-Corp starts paying off — but only by $${Math.round(delta).toLocaleString()}/yr. Worth electing if you'll grow into it, otherwise marginal.`;
+          verdict.textContent = `Projected savings (~$${Math.round(delta).toLocaleString()}/yr) start to outweigh the extra compliance cost. The reasonable-compensation study is what determines whether this holds up in practice.`;
         } else {
-          verdict.textContent = `Clear win — $${Math.round(delta).toLocaleString()}/yr in saved payroll tax. Election is a no-brainer at this scale.`;
+          verdict.textContent = `Projected S-Corp savings on payroll tax are material (~$${Math.round(delta).toLocaleString()}/yr) at this income level. The reasonable-compensation analysis is the part that determines whether the savings hold up under IRS scrutiny.`;
         }
       }
     }

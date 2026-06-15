@@ -28,8 +28,10 @@ const palette = tone === 'light'
 
 <script>
   // Mouse parallax for mountain layers — once globally, runs after View Transition swaps.
+  // Respects prefers-reduced-motion: silently exits if reduced.
   function bind() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     if ((window as any).__mountainParallaxBound) return;
     (window as any).__mountainParallaxBound = true;
 

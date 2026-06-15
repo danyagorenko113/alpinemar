@@ -1,6 +1,7 @@
 ---
 title: "Top Accounting Firms in Florida"
 date: 2025-08-07
+author: "The Alpine Mar editorial team"
 excerpt: "Working with one of the top accounting firms in Florida…"
 cover: "/images/blog/top-accounting-firms-florida.jpg"
 tags: ["Audit", "Accounting", "Advisory", "Compliance"]

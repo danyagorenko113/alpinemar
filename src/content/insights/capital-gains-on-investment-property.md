@@ -1,6 +1,7 @@
 ---
 title: "Investment Property Capital Gains Strategies"
 date: 2025-04-29
+author: "The Alpine Mar editorial team"
 excerpt: "Selling an investment property often triggers a hefty tax bill—especially…"
 cover: "/images/blog/capital-gains-on-investment-property.jpg"
 tags: ["Accounting", "Advisory", "Estate Planning", "Real Estate"]

@@ -1,6 +1,7 @@
 ---
 title: "Audit vs Review – Differences Explained"
 date: 2025-06-27
+author: "The Alpine Mar editorial team"
 excerpt: "Businesses often need third-party assurance to meet lender, investor, or…"
 cover: "/images/blog/audit-vs-review.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Estate Planning"]

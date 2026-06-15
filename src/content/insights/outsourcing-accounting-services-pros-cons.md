@@ -1,6 +1,7 @@
 ---
 title: "Pros and Cons of Outsourcing Accounting Services"
 date: 2023-11-15
+author: "The Alpine Mar editorial team"
 excerpt: "Many smaller businesses are opting for outsourced accounting services and…"
 cover: "/images/blog/outsourcing-accounting-services-pros-cons.jpg"
 tags: ["Accounting", "Estate Planning", "Payroll"]

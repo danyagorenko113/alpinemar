@@ -123,6 +123,7 @@ import CtaSection from '@/components/CtaSection.astro';
           <a href="/contact/?service=Fractional%20CFO" class="group mt-7 inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
             Talk to a fractional CFO <Icon name="arrow-right" class="h-4 w-4" />
           </a>
+          <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ Estimate only · not financial advice</p>
         </div>
       </aside>
     </Container>
@@ -157,21 +158,22 @@ import CtaSection from '@/components/CtaSection.astro';
       out.setMonth(out.getMonth() + months);
       if (rDate) rDate.textContent = out.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
-      // Zone styling
-      card?.classList.remove('bg-navy-900','bg-rose-950/90','bg-amber-950/90');
+      // Zone styling — stays in brand palette; uses border + label colour
+      // instead of changing the entire background.
+      card?.classList.remove('border-rose-500/40','border-amber-400/40','border-teal-500/40');
       let zone = 'Optimise';
-      let advice = 'You have runway. The conversation shifts to working capital, taxes, and capital-efficient hires — not raising. A fractional CFO can compress the next 12 months.';
+      let advice = 'Sufficient runway to focus on working capital, taxes, and capital-efficient hires rather than fundraising. A fractional CFO can compress the next 12 months.';
       if (months < 6) {
-        zone = 'Raise or cut'; card?.classList.add('bg-rose-950/90');
-        advice = 'Below 6 months. The choice is binary: raise capital, or cut burn aggressively. Plan B is needed before week six of this month.';
+        zone = 'Raise or cut'; card?.classList.add('border-rose-500/40');
+        advice = 'Under six months. The choice narrows to: raise capital or reduce burn. A plan should be in place this month.';
       } else if (months < 12) {
-        zone = 'Plan'; card?.classList.add('bg-amber-950/90');
-        advice = 'Inside the planning window. Time to lock the next 4 quarters of spend, pre-qualify investors, and tighten unit economics before you need to fundraise.';
+        zone = 'Plan'; card?.classList.add('border-amber-400/40');
+        advice = 'In the planning window. Time to lock the next four quarters of spend, qualify investors, and tighten unit economics before fundraising.';
       } else if (months < 18) {
-        zone = 'Plan'; card?.classList.add('bg-amber-950/90');
-        advice = 'Healthy buffer, but no slack. Map out the milestones that need to land before the cash-out date — and what each one is worth to the next round.';
+        zone = 'Plan'; card?.classList.add('border-amber-400/40');
+        advice = 'Healthy buffer with limited slack. Map out the milestones to hit before the cash-out date and what each is worth to the next round.';
       } else {
-        card?.classList.add('bg-navy-900');
+        card?.classList.add('border-teal-500/40');
       }
       if (zoneLabel) zoneLabel.textContent = zone;
       if (rAdvice) rAdvice.textContent = advice;

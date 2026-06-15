@@ -29,7 +29,7 @@ import CtaSection from '@/components/CtaSection.astro';
         </h1>
         <p class="mt-7 max-w-2xl text-xl leading-relaxed text-navy-700">
           Four quick questions. We'll point you at the 1–3 Alpine Mar services that fit your
-          situation — then you decide whether to book a 30-min call to confirm.
+          situation — then you decide whether to book an introductory call to confirm.
         </p>
       </div>
     </Container>
@@ -149,7 +149,7 @@ import CtaSection from '@/components/CtaSection.astro';
 
           <div class="mt-10 flex flex-wrap gap-3">
             <a id="result-cta" href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
-              Book a 30-min consultation <Icon name="arrow-right" class="h-4 w-4" />
+              Book an introductory call <Icon name="arrow-right" class="h-4 w-4" />
             </a>
             <button type="button" id="quiz-reset" class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
               Start over <Icon name="repeat" class="h-4 w-4" />
@@ -160,7 +160,7 @@ import CtaSection from '@/components/CtaSection.astro';
     </Container>
   </section>
 
-  <CtaSection variant="default" eyebrow="Skip the quiz" headline="Just <span class='italic text-teal-400'>talk</span> to us." body="A 30-minute call is faster than the quiz if you'd rather just describe the situation." />
+  <CtaSection variant="default" eyebrow="Skip the quiz" headline="Just <span class='italic text-teal-400'>talk</span> to us." body="An intro call is faster than the quiz if you'd rather just describe the situation." />
 
   <script>
     type Answers = { role?: string; pain?: string; urgency?: string; engagement?: string };
@@ -233,7 +233,7 @@ import CtaSection from '@/components/CtaSection.astro';
         const urg = answers.urgency === 'now' ? 'You said this is urgent.' :
                     answers.urgency === 'soon' ? 'You said this is 1–3 months out.' :
                     'You said you are in planning mode.';
-        blurb.textContent = `${urg} A 30-minute consultation will confirm scope, timing, and fee — with the partner who would run the engagement.`;
+        blurb.textContent = `${urg} An introductory consultation will confirm scope, timing, and fee — with the partner who would run the engagement.`;
       }
 
       // Pre-fill the contact service in the CTA query string

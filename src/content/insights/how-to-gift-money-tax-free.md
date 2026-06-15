@@ -1,6 +1,7 @@
 ---
 title: "Tax-Free Gifting"
 date: 2026-01-07
+author: "The Alpine Mar editorial team"
 excerpt: "The Internal Revenue Service (IRS) allows certain gifts to be…"
 cover: "/images/blog/how-to-gift-money-tax-free.jpg"
 tags: ["Crypto", "Compliance", "Estate Planning", "HNW"]

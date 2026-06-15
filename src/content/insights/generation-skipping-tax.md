@@ -1,6 +1,7 @@
 ---
 title: "Generation-Skipping Tax – 11 Things You Must Know"
 date: 2024-08-19
+author: "The Alpine Mar editorial team"
 excerpt: "The generation-skipping transfer tax (GSTT) targets property transfers to younger…"
 cover: "/images/blog/generation-skipping-tax.jpg"
 tags: ["Accounting", "Compliance", "Estate Planning", "HNW"]

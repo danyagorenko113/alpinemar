@@ -1,6 +1,7 @@
 ---
 title: "Top 15 Tax Deductions for High Earners"
 date: 2024-07-03
+author: "The Alpine Mar editorial team"
 excerpt: "High-income earners often face substantial income taxes every year. However,…"
 cover: "/images/blog/best-tax-deductions-for-high-earners.jpg"
 tags: ["Crypto", "Compliance", "Estate Planning", "HNW"]

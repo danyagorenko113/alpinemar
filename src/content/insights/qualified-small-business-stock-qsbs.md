@@ -1,6 +1,7 @@
 ---
 title: "Qualified Small Business Stock Overview"
 date: 2024-02-19
+author: "The Alpine Mar editorial team"
 excerpt: "Individuals who hold qualified small business stock (QSBS) may be…"
 cover: "/images/blog/qualified-small-business-stock-qsbs.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Payroll"]

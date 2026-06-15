@@ -1,6 +1,7 @@
 ---
 title: "DeFi Taxes &#038; How to Report Them"
 date: 2025-10-09
+author: "The Alpine Mar editorial team"
 excerpt: "DeFi taxes are a rapidly evolving area of cryptocurrency regulation.…"
 cover: "/images/blog/defi-taxes.jpg"
 tags: ["Audit", "Advisory", "Crypto", "Payroll"]

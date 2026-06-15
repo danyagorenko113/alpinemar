@@ -1,6 +1,7 @@
 ---
 title: "Crypto Staking Taxes Overview"
 date: 2025-03-17
+author: "The Alpine Mar editorial team"
 excerpt: "Crypto staking involves locking up cryptocurrency in a blockchain network…"
 cover: "/images/blog/crypto-staking-taxes.jpg"
 tags: ["Advisory", "Crypto", "Compliance", "Payroll"]

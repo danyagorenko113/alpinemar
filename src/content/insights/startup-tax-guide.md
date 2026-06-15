@@ -1,6 +1,7 @@
 ---
 title: "Professional Guide to Startup Taxes"
 date: 2025-05-27
+author: "The Alpine Mar editorial team"
 excerpt: "If you’re launching a VC-backed startup, chances are you’ll organize…"
 cover: "/images/blog/startup-tax-guide.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Payroll"]

@@ -1,6 +1,7 @@
 ---
 title: "Rippling vs Gusto for Payroll Compared"
 date: 2025-02-17
+author: "The Alpine Mar editorial team"
 excerpt: "Rippling and Gusto are leading payroll and HR platforms that…"
 cover: "/images/blog/rippling-vs-gusto-review.jpg"
 tags: ["Compliance", "Payroll", "Tax"]

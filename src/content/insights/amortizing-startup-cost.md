@@ -1,6 +1,7 @@
 ---
 title: "Amortizing Startup Costs for VC-Backed Enterprises"
 date: 2026-02-09
+author: "The Alpine Mar editorial team"
 excerpt: "Amortizing startup costs is the process of spreading your initial…"
 cover: "/images/blog/amortizing-startup-cost.jpg"
 tags: ["Compliance", "Estate Planning", "Payroll", "Real Estate"]

@@ -1,6 +1,7 @@
 ---
 title: "How Are LLC Distributions Taxed for Startup Founders?"
 date: 2026-04-23
+author: "The Alpine Mar editorial team"
 excerpt: "Limited liability company (LLC) distributions are taxed based on your…"
 cover: "/images/blog/llc-distribution-taxes.jpg"
 tags: ["Payroll", "Startups", "Tax"]

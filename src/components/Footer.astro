@@ -28,7 +28,7 @@ const socials = [
   { label: 'Facebook', href: site.socials.facebook },
   { label: 'Instagram', href: site.socials.instagram },
   { label: 'X', href: site.socials.twitter },
-];
+].filter((s) => s.href && s.href.length > 0);
 ---
 
 <footer class="bg-navy-950 text-navy-200">

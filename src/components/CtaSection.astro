@@ -72,7 +72,7 @@ const footerByVariant: Record<Variant, { kicker: string; cells: Cell[] }> = {
     cells: [
       { label: 'Translate',   value: 'Plain-language answer',         icon: 'message-circle' },
       { label: 'Apply',       value: 'Map it to your numbers',        icon: 'target' },
-      { label: 'Recommend',   value: '30-min, no obligation',         icon: 'check-circle' },
+      { label: 'Recommend',   value: 'No-obligation intro',         icon: 'check-circle' },
     ],
   },
 };
@@ -82,19 +82,19 @@ const variants = {
     eyebrow: 'Let’s talk',
     headline: 'Let’s get on a <span class="italic text-teal-400">first name</span> basis.',
     body: 'Reach out and we’ll show you what a modern accounting partner can do for you.',
-    chips: ['30-min intro', 'Senior CPA, not a queue', 'No pressure'],
+    chips: ['Introductory call', 'Senior CPA, not a queue', 'No pressure'],
   },
   home: {
     eyebrow: 'Let’s talk',
     headline: 'Let’s get on a <span class="italic text-teal-400">first name</span> basis.',
     body: 'Reach out and we’ll show you what a modern accounting partner can do for you.',
-    chips: ['30-min intro', 'Senior CPA, not a queue', 'No pressure'],
+    chips: ['Introductory call', 'Senior CPA, not a queue', 'No pressure'],
   },
   service: {
     eyebrow: context ? `Talk to a ${context} expert` : 'Talk to a senior CPA',
     headline: 'Bring the right <span class="italic text-teal-400">people</span> to the problem.',
-    body: 'Scope, timeline, fee range — answered on a 30-minute consultation, with the partner who would run the engagement.',
-    chips: ['Free 30-min consultation', 'Partner-led, not handed off', 'NDA on request'],
+    body: 'Scope, timeline, fee range — answered on an initial consultation, with the partner who would run the engagement.',
+    chips: ['Complimentary intro', 'Partner-led, not handed off', 'NDA on request'],
   },
   industry: {
     eyebrow: context ? `Built for ${context}` : 'Built for your industry',
@@ -106,7 +106,7 @@ const variants = {
     eyebrow: 'Apply this to your books',
     headline: 'See what this looks like for <span class="italic text-teal-400">your</span> numbers.',
     body: 'Insights are great. Specifics are better. Bring us your situation and we’ll show you the next move.',
-    chips: ['30-min intro', 'Bring your P&L', 'Plain-language answers'],
+    chips: ['Introductory call', 'Bring your P&L', 'Plain-language answers'],
   },
 } as const;
 

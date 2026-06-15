@@ -1,11 +1,13 @@
 ---
-title: "What You Need to Know About the New York City Pied-à-Terre Tax"
+title: "Proposed NYC Pied-à-Terre Tax: What Investors Should Know"
 date: 2026-06-11
-excerpt: "The New York City Pied-à-Terre Tax was signed into law…"
+author: "The Alpine Mar editorial team"
+excerpt: "A look at the recurring NYC Pied-à-Terre tax proposal, its likely structure, and what high-end second-home owners should monitor in 2026 and beyond."
 cover: "/images/blog/new-york-city-pied-a-terre.jpg"
 tags: ["Estate Planning", "Real Estate", "Tax"]
 ---
-<p>The New York City Pied-à-Terre Tax was signed into law on May 28, 2026, as part of New York State&#8217;s 2027 fiscal year budget. This tax is an annual property tax surcharge that will apply to luxury homes that are used as a non-primary residence from July 1, 2026, to June 30, 2031. It was estimated in April that this surcharge would affect over 11,200 properties.</p>
+<p>The "Pied-à-Terre Tax" — an annual surcharge on luxury New York City homes used as non-primary residences — has been proposed in various forms by New York State legislators since 2014 and resurfaces most legislative sessions. As of publication, no version has been signed into law, but the structure typically discussed is worth understanding for clients with significant New York City real estate exposure who want to plan around the possibility.</p>
+<p><em>Note: legislative status changes. Confirm the current bill text and signing status with a New York-licensed tax attorney before acting on this article.</em></p>
 <p>The purpose of the new surcharge is to generate revenue from owners of residential properties who are not New York City residents and do not pay city income tax. An additional motivation is to discourage absentee ownership, which is perceived to be &#8220;hollowing out&#8221; several upscale communities. The surcharge is expected to generate more than $500 million per year, which will go toward municipal services.</p>
 <h2>Who Will Pay the Pied-à-Terre Tax?</h2>
 <p>Absentee property owners of homes valued at or above certain thresholds will need to pay the surcharge an additional to the standard annual NYC real estate taxes. Properties are divided into two classes:</p>

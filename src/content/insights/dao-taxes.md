@@ -1,6 +1,7 @@
 ---
 title: "DAO Taxes"
 date: 2025-10-27
+author: "The Alpine Mar editorial team"
 excerpt: "Decentralized autonomous organization (DAO) taxes are a growing concern as…"
 cover: "/images/blog/dao-taxes.jpg"
 tags: ["Audit", "Advisory", "Crypto", "Compliance"]

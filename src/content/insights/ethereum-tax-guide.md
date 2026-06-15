@@ -1,6 +1,7 @@
 ---
 title: "Ethereum Tax Guide for Crypto Investors"
 date: 2025-09-19
+author: "The Alpine Mar editorial team"
 excerpt: "Ethereum taxes are triggered by more than simply exchanging your…"
 cover: "/images/blog/ethereum-tax-guide.jpg"
 tags: ["Advisory", "Crypto", "Tax"]

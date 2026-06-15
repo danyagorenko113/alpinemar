@@ -1,6 +1,7 @@
 ---
 title: "Crypto Tax-Loss Harvesting Guide"
 date: 2025-03-27
+author: "The Alpine Mar editorial team"
 excerpt: "Crypto tax-loss harvesting is a strategy in which investors sell…"
 cover: "/images/blog/crypto-tax-loss-harvesting.jpg"
 tags: ["Advisory", "Crypto", "Compliance", "Estate Planning"]

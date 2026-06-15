@@ -344,6 +344,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee { animation: none; flex-wrap: wrap; }
+    .float-slow, .float-slower { animation: none !important; }
+    .animate-ping { animation: none !important; }
   }
   @keyframes marquee {
     from { transform: translateX(0); }

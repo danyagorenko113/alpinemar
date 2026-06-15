@@ -1,6 +1,7 @@
 ---
 title: "How to Find a Cryptocurrency Tax Accountant"
 date: 2025-11-06
+author: "The Alpine Mar editorial team"
 excerpt: "Finding a reliable crypto tax accountant near you is crucial…"
 cover: "/images/blog/find-cryptocurrency-tax-accountant.jpg"
 tags: ["Audit", "Crypto", "Compliance", "M&A"]

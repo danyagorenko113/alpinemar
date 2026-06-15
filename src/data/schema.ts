@@ -54,7 +54,8 @@ export function breadcrumb(items: { name: string; path: string }[]) {
   };
 }
 
-export function articleSchema(opts: { title: string; description: string; date: Date; dateModified?: Date; cover?: string; path: string }) {
+export function articleSchema(opts: { title: string; description: string; date: Date; dateModified?: Date; cover?: string; path: string; author?: string }) {
+  const authorName = opts.author ?? 'The Alpine Mar editorial team';
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -64,7 +65,11 @@ export function articleSchema(opts: { title: string; description: string; date: 
     datePublished: opts.date.toISOString(),
     dateModified: (opts.dateModified ?? opts.date).toISOString(),
     image: opts.cover ? abs(opts.cover) : abs('/og-default.jpg'),
-    author: { '@id': ORG_ID },
+    author: {
+      '@type': 'Organization',
+      name: authorName,
+      url: abs('/about-us/'),
+    },
     publisher: { '@id': ORG_ID },
     mainEntityOfPage: { '@type': 'WebPage', '@id': abs(opts.path) },
   };

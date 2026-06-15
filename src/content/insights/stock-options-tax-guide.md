@@ -1,6 +1,7 @@
 ---
 title: "Tax Considerations With Stock Options for Employees"
 date: 2025-06-17
+author: "The Alpine Mar editorial team"
 excerpt: "Stock options potentially boost wealth but come with complex tax…"
 cover: "/images/blog/stock-options-tax-guide.jpg"
 tags: ["Compliance", "M&A", "Payroll", "Startups"]

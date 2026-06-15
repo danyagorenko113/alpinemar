@@ -1,6 +1,7 @@
 ---
 title: "Pre-Seed Valuations for Startups"
 date: 2026-02-25
+author: "The Alpine Mar editorial team"
 excerpt: "Pre-seed valuations are the estimated value of a startup before…"
 cover: "/images/blog/startup-pre-seed-valuations.jpg"
 tags: ["Audit", "Startups", "Tax"]

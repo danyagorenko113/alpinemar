@@ -1,6 +1,7 @@
 ---
 title: "Best Business Structure for a Construction Company"
 date: 2023-12-15
+author: "The Alpine Mar editorial team"
 excerpt: "The best business structure for your construction company will depend…"
 cover: "/images/blog/business-structure-for-construction-company.jpg"
 tags: ["Compliance", "Tax"]

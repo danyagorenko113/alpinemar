@@ -1,6 +1,7 @@
 ---
 title: "Crypto-Friendly States in 2025"
 date: 2025-05-15
+author: "The Alpine Mar editorial team"
 excerpt: "Choosing the right state is critical for crypto investors and…"
 cover: "/images/blog/crypto-friendly-states.jpg"
 tags: ["Audit", "Crypto", "Compliance", "Startups"]

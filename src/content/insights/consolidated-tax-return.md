@@ -1,6 +1,7 @@
 ---
 title: "Consolidated Tax Return Overview"
 date: 2025-09-25
+author: "The Alpine Mar editorial team"
 excerpt: "A consolidated tax return is a single tax return filed…"
 cover: "/images/blog/consolidated-tax-return.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

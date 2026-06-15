@@ -1,6 +1,7 @@
 ---
 title: "8 Must-Know Tax Implications of Selling a Business"
 date: 2025-04-07
+author: "The Alpine Mar editorial team"
 excerpt: "Selling a business triggers federal capital gains tax, ordinary income…"
 cover: "/images/blog/tax-implications-of-selling-business.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "M&A"]

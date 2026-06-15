@@ -1,6 +1,7 @@
 ---
 title: "Business Sale Tax Strategies"
 date: 2025-05-07
+author: "The Alpine Mar editorial team"
 excerpt: "Selling your business isn’t just about the sale price, it’s…"
 cover: "/images/blog/selling-business-tax-strategies.jpg"
 tags: ["Audit", "Accounting", "Advisory", "Compliance"]

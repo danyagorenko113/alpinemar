@@ -1,6 +1,7 @@
 ---
 title: "Is Investment in a Startup Tax Deductible?"
 date: 2025-07-03
+author: "The Alpine Mar editorial team"
 excerpt: "Your investment in a startup is not tax deductible. You…"
 cover: "/images/blog/startup-investment-tax-deduction.jpg"
 tags: ["Estate Planning", "Startups", "Tax"]

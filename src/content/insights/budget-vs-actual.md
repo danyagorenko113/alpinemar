@@ -1,6 +1,7 @@
 ---
 title: "Budget vs Actual and Why It Matters"
 date: 2025-10-03
+author: "The Alpine Mar editorial team"
 excerpt: "Budget vs actual analysis is a key financial tool that…"
 cover: "/images/blog/budget-vs-actual.jpg"
 tags: ["Accounting"]

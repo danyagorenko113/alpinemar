@@ -1,6 +1,7 @@
 ---
 title: "Importance of Financial Statements"
 date: 2023-12-19
+author: "The Alpine Mar editorial team"
 excerpt: "Every business knows that reporting your company’s financial position is…"
 cover: "/images/blog/importance-of-financial-statements.jpg"
 tags: ["Tax"]

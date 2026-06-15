@@ -15,10 +15,12 @@ export const site = {
     zip: '33301',
   },
   socials: {
-    facebook: 'https://facebook.com/',
-    instagram: 'https://instagram.com/',
-    linkedin: 'https://linkedin.com/',
-    twitter: 'https://twitter.com/',
+    // TODO: replace placeholders with real handles once provided by client.
+    // Empty strings hide the icons in Footer (see Footer.astro filter).
+    facebook: '',
+    instagram: '',
+    linkedin: '',
+    twitter: '',
   },
   memberships: ['AICPA', 'FICPA'],
 } as const;

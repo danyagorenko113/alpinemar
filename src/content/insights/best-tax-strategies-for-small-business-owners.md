@@ -1,6 +1,7 @@
 ---
 title: "Top 11 Money-Saving Tax Strategies for Small Business Owners"
 date: 2024-01-03
+author: "The Alpine Mar editorial team"
 excerpt: "Tax strategies for small business owners help you protect as…"
 cover: "/images/blog/best-tax-strategies-for-small-business-owners.jpg"
 tags: ["Advisory", "Estate Planning", "Payroll", "Real Estate"]

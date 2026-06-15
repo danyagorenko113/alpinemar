@@ -1,6 +1,7 @@
 ---
 title: "Cost of Outsourcing Accounting Services"
 date: 2024-08-15
+author: "The Alpine Mar editorial team"
 excerpt: "Outsourcing accounting services has become a highly effective strategy for…"
 cover: "/images/blog/outsourced-accounting-service-cost.jpg"
 tags: ["Accounting", "Compliance", "Tax"]

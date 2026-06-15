@@ -219,35 +219,35 @@ const stats = [
     <Container width="xl" class="relative">
       <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
         <div class="max-w-2xl">
-          <Eyebrow tone="dark">Recent wins · anonymised</Eyebrow>
+          <Eyebrow tone="dark">Illustrative examples · composite</Eyebrow>
           <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">
-            Real numbers from <span class="italic text-teal-600">real</span> engagements.
+            Where good planning <span class="italic text-teal-600">moves</span> the number.
           </h2>
         </div>
-        <p class="max-w-sm font-mono text-xs uppercase tracking-[0.14em] text-navy-500">↳ Client names withheld · figures verified · approach disclosed on request</p>
+        <p class="max-w-sm font-mono text-xs uppercase tracking-[0.14em] text-navy-500">↳ Illustrative scenarios drawn from engagement patterns we see · details composited and modified for confidentiality</p>
       </div>
 
       <div class="mt-16 grid border-l border-t border-line lg:grid-cols-3" data-stagger>
         {[
           {
-            client: 'Series B SaaS · 42 engineers',
+            client: 'Mid-stage SaaS company',
             amount: 340000,
             label: 'in federal R&D credit',
-            story: 'Three years of payroll-coded engineering work surfaced via a nexus study + ASC method. Filed amended returns for prior two years.',
+            story: 'A nexus study + ASC-method claim surfaced three years of qualified engineering R&D that prior preparers had missed. Amended returns filed for prior years where the look-back window allowed.',
             tag: 'Tax · R&D credit',
           },
           {
-            client: 'Real estate partnership · 18 units',
+            client: 'Real estate investor',
             amount: 215000,
             label: 'in deferred capital gains',
-            story: '1031 exchange structured against a $4.8M Class B apartment sale — proceeds rolled into a 14-unit value-add deal in Tampa.',
+            story: 'A §1031 like-kind exchange structured against a multi-family sale — proceeds rolled into a value-add acquisition. Federal tax + NIIT deferred into the replacement property.',
             tag: 'Tax · §1031',
           },
           {
-            client: 'Marketing agency · 12 staff',
+            client: 'Service-firm owner',
             amount: 78000,
-            label: 'in annual payroll tax',
-            story: 'S-Corp election + reasonable-comp study unlocked self-employment-tax savings. Payroll set up, retirement plan layered, done in 6 weeks.',
+            label: 'in annual payroll-tax savings',
+            story: 'An S-Corp election plus a documented reasonable-compensation study unlocked self-employment-tax savings. Payroll workflow set up; retirement plan layered.',
             tag: 'Entity · payroll',
           },
         ].map((c, i) => (
@@ -280,35 +280,32 @@ const stats = [
     </Container>
   </section>
 
-  <!-- ═══════════════ Live: this month at Alpine Mar ═══════════════ -->
+  <!-- ═══════════════ By the numbers ═══════════════ -->
   <section class="grain relative overflow-hidden border-t border-line bg-gradient-to-b from-navy-900 to-navy-950 py-24 text-paper lg:py-28">
     <div class="grid-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>
     <Container width="xl" class="relative">
       <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
         <div class="max-w-2xl">
           <div class="flex items-center gap-3">
-            <span class="relative flex size-2.5">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
-              <span class="relative inline-flex size-2.5 rounded-full bg-teal-400"></span>
-            </span>
-            <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-400">Live · This month at Alpine Mar</p>
+            <span class="block h-px w-8 bg-teal-400"></span>
+            <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-400">By the numbers · 2025 snapshot</p>
           </div>
-          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-white sm:text-5xl">Real work, in real time.</h2>
+          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-white sm:text-5xl">Built on real engagements.</h2>
         </div>
-        <p id="live-updated" class="font-mono text-xs uppercase tracking-[0.16em] text-navy-300">↳ Updated <span data-live-time>—</span></p>
+        <p class="font-mono text-xs uppercase tracking-[0.16em] text-navy-300">↳ Figures as of January 2026 · refreshed annually</p>
       </div>
 
       <div class="mt-14 grid gap-px border-l border-t border-white/10 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
         {[
-          { key: 'returns', label: 'S-Corp + 1040 returns filed', value: 47, suffix: '', sub: 'this month' },
-          { key: 'deductions', label: 'Deductions identified', value: 2400000, suffix: '', sub: 'YTD across clients', prefix: '$' },
-          { key: 'audits',   label: 'Audit engagements closed', value: 12, suffix: '', sub: 'last 30 days' },
-          { key: 'response', label: 'Avg first response', value: 38, suffix: ' min', sub: 'across all channels' },
+          { label: 'Specialised verticals', value: 11, suffix: '', sub: 'industries served' },
+          { label: 'Specialised services',  value: 31, suffix: '', sub: 'across tax · accounting · advisory · compliance' },
+          { label: 'Years in practice',     value: 6,  suffix: '', sub: 'founded 2020' },
+          { label: 'Partner-led ratio',     value: 100,  suffix: '%', sub: 'every engagement' },
         ].map((m) => (
           <div class="group flex flex-col gap-3 border-b border-r border-white/10 p-7 transition-colors hover:bg-white/[0.04] lg:p-9">
             <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-400">{m.label}</p>
             <p class="font-heading text-5xl font-semibold tracking-[-0.02em] text-white">
-              {m.prefix && <span class="text-navy-300">{m.prefix}</span>}<span data-counter data-to={m.value} data-suffix={m.suffix}>0</span>
+              <span data-counter data-to={m.value} data-suffix={m.suffix}>0</span>
             </p>
             <p class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-300">↳ {m.sub}</p>
             <span class="mt-auto block h-px w-10 bg-teal-500/60"></span>
@@ -317,22 +314,9 @@ const stats = [
       </div>
 
       <p class="mt-10 max-w-3xl text-base leading-relaxed text-navy-200" data-reveal>
-        ↳ Aggregate, anonymised. We publish the heartbeat so you don't have to guess if anyone's home. This counter ticks during US business hours — and so do we.
+        ↳ Figures are self-reported, drawn from the firm's internal engagement records. We update this snapshot annually.
       </p>
     </Container>
-
-    <script>
-      // Light "live" feel — update the timestamp on load + every minute.
-      function pad(n: number) { return String(n).padStart(2, '0'); }
-      function update() {
-        const now = new Date();
-        const stamp = `${pad(now.getHours())}:${pad(now.getMinutes())} ${Intl.DateTimeFormat().resolvedOptions().timeZone.split('/').pop()}`;
-        document.querySelectorAll('[data-live-time]').forEach((el) => (el as HTMLElement).textContent = stamp);
-      }
-      update();
-      setInterval(update, 60_000);
-      document.addEventListener('astro:after-swap', update);
-    </script>
   </section>
 
   <!-- ═══════════════ Manifesto — pull quote + plate ═══════════════ -->

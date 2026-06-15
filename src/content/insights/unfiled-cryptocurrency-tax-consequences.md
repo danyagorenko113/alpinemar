@@ -1,6 +1,7 @@
 ---
 title: "Unfiled Cryptocurrency Taxes: Consequences &#038; Solutions"
 date: 2025-11-25
+author: "The Alpine Mar editorial team"
 excerpt: "“What happens if you don’t report cryptocurrency on taxes?” is…"
 cover: "/images/blog/unfiled-cryptocurrency-tax-consequences.jpg"
 tags: ["Audit", "Crypto", "Compliance", "Estate Planning"]

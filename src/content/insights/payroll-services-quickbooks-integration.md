@@ -1,6 +1,7 @@
 ---
 title: "Top Payroll Integrations With QuickBooks Online"
 date: 2025-01-17
+author: "The Alpine Mar editorial team"
 excerpt: "QuickBooks Online payroll software integrations allow businesses to streamline payroll…"
 cover: "/images/blog/payroll-services-quickbooks-integration.jpg"
 tags: ["Compliance", "Estate Planning", "Payroll", "Real Estate"]

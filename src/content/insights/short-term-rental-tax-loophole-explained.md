@@ -1,6 +1,7 @@
 ---
 title: "Short-Term Rental Tax Loophole Explained by Expert CPAs"
 date: 2023-10-05
+author: "The Alpine Mar editorial team"
 excerpt: "The short-term rental tax loophole is an often misunderstood and…"
 cover: "/images/blog/short-term-rental-tax-loophole-explained.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

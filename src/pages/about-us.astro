@@ -16,36 +16,6 @@ const leadership = team.slice(0, 4);
 const rest = team.slice(4);
 const schema = personGraph(team);
 
-// Per-partner "climb log" — chronological waypoints leading to Alpine Mar.
-// Hand-curated for the leadership four; falls back to a generic 3-step.
-const CLIMB_LOGS: Record<string, { year: string; role: string }[]> = {
-  'Pablo Martell, CPA': [
-    { year: '2008', role: 'B.S. Accounting · FIU' },
-    { year: '2010', role: 'Senior tax associate · Big 4' },
-    { year: '2015', role: 'Tax manager · regional firm' },
-    { year: '2020', role: 'Co-founded Alpine Mar' },
-  ],
-  'Kevin DeCicco, CPA': [
-    { year: '2009', role: 'B.S. Accounting · University of Florida' },
-    { year: '2011', role: 'Tax senior · Big 4' },
-    { year: '2016', role: 'Tax director · private practice' },
-    { year: '2020', role: 'Co-founded Alpine Mar' },
-  ],
-  'Cristina DeCicco, CPA': [
-    { year: '2010', role: 'B.S. Accounting · FIU' },
-    { year: '2013', role: 'Audit senior · Big 4' },
-    { year: '2018', role: 'Audit manager · regional firm' },
-    { year: '2021', role: 'Joined Alpine Mar · Partner' },
-  ],
-  'Brian Fine, CPA': [
-    { year: '2007', role: 'B.S. Accounting · University of Miami' },
-    { year: '2009', role: 'Audit associate · Big 4' },
-    { year: '2014', role: 'Audit senior manager' },
-    { year: '2022', role: 'Joined Alpine Mar · Partner' },
-  ],
-};
-const stableTenure = (name: string) => 1 + (Array.from(name).reduce((a, c) => a + c.charCodeAt(0), 0) % 8);
-
 // Stable pseudo-random tenure per name so the cards look real and don't shuffle on rebuild.
 const hash = (s: string) => Array.from(s).reduce((a, c) => a + c.charCodeAt(0), 0);
 const tenure = (name: string) => 1 + (hash(name) % 8); // 1–8 years
@@ -111,114 +81,70 @@ const tenure = (name: string) => 1 + (hash(name) % 8); // 1–8 years
     </Container>
   </section>
 
-  <!-- ═══════════════ Comparison ═══════════════ -->
+  <!-- ═══════════════ How we work — our commitments ═══════════════ -->
   <section class="border-t border-line bg-paper py-24 lg:py-32">
     <Container width="xl">
       <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
         <div class="max-w-2xl">
-          <Eyebrow tone="dark">How we’re different</Eyebrow>
+          <Eyebrow tone="dark">How we work</Eyebrow>
           <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">
-            Big-firm experience. <span class="italic text-teal-600">Without the big firm.</span>
+            Eight commitments. <span class="italic text-teal-600">Written down.</span>
           </h2>
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-navy-700">
-            A plain comparison of where Alpine Mar lands against a traditional CPA shop and a Big 4 firm — on the dimensions that actually shape an engagement.
+            How Alpine Mar approaches each engagement — set out plainly so prospective clients know what to expect from day one.
           </p>
         </div>
-        <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400">8 dimensions</span>
+        <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400">8 commitments</span>
       </div>
 
-      <div class="mt-14 overflow-x-auto" data-reveal>
-        <table class="w-full min-w-[820px] border-collapse text-left">
-          <thead>
-            <tr class="border-b-2 border-navy-900">
-              <th scope="col" class="w-[28%] py-5 pr-6 align-bottom">
-                <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Dimension</span>
-              </th>
-              <th scope="col" class="w-[24%] py-5 pr-6 align-bottom">
-                <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Option 01</p>
-                <p class="mt-2 font-heading text-xl text-navy-700">Big 4</p>
-              </th>
-              <th scope="col" class="w-[24%] py-5 pr-6 align-bottom">
-                <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Option 02</p>
-                <p class="mt-2 font-heading text-xl text-navy-700">Traditional CPA</p>
-              </th>
-              <th scope="col" class="w-[24%] bg-navy-900 py-5 px-6 align-bottom text-paper">
-                <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-400">Option 03 · ✓ Recommended</p>
-                <p class="mt-2 font-heading text-xl text-white">Alpine Mar</p>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="font-body">
-            {[
-              {
-                k: 'Who runs your engagement',
-                big4: 'Senior manager you rarely see',
-                trad: 'Owner CPA + admin handoffs',
-                am:   'Partner-led, partner-signed',
-              },
-              {
-                k: 'Response time',
-                big4: '3–5 business days',
-                trad: '1–2 business days',
-                am:   'Within one business day',
-              },
-              {
-                k: 'Fee model',
-                big4: 'Hourly · variable',
-                trad: 'Hourly · variable',
-                am:   'Fixed-fee, scoped',
-              },
-              {
-                k: 'Industry depth',
-                big4: 'Broad, sector specialised',
-                trad: 'General practice',
-                am:   '11 specialised verticals',
-              },
-              {
-                k: 'Tech stack',
-                big4: 'Internal platforms',
-                trad: 'Spreadsheets + email',
-                am:   'QuickBooks · NetSuite · Mercury · Yardi',
-              },
-              {
-                k: 'Tax planning cadence',
-                big4: 'Annual, post-mortem',
-                trad: 'Annual, post-mortem',
-                am:   'Year-round, proactive',
-              },
-              {
-                k: 'Geography',
-                big4: 'National + global',
-                trad: 'Local, often one office',
-                am:   'Florida-based, multi-state licensed',
-              },
-              {
-                k: 'Minimum engagement',
-                big4: 'Multi-year, six-figure',
-                trad: 'Variable, often hourly',
-                am:   'Single-project or ongoing — both fit',
-              },
-            ].map((row) => (
-              <tr class="border-b border-line">
-                <th scope="row" class="py-5 pr-6 align-top">
-                  <span class="block text-base font-medium tracking-[-0.005em] text-navy-900">{row.k}</span>
-                </th>
-                <td class="py-5 pr-6 align-top text-[0.95rem] leading-relaxed text-navy-500">{row.big4}</td>
-                <td class="py-5 pr-6 align-top text-[0.95rem] leading-relaxed text-navy-500">{row.trad}</td>
-                <td class="bg-navy-900/5 py-5 px-6 align-top">
-                  <span class="flex items-start gap-3 text-[0.95rem] leading-relaxed text-navy-900">
-                    <Icon name="check-circle" class="mt-0.5 h-4 w-4 shrink-0 text-teal-700" />
-                    <span>{row.am}</span>
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div class="mt-14 grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-2" data-stagger>
+        {[
+          {
+            k: 'Who runs your engagement',
+            am: 'Partner-led, partner-signed. The senior CPA you meet on the intro is the one running your file day-to-day.',
+          },
+          {
+            k: 'Response time',
+            am: 'Aim for one to two business days on routine matters. Filing-season weeks may take longer for non-urgent items.',
+          },
+          {
+            k: 'Fee model',
+            am: 'Fixed-fee, scoped before the work starts. No hourly meter on questions; scope changes documented in writing.',
+          },
+          {
+            k: 'Industry depth',
+            am: 'Eleven specialised verticals — including real estate, SaaS, healthcare, family office, and crypto.',
+          },
+          {
+            k: 'Tech stack',
+            am: 'We work natively in QuickBooks, NetSuite, Yardi, Mercury, Sage, ADP, and other modern finance platforms.',
+          },
+          {
+            k: 'Tax planning cadence',
+            am: 'Year-round planning rather than annual filing-only. Quarterly check-ins on positions and projections.',
+          },
+          {
+            k: 'Geography',
+            am: 'Florida-based; licensed across multiple US states under mobility provisions. Remote-friendly for out-of-state work.',
+          },
+          {
+            k: 'Minimum engagement',
+            am: 'Single-project and ongoing engagements both fit. No multi-year minimums to start.',
+          },
+        ].map((row, i) => (
+          <article class="border-b border-r border-line bg-paper p-7 lg:p-8">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')} · Commitment</span>
+              <Icon name="check-circle" class="h-4 w-4 text-teal-600" />
+            </div>
+            <h3 class="mt-5 font-heading text-xl tracking-[-0.01em] text-navy-900">{row.k}</h3>
+            <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">{row.am}</p>
+          </article>
+        ))}
       </div>
 
       <p class="mt-8 max-w-2xl font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
-        ↳ Not every engagement needs Alpine Mar — but if you’ve outgrown a traditional CPA and aren’t ready to pay Big-4 rates, this is the lane we sit in.
+        ↳ Every engagement starts with a no-cost intro conversation to confirm fit — both directions.
       </p>
     </Container>
   </section>
@@ -253,49 +179,29 @@ const tenure = (name: string) => 1 + (hash(name) % 8); // 1–8 years
         <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">It’s all about who you know. Meet the team:</h2>
       </div>
 
-      <!-- leadership — editorial portrait plates with climb log on hover -->
+      <!-- leadership — editorial portrait plates -->
       <div class="mt-16 grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-        {leadership.map((m, i) => {
-          const log = CLIMB_LOGS[m.name] ?? [
-            { year: '20XX', role: 'Earlier career' },
-            { year: '20YY', role: 'Senior role' },
-            { year: '2020', role: 'Joined Alpine Mar' },
-          ];
-          return (
-            <article class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper">
-              <!-- Portrait plate -->
-              <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950">
-                <div class="grid-pattern absolute inset-0 opacity-30" aria-hidden="true"></div>
-                <div class="absolute -bottom-6 -right-2 select-none" aria-hidden="true">
-                  <span class="text-outline-light block font-heading text-[12rem] font-semibold leading-none">{initials(m.name)}</span>
-                </div>
-                <span class="absolute left-5 top-5 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-300">Partner · {String(i + 1).padStart(2, '0')}</span>
-                <span class="absolute bottom-5 left-5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-navy-200">{stableTenure(m.name) + 1} years · Fort Lauderdale</span>
-                <span class="absolute left-0 top-0 size-10 border-l border-t border-teal-500/70" aria-hidden="true"></span>
-
-                <!-- Climb log overlay — slides in on hover/focus -->
-                <div class="absolute inset-0 flex flex-col justify-end bg-navy-950/92 px-6 py-7 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-                  <p class="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-teal-400">↳ Climb log</p>
-                  <ol class="mt-5 space-y-3">
-                    {log.map((step, k) => (
-                      <li class="flex items-baseline gap-3 border-l border-teal-500/40 pl-3">
-                        <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-300">{step.year}</span>
-                        <span class="text-[0.82rem] leading-snug text-navy-100">{step.role}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
+        {leadership.map((m, i) => (
+          <article class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper">
+            <!-- Portrait plate -->
+            <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950">
+              <div class="grid-pattern absolute inset-0 opacity-30" aria-hidden="true"></div>
+              <div class="absolute -bottom-6 -right-2 select-none" aria-hidden="true">
+                <span class="text-outline-light block font-heading text-[12rem] font-semibold leading-none">{initials(m.name)}</span>
               </div>
-              <div class="flex flex-col gap-1.5 p-7">
-                <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{m.role}</span>
-                <h3 class="text-xl tracking-[-0.01em] text-navy-900">{cleanName(m.name)}</h3>
-                {credential(m.name) && (
-                  <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">{credential(m.name)}</span>
-                )}
-              </div>
-            </article>
-          );
-        })}
+              <span class="absolute left-5 top-5 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-300">Partner · {String(i + 1).padStart(2, '0')}</span>
+              <span class="absolute bottom-5 left-5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-navy-200">Fort Lauderdale · FL</span>
+              <span class="absolute left-0 top-0 size-10 border-l border-t border-teal-500/70" aria-hidden="true"></span>
+            </div>
+            <div class="flex flex-col gap-1.5 p-7">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{m.role}</span>
+              <h3 class="text-xl tracking-[-0.01em] text-navy-900">{cleanName(m.name)}</h3>
+              {credential(m.name) && (
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">{credential(m.name)}</span>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
 
       <!-- rest — compact horizontal cards -->
@@ -318,9 +224,9 @@ const tenure = (name: string) => 1 + (hash(name) % 8); // 1–8 years
         ))}
       </div>
 
-      <!-- Photography note (turns the placeholder into a design choice, not a bug) -->
+      <!-- Photography note — monogram portraits as a design decision -->
       <p class="mt-12 max-w-2xl font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
-        ↳ Headshots in commission · we use monogram portraits in the meantime so the page stays consistent across the team.
+        ↳ The team uses monogram portraits across the firm to keep the page consistent · request a meeting on /contact/ to meet the partner who would lead your engagement.
       </p>
     </Container>
   </section>

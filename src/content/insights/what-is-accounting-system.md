@@ -1,6 +1,7 @@
 ---
 title: "What Is an Accounting System?"
 date: 2023-11-07
+author: "The Alpine Mar editorial team"
 excerpt: "An accounting system provides the framework for managing the financial…"
 cover: "/images/blog/what-is-accounting-system.jpg"
 tags: ["Accounting", "Advisory", "Payroll", "Tax"]

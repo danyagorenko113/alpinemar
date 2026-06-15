@@ -1,6 +1,7 @@
 ---
 title: "CFO vs VP of Finance"
 date: 2024-06-27
+author: "The Alpine Mar editorial team"
 excerpt: "Chief Financial Officer (CFO) and Vice President of Finance (VP…"
 cover: "/images/blog/cfo-vs-vp-finance.jpg"
 tags: ["Advisory", "Compliance", "Payroll"]

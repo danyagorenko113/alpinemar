@@ -1,6 +1,7 @@
 ---
 title: "Understanding the Passive Activity Loss Rule for Real Estate"
 date: 2023-10-31
+author: "The Alpine Mar editorial team"
 excerpt: "One key tax rule that every real estate investor should…"
 cover: "/images/blog/passive-activity-loss-rule.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

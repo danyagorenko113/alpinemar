@@ -1,6 +1,7 @@
 ---
 title: "Revenue Recognition Principle"
 date: 2024-02-29
+author: "The Alpine Mar editorial team"
 excerpt: "The revenue recognition principle is a guiding principle that helps…"
 cover: "/images/blog/revenue-recognition-principle.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Estate Planning"]

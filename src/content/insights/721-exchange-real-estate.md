@@ -1,6 +1,7 @@
 ---
 title: "What Is a 721 Exchange in Real Estate?"
 date: 2024-10-23
+author: "The Alpine Mar editorial team"
 excerpt: "A 721 exchange allows real estate investors to defer capital…"
 cover: "/images/blog/721-exchange-real-estate.jpg"
 tags: ["Advisory", "Estate Planning", "Real Estate", "Tax"]

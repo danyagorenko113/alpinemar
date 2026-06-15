@@ -73,7 +73,7 @@ const process = service.data.process ?? [];
 const defaultFaq = [
   {
     q: 'How quickly can we start?',
-    a: `We typically schedule a 30-minute intro within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if there's a deadline driving the timeline.`,
+    a: `We typically schedule an introductory call within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if there's a deadline driving the timeline.`,
   },
   {
     q: 'How are fees structured?',
@@ -148,7 +148,7 @@ const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
         <!-- Meta strip — Tools / Timing / Output -->
         <div class="mt-12 grid grid-cols-2 gap-y-5 border-t border-line pt-6 font-mono text-xs uppercase tracking-[0.14em] text-navy-500 sm:grid-cols-3" data-stagger>
           <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">Engagement</span><br /><span class="text-navy-700">Partner-led</span></span></div>
-          <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">First call</span><br /><span class="text-navy-700">30 min · free</span></span></div>
+          <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">First call</span><br /><span class="text-navy-700">Complimentary</span></span></div>
           <div class="flex items-start gap-2"><span class="text-teal-700">↳</span><span><span class="text-navy-400">Pricing</span><br /><span class="text-navy-700">Fixed-fee · scoped</span></span></div>
         </div>
       </div>
@@ -241,7 +241,7 @@ const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
       </div>
       <div class="mt-14 grid gap-px border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4" data-stagger>
         {(process.length ? process : [
-          { title: 'Intro call', body: 'A 30-min call with the partner who would run the engagement — scope, timing, fit.' },
+          { title: 'Intro call', body: 'An introductory call with the partner who would run the engagement — scope, timing, fit.' },
           { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo + flat fee.' },
           { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence — weekly status by default.' },
           { title: 'Wrap-up',    body: 'Deliverables ship with a written summary. You keep working with the same team next round.' },
@@ -298,10 +298,10 @@ const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
               </div>
             </div>
             <p class="mt-5 text-sm leading-relaxed text-navy-600">
-              Have a question about {service.data.title.toLowerCase()}? Get a partner-level answer on a 30-min call — no sales handoff.
+              Have a question about {service.data.title.toLowerCase()}? Get a partner-level answer on an intro call — no sales handoff.
             </p>
             <a href="/contact/" class="mt-5 inline-flex items-center gap-2 border-b border-teal-500 pb-0.5 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">
-              Book a 30-min call <Icon name="arrow-right" class="h-3.5 w-3.5" />
+              Book an intro call <Icon name="arrow-right" class="h-3.5 w-3.5" />
             </a>
           </div>
 

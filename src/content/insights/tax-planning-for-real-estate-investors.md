@@ -1,6 +1,7 @@
 ---
 title: "7 Tax Planning Tips for Real Estate Investors"
 date: 2024-09-19
+author: "The Alpine Mar editorial team"
 excerpt: "Real estate investing presents a substantial opportunity to build wealth,…"
 cover: "/images/blog/tax-planning-for-real-estate-investors.jpg"
 tags: ["Compliance", "Estate Planning", "Real Estate", "Tax"]

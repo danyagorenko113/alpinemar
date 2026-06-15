@@ -1,6 +1,7 @@
 ---
 title: "Crypto Mining Taxes Guide"
 date: 2025-07-29
+author: "The Alpine Mar editorial team"
 excerpt: "Mining rewards may feel like passive earnings, but they come…"
 cover: "/images/blog/crypto-mining-tax-explained.jpg"
 tags: ["Audit", "Advisory", "Crypto", "Payroll"]

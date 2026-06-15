@@ -1,6 +1,7 @@
 ---
 title: "Top 4 Financial Statements Every Business Needs"
 date: 2023-11-29
+author: "The Alpine Mar editorial team"
 excerpt: "The four basic financial statements every business needs are the…"
 cover: "/images/blog/most-important-financial-statements.jpg"
 tags: ["M&A", "Real Estate", "Tax"]

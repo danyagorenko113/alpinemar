@@ -1,6 +1,7 @@
 ---
 title: "Bookings vs ARR vs Revenue in SaaS Finance"
 date: 2025-07-21
+author: "The Alpine Mar editorial team"
 excerpt: "Understanding bookings vs ARR vs revenue is key to making…"
 cover: "/images/blog/bookings-vs-arr-vs-revenue.jpg"
 tags: ["Audit", "Compliance", "Estate Planning", "M&A"]

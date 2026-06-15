@@ -129,10 +129,10 @@ export const integrations = [
 // `insights` collection after content migration).
 export const latestPosts = [
   {
-    title: 'What You Need to Know About the New York City Pied-à-Terre Tax',
+    title: 'Proposed NYC Pied-à-Terre Tax: What Investors Should Know',
     href: '/blog/new-york-city-pied-a-terre/',
     cover: '/images/post-nyc-pied-a-terre.jpg',
-    excerpt: 'The New York City Pied-à-Terre Tax was signed into law on May 28, 2026, as part of New York’s broader effort to tax high-value second homes.',
+    excerpt: 'A recurring NYC tax proposal targeting non-primary luxury homes — what HNW second-home owners should monitor.',
   },
   {
     title: 'How to Optimize Cash Burn Rate for a Longer Runway',

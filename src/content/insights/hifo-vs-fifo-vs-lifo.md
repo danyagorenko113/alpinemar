@@ -1,6 +1,7 @@
 ---
 title: "HIFO vs FIFO vs LIFO for Cryptocurrency Accounting"
 date: 2025-11-17
+author: "The Alpine Mar editorial team"
 excerpt: "When comparing HIFO, FIFO, and LIFO in crypto accounting, understanding…"
 cover: "/images/blog/hifo-vs-fifo-vs-lifo.jpg"
 tags: ["Audit", "Crypto", "Compliance", "M&A"]

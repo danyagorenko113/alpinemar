@@ -1,6 +1,7 @@
 ---
 title: "Best Business Structure for Real Estate Investors"
 date: 2024-06-05
+author: "The Alpine Mar editorial team"
 excerpt: "The best business structure for real estate investors is generally…"
 cover: "/images/blog/business-structure-for-real-estate-investors.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

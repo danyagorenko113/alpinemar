@@ -1,6 +1,7 @@
 ---
 title: "Crypto Gift Tax Considerations"
 date: 2025-04-17
+author: "The Alpine Mar editorial team"
 excerpt: "A cryptocurrency gift is any transfer of digital assets from…"
 cover: "/images/blog/crypto-gift-tax-considerations.jpg"
 tags: ["Audit", "Crypto", "Compliance", "Estate Planning"]

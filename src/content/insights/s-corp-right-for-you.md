@@ -1,6 +1,7 @@
 ---
 title: "Is an S-Corporation right for you?"
 date: 2022-02-23
+author: "The Alpine Mar editorial team"
 excerpt: "Overall, the number one reason from a tax perspective that an S-election is typically made is to legally minimize the impact of self-employment tax."
 cover: "/images/blog/s-corp-right-for-you.jpg"
 tags: ["Payroll", "Tax"]

@@ -1,6 +1,7 @@
 ---
 title: "ISOs vs NSOs: Important Tax Implications to Know"
 date: 2025-06-05
+author: "The Alpine Mar editorial team"
 excerpt: "Stock options reward employees and key contributors by granting them…"
 cover: "/images/blog/iso-vs-nso-taxes.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Payroll"]

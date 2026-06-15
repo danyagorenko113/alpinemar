@@ -1,6 +1,7 @@
 ---
 title: "10 Ways to Increase Company Valuation"
 date: 2025-08-15
+author: "The Alpine Mar editorial team"
 excerpt: "Knowing how to increase company valuation is essential if you…"
 cover: "/images/blog/how-to-increase-company-valuation.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

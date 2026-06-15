@@ -1,6 +1,7 @@
 ---
 title: "Cost Segregation Guide for Real Estate Investors"
 date: 2024-07-23
+author: "The Alpine Mar editorial team"
 excerpt: "Cost segregation is a powerful tax strategy that allows real…"
 cover: "/images/blog/cost-segregation-real-estate.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

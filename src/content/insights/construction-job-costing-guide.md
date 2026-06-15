@@ -1,6 +1,7 @@
 ---
 title: "Construction Job Costing – Overview &#038; Tips"
 date: 2024-02-07
+author: "The Alpine Mar editorial team"
 excerpt: "Construction job costing is a fundamentally important process used in…"
 cover: "/images/blog/construction-job-costing-guide.jpg"
 tags: ["Accounting", "Compliance", "Estate Planning", "Real Estate"]

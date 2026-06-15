@@ -1,6 +1,7 @@
 ---
 title: "ERP vs Accounting Software – Key Differences Explained"
 date: 2023-12-05
+author: "The Alpine Mar editorial team"
 excerpt: "Choosing between ERP vs accounting software for your business is…"
 cover: "/images/blog/erp-vs-accounting-software.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Payroll"]

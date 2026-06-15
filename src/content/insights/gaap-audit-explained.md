@@ -1,6 +1,7 @@
 ---
 title: "GAAP Audit"
 date: 2025-10-17
+author: "The Alpine Mar editorial team"
 excerpt: "A GAAP audit is a critical process used to verify…"
 cover: "/images/blog/gaap-audit-explained.jpg"
 tags: ["Audit", "Accounting", "Advisory", "Compliance"]
