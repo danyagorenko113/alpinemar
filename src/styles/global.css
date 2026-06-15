@@ -41,9 +41,11 @@
   /* Canvas */
   --color-paper: #fbfbfa; /* warm near-white — primary canvas */
 
-  /* Typography */
+  /* Typography — Fraunces across heading and body for unified editorial feel;
+     Geist Mono retained for eyebrows / meta / labels. */
   --font-heading: "Fraunces Variable", ui-serif, Georgia, serif;
-  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
 }
 
@@ -62,6 +64,8 @@
     line-height: 1.6;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    /* Fraunces tuned for running body — soft edges, balanced opsz, normal weight */
+    font-variation-settings: "opsz" 14, "SOFT" 100, "WONK" 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -74,6 +78,7 @@
   }
   /* Fraunces optical sizing — big, high-contrast display */
   h1, h2 { font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; }
+  h3, h4 { font-variation-settings: "opsz" 36, "SOFT" 50, "WONK" 0; }
 
   a { color: inherit; text-decoration: none; }
 
