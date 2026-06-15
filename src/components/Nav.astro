@@ -7,12 +7,17 @@ import { serviceMenu, industryMenu } from '@/data/navigation';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
-const chev =
-  'ml-1.5 inline-block transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180';
+
 const trigger =
-  'inline-flex items-center font-body text-sm font-medium text-navy-900 transition-colors hover:text-teal-700';
-const megaWrap =
-  'invisible absolute left-0 right-0 top-full z-40 translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100';
+  'inline-flex items-center font-body text-sm font-medium text-navy-900 transition-colors hover:text-teal-700 cursor-pointer';
+const chev = 'ml-1.5 inline-block transition-transform duration-200 mega-chev';
+
+// Hot picks shown in the Services mega — most common entry points
+const popularServices = [
+  { name: 'Tax Planning', href: '/services/tax-planning-services/', tag: 'Tax' },
+  { name: 'Fractional CFO', href: '/services/fractional-cfo-services/', tag: 'Advisory' },
+  { name: 'Outsourced Accounting', href: '/services/outsourced-accounting-services/', tag: 'Accounting' },
+];
 ---
 
 <header class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
@@ -20,55 +25,20 @@ const megaWrap =
     <Logo />
 
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
-      <!-- Services mega -->
-      <div class="group static">
-        <button type="button" class={trigger} aria-haspopup="true">
+      <!-- Services mega trigger -->
+      <div class="mega-host static" data-mega="services">
+        <button type="button" class={trigger} aria-haspopup="true" aria-expanded="false" data-mega-trigger>
           Services
           <svg class={chev} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
         </button>
-        <div class={megaWrap}>
-          <Container width="wide" class="grid grid-cols-5 gap-x-6 gap-y-8 py-10">
-            {serviceMenu.map((group) => (
-              <div>
-                <a href="/services/" class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.16em] text-teal-700">{group.label}</a>
-                <ul class="mt-4 space-y-2.5">
-                  {group.items.map((it) => (
-                    <li><a href={it.href} class="block text-sm leading-snug text-navy-600 transition-colors hover:text-teal-700">{it.name}</a></li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </Container>
-          <div class="border-t border-line">
-            <Container width="wide" class="flex items-center justify-between py-4">
-              <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-400">Tailored solutions for every need</span>
-              <a href="/services/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services <Icon name="arrow-right" class="h-4 w-4" /></a>
-            </Container>
-          </div>
-        </div>
       </div>
 
-      <!-- Industries mega -->
-      <div class="group static">
-        <button type="button" class={trigger} aria-haspopup="true">
+      <!-- Industries mega trigger -->
+      <div class="mega-host static" data-mega="industries">
+        <button type="button" class={trigger} aria-haspopup="true" aria-expanded="false" data-mega-trigger>
           Industries
           <svg class={chev} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
         </button>
-        <div class={megaWrap}>
-          <Container width="wide" class="grid grid-cols-3 gap-x-6 gap-y-3 py-10 sm:grid-cols-4">
-            {industryMenu.map((it) => (
-              <a href={it.href} class="group/i flex items-center justify-between border-b border-line py-2.5 text-sm text-navy-600 transition-colors hover:text-teal-700">
-                {it.name}
-                <Icon name="arrow-right" class="h-3.5 w-3.5 text-navy-300 transition-all group-hover/i:translate-x-1 group-hover/i:text-teal-600" />
-              </a>
-            ))}
-          </Container>
-          <div class="border-t border-line">
-            <Container width="wide" class="flex justify-end py-4">
-              <a href="/industries/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all industries <Icon name="arrow-right" class="h-4 w-4" /></a>
-            </Container>
-          </div>
-        </div>
       </div>
 
       <a href="/blog/" class:list={['font-body text-sm font-medium transition-colors hover:text-teal-700', isActive('/blog/') ? 'text-teal-700' : 'text-navy-900']}>Insights</a>
@@ -83,6 +53,115 @@ const megaWrap =
     </div>
   </Container>
 
+  <!-- ═══════════════ Services mega panel ═══════════════ -->
+  <div id="mega-services" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200" data-mega-panel="services">
+    <Container width="wide" class="py-10">
+      <!-- Header strip -->
+      <div class="mb-8 flex items-end justify-between gap-6 border-b border-line pb-4">
+        <div>
+          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Services · 31 specialised offerings</p>
+          <p class="mt-2 font-heading text-2xl tracking-[-0.01em] text-navy-900">What can we run for you?</p>
+        </div>
+        <div class="flex items-center gap-5 text-xs">
+          <a href="/find-your-service/" class="inline-flex items-center gap-2 border border-line bg-paper px-4 py-2 font-mono uppercase tracking-[0.12em] text-navy-900 transition-colors hover:border-navy-900">
+            <Icon name="sparkles" class="h-3.5 w-3.5 text-teal-700" /> Take the 4-question quiz
+          </a>
+          <a href="/services/" class="inline-flex items-center gap-2 font-mono uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">View all <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+        </div>
+      </div>
+
+      <!-- 5 categories grid -->
+      <div class="grid grid-cols-5 gap-x-6">
+        {serviceMenu.map((group) => (
+          <div class="flex flex-col">
+            <a href="/services/" class="flex items-center gap-2.5">
+              <span class="flex size-8 items-center justify-center border border-teal-500 text-teal-700">
+                <Icon name={group.icon} class="h-4 w-4" />
+              </span>
+              <span class="font-heading text-sm font-medium tracking-[-0.005em] text-navy-900">{group.label}</span>
+            </a>
+            <p class="mt-2.5 line-clamp-2 text-[0.72rem] leading-snug text-navy-500">{group.blurb}</p>
+            <ul class="mt-4 space-y-2.5 border-t border-line pt-4">
+              {group.items.slice(0, 7).map((it) => (
+                <li>
+                  <a href={it.href} class="group/link block">
+                    <span class="block text-[0.82rem] leading-tight text-navy-900 transition-colors group-hover/link:text-teal-700">{it.name}</span>
+                    {'desc' in it && (
+                      <span class="mt-0.5 line-clamp-1 text-[0.68rem] leading-snug text-navy-400">{(it as any).desc}</span>
+                    )}
+                  </a>
+                </li>
+              ))}
+              {group.items.length > 7 && (
+                <li>
+                  <a href="/services/" class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-700">+ {group.items.length - 7} more →</a>
+                </li>
+              )}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <!-- Popular row + CTA -->
+      <div class="mt-9 grid grid-cols-12 gap-6 border-t border-line pt-6">
+        <div class="col-span-8">
+          <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-500">Most-requested</p>
+          <ul class="mt-3 flex flex-wrap gap-1.5">
+            {popularServices.map((p) => (
+              <li>
+                <a href={p.href} class="group/p inline-flex items-center gap-2 border border-line bg-paper px-3.5 py-1.5 text-[0.78rem] text-navy-900 transition-colors hover:border-navy-900 hover:bg-navy-50">
+                  <span class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-700">{p.tag}</span>
+                  <span class="block h-3 w-px bg-line"></span>
+                  {p.name}
+                  <Icon name="arrow-right" class="h-3 w-3 text-navy-400 transition-transform group-hover/p:translate-x-0.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="col-span-4 flex items-center justify-end">
+          <a href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-5 py-2.5 font-mono text-[0.7rem] font-medium uppercase tracking-[0.1em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
+            Request consultation <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </div>
+
+  <!-- ═══════════════ Industries mega panel ═══════════════ -->
+  <div id="mega-industries" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200" data-mega-panel="industries">
+    <Container width="wide" class="py-10">
+      <div class="mb-8 flex items-end justify-between gap-6 border-b border-line pb-4">
+        <div>
+          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Industries · 11 specialised verticals</p>
+          <p class="mt-2 font-heading text-2xl tracking-[-0.01em] text-navy-900">Built for your sector.</p>
+        </div>
+        <a href="/industries/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">View all <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+      </div>
+
+      <div class="grid grid-cols-4 gap-px border-l border-t border-line bg-line">
+        {industryMenu.map((ind, i) => (
+          <a href={ind.href} class="group/ind flex items-start gap-4 border-b border-r border-line bg-paper p-4 transition-colors hover:bg-navy-50">
+            <span class="flex size-10 shrink-0 items-center justify-center border border-teal-500 text-teal-700 transition-colors group-hover/ind:bg-teal-500 group-hover/ind:text-navy-950">
+              <Icon name={ind.icon} class="h-4 w-4" />
+            </span>
+            <span class="flex-1">
+              <span class="flex items-center justify-between gap-2">
+                <span class="font-heading text-sm font-medium leading-tight text-navy-900 transition-colors group-hover/ind:text-teal-700">{ind.name}</span>
+                <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-300">{String(i + 1).padStart(2, '0')}</span>
+              </span>
+              <span class="mt-1 block text-[0.7rem] leading-snug text-navy-500">{ind.desc}</span>
+            </span>
+          </a>
+        ))}
+        <!-- "All industries" CTA tile fills the last cell -->
+        <a href="/industries/" class="group/ind flex items-center justify-center gap-3 border-b border-r border-line bg-navy-900 p-4 text-paper transition-colors hover:bg-navy-800">
+          <span class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-teal-300">View all 11 →</span>
+        </a>
+      </div>
+    </Container>
+  </div>
+
   <!-- Mobile menu -->
   <div id="mobile-menu" class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-paper lg:hidden">
     <Container width="wide" class="flex flex-col py-4">
@@ -90,20 +169,28 @@ const megaWrap =
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Services <span class="font-mono text-xs text-navy-400">+</span></summary>
         <div class="pb-4">
           {serviceMenu.map((group) => (
-            <div class="mt-2">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{group.label}</span>
-              <ul class="mt-2 space-y-2">
-                {group.items.map((it) => <li><a href={it.href} class="block text-sm text-navy-600">{it.name}</a></li>)}
+            <div class="mt-4 first:mt-2">
+              <div class="flex items-center gap-2">
+                <span class="flex size-6 items-center justify-center border border-teal-500 text-teal-700"><Icon name={group.icon} class="h-3 w-3" /></span>
+                <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{group.label}</span>
+              </div>
+              <ul class="mt-2.5 space-y-2 border-l border-line pl-3.5">
+                {group.items.map((it) => <li><a href={it.href} class="block text-sm text-navy-700">{it.name}</a></li>)}
               </ul>
             </div>
           ))}
-          <a href="/services/" class="mt-3 inline-block font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services →</a>
+          <a href="/services/" class="mt-4 inline-block font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services →</a>
         </div>
       </details>
       <details class="border-b border-line">
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Industries <span class="font-mono text-xs text-navy-400">+</span></summary>
         <div class="grid grid-cols-2 gap-2 pb-4">
-          {industryMenu.map((it) => <a href={it.href} class="text-sm text-navy-600">{it.name}</a>)}
+          {industryMenu.map((ind) => (
+            <a href={ind.href} class="flex items-center gap-2 py-1.5 text-sm text-navy-700">
+              <span class="flex size-5 items-center justify-center text-teal-700"><Icon name={ind.icon} class="h-3 w-3" /></span>
+              {ind.name}
+            </a>
+          ))}
         </div>
       </details>
       <a href="/blog/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Insights</a>
@@ -114,7 +201,103 @@ const megaWrap =
   </div>
 </header>
 
+<style>
+  /* Mega panel — animated visibility controlled by JS via [data-open] */
+  .mega-panel { visibility: hidden; }
+  .mega-panel[data-open="1"] {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  /* Spin chevron when its host is open */
+  .mega-host[data-open="1"] .mega-chev { transform: rotate(180deg); }
+  /* Bridge — invisible vertical strip above the panel that keeps hover alive */
+  .mega-panel::before {
+    content: "";
+    position: absolute;
+    inset: -16px 0 auto 0;
+    height: 16px;
+    pointer-events: auto;
+  }
+</style>
+
 <script>
+  // JS-driven mega menu with hover bridge + small close delay.
+  // Open on hover/focus of trigger or panel. Close after 180 ms once cursor
+  // leaves BOTH. Esc closes immediately.
+
+  const hosts = document.querySelectorAll<HTMLElement>('.mega-host');
+  const panels = new Map<string, HTMLElement>();
+  document.querySelectorAll<HTMLElement>('[data-mega-panel]').forEach((p) => {
+    panels.set(p.dataset.megaPanel!, p);
+  });
+
+  const closeTimers = new Map<string, number>();
+
+  function open(key: string) {
+    panels.forEach((p, k) => {
+      const isThis = k === key;
+      p.dataset.open = isThis ? '1' : '0';
+    });
+    hosts.forEach((h) => {
+      const isThis = h.dataset.mega === key;
+      h.dataset.open = isThis ? '1' : '0';
+      h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', String(isThis));
+    });
+  }
+
+  function closeAll() {
+    panels.forEach((p) => { p.dataset.open = '0'; });
+    hosts.forEach((h) => {
+      h.dataset.open = '0';
+      h.querySelector('[data-mega-trigger]')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function scheduleClose(key: string) {
+    clearTimeout(closeTimers.get(key));
+    const t = window.setTimeout(() => {
+      const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
+      const panel = panels.get(key);
+      const stillHovered = host?.matches(':hover') || panel?.matches(':hover');
+      if (!stillHovered) closeAll();
+    }, 200);
+    closeTimers.set(key, t);
+  }
+
+  function cancelClose(key: string) {
+    clearTimeout(closeTimers.get(key));
+  }
+
+  hosts.forEach((host) => {
+    const key = host.dataset.mega!;
+    host.addEventListener('mouseenter', () => { cancelClose(key); open(key); });
+    host.addEventListener('mouseleave', () => scheduleClose(key));
+    host.addEventListener('focusin', () => { cancelClose(key); open(key); });
+    host.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget as Node | null;
+      const panel = panels.get(key);
+      if (!host.contains(next) && !panel?.contains(next)) scheduleClose(key);
+    });
+  });
+
+  panels.forEach((panel, key) => {
+    panel.addEventListener('mouseenter', () => cancelClose(key));
+    panel.addEventListener('mouseleave', () => scheduleClose(key));
+    panel.addEventListener('focusin', () => cancelClose(key));
+    panel.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget as Node | null;
+      const host = document.querySelector(`.mega-host[data-mega="${key}"]`) as HTMLElement | null;
+      if (!panel.contains(next) && !host?.contains(next)) scheduleClose(key);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll();
+  });
+
+  // Mobile toggle
   const toggle = document.getElementById('nav-toggle');
   const menu = document.getElementById('mobile-menu');
   toggle?.addEventListener('click', () => {
