@@ -60,9 +60,12 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <Glossary />
 
     <script>
-      // Scroll reveal — adds .is-visible when elements enter the viewport
-      const reveals = document.querySelectorAll('[data-reveal], [data-stagger]');
-      if (reveals.length) {
+      // Scroll reveal — adds .is-visible when elements enter the viewport.
+      // Re-runs after every Astro view-transition swap so newly-mounted nodes
+      // are observed.
+      function initReveals() {
+        const reveals = document.querySelectorAll('[data-reveal], [data-stagger]');
+        if (!reveals.length) return;
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
@@ -74,7 +77,11 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
           },
           { threshold: 0, rootMargin: '0px 0px -10% 0px' }
         );
-        reveals.forEach((el) => io.observe(el));
+        reveals.forEach((el) => {
+          if ((el as any).__revealBound) return;
+          (el as any).__revealBound = true;
+          io.observe(el);
+        });
         // Safety net: never leave content hidden if the observer doesn't fire.
         setTimeout(() => {
           reveals.forEach((el) => {
@@ -83,6 +90,8 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
           });
         }, 1400);
       }
+      initReveals();
+      document.addEventListener('astro:after-swap', initReveals);
 
       // Smooth <details> open/close — site-wide accordion polish.
       // Wraps each non-summary child in an animated container and animates
@@ -132,11 +141,16 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       enhanceDetails();
       document.addEventListener('astro:after-swap', () => enhanceDetails());
 
-      // Count-up for [data-counter] (value held in data-to, optional data-suffix/prefix)
-      const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
-      if (counters.length) {
+      // Count-up for [data-counter] (value held in data-to, optional data-suffix/prefix).
+      // Re-runs after every Astro view-transition swap; uses a per-element
+      // __counterBound guard so a counter can't fire twice.
+      function initCounters() {
+        const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+        if (!counters.length) return;
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const run = (el: HTMLElement) => {
+          if ((el as any).__counterDone) return;
+          (el as any).__counterDone = true;
           const to = Number(el.dataset.to || '0');
           const suffix = el.dataset.suffix || '';
           const prefix = el.dataset.prefix || '';
@@ -165,8 +179,19 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
           },
           { threshold: 0, rootMargin: '0px 0px -80px 0px' }
         );
-        counters.forEach((el) => cio.observe(el));
-        // Safety net: ensure counters never stay on "0".
+        counters.forEach((el) => {
+          if ((el as any).__counterBound) return;
+          (el as any).__counterBound = true;
+          // Counters already in the viewport at bind time → run immediately
+          // (IntersectionObserver may not fire if the page was scrolled past).
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight && r.bottom > 0) {
+            run(el);
+          } else {
+            cio.observe(el);
+          }
+        });
+        // Final safety net: anything still on "0" after 1.6 s, run now.
         setTimeout(() => {
           counters.forEach((el) => {
             const r = el.getBoundingClientRect();
@@ -174,6 +199,8 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
           });
         }, 1600);
       }
+      initCounters();
+      document.addEventListener('astro:after-swap', initCounters);
     </script>
   </body>
 </html>
