@@ -68,16 +68,16 @@ const searchIndex = allPosts.map((p) => ({
   <!-- ═══════════════ Hero ═══════════════ -->
   <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
     <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
-      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+      <div class="grid-pattern-dark absolute inset-0 opacity-40"></div>
+      <div class="float-slow absolute -right-32 -top-40 h-[320px] w-[320px] rounded-full bg-teal-500/6 blur-[100px]"></div>
     </div>
-    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-80" />
+    <Mountains tone="light" class="pointer-events-none absolute bottom-0 left-0 h-32 w-full opacity-50" />
 
-    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block text-[10rem] leading-none lg:text-[16rem]">{String(page.currentPage).padStart(2, '0')}</span>
+    <div class="pointer-events-none absolute bottom-0 right-2 select-none lg:right-10" aria-hidden="true">
+      <span class="text-outline block leading-none text-[6rem] lg:text-[10rem]">{String(page.currentPage).padStart(2, '0')}</span>
     </div>
 
-    <Container width="xl" class="relative pb-20 lg:pb-28">
+    <Container width="xl" class="relative z-10 pb-16 lg:pb-20">
       <div class="max-w-3xl" data-reveal data-speed="slow">
         <Eyebrow tone="dark">Insights{!isFirstPage && ` · Page ${page.currentPage}`}</Eyebrow>
         <h1 class="mt-7 text-navy-900 text-hero-lg">
@@ -347,13 +347,37 @@ const searchIndex = allPosts.map((p) => ({
         }).join('');
       }
 
+      // Auto-scroll to keep input + results in view. We only nudge the page
+      // the first time a query becomes non-empty; while typing further we
+      // leave the scroll alone so the user can read.
+      let scrolledForQuery = false;
+      function nudgeIntoView() {
+        // Position the input ~120 px below the top so results below it are
+        // visible without hiding the input itself.
+        const rect = input.getBoundingClientRect();
+        if (rect.top < 60 || rect.top > 240) {
+          const target = window.scrollY + rect.top - 120;
+          window.scrollTo({ top: target, behavior: 'smooth' });
+        }
+      }
+
       // Debounced input
       let dt;
       input.addEventListener('input', (e) => {
         clearTimeout(dt);
         const v = e.target.value;
-        dt = setTimeout(() => render(v), 60);
+        dt = setTimeout(() => {
+          render(v);
+          if (v.trim() && !scrolledForQuery) {
+            scrolledForQuery = true;
+            nudgeIntoView();
+          }
+          if (!v.trim()) scrolledForQuery = false;
+        }, 60);
       });
+
+      // Also nudge on focus so the input lands in a comfortable position.
+      input.addEventListener('focus', () => { nudgeIntoView(); });
 
       // Esc clears
       input.addEventListener('keydown', (e) => {
