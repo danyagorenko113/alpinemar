@@ -103,7 +103,7 @@ const totalServices = items.length;
           ].map((v, i) => (
             <article class="flex flex-col gap-4 border-b border-r border-line bg-paper p-6 lg:p-7">
               <div class="flex items-center justify-between">
-                <span class="flex size-10 items-center justify-center border border-teal-500 text-teal-700"><Icon name={v.icon} class="h-4 w-4" /></span>
+                <span class="flex size-10 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={v.icon} class="h-4 w-4" /></span>
                 <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">{String(i + 1).padStart(2, '0')}</span>
               </div>
               <h3 class="font-heading text-xl tracking-[-0.01em] text-navy-900">{v.k}</h3>
@@ -141,7 +141,7 @@ const totalServices = items.length;
           </div>
           <div class="p-8 lg:p-10">
             <div class="flex items-center gap-3">
-              <span class="flex size-10 items-center justify-center bg-teal-500/10 text-teal-700"><Icon name={byGroup[0].icon} class="h-5 w-5" /></span>
+              <span class="flex size-11 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={byGroup[0].icon} class="h-5 w-5" /></span>
               <h3 class="text-3xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{byGroup[0].name}</h3>
             </div>
             <p class="mt-4 max-w-md text-base leading-relaxed text-navy-600">{byGroup[0].blurb}</p>
@@ -158,7 +158,7 @@ const totalServices = items.length;
               </div>
               <div class="flex flex-1 flex-col justify-center p-6 lg:p-7">
                 <div class="flex items-center gap-2.5">
-                  <span class="flex size-8 items-center justify-center bg-teal-500/10 text-teal-700"><Icon name={g.icon} class="h-4 w-4" /></span>
+                  <span class="flex size-9 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={g.icon} class="h-4 w-4" /></span>
                   <h3 class="text-xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{g.name}</h3>
                 </div>
                 <p class="mt-2 line-clamp-2 text-[0.9rem] leading-relaxed text-navy-600">{g.blurb}</p>
@@ -180,7 +180,7 @@ const totalServices = items.length;
             <div class="relative grid items-end gap-6 border-b border-navy-900 pb-5 lg:grid-cols-12" data-reveal>
               <span class="pointer-events-none absolute -top-8 right-0 select-none font-heading text-7xl font-semibold text-navy-100 lg:text-[8rem]" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
               <div class="lg:col-span-2 flex items-center gap-3">
-                <span class="flex size-12 items-center justify-center border border-teal-500 text-teal-700"><Icon name={g.icon} class="h-5 w-5" /></span>
+                <span class="flex size-12 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={g.icon} class="h-5 w-5" /></span>
                 <span class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-teal-700">{String(gi + 1).padStart(2, '0')} · {g.name}</span>
               </div>
               <div class="lg:col-span-7">

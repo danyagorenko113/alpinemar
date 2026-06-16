@@ -17,14 +17,14 @@ const {
 } = Astro.props;
 
 const base =
-  'group inline-flex items-center justify-center gap-2.5 font-mono font-medium uppercase tracking-[0.08em] transition-[color,background-color,border-color,box-shadow,transform] duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none';
+  'group inline-flex items-center justify-center gap-2.5 font-body font-medium tracking-[0.01em] transition-[color,background-color,border-color,box-shadow,transform] duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none';
 
 const variants = {
-  primary: 'bg-teal-500 px-7 py-4 text-[0.8rem] text-navy-950 hover:bg-teal-400',
-  secondary: 'border border-line px-7 py-4 text-[0.8rem] text-navy-700 hover:border-navy-900 hover:text-navy-900',
-  white: 'bg-white px-7 py-4 text-[0.8rem] text-navy-900 hover:bg-teal-500 hover:text-navy-950',
-  ghost: 'border border-white/25 px-7 py-4 text-[0.8rem] text-white hover:border-teal-400 hover:text-teal-400',
-  link: 'text-[0.8rem] uppercase tracking-[0.06em] text-teal-700 hover:text-teal-600',
+  primary:   'rounded-full bg-teal-500 px-7 py-3.5 text-sm text-navy-950 hover:bg-teal-400 hover:shadow-[0_10px_30px_rgba(51,187,220,0.35)]',
+  secondary: 'rounded-full border border-line px-7 py-3.5 text-sm text-navy-700 hover:border-navy-900 hover:text-navy-900',
+  white:     'rounded-full bg-white px-7 py-3.5 text-sm text-navy-900 hover:bg-teal-500 hover:text-navy-950',
+  ghost:     'rounded-full border border-white/25 px-7 py-3.5 text-sm text-white hover:border-teal-400 hover:text-teal-400',
+  link:      'text-sm text-teal-700 hover:text-teal-600 underline-offset-4 hover:underline',
 };
 
 const classes = [base, variants[variant], className];

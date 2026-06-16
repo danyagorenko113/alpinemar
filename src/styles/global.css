@@ -42,10 +42,11 @@
   --color-teal-dark: #1f9cbb;
 
   /* Canvas */
-  --color-paper: #fbfbfa; /* warm near-white — primary canvas */
+  --color-paper: #f9fafb; /* cool off-white — Style Guide canvas */
 
-  /* Typography — per Alpine Mar Figma Style Guide. */
-  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  /* Typography — per Alpine Mar Figma Style Guide.
+     Headings: Lora serif (italic accent words). Body / UI: Poppins. */
+  --font-heading: "Lora Variable", ui-serif, Georgia, serif;
   --font-body:    "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-serif:   "Lora Variable", ui-serif, Georgia, serif;
   --font-mono:    "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
@@ -71,9 +72,9 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--color-navy-900);
-    font-weight: 600;        /* Poppins SemiBold per Style Guide */
-    line-height: 1.1;
-    letter-spacing: -0.02em; /* a little tighter — Poppins is wider than Fraunces */
+    font-weight: 600;         /* Lora SemiBold for editorial headings */
+    line-height: 1.12;
+    letter-spacing: -0.015em; /* Lora has subtle existing tracking; only mild tighten */
     text-wrap: balance;
   }
 

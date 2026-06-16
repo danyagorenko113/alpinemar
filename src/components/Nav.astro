@@ -51,12 +51,12 @@ const popularServices = [
         href={site.clientPortal}
         target="_blank"
         rel="noopener"
-        class="hidden items-center gap-1.5 border border-line px-3 py-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-700 transition-colors hover:border-navy-900 hover:text-navy-900 xl:inline-flex"
+        class="hidden items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 font-body text-xs text-navy-700 transition-colors hover:border-navy-900 hover:text-navy-900 xl:inline-flex"
       >
         Client Portal
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
-      <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Request Consultation</Button>
+      <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Free Consultation</Button>
       <button type="button" id="nav-toggle" class="inline-flex size-11 items-center justify-center border border-line lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-navy-900"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
       </button>
@@ -85,7 +85,7 @@ const popularServices = [
         {serviceMenu.map((group) => (
           <div class="flex flex-col">
             <a href="/services/" class="flex items-center gap-2.5">
-              <span class="flex size-8 items-center justify-center border border-teal-500 text-teal-700">
+              <span class="flex size-8 items-center justify-center rounded-full bg-teal-500 text-navy-950">
                 <Icon name={group.icon} class="h-4 w-4" />
               </span>
               <span class="font-heading text-sm font-medium tracking-[-0.005em] text-navy-900">{group.label}</span>
@@ -152,7 +152,7 @@ const popularServices = [
       <div class="grid grid-cols-4 gap-px border-l border-t border-line bg-line">
         {industryMenu.map((ind, i) => (
           <a href={ind.href} class="group/ind flex items-start gap-4 border-b border-r border-line bg-paper p-4 transition-colors hover:bg-navy-50">
-            <span class="flex size-10 shrink-0 items-center justify-center border border-teal-500 text-teal-700 transition-colors group-hover/ind:bg-teal-500 group-hover/ind:text-navy-950">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-teal-500 text-navy-950 transition-colors group-hover/ind:bg-teal-500 group-hover/ind:text-navy-950">
               <Icon name={ind.icon} class="h-4 w-4" />
             </span>
             <span class="flex-1">
@@ -181,7 +181,7 @@ const popularServices = [
           {serviceMenu.map((group) => (
             <div class="mt-4 first:mt-2">
               <div class="flex items-center gap-2">
-                <span class="flex size-6 items-center justify-center border border-teal-500 text-teal-700"><Icon name={group.icon} class="h-3 w-3" /></span>
+                <span class="flex size-6 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={group.icon} class="h-3 w-3" /></span>
                 <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{group.label}</span>
               </div>
               <ul class="mt-2.5 space-y-2 border-l border-line pl-3.5">
