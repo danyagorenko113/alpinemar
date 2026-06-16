@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
-/* Fonts — premium pairing (Editorial Luxury × Minimalism). Self-hosted. */
-@import "@fontsource-variable/fraunces";        /* display serif — headings */
-@import "@fontsource-variable/geist";           /* grotesk — body / UI */
+/* Fonts — per Alpine Mar Figma Style Guide (node 208:799). Self-hosted. */
+@import "@fontsource/poppins/400.css";          /* body fallback weight */
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";          /* SemiBold — headings */
+@import "@fontsource/poppins/700.css";
+@import "@fontsource-variable/lora";            /* serif — long-form body */
 @import "@fontsource-variable/geist-mono";      /* mono — eyebrows / meta */
 
 @theme {
@@ -41,10 +44,11 @@
   /* Canvas */
   --color-paper: #fbfbfa; /* warm near-white — primary canvas */
 
-  /* Typography */
-  --font-heading: "Fraunces Variable", ui-serif, Georgia, serif;
-  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+  /* Typography — per Alpine Mar Figma Style Guide. */
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-serif:   "Lora Variable", ui-serif, Georgia, serif;
+  --font-mono:    "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
 }
 
 @layer base {
@@ -67,13 +71,11 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--color-navy-900);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.025em;
+    font-weight: 600;        /* Poppins SemiBold per Style Guide */
+    line-height: 1.1;
+    letter-spacing: -0.02em; /* a little tighter — Poppins is wider than Fraunces */
     text-wrap: balance;
   }
-  /* Fraunces optical sizing — big, high-contrast display */
-  h1, h2 { font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; }
 
   a { color: inherit; text-decoration: none; }
 
@@ -87,8 +89,9 @@
 }
 
 @layer components {
-  /* Readable long-form typography for migrated article/page bodies */
-  .prose-am { color: var(--color-navy-700); font-size: 1.0625rem; line-height: 1.75; max-width: 72ch; }
+  /* Readable long-form typography for migrated article/page bodies — uses
+     Lora serif per Style Guide (Lora · Regular, 18 / leading 30). */
+  .prose-am { color: var(--color-navy-700); font-family: var(--font-serif); font-size: 1.0625rem; line-height: 1.75; max-width: 72ch; }
   .prose-am > * + * { margin-top: 1.25rem; }
   .prose-am h2 {
     font-family: var(--font-heading); color: var(--color-navy-900);
