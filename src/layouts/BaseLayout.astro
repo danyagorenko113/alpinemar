@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import '@/styles/global.css';
 import SEO from '@/components/SEO.astro';
 import Nav from '@/components/Nav.astro';
+import TopBar from '@/components/TopBar.astro';
 import Footer from '@/components/Footer.astro';
 import Schema from '@/components/Schema.astro';
 import DeadlineTicker from '@/components/DeadlineTicker.astro';
@@ -41,6 +42,9 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     </script>
     <meta name="theme-color" content="#fbfbfa" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" />
     <meta name="generator" content={Astro.generator} />
     <SEO {title} {rawTitle} {description} {image} {noindex} />
     <Schema data={[orgSchema, websiteSchema, ...pageSchema]} />
@@ -49,6 +53,7 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   </head>
   <body class="flex min-h-screen flex-col">
     <DeadlineTicker />
+    <TopBar />
     <Nav />
     <main class="flex-1">
       <slot />

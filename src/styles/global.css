@@ -8,6 +8,9 @@
 @import "@fontsource-variable/lora";            /* serif — long-form body */
 @import "@fontsource-variable/geist-mono";      /* mono — eyebrows / meta */
 
+/* Satoshi — client's new homepage design system (Figma dhKIjasZE2UVP719jyW4a3).
+   Self-hosted via Fontshare (link tag injected from BaseLayout). */
+
 @theme {
   /* ── Brand palette — source of truth: Figma Style Guide (node 208:799) ──
      Built into a ramp around Alpine Navy (#12122D) + Mountain Blue (#454561). */
@@ -45,11 +48,21 @@
   --color-paper: #f9fafb; /* cool off-white — Style Guide canvas */
 
   /* Typography — per Alpine Mar Figma Style Guide.
-     Headings: Lora serif (italic accent words). Body / UI: Poppins. */
+     Headings: Lora serif (italic accent words). Body / UI: Poppins.
+     Display: Satoshi — used on the new client-designed homepage. */
   --font-heading: "Lora Variable", ui-serif, Georgia, serif;
   --font-body:    "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-serif:   "Lora Variable", ui-serif, Georgia, serif;
   --font-mono:    "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+  --font-display: "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* New homepage palette (Figma dhKIjasZE2UVP719jyW4a3) */
+  --color-brand-1:   #12122d; /* dark navy bg */
+  --color-brand-2:   #4986d5; /* royal blue gradient stop */
+  --color-scooter:   #33bbdc; /* accent (matches teal-500) */
+  --color-delft:     #1f3062; /* slider dots / deep blue */
+  --color-text-body: #454561;
+  --color-text-head: #12122d;
 }
 
 @layer base {
@@ -224,6 +237,53 @@
 }
 
 @layer utilities {
+  /* ── New homepage (Figma dhKIjasZE2UVP719jyW4a3) display tokens ── */
+  .font-display { font-family: var(--font-display); }
+  .am-h1-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 5vw, 3.5rem); /* 56 px desktop */
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .am-h2-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 4.2vw, 3rem); /* 48 px */
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .am-hero-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 6.4vw, 5.25rem); /* 84 px */
+    line-height: 1.1;
+    letter-spacing: -0.013em;
+  }
+  .am-h5-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.125rem, 1.6vw, 1.5rem); /* 24 px */
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  /* Gradient ink used on Hero + Services display text (124° linear). */
+  .am-gradient-ink {
+    background: linear-gradient(124deg, #12122d 26%, #1e2a57 47%, #334b91 86%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  /* Bright variant for hero on dark imagery. */
+  .am-gradient-ink-light {
+    background: linear-gradient(124deg, #ffffff 0%, #d6e4ff 45%, #7fbfe6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
   /* ── Depth: film grain on dark sections ── */
   .grain { position: relative; }
   .grain::before {

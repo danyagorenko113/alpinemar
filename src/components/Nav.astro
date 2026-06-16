@@ -8,9 +8,11 @@ import { site } from '@/data/site';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+const onDark = path === '/';
 
-const trigger =
-  'inline-flex items-center font-body text-sm font-medium text-navy-900 transition-colors hover:text-teal-700 cursor-pointer';
+const trigger = onDark
+  ? 'inline-flex items-center font-body text-sm font-medium text-white/90 transition-colors hover:text-scooter cursor-pointer'
+  : 'inline-flex items-center font-body text-sm font-medium text-navy-900 transition-colors hover:text-teal-700 cursor-pointer';
 const chev = 'ml-1.5 inline-block transition-transform duration-200 mega-chev';
 
 // Hot picks shown in the Services mega — most common entry points
@@ -21,9 +23,16 @@ const popularServices = [
 ];
 ---
 
-<header class="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
+<header
+  class:list={[
+    'sticky top-0 z-50 transition-colors',
+    onDark
+      ? 'border-b border-white/10 bg-[#0a0a1c]/55 backdrop-blur-md'
+      : 'border-b border-line bg-paper/85 backdrop-blur-md',
+  ]}
+>
   <Container width="wide" class="flex h-20 items-center justify-between gap-6">
-    <Logo />
+    <Logo variant={onDark ? 'light' : 'dark'} />
 
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
       <!-- Services mega trigger -->
@@ -42,8 +51,8 @@ const popularServices = [
         </button>
       </div>
 
-      <a href="/blog/" class:list={['font-body text-sm font-medium transition-colors hover:text-teal-700', isActive('/blog/') ? 'text-teal-700' : 'text-navy-900']}>Insights</a>
-      <a href="/about-us/" class:list={['font-body text-sm font-medium transition-colors hover:text-teal-700', isActive('/about-us/') ? 'text-teal-700' : 'text-navy-900']}>About Us</a>
+      <a href="/blog/" class:list={['font-body text-sm font-medium transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/blog/') ? 'text-teal-700' : 'text-navy-900 hover:text-teal-700')]}>Insights</a>
+      <a href="/about-us/" class:list={['font-body text-sm font-medium transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/about-us/') ? 'text-teal-700' : 'text-navy-900 hover:text-teal-700')]}>About Us</a>
     </nav>
 
     <div class="flex items-center gap-3">
@@ -51,14 +60,26 @@ const popularServices = [
         href={site.clientPortal}
         target="_blank"
         rel="noopener"
-        class="hidden items-center gap-1.5 rounded-full border border-line px-3.5 py-1.5 font-body text-xs text-navy-700 transition-colors hover:border-navy-900 hover:text-navy-900 xl:inline-flex"
+        class:list={[
+          'hidden items-center gap-1.5 rounded-full px-3.5 py-1.5 font-body text-xs transition-colors xl:inline-flex',
+          onDark
+            ? 'border border-white/20 text-white/85 hover:border-white/50 hover:text-white'
+            : 'border border-line text-navy-700 hover:border-navy-900 hover:text-navy-900',
+        ]}
       >
         Client Portal
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
-      <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Free Consultation</Button>
-      <button type="button" id="nav-toggle" class="inline-flex size-11 items-center justify-center border border-line lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-navy-900"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+      {onDark ? (
+        <a href="/contact/" class="hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 font-body text-sm font-medium text-navy-900 transition-colors hover:bg-scooter hover:text-white sm:inline-flex">
+          Get in touch
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+      ) : (
+        <Button href="/contact/" variant="primary" class="hidden sm:inline-flex">Free Consultation</Button>
+      )}
+      <button type="button" id="nav-toggle" class:list={['inline-flex size-11 items-center justify-center lg:hidden', onDark ? 'border border-white/20 text-white' : 'border border-line text-navy-900']} aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
       </button>
     </div>
   </Container>
