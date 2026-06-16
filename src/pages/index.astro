@@ -63,31 +63,25 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative -mt-20 overflow-hidden bg-[#0a0a1c] text-white md:-mt-[8.25rem]">
-    <!-- Background imagery -->
+    <!-- Background video (iStock-1127723700 — per client design) -->
     <div class="pointer-events-none absolute inset-0">
-      <svg class="absolute bottom-0 left-0 h-full w-full opacity-[0.55]" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-        <defs>
-          <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#12122d" />
-            <stop offset="55%" stop-color="#1c2c5c" />
-            <stop offset="100%" stop-color="#0a0a1c" />
-          </linearGradient>
-          <linearGradient id="ridge-1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1f3062" stop-opacity="0.75" />
-            <stop offset="100%" stop-color="#0a0a1c" stop-opacity="0.85" />
-          </linearGradient>
-          <linearGradient id="ridge-2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#4986d5" stop-opacity="0.42" />
-            <stop offset="100%" stop-color="#12122d" stop-opacity="0.92" />
-          </linearGradient>
-        </defs>
-        <rect width="1440" height="900" fill="url(#sky-grad)" />
-        <path d="M0 600 L160 450 L320 540 L500 380 L680 520 L860 360 L1040 500 L1200 410 L1340 520 L1440 470 L1440 900 L0 900 Z" fill="url(#ridge-2)" />
-        <path d="M0 720 L140 600 L300 680 L460 540 L640 660 L820 530 L1000 640 L1160 560 L1320 640 L1440 580 L1440 900 L0 900 Z" fill="url(#ridge-1)" />
-        <path d="M0 820 L180 740 L360 800 L540 700 L720 800 L900 720 L1080 800 L1260 740 L1440 800 L1440 900 L0 900 Z" fill="#0a0a1c" />
-      </svg>
-      <div class="absolute inset-0 opacity-[0.18] mix-blend-screen" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
-      <img src="/images/home/hero-blur.png" alt="" aria-hidden="true" class="absolute left-1/2 top-[-18%] w-[1400px] -translate-x-1/2 opacity-60 blur-2xl" />
+      <video
+        src="/video/hero.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+        class="absolute inset-0 h-full w-full object-cover"
+      ></video>
+      <!-- Darken / cool the footage so the title stays legible -->
+      <div class="absolute inset-0 bg-[#0a0a1c]/55"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a1c]/30 via-transparent to-[#0a0a1c]/85"></div>
+      <!-- Pattern grid overlay -->
+      <div class="absolute inset-0 opacity-[0.16] mix-blend-screen" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
+      <!-- Radial blur glow -->
+      <img src="/images/home/hero-blur.png" alt="" aria-hidden="true" class="absolute left-1/2 top-[-18%] w-[1400px] -translate-x-1/2 opacity-50 blur-2xl" />
     </div>
 
     <Container width="wide" class="relative z-10">
@@ -98,7 +92,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
         </p>
 
         <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink-light max-w-[18ch]">
-          The Florida CPA firm <span class="italic">redefining accounting.</span>
+          The Florida CPA firm redefining accounting
         </h1>
 
         <p data-reveal class="mt-8 max-w-[58ch] font-display text-[clamp(1.05rem,1.6vw,1.4rem)] font-medium leading-snug tracking-[-0.01em] text-white/80">
@@ -130,7 +124,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 
       <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-12 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink md:col-span-7">
-          A full-service firm, <span class="italic">tailored to you.</span>
+          A full-service firm, tailored to you.
         </h2>
         <p class="font-display text-[18px] leading-relaxed text-[var(--color-text-body)] md:col-span-5 md:pt-3">
           From day-to-day accounting to high-stakes transactions and audits, we build a small senior team around each client — so the work is technically rigorous and the relationship stays personal.
@@ -168,7 +162,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
-          Built different. <span class="italic">On purpose.</span>
+          Built different. On purpose.
         </h2>
         <p class="font-display text-[18px] leading-relaxed text-white/75 md:col-span-5 md:pt-3">
           Alpine Mar pairs senior CPAs with modern workflows so clients get partner-level judgment without losing the response time of a smaller firm. We hire deliberately and stay small enough to know your name.
@@ -203,7 +197,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink md:col-span-8">
-          The firm that knows <span class="italic">your world,</span> not just your numbers.
+          The firm that knows your world, not just your numbers.
         </h2>
         <p class="font-display text-[18px] leading-relaxed text-[var(--color-text-body)] md:col-span-4 md:pt-3">
           Specialised teams for the industries we know best — so the playbooks are tested, the benchmarks are real, and you stop having to explain the basics.
@@ -258,7 +252,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
             <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Get in touch</span>
           </div>
           <h2 class="am-h1-display am-gradient-ink">
-            Let's get on a <span class="italic">first-name basis.</span>
+            Let's get on a first name basis.
           </h2>
           <p class="mt-7 max-w-[44ch] font-display text-[18px] leading-relaxed text-[var(--color-text-body)]">
             Tell us a little about what you're working on. We'll match you with a senior CPA on our team — usually within one business day.
@@ -325,7 +319,7 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
               <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Latest News</span>
             </div>
             <h2 class="am-h1-display am-gradient-ink">
-              From our <span class="italic">notebook.</span>
+              From our notebook.
             </h2>
           </div>
           <a href="/blog/" class="group inline-flex items-center gap-3 border-b border-navy-200 pb-2 font-display text-sm font-medium uppercase tracking-[0.16em] text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter">
