@@ -1,243 +1,372 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
 import { team } from '@/data/taxonomy';
 import { personGraph } from '@/data/schema';
+import { site } from '@/data/site';
 
-const initials = (name: string) =>
-  name.replace(/,.*$/, '').split(' ').slice(0, 2).map((w) => w[0]).join('');
-const cleanName = (name: string) => name.replace(/,\s*CPA$/, '');
-const credential = (name: string) => (/CPA/.test(name) ? 'CPA' : '');
-const leadership = team.slice(0, 4);
-const rest = team.slice(4);
 const schema = personGraph(team);
 
-// Stable pseudo-random tenure per name so the cards look real and don't shuffle on rebuild.
-const hash = (s: string) => Array.from(s).reduce((a, c) => a + c.charCodeAt(0), 0);
-const tenure = (name: string) => 1 + (hash(name) % 8); // 1–8 years
+// Photos for the 4-image collage under "Our Journey"
+const journeyPhotos = [
+  '/images/team/Pablo.jpeg',
+  '/images/team/Kevin.jpeg',
+  '/images/team/Cristina.jpeg',
+  '/images/team/Brian.jpeg',
+];
+
+// Carousel: members with photos
+const teamCards = team.filter((m: any) => m.photo);
+
+// Slugify helper for LinkedIn URLs (placeholder)
+const linkedinFor = (name: string) =>
+  `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(name.replace(/,\s*CPA$/, '') + ' Alpine Mar')}`;
+const emailFor = (name: string) => {
+  const first = name.split(' ')[0].toLowerCase();
+  return `mailto:${first}@alpinemar.com`;
+};
+
+const drives = [
+  {
+    title: 'Quality',
+    desc: "We bring big-firm rigour to every engagement — work signed off by a senior CPA who actually owns the file.",
+    icon: 'star',
+  },
+  {
+    title: 'Trust & Integrity',
+    desc: 'Straight answers, written-down scope, and an obligation to clients before deadlines or revenue.',
+    icon: 'handshake',
+  },
+  {
+    title: 'Innovation',
+    desc: 'A modern finance stack — cloud books, automation, and analytics — so judgment goes where it matters.',
+    icon: 'lightbulb',
+  },
+  {
+    title: 'Collaboration',
+    desc: 'One small senior team around your account, so the work is coordinated and nothing falls between desks.',
+    icon: 'collab',
+  },
+];
 ---
 
 <BaseLayout
-  rawTitle="About Us - Founders & Company Vision | Alpine Mar"
-  description="Learn more about Alpine Mar, the leading Florida CPA firm offering outsourced financial services for accounting, tax strategy & more."
+  rawTitle="About Us — Alpine Mar | Florida CPAs & Advisors"
+  description="Alpine Mar was founded in 2020 by a group of CPAs from the world's largest organizations to deliver big-firm experience with a fresh perspective. Meet the team."
   schema={schema}
 >
-  <!-- ═══════════════ Hero ═══════════════ -->
-  <section class="relative overflow-hidden bg-paper pt-16 lg:pt-24">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-70"></div>
-      <div class="float-slow absolute -right-24 -top-24 h-[520px] w-[520px] rounded-full bg-teal-500/12 blur-[150px]"></div>
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative isolate overflow-hidden bg-paper">
+    <!-- Background photo (team in office) -->
+    <div class="absolute inset-x-0 top-0 h-[78%]">
+      <img src="/images/hero-team.jpg" alt="" aria-hidden="true" class="h-full w-full object-cover object-center" />
+      <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/40 to-paper"></div>
     </div>
-    <Container width="wide" class="relative grid items-end gap-12 pb-20 lg:grid-cols-12 lg:gap-x-12 lg:pb-28">
-      <div class="lg:col-span-7" data-reveal>
-        <Eyebrow tone="dark">About Alpine Mar</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-lg">
-          Breaking molds. <span class="italic text-teal-600">Building relationships.</span>
-        </h1>
-        <p class="mt-9 max-w-2xl text-xl leading-relaxed text-navy-700">
-          Alpine Mar CPAs &amp; Advisors was founded in 2020 by a group of CPAs that bring experience
-          from some of the world’s largest and most sophisticated organizations. The team prides
-          itself on providing an unmatched level of expertise and service to individuals and
-          businesses of all sizes. Since our inception, Alpine Mar has focused on using technology
-          and experience to deliver industry leading results, service, and guidance.
-        </p>
-      </div>
-      <div class="lg:col-span-5" data-reveal>
-        <figure class="relative">
-          <div class="absolute -left-3 -top-3 hidden size-16 border-l border-t border-teal-500 lg:block" aria-hidden="true"></div>
-          <img src="/images/hero-team.jpg" alt="The Alpine Mar team in their Fort Lauderdale office" width="800" height="600" class="aspect-[4/3] w-full object-cover" />
-          <figcaption class="mt-3 flex justify-between font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400"><span>Founded 2020</span><span>Fort Lauderdale, FL</span></figcaption>
-        </figure>
+
+    <Container width="wide" class="relative z-10">
+      <div class="flex min-h-[440px] flex-col justify-end pt-32 pb-10 md:min-h-[560px] md:pt-44 md:pb-14">
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink">About Us</h1>
       </div>
     </Container>
   </section>
 
-  <!-- ═══════════════ Brand etymology (signature) ═══════════════ -->
-  <section class="grain relative overflow-hidden border-t border-line bg-navy-950 pt-24 pb-28 text-white lg:pt-32 lg:pb-36">
-    <div class="absolute left-1/2 top-0 h-[360px] w-[680px] -translate-x-1/2 rounded-full bg-teal-500/12 blur-[150px]" aria-hidden="true"></div>
-    <Mountains class="absolute bottom-0 left-0 h-40 w-full opacity-70" />
-    <Container width="wide" class="relative">
-      <div class="grid gap-12 lg:grid-cols-2 lg:gap-x-16" data-stagger>
-        <figure class="border-l-2 border-teal-500 pl-7">
-          <h2 class="text-6xl tracking-[-0.03em] text-white sm:text-7xl">Alpine</h2>
-          <figcaption class="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-teal-400">Adjective</figcaption>
-          <p class="mt-4 max-w-md text-lg leading-relaxed text-navy-200">
-            of, pertaining to, on, or part of any lofty mountain.
-          </p>
-        </figure>
-        <figure class="border-l-2 border-teal-500 pl-7">
-          <h2 class="text-6xl italic tracking-[-0.03em] text-teal-400 sm:text-7xl">Mar</h2>
-          <figcaption class="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-teal-400">Noun — the Spanish word for sea</figcaption>
-          <p class="mt-4 max-w-md text-lg leading-relaxed text-navy-200">
-            the expanse of salt water that covers most of the earth’s surface and surrounds its
-            landmasses.
-          </p>
-        </figure>
+  <!-- ═════════════ OUR JOURNEY ═════════════ -->
+  <section class="relative bg-white pt-12 md:pt-16">
+    <Container width="wide">
+      <!-- Mountains + Ocean collage with center logo -->
+      <div data-reveal class="relative overflow-hidden rounded-[2rem] border border-line">
+        <div class="grid grid-cols-2 gap-0">
+          <div class="relative aspect-[16/10] sm:aspect-[16/9]">
+            <!-- Mountain SVG -->
+            <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
+              <defs>
+                <linearGradient id="m-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c8d6e8" />
+                  <stop offset="100%" stop-color="#e9e3d6" />
+                </linearGradient>
+                <linearGradient id="m-snow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f5f8fc" />
+                  <stop offset="55%" stop-color="#a9b4c4" />
+                  <stop offset="100%" stop-color="#3e4659" />
+                </linearGradient>
+                <linearGradient id="m-foot" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7d6a4c" />
+                  <stop offset="100%" stop-color="#3a3324" />
+                </linearGradient>
+              </defs>
+              <rect width="800" height="480" fill="url(#m-sky)" />
+              <polygon points="0,250 130,140 230,210 330,90 470,220 580,150 700,240 800,200 800,480 0,480" fill="url(#m-snow)" />
+              <polygon points="0,360 110,300 220,360 340,310 450,370 570,330 690,400 800,360 800,480 0,480" fill="url(#m-foot)" />
+            </svg>
+          </div>
+          <div class="relative aspect-[16/10] sm:aspect-[16/9]">
+            <!-- Ocean SVG -->
+            <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
+              <defs>
+                <linearGradient id="o-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#dbd1bd" />
+                  <stop offset="100%" stop-color="#8c8772" />
+                </linearGradient>
+                <linearGradient id="o-water" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3a5870" />
+                  <stop offset="60%" stop-color="#1f3447" />
+                  <stop offset="100%" stop-color="#0f1c2a" />
+                </linearGradient>
+              </defs>
+              <rect width="800" height="200" fill="url(#o-sky)" />
+              <rect y="200" width="800" height="280" fill="url(#o-water)" />
+              <path d="M0,240 Q200,220 400,250 T800,235 L800,260 L0,260 Z" fill="#5b7d97" opacity="0.6" />
+              <path d="M0,290 Q200,270 400,300 T800,285 L800,310 L0,310 Z" fill="#3e5e7a" opacity="0.7" />
+              <path d="M0,360 Q200,340 400,370 T800,355 L800,400 L0,400 Z" fill="#1f3447" opacity="0.8" />
+            </svg>
+          </div>
+        </div>
+        <!-- Center logo medallion -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div class="flex size-20 items-center justify-center rounded-full bg-white shadow-[0_10px_40px_-10px_rgba(18,18,45,0.45)] md:size-28">
+            <img src="/favicon.svg" alt="Alpine Mar" class="size-10 md:size-14" />
+          </div>
+        </div>
       </div>
-    </Container>
-  </section>
 
-  <!-- ═══════════════ How we work — our commitments ═══════════════ -->
-  <section class="border-t border-line bg-paper py-24 lg:py-32">
-    <Container width="xl">
-      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
-        <div class="max-w-2xl">
-          <Eyebrow tone="dark">How we work</Eyebrow>
-          <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">
-            Eight commitments. <span class="italic text-teal-600">Written down.</span>
-          </h2>
-          <p class="mt-7 max-w-xl text-lg leading-relaxed text-navy-700">
-            How Alpine Mar approaches each engagement — set out plainly so prospective clients know what to expect from day one.
+      <!-- Indicator + 2-col title/paragraph -->
+      <div data-reveal data-speed="fast" class="mt-16 mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-1.5 rounded-full bg-scooter"></span>
+        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Our Journey</span>
+      </div>
+
+      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink md:col-span-6">
+          Breaking molds. Building relationships.
+        </h2>
+        <div class="flex flex-col gap-5 font-display text-[16.5px] leading-relaxed text-[var(--color-text-body)] md:col-span-6 md:pt-2">
+          <p>
+            Alpine Mar CPAs &amp; Advisors was founded in 2020 by a group of CPAs that bring experience from some of the world's largest and most sophisticated organizations. The team prides itself on providing an unmatched level of expertise and service to individuals and businesses of all sizes.
+          </p>
+          <p>
+            Since our inception, Alpine Mar has focused on using technology and experience to deliver industry leading results, service, and guidance.
           </p>
         </div>
-        <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400">8 commitments</span>
       </div>
 
-      <div class="mt-14 grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-2" data-stagger>
-        {[
-          {
-            k: 'Who runs your engagement',
-            am: 'Partner-led, partner-signed. The senior CPA you meet on the intro is the one running your file day-to-day.',
-          },
-          {
-            k: 'Response time',
-            am: 'Aim for one to two business days on routine matters. Filing-season weeks may take longer for non-urgent items.',
-          },
-          {
-            k: 'Fee model',
-            am: 'Fixed-fee, scoped before the work starts. No hourly meter on questions; scope changes documented in writing.',
-          },
-          {
-            k: 'Industry depth',
-            am: 'Eleven specialised verticals — including real estate, SaaS, healthcare, family office, and crypto.',
-          },
-          {
-            k: 'Tech stack',
-            am: 'We work natively in QuickBooks, NetSuite, Yardi, Mercury, Sage, ADP, and other modern finance platforms.',
-          },
-          {
-            k: 'Tax planning cadence',
-            am: 'Year-round planning rather than annual filing-only. Quarterly check-ins on positions and projections.',
-          },
-          {
-            k: 'Geography',
-            am: 'Florida-based; licensed across multiple US states under mobility provisions. Remote-friendly for out-of-state work.',
-          },
-          {
-            k: 'Minimum engagement',
-            am: 'Single-project and ongoing engagements both fit. No multi-year minimums to start.',
-          },
-        ].map((row, i) => (
-          <article class="border-b border-r border-line bg-paper p-7 lg:p-8">
-            <div class="flex items-center justify-between">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')} · Commitment</span>
-              <Icon name="check-circle" class="h-4 w-4 text-teal-600" />
-            </div>
-            <h3 class="mt-5 font-heading text-xl tracking-[-0.01em] text-navy-900">{row.k}</h3>
-            <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">{row.am}</p>
-          </article>
+      <!-- 4 photo row -->
+      <div data-stagger class="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        {journeyPhotos.map((src) => (
+          <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-navy-50">
+            <img src={src} alt="Alpine Mar team" class="h-full w-full object-cover" loading="lazy" />
+          </div>
         ))}
       </div>
-
-      <p class="mt-8 max-w-2xl font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
-        ↳ Every engagement starts with a no-cost intro conversation to confirm fit — both directions.
-      </p>
     </Container>
   </section>
 
-  <!-- ═══════════════ Values ═══════════════ -->
-  <section class="border-t border-line bg-paper pt-24 pb-28 lg:pt-32 lg:pb-36">
-    <Container width="wide" class="grid items-center gap-12 lg:grid-cols-12 lg:gap-x-16">
-      <div class="lg:col-span-5" data-reveal>
-        <figure class="relative">
-          <div class="absolute -right-3 -top-3 hidden size-20 border-r border-t border-teal-500 lg:block" aria-hidden="true"></div>
-          <img src="/images/manifesto-portrait.webp" alt="Alpine Mar advisors with a client" width="800" height="1000" loading="lazy" class="aspect-[4/5] w-full object-cover object-top" />
-        </figure>
+  <!-- ═════════════ WHAT DRIVES US ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0 opacity-30" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
+    <div class="pointer-events-none absolute inset-x-0 -top-1/3 h-[60%]" style="background:radial-gradient(ellipse at center, rgba(73,134,213,0.35), transparent 70%);"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/80">
+        <span class="block size-1.5 rounded-full bg-scooter"></span>
+        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">What Drives Us</span>
       </div>
-      <div class="lg:col-span-7" data-reveal>
-        <Eyebrow tone="dark">Our values</Eyebrow>
-        <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl">Valuing what matters most.</h2>
-        <p class="mt-8 max-w-xl text-xl leading-relaxed text-navy-700">
-          As Certified Public Accountants, and champions of entrepreneurship, we’re focused on the
-          numbers and the people behind them. Their stories are challenges faced, and obstacles
-          overcome. We’ve created an innovative, people-driven business to bring our clients some of
-          the best the industry has to offer.
+
+      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-6">
+          Valuing what matters most.
+        </h2>
+        <p class="font-display text-[16.5px] leading-relaxed text-white/75 md:col-span-6 md:pt-2">
+          As Certified Public Accountants, and champions of entrepreneurship, we're focused on the numbers and the people behind them. Their stories are challenges faced, and obstacles overcome. We've created an innovative, people-driven business to bring our clients some of the best the industry has to offer.
         </p>
       </div>
+
+      <ul data-stagger class="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {drives.map((d) => (
+          <li class="group flex flex-col gap-7 rounded-[1.5rem] bg-white p-8 text-[var(--color-text-head)] transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(51,187,220,0.45)]">
+            <span class="inline-flex size-12 items-center justify-center rounded-full border border-line text-scooter">
+              {d.icon === 'star' && (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              )}
+              {d.icon === 'handshake' && (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+              )}
+              {d.icon === 'lightbulb' && (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+              )}
+              {d.icon === 'collab' && (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2"/><path d="M15.5 21v-1.5a3.5 3.5 0 0 1 3.5-3.5h.5"/></svg>
+              )}
+            </span>
+            <h3 class="am-h5-display text-[var(--color-text-head)]">{d.title}</h3>
+            <p class="font-display text-[14.5px] leading-relaxed text-[var(--color-text-body)]">{d.desc}</p>
+          </li>
+        ))}
+      </ul>
     </Container>
   </section>
 
-  <!-- ═══════════════ Team ═══════════════ -->
-  <section class="border-t border-line bg-navy-50 pt-24 pb-28 lg:pt-32 lg:pb-36">
+  <!-- ═════════════ MEET THE TEAM ═════════════ -->
+  <section class="relative bg-white py-24 md:py-32">
     <Container width="wide">
-      <div class="max-w-3xl" data-reveal>
-        <Eyebrow tone="dark">The team</Eyebrow>
-        <h2 class="mt-6 text-4xl tracking-[-0.02em] text-navy-900 sm:text-5xl lg:text-6xl">It’s all about who you know. Meet the team:</h2>
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-1.5 rounded-full bg-scooter"></span>
+        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Meet the Team</span>
       </div>
 
-      <!-- leadership — editorial portrait plates with real photos -->
-      <div class="mt-16 grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-4" data-stagger>
-        {leadership.map((m: any, i) => (
-          <article class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper">
-            <!-- Portrait plate -->
-            <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-950">
-              {m.photo ? (
-                <>
-                  <img src={m.photo} alt={cleanName(m.name)} loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
-                  <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-950/70 via-navy-950/20 to-transparent" aria-hidden="true"></div>
-                </>
-              ) : (
-                <>
-                  <div class="grid-pattern absolute inset-0 opacity-30" aria-hidden="true"></div>
-                  <div class="absolute -bottom-6 -right-2 select-none" aria-hidden="true">
-                    <span class="text-outline-light block font-heading text-[12rem] font-semibold leading-none">{initials(m.name)}</span>
+      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink md:col-span-7">
+          It's all about who you know. Meet the team:
+        </h2>
+        <p class="font-display text-[16.5px] leading-relaxed text-[var(--color-text-body)] md:col-span-5 md:pt-2">
+          Our team comes from some of the largest, most sophisticated organizations in the country, and they chose to be here. Because at Alpine Mar, the work is better when the relationships are too.
+        </p>
+      </div>
+
+      <!-- Carousel -->
+      <div class="relative mt-16">
+        <div id="team-track" class="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {teamCards.map((m: any) => {
+            const display = m.name.replace(/,\s*CPA$/, '');
+            const isCpa = /CPA/.test(m.name);
+            return (
+              <article class="group flex w-[78%] flex-none snap-start flex-col overflow-hidden rounded-[1.5rem] border border-line bg-white transition-colors hover:border-delft hover:bg-[#12122d] hover:text-white sm:w-[44%] lg:w-[calc((100%-3rem)/3)]">
+                <div class="flex flex-col gap-5 p-7">
+                  <div class="size-[148px] overflow-hidden rounded-[1rem] bg-navy-50">
+                    <img src={m.photo} alt={display} class="h-full w-full object-cover" loading="lazy" />
                   </div>
-                </>
-              )}
-              <span class="absolute left-5 top-5 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-300">Partner · {String(i + 1).padStart(2, '0')}</span>
-              <span class="absolute bottom-5 left-5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-white/85">Fort Lauderdale · FL</span>
-              <span class="absolute left-0 top-0 size-10 border-l border-t border-teal-500/70" aria-hidden="true"></span>
-            </div>
-            <div class="flex flex-col gap-1.5 p-7">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{m.role}</span>
-              <h3 class="text-xl tracking-[-0.01em] text-navy-900">{cleanName(m.name)}</h3>
-              {credential(m.name) && (
-                <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">{credential(m.name)}</span>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
+                  <div class="flex flex-col gap-1">
+                    <h3 class="am-h5-display am-gradient-ink transition-all duration-300 group-hover:[background-image:none] group-hover:!text-white">
+                      {display}{isCpa && <span>, CPA</span>}
+                    </h3>
+                  </div>
+                </div>
 
-      <!-- rest — compact horizontal cards -->
-      <p class="mt-20 mb-6 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-500" data-reveal data-speed="fast">The team · {rest.length} more</p>
-      <div class="grid gap-px border-l border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-3" data-stagger>
-        {rest.map((m: any, i) => (
-          <article class="group relative flex items-center gap-5 border-b border-r border-line bg-paper p-6 transition-colors duration-300 hover:bg-white">
-            <div class="relative flex aspect-square w-20 shrink-0 items-center justify-center overflow-hidden bg-gradient-to-br from-navy-900 to-navy-800">
-              {m.photo ? (
-                <img src={m.photo} alt={cleanName(m.name)} loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center" />
-              ) : (
-                <span class="text-outline-light block font-heading text-[3.25rem] font-semibold leading-none" aria-hidden="true">{initials(m.name)}</span>
-              )}
-              <span class="absolute bottom-1 right-1 font-mono text-[0.55rem] uppercase tracking-[0.14em] text-teal-300 [text-shadow:0_1px_2px_rgba(0,0,0,0.4)]">{String(leadership.length + i + 1).padStart(2, '0')}</span>
-            </div>
-            <div class="min-w-0">
-              <h3 class="truncate text-base tracking-[-0.01em] text-navy-900">{cleanName(m.name)}</h3>
-              <p class="mt-1 line-clamp-2 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-500">{m.role}</p>
-              {credential(m.name) && (
-                <span class="mt-1.5 inline-block font-mono text-[0.6rem] uppercase tracking-[0.18em] text-teal-700">{credential(m.name)}</span>
-              )}
-            </div>
-          </article>
-        ))}
+                <dl class="grid grid-cols-1 border-t border-line text-[14px] transition-colors duration-300 group-hover:border-white/15">
+                  <div class="flex items-center justify-between gap-4 border-b border-line px-7 py-3.5 transition-colors duration-300 group-hover:border-white/15">
+                    <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Role</dt>
+                    <dd class="text-right font-display text-[var(--color-text-head)] transition-colors group-hover:text-white">{m.role}</dd>
+                  </div>
+                  <div class="flex items-center justify-between gap-4 px-7 py-3.5">
+                    <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Based</dt>
+                    <dd class="text-right font-display text-[var(--color-text-head)] transition-colors group-hover:text-white">Miami</dd>
+                  </div>
+                </dl>
+
+                <div class="flex items-center gap-3 border-t border-line px-7 py-4 transition-colors duration-300 group-hover:border-white/15">
+                  <a href={linkedinFor(display)} target="_blank" rel="noopener" aria-label={`${display} on LinkedIn`} class="inline-flex size-9 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/20 group-hover:text-white">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V10.5H5.7v7.84h2.64Zm-1.32-8.92a1.53 1.53 0 1 0 0-3.06 1.53 1.53 0 0 0 0 3.06Zm11.32 8.92v-4.3c0-2.3-1.23-3.37-2.88-3.37a2.49 2.49 0 0 0-2.26 1.25v-1.07h-2.64v7.49h2.64v-4.16c0-1.1.21-2.17 1.57-2.17 1.34 0 1.34 1.26 1.34 2.24v4.09h2.23Z"/></svg>
+                  </a>
+                  <a href={emailFor(display)} aria-label={`Email ${display}`} class="inline-flex size-9 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/20 group-hover:text-white">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <!-- Dots + arrows -->
+        <div class="mt-10 flex items-center justify-between gap-6">
+          <div id="team-dots" class="flex items-center gap-2">
+            {Array.from({ length: Math.max(1, teamCards.length - 2) }).map((_, i) => (
+              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-6 rounded-full bg-line transition-colors data-[active=1]:bg-delft"></button>
+            ))}
+          </div>
+          <div class="flex items-center gap-3">
+            <button type="button" id="team-prev" aria-label="Previous" class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+            </button>
+            <button type="button" id="team-next" aria-label="Next" class="inline-flex size-12 items-center justify-center rounded-full bg-delft text-white transition-colors hover:bg-scooter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </Container>
   </section>
 
-  <CtaSection />
+  <!-- ═════════════ CTA — We can't wait to meet you ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122d] py-20 text-white md:py-28">
+    <div class="pointer-events-none absolute inset-0 opacity-25" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
+    <div class="pointer-events-none absolute -bottom-1/3 left-1/2 h-[110%] w-[110%] -translate-x-1/2" style="background:radial-gradient(ellipse at center, rgba(73,134,213,0.35), transparent 65%);"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/80">
+        <span class="block size-1.5 rounded-full bg-scooter"></span>
+        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">We can't wait to meet you</span>
+      </div>
+
+      <div data-reveal class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
+          Let's talk. The right financial partner makes all the difference.
+        </h2>
+        <div class="md:col-span-4 md:flex md:justify-end">
+          <a href="/contact/" class="group inline-flex items-center gap-3 rounded-full bg-scooter px-7 py-4 font-display text-sm font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
+            Request a Consultation
+            <span class="inline-flex size-7 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-1 group-hover:bg-navy-950/10">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ "Alpine Mar" big banner (light variant) ═════════════ -->
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="wide" class="relative">
+      <div class="flex flex-col items-center gap-6 pb-16 pt-12 text-center md:pb-24 md:pt-16">
+        <div class="flex size-16 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_-10px_rgba(18,18,45,0.25)]">
+          <img src="/favicon.svg" alt="Alpine Mar" class="size-9" />
+        </div>
+        <h2 data-reveal class="am-gradient-ink font-display font-medium leading-[0.85] tracking-[-0.045em]" style="font-size:clamp(4rem,18vw,18rem);">
+          Alpine Mar
+        </h2>
+      </div>
+    </Container>
+  </section>
+
+  <script>
+    function initTeamCarousel() {
+      const track = document.getElementById('team-track');
+      if (!track || (track as any).__teamBound) return;
+      (track as any).__teamBound = true;
+      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#team-dots [data-dot]'));
+      const prev = document.getElementById('team-prev');
+      const next = document.getElementById('team-next');
+      const cards = track.children;
+      const total = cards.length;
+
+      const setActive = (i: number) =>
+        dots.forEach((d, idx) => { d.dataset.active = idx === i ? '1' : '0'; });
+
+      const scrollToIndex = (i: number) => {
+        const card = cards[i] as HTMLElement | undefined;
+        if (!card) return;
+        track.scrollTo({ left: card.offsetLeft - 24, behavior: 'smooth' });
+      };
+
+      const detectActive = () => {
+        const left = track.scrollLeft;
+        let best = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i < total; i++) {
+          const card = cards[i] as HTMLElement;
+          const d = Math.abs(card.offsetLeft - 24 - left);
+          if (d < bestDist) { bestDist = d; best = i; }
+        }
+        const lastDot = dots.length - 1;
+        setActive(Math.min(best, lastDot));
+        return best;
+      };
+
+      track.addEventListener('scroll', () => requestAnimationFrame(detectActive));
+      dots.forEach((d, i) => d.addEventListener('click', () => scrollToIndex(i)));
+      prev?.addEventListener('click', () => scrollToIndex(Math.max(0, detectActive() - 1)));
+      next?.addEventListener('click', () => scrollToIndex(Math.min(total - 1, detectActive() + 1)));
+      setActive(0);
+    }
+    initTeamCarousel();
+    document.addEventListener('astro:after-swap', initTeamCarousel);
+  </script>
 </BaseLayout>

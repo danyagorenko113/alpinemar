@@ -256,9 +256,9 @@
   .am-hero-display {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(2.5rem, 6.4vw, 5.25rem); /* 84 px */
-    line-height: 1.1;
-    letter-spacing: -0.013em;
+    font-size: clamp(2.6rem, 6.8vw, 5.25rem); /* 84 px desktop */
+    line-height: 0.95;
+    letter-spacing: -0.02em;
   }
   .am-h5-display {
     font-family: var(--font-display);
