@@ -1,58 +1,23 @@
 ---
 import Container from './Container.astro';
 import { site } from '@/data/site';
-
-const path = Astro.url.pathname;
-const onDark = path === '/';
-// "Financial Services" is everything on this domain; "IT" links to the
-// separate IT-services portal at site.itPortal.
-const isIT = false;
 ---
 
-<div
-  class:list={[
-    'relative z-50 hidden border-b py-3 text-[12.5px] tracking-[-0.005em] md:block',
-    onDark ? 'border-white/10 bg-[#0a0a1c]/85 text-white/85 backdrop-blur-md' : 'border-line bg-white text-[var(--color-text-head)]',
-  ]}
->
+<!-- Always dark navy strip per Figma (Financial Services / IT division tabs). -->
+<div class="relative z-50 hidden border-b border-white/10 bg-[#0a0a1c] py-3 text-[12.5px] tracking-[-0.005em] text-white/85 md:block">
   <Container width="wide" class="flex items-center justify-between gap-6">
-    <!-- Division tabs -->
     <div class="flex items-center gap-7">
-      <a
-        href="/"
-        class:list={[
-          'inline-flex items-center gap-2 pb-1 font-medium transition-colors',
-          !isIT ? (onDark ? 'border-b border-scooter text-white' : 'border-b border-scooter text-[var(--color-text-head)]') : 'opacity-70 hover:opacity-100',
-        ]}
-        aria-current={!isIT ? 'page' : undefined}
-      >
+      <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current="page">
         <span class="block size-1.5 rounded-full bg-scooter"></span>
         Financial Services
       </a>
-      <a
-        href={site.itPortal}
-        target="_blank"
-        rel="noopener"
-        class:list={[
-          'inline-flex items-center gap-1.5 pb-1 font-medium transition-colors',
-          onDark ? 'text-white/70 hover:text-white' : 'text-[var(--color-text-body)] hover:text-[var(--color-text-head)]',
-        ]}
-      >
+      <a href={site.itPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 pb-1 font-medium text-white/70 transition-colors hover:text-white">
         IT
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
     </div>
 
-    <!-- Client Portal CTA -->
-    <a
-      href={site.clientPortal}
-      target="_blank"
-      rel="noopener"
-      class:list={[
-        'inline-flex items-center gap-1.5 font-medium transition-colors',
-        onDark ? 'text-white/85 hover:text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter',
-      ]}
-    >
+    <a href={site.clientPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-medium text-white/85 transition-colors hover:text-scooter">
       Client Portal
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
     </a>

@@ -27,26 +27,10 @@ const emailFor = (name: string) => {
 };
 
 const drives = [
-  {
-    title: 'Quality',
-    desc: "We bring big-firm rigour to every engagement — work signed off by a senior CPA who actually owns the file.",
-    icon: 'star',
-  },
-  {
-    title: 'Trust & Integrity',
-    desc: 'Straight answers, written-down scope, and an obligation to clients before deadlines or revenue.',
-    icon: 'handshake',
-  },
-  {
-    title: 'Innovation',
-    desc: 'A modern finance stack — cloud books, automation, and analytics — so judgment goes where it matters.',
-    icon: 'lightbulb',
-  },
-  {
-    title: 'Collaboration',
-    desc: 'One small senior team around your account, so the work is coordinated and nothing falls between desks.',
-    icon: 'collab',
-  },
+  { title: 'Quality',           icon: 'star' },
+  { title: 'Trust & Integrity', icon: 'handshake' },
+  { title: 'Innovation',        icon: 'lightbulb' },
+  { title: 'Collaboration',     icon: 'collab' },
 ];
 ---
 
@@ -57,27 +41,22 @@ const drives = [
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
-    <!-- Background photo (team in office) -->
-    <div class="absolute inset-x-0 top-0 h-[78%]">
-      <img src="/images/hero-team.jpg" alt="" aria-hidden="true" class="h-full w-full object-cover object-center" />
-      <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-white/40 to-paper"></div>
-    </div>
-
-    <Container width="wide" class="relative z-10">
-      <div class="flex min-h-[440px] flex-col justify-end pt-32 pb-10 md:min-h-[560px] md:pt-44 md:pb-14">
+    <div class="relative h-[460px] w-full md:h-[560px]">
+      <img src="/images/hero-team.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <!-- Subtle gradient at bottom to ensure title legibility -->
+      <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
+      <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
         <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink">About Us</h1>
-      </div>
-    </Container>
+      </Container>
+    </div>
   </section>
 
-  <!-- ═════════════ OUR JOURNEY ═════════════ -->
-  <section class="relative bg-white pt-12 md:pt-16">
+  <!-- ═════════════ Mountains + Ocean collage (full-width strip) ═════════════ -->
+  <section class="relative bg-white pt-10 md:pt-14">
     <Container width="wide">
-      <!-- Mountains + Ocean collage with center logo -->
-      <div data-reveal class="relative overflow-hidden rounded-[2rem] border border-line">
+      <div data-reveal class="relative overflow-hidden">
         <div class="grid grid-cols-2 gap-0">
-          <div class="relative aspect-[16/10] sm:aspect-[16/9]">
-            <!-- Mountain SVG -->
+          <div class="relative aspect-[16/10] sm:aspect-[16/8]">
             <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
               <defs>
                 <linearGradient id="m-sky" x1="0" y1="0" x2="0" y2="1">
@@ -99,8 +78,7 @@ const drives = [
               <polygon points="0,360 110,300 220,360 340,310 450,370 570,330 690,400 800,360 800,480 0,480" fill="url(#m-foot)" />
             </svg>
           </div>
-          <div class="relative aspect-[16/10] sm:aspect-[16/9]">
-            <!-- Ocean SVG -->
+          <div class="relative aspect-[16/10] sm:aspect-[16/8]">
             <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
               <defs>
                 <linearGradient id="o-sky" x1="0" y1="0" x2="0" y2="1">
@@ -123,20 +101,24 @@ const drives = [
         </div>
         <!-- Center logo medallion -->
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div class="flex size-20 items-center justify-center rounded-full bg-white shadow-[0_10px_40px_-10px_rgba(18,18,45,0.45)] md:size-28">
-            <img src="/favicon.svg" alt="Alpine Mar" class="size-10 md:size-14" />
+          <div class="flex size-16 items-center justify-center rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.45)] md:size-24">
+            <img src="/favicon.svg" alt="Alpine Mar" class="size-8 md:size-12" />
           </div>
         </div>
       </div>
+    </Container>
+  </section>
 
-      <!-- Indicator + 2-col title/paragraph -->
-      <div data-reveal data-speed="fast" class="mt-16 mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+  <!-- ═════════════ OUR JOURNEY ═════════════ -->
+  <section class="relative bg-white py-16 md:py-20">
+    <Container width="wide">
+      <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
         <span class="block size-1.5 rounded-full bg-scooter"></span>
         <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Our Journey</span>
       </div>
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink md:col-span-6">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-6">
           Breaking molds. Building relationships.
         </h2>
         <div class="flex flex-col gap-5 font-display text-[16.5px] leading-relaxed text-[var(--color-text-body)] md:col-span-6 md:pt-2">
@@ -149,8 +131,7 @@ const drives = [
         </div>
       </div>
 
-      <!-- 4 photo row -->
-      <div data-stagger class="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+      <div data-stagger class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
         {journeyPhotos.map((src) => (
           <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-navy-50">
             <img src={src} alt="Alpine Mar team" class="h-full w-full object-cover" loading="lazy" />
@@ -180,25 +161,24 @@ const drives = [
         </p>
       </div>
 
-      <ul data-stagger class="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul data-stagger class="mt-16 grid grid-cols-2 gap-5 lg:grid-cols-4">
         {drives.map((d) => (
-          <li class="group flex flex-col gap-7 rounded-[1.5rem] bg-white p-8 text-[var(--color-text-head)] transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(51,187,220,0.45)]">
-            <span class="inline-flex size-12 items-center justify-center rounded-full border border-line text-scooter">
+          <li class="flex aspect-square flex-col items-center justify-center gap-5 rounded-[1.5rem] bg-white p-8 text-center text-[var(--color-text-head)] transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(51,187,220,0.45)]">
+            <span class="inline-flex items-center justify-center text-scooter">
               {d.icon === 'star' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               )}
               {d.icon === 'handshake' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
               )}
               {d.icon === 'lightbulb' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
               )}
               {d.icon === 'collab' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2"/><path d="M15.5 21v-1.5a3.5 3.5 0 0 1 3.5-3.5h.5"/></svg>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2"/><path d="M15.5 21v-1.5a3.5 3.5 0 0 1 3.5-3.5h.5"/></svg>
               )}
             </span>
-            <h3 class="am-h5-display text-[var(--color-text-head)]">{d.title}</h3>
-            <p class="font-display text-[14.5px] leading-relaxed text-[var(--color-text-body)]">{d.desc}</p>
+            <h3 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{d.title}</h3>
           </li>
         ))}
       </ul>
@@ -325,6 +305,32 @@ const drives = [
       </div>
     </Container>
   </section>
+
+  <style>
+    /* First team card permanently in "active" navy state per Figma default. */
+    #team-track > article:first-child {
+      background-color: #12122d;
+      border-color: var(--color-delft);
+      color: #fff;
+    }
+    #team-track > article:first-child h3 {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: #fff !important;
+      color: #fff !important;
+    }
+    #team-track > article:first-child dl,
+    #team-track > article:first-child .border-line {
+      border-color: rgba(255, 255, 255, 0.14) !important;
+    }
+    #team-track > article:first-child dt { color: rgba(255, 255, 255, 0.65); }
+    #team-track > article:first-child dd { color: #fff; }
+    #team-track > article:first-child a {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+  </style>
 
   <script>
     function initTeamCarousel() {
