@@ -9,12 +9,17 @@ export async function getStaticPaths() {
   const services = await getCollection('services');
   return services.map((s) => ({
     params: { slug: s.data.path.replace(/^\/services\//, '').replace(/\/$/, '') },
-    props: { service: s, all: services },
+    props: { service: s, all: services, slug: s.data.path.replace(/^\/services\//, '').replace(/\/$/, '') },
   }));
 }
 
-const { service, all } = Astro.props;
+const { service, all, slug } = Astro.props;
 const { Content } = await render(service);
+
+// AI-generated hero per service (script: scripts/generate-service-covers.mjs).
+// Falls back to frontmatter cover, then to the About hero image.
+const heroImage = `/images/services/${slug}.jpg`;
+const coverSrc = service.data.cover ?? heroImage;
 
 const taxonomyEntry = allServices.find((x) => x.href === service.data.path);
 const group = (service.data.group ?? taxonomyEntry?.group) as
@@ -86,7 +91,7 @@ const schema = [
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
     <div class="relative h-[380px] w-full md:h-[480px]">
-      <img src={service.data.cover ?? '/images/about/hero.jpg'} alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <img src={coverSrc} alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" onerror="this.src='/images/about/hero.jpg'" />
       <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
 
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
