@@ -7,12 +7,15 @@ import { site } from '@/data/site';
 
 const schema = personGraph(team);
 
-// Photos for the 4-image collage under "Our Journey"
+// Photos for the drag-to-scroll gallery under "Breaking molds. Building relationships."
+// 6 photos — 4 fully visible at a time on desktop, edges cropped per Figma.
 const journeyPhotos = [
-  '/images/team/Pablo.jpeg',
-  '/images/team/Kevin.jpeg',
-  '/images/team/Cristina.jpeg',
-  '/images/team/Brian.jpeg',
+  '/images/about/collage-1.jpg',
+  '/images/about/collage-2.jpg',
+  '/images/about/collage-3.jpg',
+  '/images/about/collage-4.jpg',
+  '/images/about/collage-5.jpg',
+  '/images/about/hero.jpg',
 ];
 
 // Carousel: members with photos
@@ -42,7 +45,7 @@ const drives = [
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
     <div class="relative h-[460px] w-full md:h-[560px]">
-      <img src="/images/hero-team.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <img src="/images/about/hero.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
       <!-- Subtle gradient at bottom to ensure title legibility -->
       <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
@@ -131,14 +134,22 @@ const drives = [
         </div>
       </div>
 
-      <div data-stagger class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+    </Container>
+
+    <!-- Edge-bleed drag-to-scroll gallery -->
+    <div data-reveal class="mt-14 md:mt-16">
+      <div
+        id="journey-gallery"
+        class="flex select-none gap-4 overflow-x-auto px-[6vw] pb-3 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style="cursor:grab;"
+      >
         {journeyPhotos.map((src) => (
-          <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-navy-50">
-            <img src={src} alt="Alpine Mar team" class="h-full w-full object-cover" loading="lazy" />
+          <div class="aspect-[4/5] w-[44%] flex-none overflow-hidden rounded-2xl bg-navy-50 sm:w-[30%] md:w-[22%] lg:w-[19%]">
+            <img src={src} alt="Alpine Mar team" class="pointer-events-none h-full w-full object-cover" loading="lazy" draggable="false" />
           </div>
         ))}
       </div>
-    </Container>
+    </div>
   </section>
 
   <!-- ═════════════ WHAT DRIVES US ═════════════ -->
@@ -374,5 +385,43 @@ const drives = [
     }
     initTeamCarousel();
     document.addEventListener('astro:after-swap', initTeamCarousel);
+
+    // Drag-to-scroll for the "Breaking molds" gallery
+    function initJourneyDrag() {
+      const el = document.getElementById('journey-gallery') as HTMLElement | null;
+      if (!el || (el as any).__dragBound) return;
+      (el as any).__dragBound = true;
+
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let moved = false;
+
+      el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        moved = false;
+        el.style.cursor = 'grabbing';
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      const release = () => {
+        isDown = false;
+        el.style.cursor = 'grab';
+      };
+      el.addEventListener('mouseleave', release);
+      el.addEventListener('mouseup', release);
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.4;
+        if (Math.abs(walk) > 3) moved = true;
+        el.scrollLeft = scrollLeft - walk;
+      });
+      // Prevent accidental child-click after drag
+      el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    }
+    initJourneyDrag();
+    document.addEventListener('astro:after-swap', initJourneyDrag);
   </script>
 </BaseLayout>
