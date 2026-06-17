@@ -73,9 +73,9 @@ const dateFmt = (d: string | Date) =>
   description="Alpine Mar is the Florida CPA firm blending big-firm experience with a fresh perspective on tax, accounting, advisory, and audit — personalized attention for HNW individuals, healthcare, and growth-stage businesses."
 >
   <!-- ═════════════ HERO ═════════════ -->
-  <section class="relative bg-white">
-    <!-- Full-width video on top -->
-    <div class="relative w-full overflow-hidden">
+  <section class="relative overflow-hidden bg-paper">
+    <!-- Full-bleed background video -->
+    <div class="absolute inset-0">
       <video
         src="/video/hero.mp4"
         autoplay
@@ -84,25 +84,26 @@ const dateFmt = (d: string | Date) =>
         playsinline
         preload="auto"
         aria-hidden="true"
-        class="block h-[44vh] w-full object-cover md:h-[58vh]"
+        class="absolute inset-0 h-full w-full object-cover"
       ></video>
+      <!-- Soft fade at top + bottom into paper bg for legibility -->
+      <div class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white/85 to-transparent"></div>
+      <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white/70 to-transparent"></div>
     </div>
 
-    <!-- Text content below -->
-    <Container width="wide">
-      <div data-reveal class="grid grid-cols-1 items-end gap-10 py-14 md:grid-cols-12 md:gap-16 md:py-20">
-        <h1 class="am-hero-display am-gradient-ink md:col-span-7">
+    <Container width="wide" class="relative">
+      <div class="grid min-h-[88vh] grid-rows-[1fr_auto] gap-12 py-16 md:py-24">
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink max-w-[18ch] self-start">
           The Florida CPA firm redefining accounting
         </h1>
-        <div class="flex flex-col gap-8 md:col-span-5 md:pb-3">
-          <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
-            Whether you're seeking expert tax planning services, fractional CFO services for financial guidance, reliable outsourced accounting services, or our perfect blend of industry experience, technology, and hands-on care has got you covered.
+
+        <div data-reveal class="flex max-w-[58ch] flex-col gap-8 self-end">
+          <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
+            Whether you're seeking expert tax planning services, efficient tax preparation services, fractional CFO services for financial guidance, reliable outsourced accounting services, or valuable transaction advisory services, our perfect blend of industry experience, technology, and hands-on care has got you covered.
           </p>
-          <a href="/about-us/" class="group inline-flex w-fit items-center gap-3 rounded-[4px] border border-line px-5 py-3 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122d]">
+          <a href="/about-us/" class="group inline-flex w-fit items-center gap-2 border-b border-[#12122d] pb-1.5 font-display text-[18px] font-medium text-[#12122d] transition-colors hover:text-scooter">
             View More
-            <span class="inline-flex size-6 items-center justify-center rounded-full bg-[#12122d] text-white transition-transform group-hover:translate-x-1">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-            </span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
       </div>
