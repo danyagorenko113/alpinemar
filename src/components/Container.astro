@@ -2,15 +2,16 @@
 interface Props {
   as?: keyof HTMLElementTagNameMap;
   class?: string;
-  width?: 'default' | 'narrow' | 'wide' | 'xl';
+  width?: 'reading' | 'narrow' | 'default' | 'wide' | 'xl';
 }
 const { as = 'div', class: className = '', width = 'default' } = Astro.props;
 const Tag = as as any;
 const widths = {
-  narrow: 'max-w-3xl',
+  reading: 'max-w-[720px]', // blog body, long-form prose
+  narrow:  'max-w-3xl',     // focused sales pages
   default: 'max-w-6xl',
-  wide: 'max-w-7xl',
-  xl: 'max-w-[88rem]',
+  wide:    'max-w-7xl',     // every redesign section uses this
+  xl:      'max-w-[88rem]',
 };
 ---
 

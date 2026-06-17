@@ -560,4 +560,388 @@ const body = [
       </ul>
     </Container>
   </section>
+
+  <!-- ═════════════ CONTAINER WIDTHS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">12 · Container widths</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Three widths, one component</h2>
+
+      <div class="flex flex-col gap-4">
+        <div class="rounded-[6px] border border-line bg-white py-4">
+          <div class="mx-auto max-w-[1280px] rounded-[4px] bg-paper px-6 py-5">
+            <code class="font-mono text-[12px] text-[var(--color-text-head)]">width="wide"</code>
+            <span class="ml-3 font-display text-[13px] text-[var(--color-text-body)]">max-w-[1280px] — default for every section</span>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-line bg-white py-4">
+          <div class="mx-auto max-w-[860px] rounded-[4px] bg-paper px-6 py-5">
+            <code class="font-mono text-[12px] text-[var(--color-text-head)]">width="narrow"</code>
+            <span class="ml-3 font-display text-[13px] text-[var(--color-text-body)]">max-w-[860px] — sales pages with focus column</span>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-line bg-white py-4">
+          <div class="mx-auto max-w-[720px] rounded-[4px] bg-paper px-6 py-5">
+            <code class="font-mono text-[12px] text-[var(--color-text-head)]">width="reading"</code>
+            <span class="ml-3 font-display text-[13px] text-[var(--color-text-body)]">max-w-[720px] — long-form prose (blog posts, policy)</span>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-line bg-white py-4">
+          <div class="rounded-[4px] bg-paper px-6 py-5">
+            <code class="font-mono text-[12px] text-[var(--color-text-head)]">no Container — full bleed</code>
+            <span class="ml-3 font-display text-[13px] text-[var(--color-text-body)]">image strips (About) + marquee + footer wordmark only</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-6 font-display text-[13px] leading-[1.6] text-[var(--color-text-body)]">Rule: pick the widest one that still respects the content. Body copy never exceeds 72ch — narrow before stretching past that.</p>
+    </Container>
+  </section>
+
+  <!-- ═════════════ SECTION RHYTHM ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">13 · Section rhythm</span>
+      </div>
+      <h2 class="am-h2-display mb-3 text-[var(--color-text-head)]">Light → dark → light → CTA</h2>
+      <p class="mb-12 max-w-[60ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
+        Every page alternates light and dark sections. Two dark sections in a row is okay; three in a row reads heavy. The page always closes with a dark CTA strip + the global footer.
+      </p>
+
+      <!-- Home rhythm diagram -->
+      <div class="mb-12">
+        <h3 class="am-h5-display mb-5 text-[var(--color-text-head)]">Home — current rhythm</h3>
+        <ol class="grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-7">
+          {[
+            { bg: 'bg-paper',      label: 'Hero',              tone: 'light' },
+            { bg: 'bg-paper',      label: 'Platforms',         tone: 'light' },
+            { bg: 'bg-white',      label: 'Our Services',      tone: 'light' },
+            { bg: 'bg-[#12122D]',  label: 'About',             tone: 'dark'  },
+            { bg: 'bg-white',      label: 'Industries',        tone: 'light' },
+            { bg: 'bg-[#12122D]',  label: 'Contact form',      tone: 'dark'  },
+            { bg: 'bg-white',      label: 'Latest Insights',   tone: 'light' },
+          ].map((s) => (
+            <li class={`${s.bg} flex flex-col items-start gap-2 rounded-[6px] border border-line p-4`}>
+              <span class={`block size-2 ${s.tone === 'dark' ? 'bg-scooter' : 'bg-[#12122D]'}`}></span>
+              <span class={`font-display text-[13px] font-medium ${s.tone === 'dark' ? 'text-white' : 'text-[var(--color-text-head)]'}`}>{s.label}</span>
+              <code class={`font-mono text-[10px] ${s.tone === 'dark' ? 'text-white/60' : 'text-[var(--color-text-body)]'}`}>{s.tone}</code>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div>
+        <h3 class="am-h5-display mb-5 text-[var(--color-text-head)]">About — current rhythm</h3>
+        <ol class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-6">
+          {[
+            { bg: 'bg-paper',      label: 'Hero',          tone: 'light' },
+            { bg: 'bg-white',      label: 'Collage',       tone: 'light' },
+            { bg: 'bg-white',      label: 'Our Journey',   tone: 'light' },
+            { bg: 'bg-[#12122D]',  label: 'What Drives Us', tone: 'dark' },
+            { bg: 'bg-white',      label: 'Meet the Team', tone: 'light' },
+            { bg: 'bg-[#12122D]',  label: 'CTA',           tone: 'dark'  },
+          ].map((s) => (
+            <li class={`${s.bg} flex flex-col items-start gap-2 rounded-[6px] border border-line p-4`}>
+              <span class={`block size-2 ${s.tone === 'dark' ? 'bg-scooter' : 'bg-[#12122D]'}`}></span>
+              <span class={`font-display text-[13px] font-medium ${s.tone === 'dark' ? 'text-white' : 'text-[var(--color-text-head)]'}`}>{s.label}</span>
+              <code class={`font-mono text-[10px] ${s.tone === 'dark' ? 'text-white/60' : 'text-[var(--color-text-body)]'}`}>{s.tone}</code>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ BREADCRUMBS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">14 · Breadcrumbs</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Hero-top trail</h2>
+
+      <div class="rounded-[6px] border border-line bg-white p-8">
+        <nav aria-label="Breadcrumb">
+          <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-[var(--color-text-body)]">
+            <li><a href="#" class="transition-colors hover:text-scooter">Home</a></li>
+            <li aria-hidden="true" class="text-[var(--color-text-body)]/55">/</li>
+            <li><a href="#" class="transition-colors hover:text-scooter">Services</a></li>
+            <li aria-hidden="true" class="text-[var(--color-text-body)]/55">/</li>
+            <li aria-current="page" class="text-[var(--color-text-head)]">Tax Planning</li>
+          </ol>
+        </nav>
+      </div>
+
+      <p class="mt-4 font-display text-[13px] leading-[1.6] text-[var(--color-text-body)]">
+        Place above the page H1 on every detail page. `/` separator stays at 55% opacity. The current page is never a link.
+      </p>
+    </Container>
+  </section>
+
+  <!-- ═════════════ FAQ / ACCORDION ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">15 · FAQ / accordion</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Native &lt;details&gt; with smooth open</h2>
+
+      <div class="overflow-hidden rounded-[6px] border border-line bg-white">
+        {[
+          { q: 'How is Alpine Mar different from a traditional CPA firm?', a: "We pair senior CPAs with modern cloud workflows so clients get partner-level judgment without losing the response time of a smaller firm." },
+          { q: 'Do you work with clients outside Florida?', a: 'Yes — we serve clients across the US under CPA mobility provisions, with concentrations in NY, CA and TX.' },
+          { q: 'What does a typical engagement look like?', a: 'Fixed-fee scope agreed up front, single senior point of contact, quarterly planning checkpoints and year-end filing.' },
+        ].map((item, i) => (
+          <details class={`group ${i > 0 ? 'border-t border-line' : ''} px-7 py-5`}>
+            <summary class="flex cursor-pointer items-center justify-between gap-6 font-display text-[16px] font-medium text-[var(--color-text-head)] [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <span class="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-transform group-open:rotate-45">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              </span>
+            </summary>
+            <p class="mt-4 font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{item.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <p class="mt-4 font-display text-[13px] leading-[1.6] text-[var(--color-text-body)]">
+        Use `&lt;details&gt;` for FAQ blocks. `BaseLayout` smooth-opens them with Web Animations (320 ms ease-out). Icon rotates 45° on open.
+      </p>
+    </Container>
+  </section>
+
+  <!-- ═════════════ TABS / FILTER CHIPS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">16 · Tabs &amp; filter chips</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Pickable row</h2>
+
+      <div class="mb-8">
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Tab bar (underline)</h3>
+        <div class="flex items-center gap-8 border-b border-line">
+          <button class="border-b-2 border-[#1F3062] pb-3 font-display text-[14px] font-medium text-[var(--color-text-head)]">All</button>
+          <button class="border-b-2 border-transparent pb-3 font-display text-[14px] font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-text-head)]">Tax</button>
+          <button class="border-b-2 border-transparent pb-3 font-display text-[14px] font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-text-head)]">Accounting</button>
+          <button class="border-b-2 border-transparent pb-3 font-display text-[14px] font-medium text-[var(--color-text-body)] transition-colors hover:text-[var(--color-text-head)]">Advisory</button>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Filter chips (rounded outlined, navy when selected)</h3>
+        <div class="flex flex-wrap items-center gap-2">
+          <button class="rounded-[6px] bg-[#1F3062] px-4 py-2 font-display text-[13px] font-medium text-white">All categories</button>
+          <button class="rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">Tax planning</button>
+          <button class="rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">HNW</button>
+          <button class="rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">Healthcare</button>
+          <button class="rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">SaaS</button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ PAGINATION ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">17 · Pagination</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Blog archive footer</h2>
+
+      <nav aria-label="Pagination" class="flex items-center justify-between gap-4 rounded-[6px] border border-line bg-paper p-6">
+        <a href="#" class="inline-flex items-center gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          Previous
+        </a>
+        <div class="flex items-center gap-1.5">
+          <a href="#" class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] font-display text-[13px] font-medium text-white">1</a>
+          <a href="#" class="inline-flex size-9 items-center justify-center rounded-[4px] border border-line font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">2</a>
+          <a href="#" class="inline-flex size-9 items-center justify-center rounded-[4px] border border-line font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">3</a>
+          <span class="px-2 font-display text-[13px] text-[var(--color-text-body)]">…</span>
+          <a href="#" class="inline-flex size-9 items-center justify-center rounded-[4px] border border-line font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">12</a>
+        </div>
+        <a href="#" class="inline-flex items-center gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+          Next
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </nav>
+    </Container>
+  </section>
+
+  <!-- ═════════════ TABLE ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">18 · Tables</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Comparison / data</h2>
+
+      <div class="overflow-hidden rounded-[6px] border border-line bg-white">
+        <table class="w-full text-left">
+          <thead class="border-b border-line bg-paper">
+            <tr>
+              <th class="px-5 py-4 font-display text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Entity</th>
+              <th class="px-5 py-4 font-display text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Tax treatment</th>
+              <th class="px-5 py-4 font-display text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Owner draw</th>
+              <th class="px-5 py-4 font-display text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['LLC',     'Pass-through',   'Member distribution', 'Single-owner ops, real estate'],
+              ['S-Corp',  'Pass-through + payroll', 'Salary + distribution', 'Owners with $80K+ profit'],
+              ['C-Corp',  '21% federal', 'W-2 + dividend', 'VC-backed startups'],
+              ['Sole Prop', 'Schedule C', 'Owner draw', 'Freelancers, side projects'],
+            ].map(([entity, tax, draw, fit], i) => (
+              <tr class={i % 2 === 0 ? '' : 'bg-paper/40'}>
+                <td class="border-t border-line px-5 py-4 font-display text-[14px] font-medium text-[var(--color-text-head)]">{entity}</td>
+                <td class="border-t border-line px-5 py-4 font-display text-[14px] text-[var(--color-text-body)]">{tax}</td>
+                <td class="border-t border-line px-5 py-4 font-display text-[14px] text-[var(--color-text-body)]">{draw}</td>
+                <td class="border-t border-line px-5 py-4 font-display text-[14px] text-[var(--color-text-body)]">{fit}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ LONG-FORM PROSE ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">19 · Long-form prose</span>
+      </div>
+      <h2 class="am-h2-display mb-3 text-[var(--color-text-head)]">.prose-am — for blog &amp; service bodies</h2>
+      <p class="mb-12 max-w-[60ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
+        Wrap migrated WordPress markdown bodies (or any long-form MD) in <code class="rounded-[4px] bg-paper px-1.5 py-0.5">.prose-am</code>. Handles h2/h3 with cyan teal underline, lists with arrow bullets, blockquotes with decorative quote, and tables.
+      </p>
+
+      <article class="prose-am rounded-[6px] border border-line bg-white p-8 md:p-12">
+        <h2>What S-Corp election actually saves you</h2>
+        <p>For owner-operators clearing $80K+ of profit, an S-Corp election can drop your self-employment tax bill by 12-18% — but only if reasonable comp is set correctly and payroll is run from day one.</p>
+        <h3>How the math works</h3>
+        <ul>
+          <li>Salary portion is subject to FICA (15.3%)</li>
+          <li>Distribution portion skips FICA entirely</li>
+          <li>IRS expects "reasonable comp" set by industry benchmarks</li>
+        </ul>
+        <blockquote>The IRS doesn't publish a magic ratio. It does publish industry comp tables you can defend against.</blockquote>
+        <h3>When it doesn't make sense</h3>
+        <p>Below ~$50K profit, the added compliance cost (payroll, annual return) usually outweighs the FICA savings.</p>
+      </article>
+    </Container>
+  </section>
+
+  <!-- ═════════════ TOAST / SUCCESS STATES ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">20 · Toast / inline status</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Form feedback</h2>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <!-- Success -->
+        <div class="flex items-start gap-3 rounded-[6px] border border-[#1b9c4a]/30 bg-[#1b9c4a]/8 p-5">
+          <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-[#1b9c4a] text-white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <div>
+            <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Message sent</p>
+            <p class="mt-1 font-display text-[13px] leading-[1.5] text-[var(--color-text-body)]">A senior CPA will reply within one business day.</p>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="flex items-start gap-3 rounded-[6px] border border-[#cf2e2e]/30 bg-[#cf2e2e]/8 p-5">
+          <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-[#cf2e2e] text-white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          </span>
+          <div>
+            <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Couldn't send</p>
+            <p class="mt-1 font-display text-[13px] leading-[1.5] text-[var(--color-text-body)]">Please check the highlighted fields and try again.</p>
+          </div>
+        </div>
+
+        <!-- Info / heads-up -->
+        <div class="flex items-start gap-3 rounded-[6px] border border-scooter/30 bg-scooter/8 p-5">
+          <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-scooter text-white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" x2="12" y1="8" y2="13"/><line x1="12" x2="12" y1="16" y2="16"/></svg>
+          </span>
+          <div>
+            <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">For information only</p>
+            <p class="mt-1 font-display text-[13px] leading-[1.5] text-[var(--color-text-body)]">This calculator gives a directional estimate — confirm with your CPA.</p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ EMPTY STATE ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">21 · Empty states</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">"No results" treatment</h2>
+
+      <div class="flex flex-col items-center gap-5 rounded-[6px] border border-line bg-paper py-16 text-center">
+        <span class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-body)]">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <div>
+          <p class="font-display text-[18px] font-medium text-[var(--color-text-head)]">No articles match "qualified business income"</p>
+          <p class="mt-2 font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">Try a broader keyword or reset the filters.</p>
+        </div>
+        <button class="inline-flex items-center gap-2 rounded-[6px] border border-line px-5 py-2.5 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">
+          Reset filters
+        </button>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ IMAGE ASPECT RATIOS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">22 · Image aspect ratios</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">When to crop what</h2>
+
+      <div class="grid grid-cols-2 gap-5 lg:grid-cols-4">
+        {[
+          { ratio: '5/4', label: 'Industry card', img: '/images/home/ind-1.png' },
+          { ratio: '16/10', label: 'Insight thumb', img: '/images/about/collage-2.jpg' },
+          { ratio: '16/9', label: 'Hero banner / video', img: '/images/about/collage-3.jpg' },
+          { ratio: '4/5', label: 'Drag gallery / portrait', img: '/images/about/collage-1.jpg' },
+        ].map((r) => (
+          <div class="flex flex-col gap-3">
+            <div class="w-full overflow-hidden rounded-[4px] bg-navy-50" style={`aspect-ratio: ${r.ratio}`}>
+              <img src={r.img} alt="" class="h-full w-full object-cover" />
+            </div>
+            <div>
+              <code class="font-mono text-[12px] text-[var(--color-text-head)]">aspect-[{r.ratio}]</code>
+              <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">{r.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
 </BaseLayout>
