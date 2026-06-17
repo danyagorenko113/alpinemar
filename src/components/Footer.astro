@@ -1,107 +1,140 @@
 ---
 import Container from './Container.astro';
-import Logo from './Logo.astro';
-import Icon from './Icon.astro';
-import { companyMenu } from '@/data/navigation';
 import { site } from '@/data/site';
 
 const year = 2026;
 
+const quicklinks = [
+  { name: 'Insights',     href: '/blog/' },
+  { name: 'About Us',     href: '/about-us/' },
+  { name: 'In The Media', href: '/in-the-media/' },
+  { name: 'HTML Sitemap', href: '/sitemap/' },
+];
+
 const footerServices = [
-  { name: 'Tax Planning', href: '/services/tax-planning-services/' },
-  { name: 'Outsourced Accounting', href: '/services/outsourced-accounting-services/' },
-  { name: 'Fractional CFO', href: '/services/fractional-cfo-services/' },
-  { name: 'Transaction Advisory', href: '/services/transaction-advisory-services/' },
-  { name: 'Audit & Attestation', href: '/services/audit-attestation-services/' },
-  { name: 'All services', href: '/services/' },
+  { name: 'Tax Planning',                                  href: '/services/tax-planning-services/' },
+  { name: 'Outsourced Accounting',                         href: '/services/outsourced-accounting-services/' },
+  { name: 'Entity Structuring',                            href: '/services/business-structure-consulting/' },
+  { name: 'Fractional CFO',                                href: '/services/fractional-cfo-services/' },
+  { name: 'SMB Tax Services',                              href: '/services/small-business-tax-services/' },
+  { name: 'S Corp CPA Services',                           href: '/services/s-corp-cpa-services/' },
+  { name: 'Financial Statement Preparation',               href: '/services/financial-statement-preparation-services/' },
+  { name: 'Outsourced Bookkeeping',                        href: '/services/outsourced-bookkeeping-services/' },
+  { name: 'Accounting Software Implementation',            href: '/services/accounting-software-implementation/' },
+  { name: 'Transaction Advisory Services',                 href: '/services/transaction-advisory-services/' },
+  { name: 'Payroll Compliance Services',                   href: '/services/payroll-compliance-services/' },
+  { name: 'Financial Modeling Services',                   href: '/services/financial-modeling-services/' },
+  { name: 'Multistate Tax Services',                       href: '/services/multistate-tax-services/' },
+  { name: 'Creación de Empresas',                          href: '/services/creacion-de-empresas/' },
+  { name: 'Servicios Tributarios en Florida',              href: '/services/servicios-tributarios-en-florida/' },
+  { name: 'Servicios Contables y Tenedoria de Libros',     href: '/services/servicios-contables/' },
 ];
+
 const footerIndustries = [
-  { name: 'High Net Worth', href: '/industries/high-net-worth-accounting-cpa/' },
-  { name: 'Healthcare', href: '/industries/healthcare-accounting-services/' },
-  { name: 'Real Estate', href: '/industries/real-estate-cpa-services/' },
-  { name: 'Crypto', href: '/industries/crypto-cpa-services/' },
-  { name: 'Startups', href: '/industries/startup-cpa-services/' },
-  { name: 'All industries', href: '/industries/' },
+  { name: 'Construction',              href: '/industries/construction-cpa-services/' },
+  { name: 'Family Office',             href: '/industries/family-office-accounting-services/' },
+  { name: 'Healthcare',                href: '/industries/healthcare-accounting-services/' },
+  { name: 'High Net Worth Individuals', href: '/industries/high-net-worth-accounting-cpa/' },
+  { name: 'Law Firms',                 href: '/industries/law-firm-accounting-services/' },
+  { name: 'Marketing Agencies',        href: '/industries/marketing-agency-accounting-services/' },
+  { name: 'Real Estate',               href: '/industries/real-estate-cpa-services/' },
+  { name: 'Sports Athletes',           href: '/industries/sports-accounting-services/' },
+  { name: 'Startups',                  href: '/industries/startup-cpa-services/' },
+  { name: 'SaaS Companies',            href: '/industries/saas-accounting-services/' },
+  { name: 'Crypto',                    href: '/industries/crypto-cpa-services/' },
 ];
-const socials = [
-  { label: 'LinkedIn', href: site.socials.linkedin },
-  { label: 'Facebook', href: site.socials.facebook },
-  { label: 'Instagram', href: site.socials.instagram },
-  { label: 'X', href: site.socials.twitter },
-].filter((s) => s.href && s.href.length > 0);
 ---
 
-<footer class="bg-navy-950 text-navy-200">
-  <Container width="wide" class="py-16 lg:py-20">
-    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
-      <!-- brand -->
-      <div class="max-w-xs">
-        <Logo variant="light" />
-        <p class="mt-5 text-sm leading-relaxed text-navy-300">
-          The modern day accounting firm — blending industry experience, technology, and hands-on
-          care for businesses and individuals across Florida.
-        </p>
-        <div class="mt-6 flex gap-2">
-          {socials.map((s) => (
-            <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} class="flex size-9 items-center justify-center border border-white/15 font-mono text-[0.6rem] uppercase tracking-wide text-navy-200 transition-colors hover:border-teal-400 hover:text-teal-400">{s.label[0]}</a>
+<footer class="relative overflow-hidden bg-white text-[var(--color-text-head)]">
+  <!-- Grid pattern background -->
+  <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(18,18,45,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,45,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
+
+  <Container width="wide" class="relative z-10 pt-20 pb-10">
+    <!-- 4-col content -->
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+      <!-- Quicklinks -->
+      <nav aria-label="Quicklinks">
+        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Quicklinks</h2>
+        <ul class="mt-7 space-y-3.5 text-[14px]">
+          {quicklinks.map((i) => (
+            <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
           ))}
-        </div>
-      </div>
-
-      <!-- services -->
-      <nav aria-label="Footer services">
-        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Services</h2>
-        <ul class="mt-5 space-y-2.5 text-sm">
-          {footerServices.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
         </ul>
       </nav>
 
-      <!-- industries -->
-      <nav aria-label="Footer industries">
-        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Industries</h2>
-        <ul class="mt-5 space-y-2.5 text-sm">
-          {footerIndustries.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
+      <!-- Services -->
+      <nav aria-label="Services">
+        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Services</h2>
+        <ul class="mt-7 space-y-3.5 text-[14px]">
+          {footerServices.map((i) => (
+            <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
+          ))}
         </ul>
       </nav>
 
-      <!-- company -->
-      <nav aria-label="Footer company">
-        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Company</h2>
-        <ul class="mt-5 space-y-2.5 text-sm">
-          {companyMenu.map((i) => <li><a href={i.href} class="text-navy-300 transition-colors hover:text-teal-400">{i.name}</a></li>)}
-          <li><a href="/sitemap/" class="text-navy-300 transition-colors hover:text-teal-400">HTML Sitemap</a></li>
-          <li><a href={site.clientPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-navy-300 transition-colors hover:text-teal-400">
-            Client Portal
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-          </a></li>
-          <li><a href={site.itPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-navy-300 transition-colors hover:text-teal-400">
-            IT Portal
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-          </a></li>
+      <!-- Industries -->
+      <nav aria-label="Industries">
+        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Industries</h2>
+        <ul class="mt-7 space-y-3.5 text-[14px]">
+          {footerIndustries.map((i) => (
+            <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
+          ))}
         </ul>
       </nav>
 
-      <!-- contact -->
+      <!-- Contact Details -->
       <div>
-        <h2 class="font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em] text-white">Contact</h2>
-        <ul class="mt-5 space-y-2.5 text-sm">
-          <li><a href={`tel:${site.phoneHref}`} class="text-navy-300 transition-colors hover:text-teal-400">{site.phone}</a></li>
-          <li><a href={`mailto:${site.email}`} class="text-navy-300 transition-colors hover:text-teal-400">{site.email}</a></li>
-          <li class="pt-1 leading-relaxed text-navy-300">{site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</li>
+        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Contact Details</h2>
+        <ul class="mt-7 space-y-5 text-[14px]">
+          <li>
+            <p class="font-display text-[var(--color-text-body)]">Phone: <a href={`tel:${site.phoneHref}`} class="transition-colors hover:text-scooter">{site.phone}</a></p>
+          </li>
+          <li>
+            <p class="font-display text-[var(--color-text-body)]">Email: <a href={`mailto:${site.email}`} class="transition-colors hover:text-scooter">{site.email}</a></p>
+          </li>
+          <li>
+            <p class="font-display text-[var(--color-text-body)]">Address: {site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</p>
+          </li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-navy-400">© {year} {site.legalName}. All rights reserved.</p>
-      <div class="flex flex-wrap items-center gap-5">
-        <span class="hidden font-mono uppercase tracking-[0.14em] text-navy-400 lg:inline-flex items-center gap-2">
-          Search anywhere
-          <kbd class="border border-white/15 bg-white/[0.03] px-1.5 py-0.5 text-[0.6rem] text-navy-200">⌘ K</kbd>
-        </span>
-        <span class="font-mono uppercase tracking-[0.14em] text-navy-400">Members · {site.memberships.join(' · ')}</span>
-        <a href="/privacy-policy/" class="text-navy-300 transition-colors hover:text-teal-400">Privacy Policy</a>
+    <!-- AICPA / FICPA membership strip -->
+    <div class="mt-14 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
+      <p class="max-w-xl font-display text-[13px] leading-relaxed text-[var(--color-text-body)]">
+        Members of the American Institute of Certified Public Accountants<br class="hidden md:inline" /> and the Florida Institute of Certified Public Accountants.
+      </p>
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2 rounded-[4px] border border-line px-3 py-1.5">
+          <span class="font-display text-[18px] font-bold tracking-[-0.02em] text-[#1f3062]">F</span>
+          <span class="font-display text-[12px] font-semibold leading-none tracking-[-0.01em] text-[#1f3062]">I<br/>CPA</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block size-7 rounded-full border-2 border-[#1f3062]"></span>
+          <span class="font-display text-[18px] font-semibold tracking-[-0.02em] text-[#1f3062]">CPA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright + socials -->
+    <div class="mt-8 flex flex-col gap-4 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+      <p class="font-display text-[var(--color-text-body)]">© {year} {site.name}. All rights reserved.</p>
+      <div class="flex items-center gap-5">
+        <a href="https://x.com/" target="_blank" rel="noopener" aria-label="X" class="text-[var(--color-text-body)] transition-colors hover:text-scooter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" class="text-[var(--color-text-body)] transition-colors hover:text-scooter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-[var(--color-text-body)] transition-colors hover:text-scooter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
       </div>
     </div>
   </Container>
+
+  <!-- Big "Alpine Mar" wordmark banner -->
+  <div class="relative overflow-hidden">
+    <img src="/images/brand/alpine-mar-wordmark.svg" alt="Alpine Mar" class="block w-full" />
+  </div>
 </footer>

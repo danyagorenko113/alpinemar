@@ -369,33 +369,6 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
     </section>
   )}
 
-  <!-- ═════════════ "ALPINE MAR" big typographic banner ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122d] text-white">
-    <div class="pointer-events-none absolute inset-0 opacity-25" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
-    <div class="pointer-events-none absolute inset-x-0 -bottom-1/2 h-[120%]" style="background:radial-gradient(ellipse at center, rgba(73,134,213,0.4), transparent 70%);"></div>
-
-    <Container width="wide" class="relative z-10">
-      <div class="flex flex-col items-center gap-10 py-20 text-center md:py-28">
-        <p data-reveal data-speed="fast" class="inline-flex items-center gap-3 font-mono text-[0.72rem] uppercase tracking-[0.22em] text-white/70">
-          <span class="block h-px w-10 bg-scooter"></span>
-          The modern day accounting firm
-          <span class="block h-px w-10 bg-scooter"></span>
-        </p>
-
-        <h2 data-reveal data-speed="slow" class="am-gradient-ink-light font-display font-medium leading-[0.9] tracking-[-0.04em]" style="font-size:clamp(4rem,18vw,16rem);">
-          Alpine Mar
-        </h2>
-
-        <a data-reveal href="/contact/" class="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 font-display text-sm font-medium uppercase tracking-[0.16em] text-navy-950 transition-colors hover:bg-scooter hover:text-white">
-          Start a conversation
-          <span class="inline-flex size-7 items-center justify-center rounded-full bg-navy-950/10 transition-transform group-hover:translate-x-1">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-          </span>
-        </a>
-      </div>
-    </Container>
-  </section>
-
   <script>
     function initAudience() {
       const track = document.getElementById('aud-track');
