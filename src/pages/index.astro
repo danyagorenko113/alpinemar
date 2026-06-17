@@ -19,25 +19,70 @@ const services = [
 
 const industries = [
   {
-    name: 'High-Net-Worth Individuals',
+    name: 'High Net-Worth Individuals',
     href: '/industries/high-net-worth-accounting-cpa/',
     img: '/images/home/ind-1.png',
-    blurb:
-      "We help our high-net-worth clients analyze their entity structures and various types of taxable income to strategically minimize the taxable impact.",
+    blurb: "We help our high net-worth clients analyze their entity structures and various types of taxable income to strategically minimize the taxable impact.",
   },
   {
     name: 'Healthcare',
     href: '/industries/healthcare-accounting-services/',
     img: '/images/home/ind-2.png',
-    blurb:
-      'We recognize the complexities associated with the industry and minimize their tax expertise by using all of the available deductions.',
+    blurb: 'We navigate the tax complexities associated with the industry and minimize their tax expense by using all of the available deductions.',
   },
   {
     name: 'Advertising & Marketing',
     href: '/industries/marketing-agency-accounting-services/',
     img: '/images/home/ind-3.png',
-    blurb:
-      'Project-cost discipline for agencies — utilisation, retainer revenue recognition, and the runway visibility creative leaders actually use.',
+    blurb: 'Creative service providers trust Alpine Mar to provide a comprehensive suite of services, including financial management and strategic guidance.',
+  },
+  {
+    name: 'Construction',
+    href: '/industries/construction-cpa-services/',
+    img: '/images/ind-construction.png',
+    blurb: 'Job-cost accounting, multi-state nexus and contract revenue recognition for builders, GCs, and specialty trades.',
+  },
+  {
+    name: 'Family Office',
+    href: '/industries/family-office-accounting-services/',
+    img: '/images/ind-family-office.png',
+    blurb: 'Consolidated reporting across entities, trusts and investments — purpose-built for multi-generational wealth.',
+  },
+  {
+    name: 'Law Firms',
+    href: '/industries/law-firm-accounting-services/',
+    img: '/images/ind-law-firm.png',
+    blurb: 'IOLTA discipline, partner comp, and matter-level profitability reporting for plaintiff and defense practices.',
+  },
+  {
+    name: 'Real Estate',
+    href: '/industries/real-estate-cpa-services/',
+    img: '/images/ind-real-estate.png',
+    blurb: '1031s, cost-segregation, opportunity zones and entity structures — for sponsors, syndicators, and owner-operators.',
+  },
+  {
+    name: 'Sports Athletes',
+    href: '/industries/sports-accounting-services/',
+    img: '/images/ind-sports.png',
+    blurb: 'Multi-state residency, NIL income, signing bonuses and post-career planning — handled discreetly end to end.',
+  },
+  {
+    name: 'Startups',
+    href: '/industries/startup-cpa-services/',
+    img: '/images/ind-startup.jpg',
+    blurb: 'Cap table, R&D credits, fundraising-ready financials and a finance team that scales from pre-seed through Series C.',
+  },
+  {
+    name: 'SaaS Companies',
+    href: '/industries/saas-accounting-services/',
+    img: '/images/ind-saas.jpg',
+    blurb: 'ASC 606 revenue recognition, deferred revenue, ARR tracking and metrics investors actually look at.',
+  },
+  {
+    name: 'Crypto',
+    href: '/industries/crypto-cpa-services/',
+    img: '/images/ind-crypto.jpg',
+    blurb: 'On-chain reconciliation, DeFi and NFT cost basis, and tax-ready reporting for funds, founders, and individuals.',
   },
 ];
 
@@ -240,12 +285,12 @@ const dateFmt = (d: string | Date) =>
       <div class="relative mt-14">
         <div id="aud-track" class="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {industries.map((ind) => (
-            <a href={ind.href} class="group flex w-[80%] flex-none snap-start flex-col gap-5 sm:w-[48%] lg:w-[calc((100%-3rem)/3)]">
-              <div class="aspect-[4/3] w-full overflow-hidden rounded-[6px] bg-navy-50">
+            <a href={ind.href} class="group flex w-[80%] flex-none snap-start flex-col gap-6 sm:w-[55%] md:w-[44%] lg:w-[calc((100%-3rem)/2.6)]">
+              <div class="aspect-[5/4] w-full overflow-hidden rounded-[4px] bg-navy-50">
                 <img src={ind.img} alt={ind.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
-              <h3 class="font-display text-[18px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{ind.name}</h3>
-              <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{ind.blurb}</p>
+              <h3 class="font-display text-[22px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{ind.name}</h3>
+              <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">{ind.blurb}</p>
             </a>
           ))}
         </div>
@@ -253,7 +298,7 @@ const dateFmt = (d: string | Date) =>
         <div class="mt-10 flex items-center justify-between gap-6">
           <div id="aud-dots" class="flex items-center gap-2">
             {industries.map((_, i) => (
-              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-1.5 rounded-full bg-line transition-all duration-300 data-[active=1]:w-6 data-[active=1]:bg-scooter"></button>
+              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-6 rounded-full bg-line transition-all duration-300 data-[active=1]:bg-[#12122d]"></button>
             ))}
           </div>
           <div class="flex items-center gap-3">
