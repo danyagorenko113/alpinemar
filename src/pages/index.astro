@@ -178,7 +178,7 @@ const dateFmt = (d: string | Date) =>
   </section>
 
   <!-- ═════════════ ABOUT — Built different. On purpose. ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+  <section class="relative overflow-hidden bg-[#12122d] pt-24 text-white md:pt-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
@@ -187,31 +187,36 @@ const dateFmt = (d: string | Date) =>
         <span class="font-display text-[14px] tracking-[-0.005em]">About Us</span>
       </div>
 
-      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-white md:col-span-6">
+      <div data-reveal class="grid grid-cols-1 gap-10 pb-20 md:grid-cols-12 md:gap-16 md:pb-28">
+        <h2 class="am-h1-display text-white md:col-span-7">
           Built different.<br />On purpose.
         </h2>
-        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-6 md:pt-3">
-          We started Alpine Mar because we knew there was a better way to do this. More personal. More proactive. Less of the formal distance that makes most CPA relationships feel transactional. That's all what drives everything we do.
+        <p class="font-display text-[15px] leading-[1.65] text-white/80 md:col-span-5 md:pt-3">
+          We started Alpine Mar because we knew there was a better way to do this. More personal. More proactive. Less of the formal distance that makes most CPA relationships feel transactional. That's still what drives everything we do.
         </p>
       </div>
+    </Container>
 
-      <!-- Full-width image -->
-      <div data-reveal class="mt-12 overflow-hidden rounded-[6px]">
-        <img src="/images/about/hero.jpg" alt="Alpine Mar team meeting" class="h-[320px] w-full object-cover md:h-[420px]" loading="lazy" />
-      </div>
+    <!-- Full-bleed image with overlay pills -->
+    <div data-reveal class="relative">
+      <img src="/images/about/hero.jpg" alt="Alpine Mar team meeting" class="h-[420px] w-full object-cover md:h-[640px] lg:h-[720px]" loading="lazy" />
+      <!-- Dark gradient at bottom for legibility -->
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#12122d] via-[#12122d]/70 to-transparent"></div>
 
-      <!-- 4 feature pills (below image, not overlay) -->
-      <ul data-stagger class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {aboutPills.map((label) => (
-          <li class="flex items-center gap-3">
-            <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-scooter text-white">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <span class="font-display text-[13px] text-white/85">{label}</span>
-          </li>
-        ))}
-      </ul>
+      <!-- 4 feature pills overlay at bottom of image -->
+      <Container width="wide" class="absolute inset-x-0 bottom-0">
+        <ul data-stagger class="grid grid-cols-1 gap-6 pb-10 sm:grid-cols-2 md:grid-cols-4 md:pb-14">
+          {aboutPills.map((label) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-scooter"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span class="font-display text-[14px] font-medium leading-[1.4] text-white">{label}</span>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </div>
     </Container>
   </section>
 
