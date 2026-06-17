@@ -87,10 +87,16 @@ const drives = [
           </div>
         </div>
 
-        <!-- Center logo medallion -->
+        <!-- Center logo medallion — uses the brand lockup from the header,
+             clipped to its left mountain icon via overflow-hidden round container. -->
         <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div class="flex size-16 items-center justify-center rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.55)] md:size-24">
-            <img src="/favicon.svg" alt="Alpine Mar" class="size-8 md:size-12" />
+          <div class="size-20 overflow-hidden rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.55)] md:size-28">
+            <img
+              src="/images/brand/logo-web.png"
+              alt="Alpine Mar"
+              class="block h-full max-w-none"
+              style="width: auto; object-fit: contain; object-position: left center;"
+            />
           </div>
         </div>
       </div>
