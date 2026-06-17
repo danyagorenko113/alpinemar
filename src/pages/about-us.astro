@@ -54,57 +54,42 @@ const drives = [
     </div>
   </section>
 
-  <!-- ═════════════ Mountains + Ocean collage (full-width strip) ═════════════ -->
+  <!-- ═════════════ Mountains + Ocean collage with brand etymology on hover ═════════════ -->
   <section class="relative bg-white pt-10 md:pt-14">
     <Container width="wide">
       <div data-reveal class="relative overflow-hidden">
         <div class="grid grid-cols-2 gap-0">
-          <div class="relative aspect-[16/10] sm:aspect-[16/8]">
-            <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
-              <defs>
-                <linearGradient id="m-sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#c8d6e8" />
-                  <stop offset="100%" stop-color="#e9e3d6" />
-                </linearGradient>
-                <linearGradient id="m-snow" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#f5f8fc" />
-                  <stop offset="55%" stop-color="#a9b4c4" />
-                  <stop offset="100%" stop-color="#3e4659" />
-                </linearGradient>
-                <linearGradient id="m-foot" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#7d6a4c" />
-                  <stop offset="100%" stop-color="#3a3324" />
-                </linearGradient>
-              </defs>
-              <rect width="800" height="480" fill="url(#m-sky)" />
-              <polygon points="0,250 130,140 230,210 330,90 470,220 580,150 700,240 800,200 800,480 0,480" fill="url(#m-snow)" />
-              <polygon points="0,360 110,300 220,360 340,310 450,370 570,330 690,400 800,360 800,480 0,480" fill="url(#m-foot)" />
-            </svg>
+          <!-- LEFT: Alpine (mountain) -->
+          <div class="group/etym relative aspect-[16/10] overflow-hidden sm:aspect-[16/8]">
+            <img src="/images/about/mountain.jpg" alt="Alpine peaks" class="h-full w-full object-cover transition-transform duration-700 group-hover/etym:scale-[1.04]" loading="lazy" />
+            <!-- Etymology overlay -->
+            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/85 px-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
+              <h3 class="font-display text-5xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Alpine</h3>
+              <p class="font-mono text-[13px] text-white/85">[al-pahyn, -pin]</p>
+              <p class="mt-1 font-display italic text-white/65">adjective</p>
+              <p class="max-w-md font-display text-[15px] leading-relaxed text-white/85 md:text-[16px]">
+                of, pertaining to, on, or part of any lofty mountain.
+              </p>
+            </div>
           </div>
-          <div class="relative aspect-[16/10] sm:aspect-[16/8]">
-            <svg viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice" class="h-full w-full" aria-hidden="true">
-              <defs>
-                <linearGradient id="o-sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#dbd1bd" />
-                  <stop offset="100%" stop-color="#8c8772" />
-                </linearGradient>
-                <linearGradient id="o-water" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#3a5870" />
-                  <stop offset="60%" stop-color="#1f3447" />
-                  <stop offset="100%" stop-color="#0f1c2a" />
-                </linearGradient>
-              </defs>
-              <rect width="800" height="200" fill="url(#o-sky)" />
-              <rect y="200" width="800" height="280" fill="url(#o-water)" />
-              <path d="M0,240 Q200,220 400,250 T800,235 L800,260 L0,260 Z" fill="#5b7d97" opacity="0.6" />
-              <path d="M0,290 Q200,270 400,300 T800,285 L800,310 L0,310 Z" fill="#3e5e7a" opacity="0.7" />
-              <path d="M0,360 Q200,340 400,370 T800,355 L800,400 L0,400 Z" fill="#1f3447" opacity="0.8" />
-            </svg>
+
+          <!-- RIGHT: Mar (ocean) -->
+          <div class="group/etym relative aspect-[16/10] overflow-hidden sm:aspect-[16/8]">
+            <img src="/images/about/ocean.jpg" alt="Ocean surface" class="h-full w-full object-cover transition-transform duration-700 group-hover/etym:scale-[1.04]" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/85 px-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
+              <h3 class="font-display text-5xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Mar</h3>
+              <p class="font-mono text-[13px] text-white/85">[mahr]</p>
+              <p class="mt-1 max-w-md font-display text-[15px] leading-relaxed text-white/85 md:text-[16px]">
+                <span class="italic text-white/65">noun</span>: the Spanish word for sea.
+                The expanse of salt water that covers most of the earth's surface and surrounds its landmasses.
+              </p>
+            </div>
           </div>
         </div>
+
         <!-- Center logo medallion -->
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div class="flex size-16 items-center justify-center rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.45)] md:size-24">
+        <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div class="flex size-16 items-center justify-center rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.55)] md:size-24">
             <img src="/favicon.svg" alt="Alpine Mar" class="size-8 md:size-12" />
           </div>
         </div>
