@@ -1,0 +1,563 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+
+// ── Tokens ──────────────────────────────────────────────────────────────────
+const colours = [
+  { name: 'brand-1 / text-head', hex: '#12122D', use: 'Dark navy bg, section bg, headings on light' },
+  { name: 'delft',               hex: '#1F3062', use: 'ALL filled buttons + active dot states' },
+  { name: 'brand-2',             hex: '#4986D5', use: 'Royal-blue glow / gradient stop' },
+  { name: 'scooter',             hex: '#33BBDC', use: 'Indicators, focus, hover accent' },
+  { name: 'text-body',           hex: '#454561', use: 'Body copy' },
+  { name: 'line',                hex: '#D4D4DC', use: 'Borders / dividers' },
+  { name: 'paper',               hex: '#F9FAFB', use: 'Off-white page bg + tag chips' },
+  { name: 'TopBar bg',           hex: '#0A0A1C', use: 'Top strip (one tone darker)' },
+];
+
+const radii = [
+  { label: 'Card / button',  px: 6 },
+  { label: 'Image / chip',   px: 4 },
+  { label: 'Icon-chip square', px: 3 },
+  { label: 'Round (carousel arrow, dot, medallion)', px: 9999 },
+];
+
+const display = [
+  { className: 'am-hero-display am-gradient-ink', sample: 'The Florida CPA firm', meta: '~84 px · Satoshi 500 · LH 0.95 · -2% tracking' },
+  { className: 'am-h1-display',                   sample: 'Section heading',      meta: '~56 px · Satoshi 500 · LH 1.1' },
+  { className: 'am-h2-display',                   sample: 'Sub-section heading',  meta: '~48 px · Satoshi 500 · LH 1.1' },
+  { className: 'am-h5-display',                   sample: 'Card title',           meta: '~24 px · Satoshi 500 · LH 1.25' },
+];
+
+const body = [
+  { size: '12 px', className: 'font-display text-[12px]', use: 'Card meta (Category / date)' },
+  { size: '13 px', className: 'font-display text-[13px]', use: 'Tag chips, eyebrow labels' },
+  { size: '14 px', className: 'font-display text-[14px]', use: 'Form labels, buttons, dl values' },
+  { size: '15 px', className: 'font-display text-[15px]', use: 'Default paragraph body' },
+  { size: '18 px', className: 'font-display text-[18px] font-medium', use: 'Hero "View More" link' },
+  { size: '22 px', className: 'font-display text-[22px] font-medium', use: 'Small card titles' },
+  { size: '32 px', className: 'font-display text-[32px] font-medium', use: 'Featured card titles' },
+];
+---
+
+<BaseLayout
+  rawTitle="Design System — Alpine Mar"
+  description="Live design system showcase for the 2026 Alpine Mar redesign."
+  noindex
+>
+  <!-- ═════════════ HEADER ═════════════ -->
+  <section class="relative bg-paper pt-16 md:pt-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Design System</span>
+      </div>
+      <div class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+        <h1 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+          One source of truth for the 2026 redesign.
+        </h1>
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+          Live preview of tokens, typography, components and section recipes. If you reach for a class that isn't on this page, you're probably about to invent one — don't. See <code class="rounded-[4px] bg-white px-1.5 py-0.5">docs/design-system.md</code> for the full reference.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ COLOURS ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">01 · Colours</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Palette</h2>
+
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {colours.map((c) => (
+          <div class="overflow-hidden rounded-[6px] border border-line bg-white">
+            <div class="h-28 w-full" style={`background:${c.hex}`}></div>
+            <div class="flex flex-col gap-1 p-4">
+              <span class="font-display text-[15px] font-medium text-[var(--color-text-head)]">{c.name}</span>
+              <span class="font-mono text-[12px] text-[var(--color-text-body)]">{c.hex}</span>
+              <span class="mt-2 font-display text-[13px] leading-[1.5] text-[var(--color-text-body)]">{c.use}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ TYPOGRAPHY ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">02 · Typography</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Display scale</h2>
+
+      <div class="flex flex-col gap-10 border-y border-line py-10">
+        {display.map((d) => (
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+            <div class={`${d.className} text-[var(--color-text-head)] md:col-span-8`} style="line-height: 1.05;">
+              {d.sample}
+            </div>
+            <div class="md:col-span-4 md:pt-3">
+              <code class="block font-mono text-[12px] text-[var(--color-text-body)]">{d.className}</code>
+              <span class="mt-2 block font-display text-[13px] text-[var(--color-text-body)]">{d.meta}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="am-h5-display mb-6 mt-16 text-[var(--color-text-head)]">Body / UI scale</h3>
+      <div class="overflow-hidden rounded-[6px] border border-line bg-white">
+        <table class="w-full text-left">
+          <thead class="border-b border-line bg-paper text-[12px] uppercase tracking-[0.08em] text-[var(--color-text-body)]">
+            <tr>
+              <th class="px-5 py-3 font-display">Size</th>
+              <th class="px-5 py-3 font-display">Sample</th>
+              <th class="px-5 py-3 font-display">Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            {body.map((b) => (
+              <tr class="border-b border-line last:border-0">
+                <td class="px-5 py-4 font-mono text-[12px] text-[var(--color-text-body)]">{b.size}</td>
+                <td class="px-5 py-4">
+                  <span class={`${b.className} text-[var(--color-text-head)]`}>The quick brown fox jumps</span>
+                </td>
+                <td class="px-5 py-4 font-display text-[13px] text-[var(--color-text-body)]">{b.use}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="am-h5-display mb-6 mt-16 text-[var(--color-text-head)]">Gradient ink</h3>
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="rounded-[6px] border border-line bg-white p-8">
+          <div class="am-h1-display am-gradient-ink mb-4">Headline on light</div>
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">am-gradient-ink</code>
+        </div>
+        <div class="rounded-[6px] bg-[#12122D] p-8">
+          <div class="am-h1-display am-gradient-ink-light mb-4">Headline on dark</div>
+          <code class="font-mono text-[12px] text-white/60">am-gradient-ink-light</code>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ RADII & SPACING ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">03 · Radii &amp; spacing</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Corner radii</h2>
+
+      <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+        {radii.map((r) => (
+          <div class="flex flex-col items-center gap-4">
+            <div
+              class="flex h-24 w-24 items-center justify-center bg-[#1F3062] text-white"
+              style={`border-radius: ${r.px === 9999 ? '9999px' : r.px + 'px'}`}
+            >
+              <span class="font-mono text-[12px]">{r.px === 9999 ? '∞' : `${r.px}px`}</span>
+            </div>
+            <span class="text-center font-display text-[13px] text-[var(--color-text-body)]">{r.label}</span>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="am-h5-display mb-6 mt-16 text-[var(--color-text-head)]">Section padding</h3>
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div class="rounded-[6px] border border-line bg-paper p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">py-24 md:py-32</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">Standard section padding (light or dark).</p>
+        </div>
+        <div class="rounded-[6px] border border-line bg-paper p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">pt-24 md:pt-32</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">Only when section ends in a full-bleed image (no bottom padding).</p>
+        </div>
+        <div class="rounded-[6px] border border-line bg-paper p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">gap-10 md:gap-16</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">2-col header (title + description).</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ INDICATORS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">04 · Section indicators</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Square dot + label</h2>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="rounded-[6px] border border-line bg-white p-8">
+          <div class="flex items-center gap-3 text-[var(--color-text-head)]">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em]">Indicator on light</span>
+          </div>
+          <code class="mt-6 block font-mono text-[12px] text-[var(--color-text-body)]">{`<span class="block size-2 bg-scooter"></span>`}</code>
+        </div>
+        <div class="rounded-[6px] bg-[#12122D] p-8">
+          <div class="flex items-center gap-3 text-white/85">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em]">Indicator on dark</span>
+          </div>
+          <code class="mt-6 block font-mono text-[12px] text-white/60">{`<span class="block size-2 bg-scooter"></span>`}</code>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ BUTTONS ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">05 · Buttons</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Variants</h2>
+
+      <!-- Filled primary -->
+      <div class="mb-10">
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Filled (primary)</h3>
+        <div class="flex flex-wrap items-center gap-4 rounded-[6px] border border-line bg-paper p-8">
+          <a href="#" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+            Request a Consultation
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+          <a href="#" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+            View All Insights
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+        <code class="mt-3 block font-mono text-[12px] text-[var(--color-text-body)]">bg-[#1F3062] · hover:bg-scooter · rounded-[6px] · px-6 py-3.5</code>
+      </div>
+
+      <!-- Outlined chip -->
+      <div class="mb-10">
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Outlined chip</h3>
+        <div class="flex flex-wrap items-center gap-4 rounded-[6px] border border-line bg-paper p-8">
+          <a href="#" class="group inline-flex items-center gap-3 rounded-[4px] border border-line px-5 py-3 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">
+            View More
+            <span class="inline-flex size-6 items-center justify-center rounded-full bg-[#12122D] text-white transition-transform group-hover:translate-x-1">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Underline link -->
+      <div class="mb-10">
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Underline link</h3>
+        <div class="flex flex-wrap items-center gap-4 rounded-[6px] border border-line bg-paper p-8">
+          <a href="#" class="group inline-flex items-center gap-2 border-b border-[#12122D] pb-1.5 font-display text-[18px] font-medium text-[#12122D] transition-colors hover:text-scooter">
+            View More
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Arrow chips -->
+      <div>
+        <h3 class="am-h5-display mb-4 text-[var(--color-text-head)]">Arrow chips (paired with "Read more")</h3>
+        <div class="flex flex-wrap items-center gap-6 rounded-[6px] border border-line bg-paper p-8">
+          <div class="inline-flex items-center gap-3">
+            <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+            <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-[#1F3062] text-white">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </span>
+            <code class="font-mono text-[11px] text-[var(--color-text-body)]">size-10 (featured)</code>
+          </div>
+          <div class="inline-flex items-center gap-3">
+            <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+            <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] text-white">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </span>
+            <code class="font-mono text-[11px] text-[var(--color-text-body)]">size-9 (small card)</code>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ FORM FIELDS ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] py-20 text-white md:py-24">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
+    <Container width="wide" class="relative z-10">
+      <div class="mb-10 flex items-center gap-3 text-white/85">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">06 · Form fields</span>
+      </div>
+      <h2 class="am-h2-display am-gradient-ink-light mb-12">Inputs on dark</h2>
+
+      <form class="rounded-[6px] bg-white p-7 text-[var(--color-text-head)] md:p-9">
+        <div class="grid grid-cols-1 gap-5">
+          <label class="block">
+            <span class="font-display text-[14px] font-medium">Full Name</span>
+            <input type="text" placeholder="Enter your name" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+          </label>
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <label class="block">
+              <span class="font-display text-[14px] font-medium">Email Address</span>
+              <input type="email" placeholder="Enter email address" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+            </label>
+            <label class="block">
+              <span class="font-display text-[14px] font-medium">Phone Number</span>
+              <input type="tel" placeholder="xxx-xxx-xxxx" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+            </label>
+          </div>
+          <label class="block">
+            <span class="font-display text-[14px] font-medium">Services Needed</span>
+            <div class="relative mt-2">
+              <select class="block w-full appearance-none rounded-[4px] border border-line bg-white px-4 py-3 pr-10 font-display text-[14px] focus:border-scooter focus:outline-none focus:ring-0">
+                <option>Select a service</option>
+              </select>
+              <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-body)]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </label>
+          <label class="block">
+            <span class="font-display text-[14px] font-medium">How can we help?</span>
+            <textarea rows="3" placeholder="Type a message..." class="mt-2 block w-full resize-none rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0"></textarea>
+          </label>
+        </div>
+        <button type="button" class="group mt-7 inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+          Request a Consultation
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </form>
+    </Container>
+  </section>
+
+  <!-- ═════════════ CARDS ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">07 · Cards</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Patterns</h2>
+
+      <!-- Industry card -->
+      <h3 class="am-h5-display mb-6 text-[var(--color-text-head)]">Industry card</h3>
+      <div class="mb-12 max-w-sm">
+        <a href="#" class="group flex flex-col gap-6">
+          <div class="aspect-[5/4] w-full overflow-hidden rounded-[4px] bg-navy-50">
+            <img src="/images/home/ind-1.png" alt="" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+          <h4 class="font-display text-[22px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">High Net-Worth Individuals</h4>
+          <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">We help our high net-worth clients analyze their entity structures and various types of taxable income to strategically minimize the taxable impact.</p>
+        </a>
+      </div>
+
+      <!-- Insight featured -->
+      <h3 class="am-h5-display mb-6 text-[var(--color-text-head)]">Insight — featured (image-left)</h3>
+      <a href="#" class="group mb-12 grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
+        <div class="relative aspect-[5/4] overflow-hidden bg-navy-50 md:aspect-auto md:min-h-[420px]">
+          <img src="/images/about/collage-1.jpg" alt="" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        </div>
+        <div class="flex flex-col gap-6 p-8 md:p-12">
+          <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+            <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+              <span class="block size-1.5 bg-[#12122D]"></span>
+              Category
+            </span>
+            <span>Dec 14, 2025</span>
+          </div>
+          <h4 class="font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[32px]">Estate Tax Planning Guide</h4>
+          <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">Lorem ipsum dolor sit amet consectetur. Id ullamcorper a commodo eget. Semper faucibus ac facilisi amet nullam in quam leo sed.</p>
+          <div class="mt-auto flex items-center justify-between gap-4">
+            <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+            <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Insight small -->
+      <h3 class="am-h5-display mb-6 text-[var(--color-text-head)]">Insight — small (text-only)</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        {['Blog title heading will go here', 'Another title placeholder', 'Third entry in the row'].map((title) => (
+          <a href="#" class="group flex min-h-[320px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
+            <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+              <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                <span class="block size-1.5 bg-[#12122D]"></span>
+                Category
+              </span>
+              <span>Dec 14, 2025</span>
+            </div>
+            <h4 class="mt-7 font-display text-[20px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{title}</h4>
+            <div class="mt-auto flex items-center justify-between gap-4 pt-8">
+              <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+              <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ CAROUSEL CONTROLS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">08 · Carousel controls</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Dots &amp; arrows</h2>
+
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+        <div class="rounded-[6px] border border-line bg-white p-8">
+          <h3 class="am-h5-display mb-6 text-[var(--color-text-head)]">Industries (uniform bar, navy active)</h3>
+          <div class="flex items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+              <button class="h-1.5 w-6 rounded-full bg-[#12122D]"></button>
+              <button class="h-1.5 w-6 rounded-full bg-line"></button>
+              <button class="h-1.5 w-6 rounded-full bg-line"></button>
+              <button class="h-1.5 w-6 rounded-full bg-line"></button>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] hover:border-delft hover:text-delft">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+              </button>
+              <button class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] hover:border-delft hover:text-delft">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-[6px] border border-line bg-white p-8">
+          <h3 class="am-h5-display mb-6 text-[var(--color-text-head)]">Meet the Team (dot + expanded scooter active)</h3>
+          <div class="flex items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+              <button class="h-1.5 w-6 rounded-full bg-scooter"></button>
+              <button class="h-1.5 w-1.5 rounded-full bg-line"></button>
+              <button class="h-1.5 w-1.5 rounded-full bg-line"></button>
+              <button class="h-1.5 w-1.5 rounded-full bg-line"></button>
+            </div>
+            <div class="flex items-center gap-3">
+              <button class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] hover:border-delft hover:text-delft">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+              </button>
+              <button class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] hover:border-delft hover:text-delft">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ GRID PATTERN ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">09 · Grid pattern background</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">72×72 px CSS lines</h2>
+
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="relative h-64 overflow-hidden rounded-[6px] bg-[#12122D]">
+          <div class="absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+          <div class="relative flex h-full items-center justify-center">
+            <code class="font-mono text-[12px] text-white/70">rgba(255,255,255,0.05) on #12122D</code>
+          </div>
+        </div>
+        <div class="relative h-64 overflow-hidden rounded-[6px] border border-line bg-white">
+          <div class="absolute inset-0" style="background-image:linear-gradient(rgba(18,18,45,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,45,0.035) 1px, transparent 1px); background-size: 72px 72px;"></div>
+          <div class="relative flex h-full items-center justify-center">
+            <code class="font-mono text-[12px] text-[var(--color-text-body)]">rgba(18,18,45,0.035) on white</code>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ ANIMATIONS ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">10 · Animations</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Scroll reveals &amp; hover</h2>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div class="rounded-[6px] border border-line bg-white p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">data-reveal</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">Fade + translateY(24 px) over 0.6 s. Default entrance for every section block.</p>
+        </div>
+        <div class="rounded-[6px] border border-line bg-white p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">data-reveal data-speed="slow"</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">Bigger translate over 0.9 s. Use on hero h1 only.</p>
+        </div>
+        <div class="rounded-[6px] border border-line bg-white p-7">
+          <code class="font-mono text-[12px] text-[var(--color-text-body)]">data-stagger</code>
+          <p class="mt-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-head)]">Children fade-in one by one. Use on grids and lists.</p>
+        </div>
+      </div>
+
+      <h3 class="am-h5-display mb-6 mt-16 text-[var(--color-text-head)]">Hover (mouse over)</h3>
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="group overflow-hidden rounded-[6px] border border-line bg-white">
+          <div class="aspect-[16/10] overflow-hidden bg-navy-50">
+            <img src="/images/about/collage-2.jpg" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </div>
+          <div class="p-5">
+            <p class="font-display text-[14px] text-[var(--color-text-head)]">Image scale-105 / duration-700 on card hover</p>
+          </div>
+        </div>
+        <div class="group inline-flex h-full items-center gap-3 rounded-[6px] border border-line bg-white p-7 text-[14px] text-[var(--color-text-head)]">
+          <span class="font-display font-medium">Read more</span>
+          <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </span>
+          <span class="ml-auto font-mono text-[11px] text-[var(--color-text-body)]">arrow translateX(1)</span>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ DON'Ts ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">11 · Don'ts</span>
+      </div>
+      <h2 class="am-h2-display mb-12 text-[var(--color-text-head)]">Anti-patterns</h2>
+      <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {[
+          'Circular indicator dots — always square 8×8 scooter',
+          'Scooter cyan as button fill — always delft #1F3062',
+          'Round-corner pills for filled buttons — always rounded-[6px]',
+          'Mixed gradient + accent spans inside headings — plain navy text',
+          'Grayscale on Trusted Platforms marquee — keep full colour',
+          'Nested <Container> — close the parent, render the bleed sibling, reopen',
+          'data-reveal on every element — use on section headers only',
+          'Generating new images when /images/ind-*.{png,jpg} already exist',
+        ].map((dont) => (
+          <li class="flex items-start gap-3 rounded-[6px] border border-line bg-paper p-5">
+            <span class="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-[#cf2e2e] text-white">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </span>
+            <span class="font-display text-[14px] leading-[1.55] text-[var(--color-text-head)]">{dont}</span>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+</BaseLayout>
