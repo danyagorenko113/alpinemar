@@ -4,7 +4,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 
 type Group = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance';
-const groupOrder: Group[] = ['Tax', 'Accounting', 'Advisory', 'Compliance'];
 
 const SPANISH = new Set([
   'creacion-de-empresas',
@@ -16,124 +15,237 @@ const collection = await getCollection('services');
 const services = collection
   .filter((s) => !SPANISH.has(s.id) && s.data.group)
   .map((s) => ({
-    title: s.data.title.replace(/\s*Services\s*$/i, '').trim(),
-    fullTitle: s.data.title,
+    title: s.data.title.replace(/\s+/g, ' ').trim(),
     href: s.data.path,
     summary: s.data.summary,
     group: s.data.group as Group,
-  }))
-  .sort((a, b) => groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group));
+  }));
 
 const totalServices = services.length;
 
-const groupCounts = groupOrder.map((g) => ({
-  name: g,
-  count: services.filter((s) => s.group === g).length,
-}));
+// 3 "Why choose us" pillars per Figma template
+const pillars = [
+  {
+    title: 'National and international expertise',
+    body: "Single-state, multistate, or cross-border, our CPAs know the complexity and know how to navigate it without leaving money on the table.",
+    icon: '/icons/about/quality.svg',
+  },
+  {
+    title: 'Proactive approach',
+    body: "We don't wait for deadlines to find savings. We plan ahead so you're always in a better position than you were last year.",
+    icon: '/icons/about/innovation.svg',
+  },
+  {
+    title: 'Adapted to your needs',
+    body: 'Individual, small business, S-Corp, or multijurisdictional, your situation is specific and our service should be too.',
+    icon: '/icons/about/collaboration.svg',
+  },
+];
+
+// Testimonials (placeholder copy — replace with real reviews when client supplies them)
+const testimonials = [
+  {
+    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    name: 'Dianne Russell',
+    city: 'Fairfield',
+    photo: '/images/team/Jennifer.jpeg',
+  },
+  {
+    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    name: 'Jerome Bell',
+    city: 'Naperville',
+    photo: '/images/team/Brian.jpeg',
+  },
+  {
+    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    name: 'Courtney Henry',
+    city: 'Pembroke Pines',
+    photo: '/images/team/Cristina.jpeg',
+  },
+  {
+    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    name: 'Jerome Bell',
+    city: 'Miami',
+    photo: '/images/team/Kevin.jpeg',
+  },
+];
+
+// Recognised CPA bodies
+const partners = [
+  { name: 'AICPA',   src: '/images/brand/aicpa-logo.png' },
+  { name: 'intuit',  src: '/images/logos/quickbooks.webp' },
+  { name: 'FICPA',   src: '/images/brand/ficpa-logo.png' },
+];
+
+// Icon — single shared briefcase-style glyph used in the Figma template
+const svcIcon = '/icons/about/quality.svg';
 ---
 
 <BaseLayout
   rawTitle="Our Services — Alpine Mar"
-  description="From day-to-day accounting to high-stakes transactions and audits — explore the full range of services Alpine Mar builds around its clients."
+  description="Tax, accounting, advisory and compliance services — built around your business by senior CPAs from Florida's modern-day accounting firm."
 >
   <!-- ═════════════ HERO ═════════════ -->
-  <section class="relative isolate overflow-hidden bg-paper">
-    <div class="relative h-[460px] w-full md:h-[560px]">
-      <img src="/images/about/hero.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
-      <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
-      <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
-        <!-- Breadcrumbs -->
-        <nav aria-label="Breadcrumb" class="mb-6">
-          <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-[var(--color-text-head)]">
-            <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
-            <li aria-hidden="true" class="opacity-55">/</li>
-            <li aria-current="page" class="font-medium">Services</li>
-          </ol>
-        </nav>
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink">Our Services</h1>
-      </Container>
-    </div>
-  </section>
+  <section class="relative overflow-hidden bg-[#12122D] py-20 text-center text-white md:py-28">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-  <!-- ═════════════ INTRO ═════════════ -->
-  <section class="relative bg-white py-20 md:py-24">
-    <Container width="wide">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-        <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">{totalServices} services in total</span>
-      </div>
-
-      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-          The solutions you need, built around your business.
-        </h2>
-        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          Whatever stage you're at — early-stage, scaling, or institution-level — there's a service mapped to it. Filter by pillar or scroll the full list below.
-        </p>
-      </div>
-
-      <!-- Filter chips -->
-      <div data-reveal class="mt-12 flex flex-wrap items-center gap-2">
-        <button data-filter="all" data-active="1" class="rounded-[6px] bg-[#1F3062] px-4 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-scooter data-[active=0]:border data-[active=0]:border-line data-[active=0]:bg-white data-[active=0]:text-[var(--color-text-head)] data-[active=0]:hover:border-[#12122D] data-[active=0]:hover:bg-white">
-          All services <span class="opacity-70">· {totalServices}</span>
-        </button>
-        {groupCounts.map((g) => (
-          <button data-filter={g.name} data-active="0" class="rounded-[6px] bg-[#1F3062] px-4 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-scooter data-[active=0]:border data-[active=0]:border-line data-[active=0]:bg-white data-[active=0]:text-[var(--color-text-head)] data-[active=0]:hover:border-[#12122D] data-[active=0]:hover:bg-white">
-            {g.name} <span class="opacity-70">· {g.count}</span>
-          </button>
-        ))}
-      </div>
-    </Container>
-  </section>
-
-  <!-- ═════════════ SERVICES GRID ═════════════ -->
-  <section class="relative bg-paper py-12 md:py-16">
-    <Container width="wide">
-      <ul id="services-grid" data-stagger class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((s) => (
-          <li data-group={s.group}>
-            <a href={s.href} class="group flex h-full min-h-[260px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
-              <div class="flex items-center gap-3">
-                <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5 font-display text-[12px] text-[var(--color-text-body)]">
-                  <span class="block size-1.5 bg-[#12122D]"></span>
-                  {s.group}
-                </span>
-              </div>
-              <h3 class="mt-6 font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)]">{s.title}</h3>
-              <p class="mt-3 line-clamp-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{s.summary}</p>
-              <div class="mt-auto flex items-center justify-between gap-4 pt-6">
-                <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Learn more</span>
-                <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </span>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <p id="services-empty" class="hidden mt-12 text-center font-display text-[14px] text-[var(--color-text-body)]">
-        No services in this pillar yet.
+    <Container width="narrow" class="relative z-10">
+      <h1 data-reveal data-speed="slow" class="font-display text-[40px] font-medium leading-[1.1] tracking-[-0.02em] text-white sm:text-[48px] md:text-[56px]">
+        Our Services
+      </h1>
+      <p data-reveal class="mx-auto mt-6 max-w-[58ch] font-display text-[15px] leading-[1.65] text-white/75">
+        Tax is complicated. Accounting is non-negotiable. Advisory is what good firms ought to do. Our CPAs handle every part — from individual planning to business tax, multistate, international, and estate — so you can stop guessing and start making better decisions.
       </p>
     </Container>
   </section>
 
-  <!-- ═════════════ CTA — Let's talk ═════════════ -->
+  <!-- ═════════════ SUB-SERVICES GRID ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <ul data-stagger class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <li>
+            <a href={s.href} class="group flex h-full min-h-[260px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
+              <span class="inline-flex size-12 items-center justify-center rounded-[6px] bg-paper">
+                <img src={svcIcon} alt="" aria-hidden="true" class="size-6" />
+              </span>
+              <h3 class="mt-6 font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)]">{s.title}</h3>
+              <p class="mt-3 line-clamp-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{s.summary}</p>
+              <span class="mt-auto inline-flex items-center gap-2 pt-6 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
+                Learn more
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <!-- ═════════════ WHY CHOOSE US ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/85">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Why Choose Us</span>
+      </div>
+
+      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
+          A strategy that works<br />as hard as you do.
+        </h2>
+        <div class="flex flex-col gap-4 md:col-span-5 md:pt-3">
+          <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">What you can expect</p>
+          <p class="font-display text-[15px] leading-[1.65] text-white/75">
+            You'll hear from us before tax season, not just during it. Our team stays close to your financials year-round, flagging opportunities, managing compliance, and making sure nothing catches you off guard.
+          </p>
+        </div>
+      </div>
+
+      <ul data-stagger class="mt-16 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {pillars.map((p) => (
+          <li class="flex flex-col gap-6 rounded-[6px] bg-white p-7 text-[var(--color-text-head)]">
+            <span class="inline-flex size-12 items-center justify-center rounded-[6px] bg-paper">
+              <img src={p.icon} alt="" aria-hidden="true" class="size-6" />
+            </span>
+            <h3 class="font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em]">{p.title}</h3>
+            <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{p.body}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <!-- ═════════════ TESTIMONIALS ═════════════ -->
+  <section class="relative bg-white py-24 md:py-32">
+    <Container width="wide">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Testimonial</span>
+      </div>
+
+      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+          Don't just take<br />our word for it.
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+          Numbers are only part of what we do. The other part is showing up for the people behind them, consistently, proactively, and with a level of care that most firms don't prioritize. Here's what that looks like from the client side.
+        </p>
+      </div>
+
+      <div class="relative mt-14">
+        <div id="testi-track" class="-mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {testimonials.map((t) => (
+            <article class="flex w-[82%] flex-none snap-start flex-col gap-6 rounded-[6px] border border-line bg-white p-7 sm:w-[50%] lg:w-[calc((100%-2.5rem)/3.4)]">
+              <svg width="32" height="26" viewBox="0 0 32 26" fill="currentColor" aria-hidden="true" class="text-line">
+                <path d="M9.6 0C4.3 0 0 4.6 0 10.3v15.7h12.5V10.3H6.4c0-2.8 1.4-5.1 3.2-5.1V0Zm19.6 0c-5.3 0-9.6 4.6-9.6 10.3v15.7H32V10.3h-6.1c0-2.8 1.4-5.1 3.2-5.1V0Z"/>
+              </svg>
+              <p class="font-display text-[14px] leading-[1.7] text-[var(--color-text-body)]">{t.quote}</p>
+              <div class="mt-auto flex items-center gap-3 border-t border-line pt-5">
+                <div class="size-11 overflow-hidden rounded-full bg-navy-50">
+                  <img src={t.photo} alt={t.name} class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <div>
+                  <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">{t.name}</p>
+                  <p class="font-display text-[12px] text-[var(--color-text-body)]">{t.city}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- Dots + arrows -->
+        <div class="mt-10 flex items-center justify-between gap-6">
+          <div id="testi-dots" class="flex items-center gap-2">
+            {testimonials.map((_, i) => (
+              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-6 rounded-full bg-line transition-all duration-300 data-[active=1]:bg-[#12122D]"></button>
+            ))}
+          </div>
+          <div class="flex items-center gap-3">
+            <button type="button" id="testi-prev" aria-label="Previous" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+            </button>
+            <button type="button" id="testi-next" aria-label="Next" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ PARTNER CPAs STRIP ═════════════ -->
+  <section class="relative bg-white py-14 md:py-16">
+    <Container width="wide">
+      <div class="flex flex-col items-center gap-8 border-t border-line pt-12 md:flex-row md:gap-12">
+        <p class="shrink-0 font-display text-[14px] text-[var(--color-text-body)] md:whitespace-nowrap">Partner with nationally recognized CPAs:</p>
+        <div class="flex flex-1 flex-wrap items-center justify-around gap-x-12 gap-y-6">
+          {partners.map((p) => (
+            <img src={p.src} alt={p.name} class="h-10 w-auto grayscale opacity-70" loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-16 flex items-center gap-3 text-white/85 md:mb-24">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[15px] tracking-[-0.005em]">Not sure where to start?</span>
+        <span class="font-display text-[15px] tracking-[-0.005em]">Contact Us</span>
       </div>
 
       <div data-reveal class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
-          Let's talk. We'll map the right service to your business.
+          Let's talk taxes. The sooner we understand your situation, the sooner we can start improving it.
         </h2>
         <div class="md:col-span-4 md:flex md:justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
@@ -143,31 +255,45 @@ const groupCounts = groupOrder.map((g) => ({
   </section>
 
   <script>
-    function initServiceFilters() {
-      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
-      const cards = Array.from(document.querySelectorAll<HTMLElement>('#services-grid > li'));
-      const empty = document.getElementById('services-empty');
-      if (!buttons.length || !cards.length || (buttons[0] as any).__filterBound) return;
-      buttons.forEach((b) => ((b as any).__filterBound = true));
+    function initTestimonials() {
+      const track = document.getElementById('testi-track');
+      if (!track || (track as any).__testiBound) return;
+      (track as any).__testiBound = true;
+      const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#testi-dots [data-dot]'));
+      const prev = document.getElementById('testi-prev');
+      const next = document.getElementById('testi-next');
+      const cards = track.children;
+      const total = cards.length;
 
-      const apply = (filter: string) => {
-        let visible = 0;
-        cards.forEach((c) => {
-          const show = filter === 'all' || c.dataset.group === filter;
-          c.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-        empty?.classList.toggle('hidden', visible !== 0);
+      const setActive = (i: number) =>
+        dots.forEach((d, idx) => { d.dataset.active = idx === i ? '1' : '0'; });
+
+      const scrollToIndex = (i: number) => {
+        const card = cards[i] as HTMLElement | undefined;
+        if (!card) return;
+        track.scrollTo({ left: card.offsetLeft - 24, behavior: 'smooth' });
       };
 
-      buttons.forEach((b) => {
-        b.addEventListener('click', () => {
-          buttons.forEach((other) => { other.dataset.active = other === b ? '1' : '0'; });
-          apply(b.dataset.filter || 'all');
-        });
-      });
+      const detectActive = () => {
+        const left = track.scrollLeft;
+        let best = 0;
+        let bestDist = Infinity;
+        for (let i = 0; i < total; i++) {
+          const card = cards[i] as HTMLElement;
+          const d = Math.abs(card.offsetLeft - 24 - left);
+          if (d < bestDist) { bestDist = d; best = i; }
+        }
+        setActive(best);
+        return best;
+      };
+
+      track.addEventListener('scroll', () => requestAnimationFrame(detectActive));
+      dots.forEach((d, i) => d.addEventListener('click', () => scrollToIndex(i)));
+      prev?.addEventListener('click', () => scrollToIndex(Math.max(0, detectActive() - 1)));
+      next?.addEventListener('click', () => scrollToIndex(Math.min(total - 1, detectActive() + 1)));
+      setActive(0);
     }
-    initServiceFilters();
-    document.addEventListener('astro:after-swap', initServiceFilters);
+    initTestimonials();
+    document.addEventListener('astro:after-swap', initTestimonials);
   </script>
 </BaseLayout>
