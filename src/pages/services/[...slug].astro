@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { allServices, industries as industryList } from '@/data/taxonomy';
@@ -14,7 +14,6 @@ export async function getStaticPaths() {
 }
 
 const { service, all } = Astro.props;
-const { Content, headings } = await render(service);
 
 const taxonomyEntry = allServices.find((x) => x.href === service.data.path);
 const group = (service.data.group ?? taxonomyEntry?.group) as
@@ -22,13 +21,11 @@ const group = (service.data.group ?? taxonomyEntry?.group) as
 
 // Siblings within the same category
 const siblings = group
-  ? allServices.filter((s) => s.group === group && s.href !== service.data.path).slice(0, 5)
+  ? allServices.filter((s) => s.group === group && s.href !== service.data.path).slice(0, 6)
   : [];
-
-// Fall-back related (other services)
 const fallbackRelated = all
   .filter((s) => s.id !== service.id)
-  .slice(0, 5)
+  .slice(0, 6)
   .map((s) => ({ title: s.data.title, href: s.data.path }));
 const related = siblings.length
   ? siblings.map((s) => ({ title: s.title, href: s.href }))
@@ -39,30 +36,33 @@ const linkedIndustries = (service.data.industries ?? [])
   .map((slug) => industryList.find((i) => i.href.includes(slug)))
   .filter((x): x is (typeof industryList)[number] => !!x);
 
-// Build a TOC from h2 headings
-const toc = headings.filter((h) => h.depth === 2 && h.text.trim().length > 1).slice(0, 8);
-
 const takeaways = service.data.takeaways ?? [];
 const included = service.data.included ?? [];
 const process = service.data.process ?? [];
 
+// Landing-style "What you get" — uses takeaways when supplied, otherwise
+// a sensible 4-up default that applies to every Alpine Mar engagement.
+const benefits = takeaways.length
+  ? takeaways.slice(0, 4).map((t) => ({ title: t, body: '' }))
+  : [
+      { title: 'Partner-led', body: 'A senior CPA on every engagement — no junior handoff once you sign.' },
+      { title: 'Fixed-fee, scoped',  body: "Scope and price agreed before we start. No hourly meter, no surprise invoices." },
+      { title: 'Year-round attention', body: 'We work the calendar, not just the deadline. Quarterly check-ins by default.' },
+      { title: 'Modern finance stack', body: 'Cloud books, automation, secure portals — work moves faster without losing rigor.' },
+    ];
+
+// "Why Alpine Mar" pillars — three reasons we win the engagement
+const pillars = [
+  { title: 'National and international expertise', body: "Single-state, multistate, or cross-border, our CPAs know the complexity and know how to navigate it without leaving money on the table.", icon: '/icons/about/quality.svg' },
+  { title: 'Proactive approach',                   body: "We don't wait for deadlines to find savings. We plan ahead so you're always in a better position than you were last year.", icon: '/icons/about/innovation.svg' },
+  { title: 'Adapted to your needs',                body: 'Individual, small business, S-Corp, or multijurisdictional, your situation is specific and our service should be too.', icon: '/icons/about/collaboration.svg' },
+];
+
 const defaultFaq = [
-  {
-    q: 'How quickly can we start?',
-    a: "We schedule an intro call within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if a deadline is driving the timeline.",
-  },
-  {
-    q: 'How are fees structured?',
-    a: `${service.data.title} engagements are quoted as fixed-fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes. For ongoing engagements (e.g. monthly close, fractional CFO), pricing is a flat monthly retainer.`,
-  },
-  {
-    q: 'Will I work with the same person, or get passed around?',
-    a: 'Every engagement is partner-led — the senior CPA you meet on the intro is the one running your file. Day-to-day support is handled by a senior associate, but partner sign-off is on every deliverable.',
-  },
-  {
-    q: 'Are you taking new clients?',
-    a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.',
-  },
+  { q: 'How quickly can we start?',                            a: 'We schedule an intro call within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if a deadline is driving the timeline.' },
+  { q: 'How are fees structured?',                             a: `${service.data.title} engagements are quoted as fixed-fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes. For ongoing engagements (e.g. monthly close, fractional CFO), pricing is a flat monthly retainer.` },
+  { q: 'Will I work with the same person, or get passed around?', a: 'Every engagement is partner-led — the senior CPA you meet on the intro is the one running your file. Day-to-day support is handled by a senior associate, but partner sign-off is on every deliverable.' },
+  { q: 'Are you taking new clients?',                          a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.' },
 ];
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
 
@@ -84,17 +84,11 @@ const schema = [
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
-    <div class="relative h-[420px] w-full md:h-[520px]">
-      <img
-        src={service.data.cover ?? '/images/about/hero.jpg'}
-        alt=""
-        aria-hidden="true"
-        class="absolute inset-0 h-full w-full object-cover object-center"
-      />
+    <div class="relative h-[380px] w-full md:h-[480px]">
+      <img src={service.data.cover ?? '/images/about/hero.jpg'} alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
       <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
 
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
-        <!-- Breadcrumbs -->
         <nav aria-label="Breadcrumb" class="mb-6">
           <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-[var(--color-text-head)]">
             <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
@@ -109,17 +103,17 @@ const schema = [
           </ol>
         </nav>
 
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink max-w-[18ch]">
+        <h1 class="am-hero-display am-gradient-ink max-w-[18ch]">
           {service.data.title}
         </h1>
       </Container>
     </div>
   </section>
 
-  <!-- ═════════════ SUMMARY ═════════════ -->
-  <section class="relative bg-white py-16 md:py-20">
+  <!-- ═════════════ SUMMARY + CTA STRIP ═════════════ -->
+  <section class="relative bg-white py-14 md:py-20">
     <Container width="wide">
-      <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <p class="font-display text-[18px] leading-[1.55] text-[var(--color-text-head)] md:col-span-8">
           {service.data.summary}
         </p>
@@ -128,55 +122,55 @@ const schema = [
             Request a Consultation
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
-          <a href="#engagement" class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
-            How we work
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a>
         </div>
       </div>
     </Container>
   </section>
 
-  <!-- ═════════════ KEY TAKEAWAYS (optional) ═════════════ -->
-  {takeaways.length > 0 && (
-    <section class="relative bg-paper py-20 md:py-24">
-      <Container width="wide">
-        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-          <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">In one minute</span>
-        </div>
-        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-          <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">The thing to remember.</h2>
-        </div>
-        <ul data-stagger class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {takeaways.map((t, i) => (
-            <li class="flex flex-col gap-5 rounded-[6px] border border-line bg-white p-7">
-              <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">{String(i + 1).padStart(2, '0')}</span>
-              <p class="font-display text-[18px] leading-[1.4] tracking-[-0.005em] text-[var(--color-text-head)]">{t}</p>
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
-  )}
+  <!-- ═════════════ WHAT YOU GET (benefits) ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">What you get</span>
+      </div>
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+          The engagement, in a nutshell.
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+          Every Alpine Mar {service.data.title.toLowerCase()} engagement is built on the same four commitments.
+        </p>
+      </div>
+      <ul class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {benefits.map((b, i) => (
+          <li class="flex flex-col gap-5 rounded-[6px] border border-line bg-white p-7">
+            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{b.title}</h3>
+            {b.body && (<p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{b.body}</p>)}
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
 
-  <!-- ═════════════ WHAT'S INCLUDED (optional, dark) ═════════════ -->
+  <!-- ═════════════ WHAT'S INCLUDED (dark, optional) ═════════════ -->
   {included.length > 0 && (
     <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
       <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
       <Container width="wide" class="relative z-10">
-        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/85">
+        <div class="mb-10 flex items-center gap-3 text-white/85">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">What's included</span>
         </div>
-        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">A defined scope, not a black box.</h2>
           <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
             Engagements are scoped before they start. Here's what a typical {service.data.title.toLowerCase()} engagement covers.
           </p>
         </div>
-        <ul data-stagger class="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul class="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {included.map((item) => (
             <li class="flex items-start gap-3">
               <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
@@ -191,26 +185,26 @@ const schema = [
   )}
 
   <!-- ═════════════ PROCESS ═════════════ -->
-  <section id="engagement" class="relative bg-white py-24 md:py-32">
+  <section class="relative bg-white py-24 md:py-32">
     <Container width="wide">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">How we work</span>
       </div>
-      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">From first call to closed loop.</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
           Four predictable steps. No surprise scope creep, no junior handoffs, no hourly meter ticking on routine questions.
         </p>
       </div>
-      <ol data-stagger class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <ol class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
         {(process.length ? process : [
           { title: 'Intro call', body: 'An introductory call with the partner who would run the engagement — scope, timing, fit.' },
           { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo + flat fee.' },
           { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence — weekly status by default.' },
           { title: 'Wrap-up',    body: 'Deliverables ship with a written summary. You keep working with the same team next round.' },
         ]).map((p, i) => (
-          <li class="flex flex-col gap-4 rounded-[6px] border border-line bg-white p-7">
+          <li class="flex flex-col gap-4 rounded-[6px] border border-line bg-paper p-7">
             <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">Step {String(i + 1).padStart(2, '0')}</span>
             <h3 class="font-display text-[20px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{p.title}</h3>
             <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{p.body}</p>
@@ -220,23 +214,73 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ OVERVIEW (narrow centred prose) ═════════════ -->
-  <section id="body" class="relative bg-paper py-20 md:py-24">
-    <Container width="reading">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center justify-center gap-3 text-[var(--color-text-head)]">
+  <!-- ═════════════ WHO IT'S FOR ═════════════ -->
+  {linkedIndustries.length > 0 && (
+    <section class="relative bg-paper py-24 md:py-32">
+      <Container width="wide">
+        <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Who it's for</span>
+        </div>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+          <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+            Industries we run this for.
+          </h2>
+          <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+            Specialised playbooks for the verticals we know best — benchmarks, deductions, and tax positions that don't need explaining.
+          </p>
+        </div>
+        <ul class="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {linkedIndustries.map((ind) => (
+            <li>
+              <a href={ind.href} class="group flex h-full min-h-[120px] flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+                <span class="font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{ind.title}</span>
+                <span class="inline-flex size-7 items-center justify-center rounded-[4px] bg-paper text-[var(--color-text-head)] transition-transform group-hover:translate-x-1">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  <!-- ═════════════ WHY ALPINE MAR (dark) ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div class="mb-10 flex items-center gap-3 text-white/85">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Overview</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Why Alpine Mar</span>
       </div>
-      <div data-reveal class="prose-am">
-        <Content />
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
+          A strategy that works<br />as hard as you do.
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
+          You'll hear from us before tax season, not just during it. Our team stays close to your financials year-round, flagging opportunities and managing compliance.
+        </p>
       </div>
+      <ul class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {pillars.map((p) => (
+          <li class="flex flex-col gap-6 rounded-[6px] bg-white p-7 text-[var(--color-text-head)]">
+            <span class="inline-flex size-12 items-center justify-center rounded-[6px] bg-paper">
+              <img src={p.icon} alt="" aria-hidden="true" class="size-6" />
+            </span>
+            <h3 class="font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em]">{p.title}</h3>
+            <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{p.body}</p>
+          </li>
+        ))}
+      </ul>
     </Container>
   </section>
 
-  <!-- ═════════════ TALK TO A PARTNER (dedicated CTA section) ═════════════ -->
+  <!-- ═════════════ TALK TO A PARTNER ═════════════ -->
   <section class="relative bg-white py-20 md:py-24">
     <Container width="wide">
-      <div data-reveal class="grid grid-cols-1 items-center gap-10 rounded-[6px] border border-line bg-paper p-8 md:grid-cols-12 md:gap-16 md:p-12">
+      <div class="grid grid-cols-1 items-center gap-10 rounded-[6px] border border-line bg-paper p-8 md:grid-cols-12 md:gap-16 md:p-12">
         <div class="md:col-span-3 md:order-1">
           <div class="aspect-square w-full max-w-[200px] overflow-hidden rounded-[6px] bg-navy-50">
             <img src="/images/team/Pablo.jpeg" alt="Pablo Martell, CPA" class="h-full w-full object-cover" loading="lazy" />
@@ -269,11 +313,11 @@ const schema = [
   {related.length > 0 && (
     <section class="relative bg-paper py-20 md:py-24">
       <Container width="wide">
-        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">{group ? `More ${group} services` : 'Related services'}</span>
         </div>
-        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
             Often booked alongside this one.
           </h2>
@@ -282,7 +326,7 @@ const schema = [
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="mt-0.5"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
-        <ul data-stagger class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <ul class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {related.map((s) => (
             <li>
               <a href={s.href} class="group flex h-full min-h-[160px] flex-col justify-between gap-6 rounded-[6px] border border-line bg-white p-6 transition-colors hover:border-[#12122D]">
@@ -299,50 +343,21 @@ const schema = [
     </section>
   )}
 
-  <!-- ═════════════ RELATED INDUSTRIES (optional) ═════════════ -->
-  {linkedIndustries.length > 0 && (
-    <section class="relative bg-white py-20 md:py-24">
-      <Container width="wide">
-        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-          <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">Often paired with</span>
-        </div>
-        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-          <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-            Industries we run this for.
-          </h2>
-        </div>
-        <ul data-stagger class="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {linkedIndustries.map((ind) => (
-            <li>
-              <a href={ind.href} class="group flex h-full flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
-                <span class="font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{ind.title}</span>
-                <span class="inline-flex size-7 items-center justify-center rounded-[4px] bg-paper text-[var(--color-text-head)] transition-transform group-hover:translate-x-1">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
-  )}
-
   <!-- ═════════════ FAQ ═════════════ -->
-  <section id="faq" class="relative bg-paper py-24 md:py-32">
+  <section id="faq" class="relative bg-white py-24 md:py-32">
     <Container width="wide">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Common questions</span>
       </div>
-      <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">Before you book the call.</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
           Quick answers to the things most people ask before signing on for {service.data.title.toLowerCase()}.
         </p>
       </div>
 
-      <div data-stagger class="mt-12 overflow-hidden rounded-[6px] border border-line bg-white">
+      <div class="mt-12 overflow-hidden rounded-[6px] border border-line bg-white">
         {faq.map((item, i) => (
           <details class={`group ${i > 0 ? 'border-t border-line' : ''} px-7 py-5`} {...(i === 0 ? { open: true } : {})}>
             <summary class="flex cursor-pointer items-center justify-between gap-6 font-display text-[16px] font-medium text-[var(--color-text-head)] [&::-webkit-details-marker]:hidden">
@@ -358,22 +373,22 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ CTA ═════════════ -->
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-16 flex items-center gap-3 text-white/85 md:mb-24">
+      <div class="mb-16 flex items-center gap-3 text-white/85 md:mb-24">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[15px] tracking-[-0.005em]">Ready to <span class="text-white/55">start?</span></span>
       </div>
 
-      <div data-reveal class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
           Let's get on a first name basis.
         </h2>
         <div class="md:col-span-4 md:flex md:justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
