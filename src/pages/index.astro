@@ -319,29 +319,29 @@ const dateFmt = (d: string | Date) =>
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/80">
+      <div data-reveal data-speed="fast" class="mb-12 flex items-center gap-3 text-white/85">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Contact Us</span>
       </div>
 
       <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
         <!-- Left: Title + Office / Contact cards -->
-        <div data-reveal class="flex flex-col gap-8 lg:col-span-6">
+        <div data-reveal class="flex flex-col gap-10 lg:col-span-5">
           <h2 class="am-h1-display am-gradient-ink-light">
             Let's get on<br />a first name basis.
           </h2>
 
-          <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div class="rounded-[6px] border border-white/10 bg-white/[0.04] p-6">
+          <div class="mt-4 flex flex-col gap-5">
+            <div class="rounded-[6px] bg-white/[0.05] p-7">
               <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Our Location</h3>
-              <p class="mt-4 font-display text-[14px] leading-[1.6] text-white/85">
+              <p class="mt-6 font-display text-[15px] leading-[1.6] text-white">
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
               </p>
             </div>
-            <div class="rounded-[6px] border border-white/10 bg-white/[0.04] p-6">
+            <div class="rounded-[6px] bg-white/[0.05] p-7">
               <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Contact Information</h3>
-              <p class="mt-4 font-display text-[14px] leading-[1.7] text-white/85">
+              <p class="mt-6 font-display text-[15px] leading-[1.7] text-white">
                 <a href={`tel:${site.phoneHref}`} class="block transition-colors hover:text-scooter">{site.phone}</a>
                 <a href={`mailto:${site.email}`} class="block transition-colors hover:text-scooter">{site.email}</a>
               </p>
@@ -350,50 +350,59 @@ const dateFmt = (d: string | Date) =>
         </div>
 
         <!-- Right: Form -->
-        <form data-reveal action="/contact/" method="get" class="rounded-[6px] bg-white p-7 text-[var(--color-text-head)] md:p-9 lg:col-span-6">
+        <form data-reveal action="/contact/" method="get" class="rounded-[6px] bg-white p-7 text-[var(--color-text-head)] md:p-9 lg:col-span-7">
           <div class="grid grid-cols-1 gap-5">
             <label class="block">
-              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Full Name</span>
+              <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Full Name</span>
               <input name="full" type="text" placeholder="Enter your name" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
             </label>
 
             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <label class="block">
-                <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Email Address</span>
+                <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Email Address</span>
                 <input name="email" type="email" autocomplete="email" placeholder="Enter email address" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
               </label>
               <label class="block">
-                <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Company Name</span>
-                <input name="company" type="text" placeholder="Enter company name" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+                <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Phone Number</span>
+                <input name="phone" type="tel" autocomplete="tel" placeholder="xxx-xxx-xxxx" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
               </label>
             </div>
 
             <label class="block">
-              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Services Needed</span>
-              <select name="service" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0">
-                <option value="">Select a service</option>
-                {services.map((s) => <option value={s.name}>{s.name}</option>)}
-              </select>
+              <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Services Needed</span>
+              <div class="relative mt-2">
+                <select name="service" class="block w-full appearance-none rounded-[4px] border border-line bg-white px-4 py-3 pr-10 font-display text-[14px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0">
+                  <option value="">Select a service</option>
+                  {services.map((s) => <option value={s.name}>{s.name}</option>)}
+                </select>
+                <svg class="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-body)]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
             </label>
 
             <label class="block">
-              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">How can we help?</span>
-              <textarea name="note" rows="3" placeholder="Tell us a bit about what you're working on" class="mt-2 block w-full resize-none rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0"></textarea>
+              <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">How can we help?</span>
+              <textarea name="note" rows="3" placeholder="Type a message..." class="mt-2 block w-full resize-none rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0"></textarea>
             </label>
 
-            <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
-              {['Secured', 'Confidential', 'Within 1 business day'].map((label) => (
-                <li class="inline-flex items-center gap-1.5 font-display text-[12px] text-[var(--color-text-body)]">
-                  <span class="flex size-4 items-center justify-center rounded-full bg-scooter text-white">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                  </span>
-                  {label}
-                </li>
-              ))}
-            </ul>
+            <!-- Cloudflare Turnstile placeholder widget -->
+            <div class="flex w-full max-w-[300px] items-center justify-between rounded-[4px] border border-line bg-[#fafbfc] px-3 py-2.5">
+              <div class="flex items-center gap-2 text-[13px] text-[var(--color-text-head)]">
+                <span class="flex size-5 items-center justify-center rounded-full bg-[#1b9c4a] text-white">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="font-display">Success!</span>
+              </div>
+              <div class="flex flex-col items-end">
+                <div class="flex items-center gap-1 text-[10px] font-semibold text-[#f48120]">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                  CLOUDFLARE
+                </div>
+                <div class="text-[8px] text-[var(--color-text-body)]">Privacy · Help</div>
+              </div>
+            </div>
           </div>
 
-          <button type="submit" class="group mt-7 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-[#12122d]">
+          <button type="submit" class="group mt-7 inline-flex items-center gap-2 rounded-[6px] bg-[#12122d] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
             Request a Consultation
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </button>
@@ -404,64 +413,77 @@ const dateFmt = (d: string | Date) =>
 
   <!-- ═════════════ LATEST INSIGHTS ═════════════ -->
   {insights.length > 0 && (
-    <section class="relative bg-white py-24 md:py-32">
-      <Container width="wide">
+    <section class="relative overflow-hidden bg-white py-24 md:py-32">
+      <!-- Subtle grid pattern -->
+      <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(18,18,45,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,45,0.035) 1px, transparent 1px); background-size: 72px 72px;"></div>
+
+      <Container width="wide" class="relative z-10">
         <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">Latest Insights</span>
         </div>
 
-        <div data-reveal class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16">
-          <h2 class="am-h1-display text-[var(--color-text-head)] md:max-w-[20ch]">
-            Leading the industry in helping industry leaders
+        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+          <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+            Leading the industry<br />in helping industry<br />leaders
           </h2>
-          <a href="/blog/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-[#12122d]">
-            View All Insights
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-          </a>
+          <div class="flex flex-col items-start gap-7 md:col-span-5 md:pt-3">
+            <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
+              Practical perspectives on tax, finance, and business, written by the people who work in it every day.
+            </p>
+            <a href="/blog/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#12122d] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+              View All Insights
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
         </div>
 
         <!-- Featured large -->
         {featured && (
-          <a data-reveal href={`/blog/${slugOf(featured.id)}/`} class="group mt-12 grid grid-cols-1 gap-8 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2 md:gap-12">
+          <a data-reveal href={`/blog/${slugOf(featured.id)}/`} class="group mt-16 grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
             {featured.data.heroImage && (
-              <div class="aspect-[4/3] overflow-hidden md:aspect-auto">
+              <div class="aspect-[4/3] overflow-hidden md:aspect-auto md:min-h-[420px]">
                 <img src={featured.data.heroImage} alt={featured.data.title} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
             )}
-            <div class="flex flex-col gap-4 p-6 md:p-10">
-              <div class="flex items-center gap-3 font-display text-[12px] text-[var(--color-text-body)]">
-                <span class="inline-flex items-center gap-1.5"><span class="block size-1.5 rounded-full bg-scooter"></span>Category</span>
+            <div class="flex flex-col gap-6 p-8 md:p-12">
+              <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+                <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                  <span class="block size-1.5 bg-[#12122d]"></span>
+                  Category
+                </span>
                 <span>{dateFmt(featured.data.date)}</span>
               </div>
-              <h3 class="font-display text-[24px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[28px]">{featured.data.title}</h3>
+              <h3 class="font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[32px]">{featured.data.title}</h3>
               <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{featured.data.description}</p>
-              <span class="mt-auto inline-flex items-center gap-2 self-start rounded-[6px] bg-scooter px-4 py-2 font-display text-[13px] font-medium text-white">
-                Read more
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-              </span>
+              <div class="mt-auto flex items-center justify-between gap-4">
+                <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+                <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-[#12122d] text-white transition-transform group-hover:translate-x-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </span>
+              </div>
             </div>
           </a>
         )}
 
-        <!-- 3 small posts -->
-        <div data-stagger class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <!-- 3 small posts (text-only) -->
+        <div data-stagger class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
           {more.map((p) => (
-            <a href={`/blog/${slugOf(p.id)}/`} class="group flex flex-col gap-4 overflow-hidden rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-scooter">
-              {p.data.heroImage && (
-                <div class="aspect-[16/10] overflow-hidden rounded-[4px] bg-navy-50">
-                  <img src={p.data.heroImage} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                </div>
-              )}
-              <div class="flex items-center gap-3 font-display text-[12px] text-[var(--color-text-body)]">
-                <span class="inline-flex items-center gap-1.5"><span class="block size-1.5 rounded-full bg-scooter"></span>Category</span>
+            <a href={`/blog/${slugOf(p.id)}/`} class="group flex min-h-[300px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122d]">
+              <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+                <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                  <span class="block size-1.5 bg-[#12122d]"></span>
+                  Category
+                </span>
                 <span>{dateFmt(p.data.date)}</span>
               </div>
-              <h4 class="font-display text-[16px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{p.data.title || 'Blog title heading will go here'}</h4>
-              <span class="mt-auto inline-flex items-center gap-2 self-start rounded-[6px] bg-scooter px-3.5 py-2 font-display text-[12px] font-medium text-white">
-                Read more
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-              </span>
+              <h4 class="mt-7 font-display text-[20px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{p.data.title || 'Blog title heading will go here'}</h4>
+              <div class="mt-auto flex items-center justify-between gap-4 pt-8">
+                <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+                <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#12122d] text-white transition-transform group-hover:translate-x-1">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </span>
+              </div>
             </a>
           ))}
         </div>
