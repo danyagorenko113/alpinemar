@@ -30,10 +30,10 @@ const emailFor = (name: string) => {
 };
 
 const drives = [
-  { title: 'Quality',           icon: 'star' },
-  { title: 'Trust & Integrity', icon: 'handshake' },
-  { title: 'Innovation',        icon: 'lightbulb' },
-  { title: 'Collaboration',     icon: 'collab' },
+  { title: 'Quality',           icon: '/icons/about/quality.svg' },
+  { title: 'Trust & Integrity', icon: '/icons/about/trust.svg' },
+  { title: 'Innovation',        icon: '/icons/about/innovation.svg' },
+  { title: 'Collaboration',     icon: '/icons/about/collaboration.svg' },
 ];
 ---
 
@@ -149,7 +149,7 @@ const drives = [
       </div>
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-6">
+        <h2 class="am-h1-display text-white md:col-span-6">
           Valuing what matters most.
         </h2>
         <p class="font-display text-[16.5px] leading-relaxed text-white/75 md:col-span-6 md:pt-2">
@@ -159,22 +159,9 @@ const drives = [
 
       <ul data-stagger class="mt-16 grid grid-cols-2 gap-5 lg:grid-cols-4">
         {drives.map((d) => (
-          <li class="flex aspect-square flex-col items-center justify-center gap-5 rounded-[1.5rem] bg-white p-8 text-center text-[var(--color-text-head)] transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(51,187,220,0.45)]">
-            <span class="inline-flex items-center justify-center text-scooter">
-              {d.icon === 'star' && (
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              )}
-              {d.icon === 'handshake' && (
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
-              )}
-              {d.icon === 'lightbulb' && (
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
-              )}
-              {d.icon === 'collab' && (
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2"/><path d="M15.5 21v-1.5a3.5 3.5 0 0 1 3.5-3.5h.5"/></svg>
-              )}
-            </span>
-            <h3 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{d.title}</h3>
+          <li class="flex flex-col items-center justify-center gap-5 rounded-[1.25rem] bg-white px-6 py-10 text-center text-[var(--color-text-head)] transition-shadow hover:shadow-[0_24px_60px_-30px_rgba(51,187,220,0.45)]">
+            <img src={d.icon} alt="" aria-hidden="true" width="32" height="32" class="size-8" />
+            <h3 class="font-display text-[16px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{d.title}</h3>
           </li>
         ))}
       </ul>
