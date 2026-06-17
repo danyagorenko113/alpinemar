@@ -117,9 +117,9 @@ const dateFmt = (d: string | Date) =>
 
         <!-- Mask both ends so logos fade in/out smoothly -->
         <div class="relative w-full overflow-hidden" style="mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);">
-          <div class="marquee items-center gap-12 [filter:grayscale(1)]">
+          <div class="marquee items-center gap-12">
             {[...platforms, ...platforms].map((p) => (
-              <img src={p.src} alt={p.name} class="h-7 w-auto shrink-0 opacity-60 md:h-8" loading="lazy" />
+              <img src={p.src} alt={p.name} class="h-7 w-auto shrink-0 md:h-8" loading="lazy" />
             ))}
           </div>
         </div>
