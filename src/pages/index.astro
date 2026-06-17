@@ -10,27 +10,27 @@ const insights = (await getCollection('insights'))
   .slice(0, 4);
 
 const services = [
-  { num: '01', name: 'Tax Planning',                 href: '/services/tax-planning-services/' },
-  { num: '02', name: 'Outsourced Accounting',        href: '/services/outsourced-accounting-services/' },
-  { num: '03', name: 'Private Client Services',      href: '/services/private-client-services/' },
-  { num: '04', name: 'Transaction Advisory',         href: '/services/transaction-advisory-services/' },
+  { num: '01', name: 'Tax Planning',              href: '/services/tax-planning-services/' },
+  { num: '02', name: 'Outsourced Accounting',     href: '/services/outsourced-accounting-services/' },
+  { num: '03', name: 'Private Client Services',   href: '/services/private-client-services/' },
+  { num: '04', name: 'Transaction Advisory',      href: '/services/transaction-advisory-services/' },
   { num: '05', name: 'Audit & Attestation Services', href: '/services/audit-attestation-services/' },
 ];
 
 const industries = [
   {
-    name: 'HNW Individuals',
+    name: 'High-Net-Worth Individuals',
     href: '/industries/high-net-worth-accounting-cpa/',
     img: '/images/home/ind-1.png',
     blurb:
-      'Planning tuned to complex personal balance sheets — multi-state residency, K-1s, trusts, equity, and private investments under one roof.',
+      "We help our high-net-worth clients analyze their entity structures and various types of taxable income to strategically minimize the taxable impact.",
   },
   {
     name: 'Healthcare',
     href: '/industries/healthcare-accounting-services/',
     img: '/images/home/ind-2.png',
     blurb:
-      'For practice owners, ASCs, and medical groups — Stark / Anti-kickback aware accounting, owner comp, and reimbursement-grade reporting.',
+      'We recognize the complexities associated with the industry and minimize their tax expertise by using all of the available deductions.',
   },
   {
     name: 'Advertising & Marketing',
@@ -48,13 +48,18 @@ const aboutPills = [
   'Privacy and Trust',
 ];
 
+const platforms = [
+  { name: 'QuickBooks', src: '/images/logos/quickbooks.webp' },
+  { name: 'NetSuite',   src: '/images/logos/netsuite.webp' },
+  { name: 'Yardi',      src: '/images/logos/yardi.webp' },
+  { name: 'Mercury',    src: '/images/logos/mercury.webp' },
+];
+
 const featured = insights[0];
 const more = insights.slice(1, 4);
-
+const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 const dateFmt = (d: string | Date) =>
   new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 ---
 
 <BaseLayout
@@ -62,45 +67,44 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
   description="Alpine Mar is the Florida CPA firm blending big-firm experience with a fresh perspective on tax, accounting, advisory, and audit — personalized attention for HNW individuals, healthcare, and growth-stage businesses."
 >
   <!-- ═════════════ HERO ═════════════ -->
-  <section class="relative -mt-[88px] overflow-hidden bg-[#0a0a1c] text-white">
-    <!-- Background video (iStock-1127723700 — per client design) -->
-    <div class="pointer-events-none absolute inset-0">
-      <video
-        src="/video/hero.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        aria-hidden="true"
-        class="absolute inset-0 h-full w-full object-cover"
-      ></video>
-      <!-- Darken / cool the footage so the title stays legible -->
-      <div class="absolute inset-0 bg-[#0a0a1c]/55"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a1c]/30 via-transparent to-[#0a0a1c]/85"></div>
-      <!-- Pattern grid overlay -->
-      <div class="absolute inset-0 opacity-[0.16] mix-blend-screen" style="background-image:url('/images/home/hero-pattern-grid.png');background-size:cover;background-position:center;"></div>
-      <!-- Radial blur glow -->
-      <img src="/images/home/hero-blur.png" alt="" aria-hidden="true" class="absolute left-1/2 top-[-18%] w-[1400px] -translate-x-1/2 opacity-50 blur-2xl" />
-    </div>
+  <section class="relative bg-white">
+    <Container width="wide" class="relative">
+      <div class="grid grid-cols-1 items-stretch gap-0 overflow-hidden lg:grid-cols-12">
+        <!-- Left: copy -->
+        <div data-reveal class="flex flex-col justify-center py-12 pr-0 lg:col-span-7 lg:py-20 lg:pr-12">
+          <h1 class="am-hero-display am-gradient-ink">
+            The Florida CPA firm redefining accounting
+          </h1>
+          <p class="mt-8 max-w-[58ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
+            Whether you're seeking expert tax planning services, fractional CFO services for financial guidance, reliable outsourced accounting services, or our perfect blend of industry experience, technology, and hands-on care has got you covered.
+          </p>
+          <div class="mt-10">
+            <a href="/about-us/" class="group inline-flex items-center gap-3 rounded-[4px] border border-line px-5 py-3 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122d]">
+              View More
+              <span class="inline-flex size-6 items-center justify-center rounded-full bg-[#12122d] text-white transition-transform group-hover:translate-x-1">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </span>
+            </a>
+          </div>
+        </div>
 
-    <Container width="wide" class="relative z-10">
-      <div class="flex min-h-[100svh] flex-col justify-end pb-24 pt-[10rem] md:pb-28 md:pt-[12.5rem]">
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink-light">
-          The Florida CPA firm redefining accounting
-        </h1>
+        <!-- Right: photo (taller on desktop, anchored to top) -->
+        <div class="relative h-[280px] sm:h-[360px] lg:col-span-5 lg:h-auto">
+          <img src="/images/about/collage-5.jpg" alt="Alpine Mar — partnership handshake" class="absolute inset-0 h-full w-full object-cover" loading="eager" decoding="async" />
+        </div>
+      </div>
+    </Container>
+  </section>
 
-        <p data-reveal class="mt-8 max-w-[62ch] font-display text-[clamp(1.05rem,1.55vw,1.5rem)] font-medium leading-[1.25] tracking-[-0.01em] text-white/80">
-          Big-firm experience meets a fresh perspective — for high-net-worth individuals, healthcare practices, and growth-stage businesses that want a CPA on their first name basis.
-        </p>
-
-        <div data-reveal class="mt-10">
-          <a href="/about-us/" class="group inline-flex items-center gap-4 border-b border-white/35 pb-2 font-display text-[15px] font-medium uppercase tracking-[0.18em] text-white transition-colors hover:border-scooter hover:text-scooter">
-            View More
-            <span class="inline-flex size-9 items-center justify-center rounded-full border border-white/35 transition-all duration-300 group-hover:translate-x-1 group-hover:border-scooter group-hover:bg-scooter group-hover:text-navy-950">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-            </span>
-          </a>
+  <!-- ═════════════ TRUSTED PLATFORMS ═════════════ -->
+  <section class="relative bg-paper py-10 md:py-14">
+    <Container width="wide">
+      <div class="flex flex-col items-center gap-8 md:flex-row md:gap-14">
+        <p class="font-display text-[13px] tracking-[0.04em] text-[var(--color-text-body)] md:whitespace-nowrap">Trusted Platforms We Work With</p>
+        <div class="flex flex-1 flex-wrap items-center justify-around gap-x-10 gap-y-6 opacity-70 [filter:grayscale(0.9)]">
+          {platforms.map((p) => (
+            <img src={p.src} alt={p.name} class="h-7 w-auto md:h-8" loading="lazy" />
+          ))}
         </div>
       </div>
     </Container>
@@ -110,29 +114,29 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
   <section class="relative bg-white py-24 md:py-32">
     <Container width="wide">
       <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-        <span class="block h-px w-10 bg-scooter"></span>
-        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Our Services</span>
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Our Services</span>
       </div>
 
-      <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-12 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink md:col-span-7">
-          A full-service firm, tailored to you.
+      <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-6">
+          Discover a full range of services to meet <span class="text-scooter">your specific needs.</span>
         </h2>
-        <p class="font-display text-[18px] leading-relaxed text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          From day-to-day accounting to high-stakes transactions and audits, we build a small senior team around each client — so the work is technically rigorous and the relationship stays personal.
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-6 md:pt-3">
+          Whatever stage you're at, there's a service built for it. Take a look at what we do and find your fit.
         </p>
       </div>
 
-      <ul class="mt-2">
+      <ul>
         {services.map((s) => (
           <li data-reveal class="group border-b border-line">
             <a href={s.href} class="grid grid-cols-12 items-center gap-6 py-7 transition-colors md:py-9">
-              <span class="am-h2-display am-gradient-ink col-span-2 tabular-nums opacity-90 md:col-span-1">{s.num}</span>
-              <span class="am-h1-display am-gradient-ink col-span-9 transition-transform duration-500 group-hover:translate-x-2 md:col-span-10">{s.name}</span>
+              <span class="font-display text-[28px] font-medium tabular-nums text-[var(--color-text-head)] md:col-span-1 col-span-2">{s.num}</span>
+              <span class="font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)] transition-transform duration-500 group-hover:translate-x-2 md:col-span-10 md:text-[32px] col-span-9">{s.name}</span>
               <span class="col-span-1 flex justify-end">
-                <span class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-all duration-500 group-hover:border-scooter group-hover:bg-scooter group-hover:text-white">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-[var(--color-text-head)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+                </svg>
               </span>
             </a>
           </li>
@@ -143,74 +147,68 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 
   <!-- ═════════════ ABOUT — Built different. On purpose. ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <img src="/images/home/about-bg.png" alt="" aria-hidden="true" class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30" />
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#12122d]/40 via-[#12122d]/55 to-[#12122d]/80"></div>
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/80">
-        <span class="block h-px w-10 bg-scooter"></span>
-        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">About Us</span>
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">About Us</span>
       </div>
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
-          Built different. On purpose.
+        <h2 class="am-h1-display text-white md:col-span-6">
+          Built different.<br />On purpose.
         </h2>
-        <p class="font-display text-[18px] leading-relaxed text-white/75 md:col-span-5 md:pt-3">
-          Alpine Mar pairs senior CPAs with modern workflows so clients get partner-level judgment without losing the response time of a smaller firm. We hire deliberately and stay small enough to know your name.
+        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-6 md:pt-3">
+          We started Alpine Mar because we knew there was a better way to do this. More personal. More proactive. Less of the formal distance that makes most CPA relationships feel transactional. That's all what drives everything we do.
         </p>
       </div>
 
-      <div data-reveal class="relative mt-16 overflow-hidden rounded-[2rem] border border-white/10">
-        <img src="/images/home/about-image.png" alt="Alpine Mar team" width="1600" height="900" class="h-[460px] w-full object-cover md:h-[560px]" loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a1c]/85 via-[#0a0a1c]/10 to-transparent"></div>
-
-        <ul data-stagger class="absolute inset-x-0 bottom-0 grid grid-cols-1 gap-3 p-6 sm:grid-cols-2 md:p-10 xl:grid-cols-4">
-          {aboutPills.map((label) => (
-            <li class="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-md">
-              <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-scooter text-navy-950">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <span class="font-display text-[15px] font-medium leading-snug text-white">{label}</span>
-            </li>
-          ))}
-        </ul>
+      <!-- Full-width image -->
+      <div data-reveal class="mt-12 overflow-hidden rounded-[6px]">
+        <img src="/images/about/hero.jpg" alt="Alpine Mar team meeting" class="h-[320px] w-full object-cover md:h-[420px]" loading="lazy" />
       </div>
+
+      <!-- 4 feature pills (below image, not overlay) -->
+      <ul data-stagger class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {aboutPills.map((label) => (
+          <li class="flex items-center gap-3">
+            <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-scooter text-white">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="font-display text-[13px] text-white/85">{label}</span>
+          </li>
+        ))}
+      </ul>
     </Container>
   </section>
 
-  <!-- ═════════════ AUDIENCE — Industries We Service ═════════════ -->
+  <!-- ═════════════ INDUSTRIES ═════════════ -->
   <section class="relative bg-white py-24 md:py-32">
     <Container width="wide">
       <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-        <span class="block h-px w-10 bg-scooter"></span>
-        <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Industries We Service</span>
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Industries We Service</span>
       </div>
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink md:col-span-8">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
           The firm that knows your world, not just your numbers.
         </h2>
-        <p class="font-display text-[18px] leading-relaxed text-[var(--color-text-body)] md:col-span-4 md:pt-3">
-          Specialised teams for the industries we know best — so the playbooks are tested, the benchmarks are real, and you stop having to explain the basics.
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+          From healthcare to high-net-worth individuals to startups, we serve clients across some of the most complex financial landscapes there. The details change. The level of care doesn't.
         </p>
       </div>
 
       <div class="relative mt-14">
         <div id="aud-track" class="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {industries.map((ind) => (
-            <a href={ind.href} class="group relative flex w-[88%] flex-none snap-start flex-col overflow-hidden rounded-[2rem] border border-line bg-white shadow-[0_24px_60px_-30px_rgba(18,18,45,0.25)] transition-shadow hover:shadow-[0_28px_80px_-24px_rgba(18,18,45,0.35)] sm:w-[58%] lg:w-[calc((100%-3rem)/3)]">
-              <div class="aspect-[4/3] w-full overflow-hidden bg-navy-50">
+            <a href={ind.href} class="group flex w-[80%] flex-none snap-start flex-col gap-5 sm:w-[48%] lg:w-[calc((100%-3rem)/3)]">
+              <div class="aspect-[4/3] w-full overflow-hidden rounded-[6px] bg-navy-50">
                 <img src={ind.img} alt={ind.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
-              <div class="flex flex-col gap-3 px-7 py-7">
-                <h3 class="am-h5-display text-[var(--color-text-head)]">{ind.name}</h3>
-                <p class="font-display text-[15px] leading-relaxed text-[var(--color-text-body)]">{ind.blurb}</p>
-                <span class="mt-2 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-delft transition-colors group-hover:text-scooter">
-                  Explore
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </span>
-              </div>
+              <h3 class="font-display text-[18px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{ind.name}</h3>
+              <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{ind.blurb}</p>
             </a>
           ))}
         </div>
@@ -218,15 +216,15 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
         <div class="mt-10 flex items-center justify-between gap-6">
           <div id="aud-dots" class="flex items-center gap-2">
             {industries.map((_, i) => (
-              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="size-2.5 rounded-full bg-line transition-colors data-[active=1]:bg-delft"></button>
+              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-1.5 rounded-full bg-line transition-all duration-300 data-[active=1]:w-6 data-[active=1]:bg-scooter"></button>
             ))}
           </div>
           <div class="flex items-center gap-3">
-            <button type="button" id="aud-prev" aria-label="Previous" class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+            <button type="button" id="aud-prev" aria-label="Previous" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
             </button>
-            <button type="button" id="aud-next" aria-label="Next" class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            <button type="button" id="aud-next" aria-label="Next" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
             </button>
           </div>
         </div>
@@ -234,136 +232,156 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
     </Container>
   </section>
 
-  <!-- ═════════════ CONTACT ═════════════ -->
-  <section id="contact-intro" class="relative bg-paper py-24 md:py-32">
-    <Container width="wide">
-      <div class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-20">
-        <div data-reveal class="lg:col-span-6">
-          <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-            <span class="block h-px w-10 bg-scooter"></span>
-            <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Get in touch</span>
-          </div>
-          <h2 class="am-h1-display am-gradient-ink">
-            Let's get on a first name basis.
-          </h2>
-          <p class="mt-7 max-w-[44ch] font-display text-[18px] leading-relaxed text-[var(--color-text-body)]">
-            Tell us a little about what you're working on. We'll match you with a senior CPA on our team — usually within one business day.
-          </p>
+  <!-- ═════════════ CONTACT US ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-          <dl class="mt-12 grid grid-cols-1 gap-y-7 sm:grid-cols-2">
-            <div>
-              <dt class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-400">Call</dt>
-              <dd class="mt-2"><a href={`tel:${site.phoneHref}`} class="font-display text-[18px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">{site.phone}</a></dd>
-            </div>
-            <div>
-              <dt class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-400">Email</dt>
-              <dd class="mt-2"><a href={`mailto:${site.email}`} class="font-display text-[18px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">{site.email}</a></dd>
-            </div>
-            <div class="sm:col-span-2">
-              <dt class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-400">Visit</dt>
-              <dd class="mt-2 font-display text-[16px] leading-relaxed text-[var(--color-text-body)]">
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/80">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Contact Us</span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+        <!-- Left: Title + Office / Contact cards -->
+        <div data-reveal class="flex flex-col gap-8 lg:col-span-6">
+          <h2 class="am-h1-display am-gradient-ink-light">
+            Let's get on<br />a first name basis.
+          </h2>
+
+          <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="rounded-[6px] border border-white/10 bg-white/[0.04] p-6">
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Our Location</h3>
+              <p class="mt-4 font-display text-[14px] leading-[1.6] text-white/85">
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
-              </dd>
+              </p>
             </div>
-          </dl>
+            <div class="rounded-[6px] border border-white/10 bg-white/[0.04] p-6">
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Contact Information</h3>
+              <p class="mt-4 font-display text-[14px] leading-[1.7] text-white/85">
+                <a href={`tel:${site.phoneHref}`} class="block transition-colors hover:text-scooter">{site.phone}</a>
+                <a href={`mailto:${site.email}`} class="block transition-colors hover:text-scooter">{site.email}</a>
+              </p>
+            </div>
+          </div>
         </div>
 
-        <form data-reveal action="/contact/" method="get" class="rounded-[2rem] border border-line bg-white p-8 md:p-10 lg:col-span-6">
-          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <!-- Right: Form -->
+        <form data-reveal action="/contact/" method="get" class="rounded-[6px] bg-white p-7 text-[var(--color-text-head)] md:p-9 lg:col-span-6">
+          <div class="grid grid-cols-1 gap-5">
             <label class="block">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">First name</span>
-              <input name="first" type="text" autocomplete="given-name" class="mt-2 block w-full border-0 border-b border-line bg-transparent py-3 font-display text-[16px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0" />
+              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Full Name</span>
+              <input name="full" type="text" placeholder="Enter your name" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
             </label>
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <label class="block">
+                <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Email Address</span>
+                <input name="email" type="email" autocomplete="email" placeholder="Enter email address" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+              </label>
+              <label class="block">
+                <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Company Name</span>
+                <input name="company" type="text" placeholder="Enter company name" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0" />
+              </label>
+            </div>
+
             <label class="block">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">Last name</span>
-              <input name="last" type="text" autocomplete="family-name" class="mt-2 block w-full border-0 border-b border-line bg-transparent py-3 font-display text-[16px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0" />
+              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">Services Needed</span>
+              <select name="service" class="mt-2 block w-full rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0">
+                <option value="">Select a service</option>
+                {services.map((s) => <option value={s.name}>{s.name}</option>)}
+              </select>
             </label>
-            <label class="block sm:col-span-2">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">Email</span>
-              <input name="email" type="email" autocomplete="email" required class="mt-2 block w-full border-0 border-b border-line bg-transparent py-3 font-display text-[16px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0" />
+
+            <label class="block">
+              <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">How can we help?</span>
+              <textarea name="note" rows="3" placeholder="Tell us a bit about what you're working on" class="mt-2 block w-full resize-none rounded-[4px] border border-line bg-white px-4 py-3 font-display text-[14px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:border-scooter focus:outline-none focus:ring-0"></textarea>
             </label>
-            <label class="block sm:col-span-2">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">What do you need help with?</span>
-              <textarea name="note" rows="4" class="mt-2 block w-full resize-none border-0 border-b border-line bg-transparent py-3 font-display text-[16px] text-[var(--color-text-head)] focus:border-scooter focus:outline-none focus:ring-0"></textarea>
-            </label>
+
+            <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
+              {['Secured', 'Confidential', 'Within 1 business day'].map((label) => (
+                <li class="inline-flex items-center gap-1.5 font-display text-[12px] text-[var(--color-text-body)]">
+                  <span class="flex size-4 items-center justify-center rounded-full bg-scooter text-white">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  {label}
+                </li>
+              ))}
+            </ul>
           </div>
-          <button type="submit" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-[#12122d] px-7 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter">
-            Send message
-            <span class="inline-flex size-5 items-center justify-center transition-transform group-hover:translate-x-1">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-            </span>
+
+          <button type="submit" class="group mt-7 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-[#12122d]">
+            Request a Consultation
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </button>
-          <p class="mt-4 text-[12px] text-navy-400">We respond within one business day — usually the same day.</p>
         </form>
       </div>
     </Container>
   </section>
 
-  <!-- ═════════════ LATEST NEWS ═════════════ -->
+  <!-- ═════════════ LATEST INSIGHTS ═════════════ -->
   {insights.length > 0 && (
     <section class="relative bg-white py-24 md:py-32">
       <Container width="wide">
-        <div class="flex flex-wrap items-end justify-between gap-6">
-          <div data-reveal data-speed="fast">
-            <div class="mb-6 flex items-center gap-3 text-[var(--color-text-head)]">
-              <span class="block h-px w-10 bg-scooter"></span>
-              <span class="font-mono text-[0.72rem] uppercase tracking-[0.22em]">Latest News</span>
-            </div>
-            <h2 class="am-h1-display am-gradient-ink">
-              From our notebook.
-            </h2>
-          </div>
-          <a href="/blog/" class="group inline-flex items-center gap-3 border-b border-navy-200 pb-2 font-display text-sm font-medium uppercase tracking-[0.16em] text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter">
-            View all insights
-            <span class="inline-flex size-8 items-center justify-center rounded-full border border-navy-200 transition-all group-hover:translate-x-1 group-hover:border-scooter group-hover:bg-scooter group-hover:text-white">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-            </span>
+        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Latest Insights</span>
+        </div>
+
+        <div data-reveal class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between md:gap-16">
+          <h2 class="am-h1-display text-[var(--color-text-head)] md:max-w-[20ch]">
+            Leading the industry in helping industry leaders
+          </h2>
+          <a href="/blog/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-[#12122d]">
+            View All Insights
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
 
-        <div class="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-12">
-          {featured && (
-            <a data-reveal href={`/blog/${slugOf(featured.id)}/`} class="group flex flex-col overflow-hidden rounded-[2rem] border border-line bg-paper lg:col-span-7">
-              {featured.data.heroImage && (
-                <div class="aspect-[16/10] overflow-hidden">
-                  <img src={featured.data.heroImage} alt={featured.data.title} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+        <!-- Featured large -->
+        {featured && (
+          <a data-reveal href={`/blog/${slugOf(featured.id)}/`} class="group mt-12 grid grid-cols-1 gap-8 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2 md:gap-12">
+            {featured.data.heroImage && (
+              <div class="aspect-[4/3] overflow-hidden md:aspect-auto">
+                <img src={featured.data.heroImage} alt={featured.data.title} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              </div>
+            )}
+            <div class="flex flex-col gap-4 p-6 md:p-10">
+              <div class="flex items-center gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+                <span class="inline-flex items-center gap-1.5"><span class="block size-1.5 rounded-full bg-scooter"></span>Category</span>
+                <span>{dateFmt(featured.data.date)}</span>
+              </div>
+              <h3 class="font-display text-[24px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[28px]">{featured.data.title}</h3>
+              <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{featured.data.description}</p>
+              <span class="mt-auto inline-flex items-center gap-2 self-start rounded-[6px] bg-scooter px-4 py-2 font-display text-[13px] font-medium text-white">
+                Read more
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </div>
+          </a>
+        )}
+
+        <!-- 3 small posts -->
+        <div data-stagger class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {more.map((p) => (
+            <a href={`/blog/${slugOf(p.id)}/`} class="group flex flex-col gap-4 overflow-hidden rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-scooter">
+              {p.data.heroImage && (
+                <div class="aspect-[16/10] overflow-hidden rounded-[4px] bg-navy-50">
+                  <img src={p.data.heroImage} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               )}
-              <div class="flex flex-1 flex-col gap-4 p-8 md:p-10">
-                <div class="flex items-center gap-3 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-400">
-                  <span class="rounded-full bg-scooter/15 px-3 py-1 text-delft">Featured</span>
-                  <span>{dateFmt(featured.data.date)}</span>
-                </div>
-                <h3 class="am-h2-display am-gradient-ink">{featured.data.title}</h3>
-                <p class="font-display text-[16px] leading-relaxed text-[var(--color-text-body)]">{featured.data.description}</p>
-                <span class="mt-auto inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-delft transition-colors group-hover:text-scooter">
-                  Read article
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                </span>
+              <div class="flex items-center gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+                <span class="inline-flex items-center gap-1.5"><span class="block size-1.5 rounded-full bg-scooter"></span>Category</span>
+                <span>{dateFmt(p.data.date)}</span>
               </div>
+              <h4 class="font-display text-[16px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{p.data.title || 'Blog title heading will go here'}</h4>
+              <span class="mt-auto inline-flex items-center gap-2 self-start rounded-[6px] bg-scooter px-3.5 py-2 font-display text-[12px] font-medium text-white">
+                Read more
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
             </a>
-          )}
-
-          <div data-stagger class="flex flex-col gap-5 lg:col-span-5">
-            {more.map((p) => (
-              <a href={`/blog/${slugOf(p.id)}/`} class="group flex gap-5 rounded-2xl border border-line bg-white p-5 transition-colors hover:border-scooter">
-                {p.data.heroImage && (
-                  <div class="aspect-[4/3] w-28 shrink-0 overflow-hidden rounded-xl bg-navy-50 sm:w-36">
-                    <img src={p.data.heroImage} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  </div>
-                )}
-                <div class="flex flex-1 flex-col gap-2">
-                  <span class="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-navy-400">{dateFmt(p.data.date)}</span>
-                  <h4 class="font-display text-[16px] font-medium leading-snug text-[var(--color-text-head)] transition-colors group-hover:text-delft">{p.data.title}</h4>
-                  <span class="mt-auto inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-delft transition-colors group-hover:text-scooter">
-                    Read
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
+          ))}
         </div>
       </Container>
     </section>

@@ -8,7 +8,9 @@ import { site } from '@/data/site';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
-const onDark = path === '/';
+// Whole Figma redesign uses light navbar on every page — keep dark variant
+// only as a fallback (no current pages need it).
+const onDark = false;
 
 const trigger = onDark
   ? 'inline-flex items-center font-body text-sm font-medium text-white/90 transition-colors hover:text-scooter cursor-pointer'
