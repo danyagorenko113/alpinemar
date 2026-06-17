@@ -88,9 +88,18 @@ const dateFmt = (d: string | Date) =>
           </div>
         </div>
 
-        <!-- Right: photo (taller on desktop, anchored to top) -->
-        <div class="relative h-[280px] sm:h-[360px] lg:col-span-5 lg:h-auto">
-          <img src="/images/about/collage-5.jpg" alt="Alpine Mar — partnership handshake" class="absolute inset-0 h-full w-full object-cover" loading="eager" decoding="async" />
+        <!-- Right: hero video (iStock-1127723700, mountain + ocean) -->
+        <div class="relative h-[280px] overflow-hidden sm:h-[360px] lg:col-span-5 lg:h-auto">
+          <video
+            src="/video/hero.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+            class="absolute inset-0 h-full w-full object-cover"
+          ></video>
         </div>
       </div>
     </Container>
