@@ -28,14 +28,15 @@ const popularServices = [
     'sticky top-0 z-50 transition-colors',
     onDark
       ? 'border-b border-white/10 bg-[#0a0a1c]/55 backdrop-blur-md'
-      : 'border-b border-line bg-paper/85 backdrop-blur-md',
+      : 'border-b border-line bg-white/95 backdrop-blur-md',
   ]}
 >
-  <Container width="wide" class="flex h-20 items-center justify-between gap-6">
-    <Logo variant={onDark ? 'light' : 'dark'} />
+  <Container width="wide" class="flex h-[88px] items-stretch justify-between gap-6 px-0">
+    <div class="flex items-center pl-6 md:pl-10">
+      <Logo variant={onDark ? 'light' : 'dark'} />
+    </div>
 
-    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
-      <!-- Services mega trigger -->
+    <nav class="hidden items-center gap-10 lg:flex" aria-label="Primary">
       <div class="mega-host static" data-mega="services">
         <button type="button" class={trigger} aria-haspopup="true" aria-expanded="false" data-mega-trigger>
           Services
@@ -43,7 +44,6 @@ const popularServices = [
         </button>
       </div>
 
-      <!-- Industries mega trigger -->
       <div class="mega-host static" data-mega="industries">
         <button type="button" class={trigger} aria-haspopup="true" aria-expanded="false" data-mega-trigger>
           Industries
@@ -51,36 +51,24 @@ const popularServices = [
         </button>
       </div>
 
-      <a href="/blog/" class:list={['font-body text-sm font-medium transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/blog/') ? 'text-teal-700' : 'text-navy-900 hover:text-teal-700')]}>Insights</a>
-      <a href="/about-us/" class:list={['font-body text-sm font-medium transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/about-us/') ? 'text-teal-700' : 'text-navy-900 hover:text-teal-700')]}>About Us</a>
+      <a href="/blog/" class:list={['font-display text-[15px] font-medium tracking-[-0.005em] transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/blog/') ? 'text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter')]}>Insights</a>
+      <a href="/about-us/" class:list={['font-display text-[15px] font-medium tracking-[-0.005em] transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/about-us/') ? 'text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter')]}>About Us</a>
     </nav>
 
-    <div class="flex items-center gap-3">
-      <a
-        href={site.clientPortal}
-        target="_blank"
-        rel="noopener"
-        class:list={[
-          'hidden items-center gap-1.5 rounded-full px-3.5 py-1.5 font-body text-xs transition-colors xl:inline-flex',
-          onDark
-            ? 'border border-white/20 text-white/85 hover:border-white/50 hover:text-white'
-            : 'border border-line text-navy-700 hover:border-navy-900 hover:text-navy-900',
-        ]}
-      >
-        Client Portal
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-      </a>
-      {onDark ? (
-        <a href="/contact/" class="hidden items-center gap-2 rounded-full bg-white px-5 py-2.5 font-body text-sm font-medium text-navy-900 transition-colors hover:bg-scooter hover:text-white sm:inline-flex">
-          Get in touch
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-        </a>
-      ) : (
-        <Button href="/contact/" variant="primary" arrow class="hidden sm:inline-flex">Request Consultation</Button>
-      )}
-      <button type="button" id="nav-toggle" class:list={['inline-flex size-11 items-center justify-center lg:hidden', onDark ? 'border border-white/20 text-white' : 'border border-line text-navy-900']} aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+    <div class="flex items-stretch gap-0">
+      <button type="button" id="nav-toggle" class:list={['inline-flex w-14 items-center justify-center lg:hidden', onDark ? 'border-l border-white/20 text-white' : 'border-l border-line text-[var(--color-text-head)]']} aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
       </button>
+      <a
+        href="/contact/"
+        class:list={[
+          'hidden h-full items-center gap-2 px-8 font-display text-[15px] font-medium transition-colors sm:inline-flex',
+          onDark ? 'bg-scooter text-white hover:bg-white hover:text-navy-950' : 'bg-[#12122d] text-white hover:bg-scooter',
+        ]}
+      >
+        Request Consultation
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
     </div>
   </Container>
 
