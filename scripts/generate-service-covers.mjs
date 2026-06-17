@@ -13,7 +13,8 @@ const ROOT = join(fileURLToPath(import.meta.url), '..', '..');
 const SERVICE_DIR = join(ROOT, 'src', 'content', 'services');
 const OUT_DIR = join(ROOT, 'public', 'images', 'services');
 const KEY = process.env.FAL_KEY || '8a1d167c-4e27-4a01-ab71-42077ff77788:057be61159dce4a58ce9de2109eaa507';
-const CONCURRENCY = 3;
+const CONCURRENCY = 1;          // sequential — fal locks parallel bursts from one key
+const DELAY_MS = 800;           // pause between requests so we don't trip rate-limit
 
 // Per-service prompt overrides for sharper, less generic imagery.
 // Anything not listed falls back to the auto-prompt builder.
@@ -110,12 +111,7 @@ async function generate(slug, prompt) {
       Authorization: `Key ${KEY}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      prompt,
-      num_images: 1,
-      output_format: 'jpeg',
-      aspect_ratio: ASPECT,
-    }),
+    body: JSON.stringify({ prompt, num_images: 1 }),
   });
   if (!res.ok) {
     const txt = await res.text();
@@ -131,6 +127,8 @@ async function generate(slug, prompt) {
   writeFileSync(join(OUT_DIR, `${slug}.jpg`), buf);
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 async function pool(items, fn, n) {
   let i = 0;
   const workers = Array.from({ length: n }, async () => {
@@ -141,6 +139,7 @@ async function pool(items, fn, n) {
       } catch (e) {
         console.error(`[${items[my].slug}] failed:`, e.message);
       }
+      if (DELAY_MS) await sleep(DELAY_MS);
     }
   });
   await Promise.all(workers);
