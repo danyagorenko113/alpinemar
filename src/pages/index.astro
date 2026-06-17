@@ -49,10 +49,16 @@ const aboutPills = [
 ];
 
 const platforms = [
-  { name: 'QuickBooks', src: '/images/logos/quickbooks.webp' },
-  { name: 'NetSuite',   src: '/images/logos/netsuite.webp' },
-  { name: 'Yardi',      src: '/images/logos/yardi.webp' },
-  { name: 'Mercury',    src: '/images/logos/mercury.webp' },
+  { name: 'QuickBooks',  src: '/images/logos/quickbooks.webp' },
+  { name: 'NetSuite',    src: '/images/logos/netsuite-new.png' },
+  { name: 'Yardi',       src: '/images/logos/yardi.webp' },
+  { name: 'Mercury',     src: '/images/logos/mercury-new.png' },
+  { name: 'CoinTracker', src: '/images/logos/cointracker.png' },
+  { name: 'innflow',     src: '/images/logos/innflow.png' },
+  { name: 'Justworks',   src: '/images/logos/justworks.png' },
+  { name: 'Vestwell',    src: '/images/logos/vestwell.png' },
+  { name: 'Gusto',       src: '/images/logos/gusto-new.png' },
+  { name: 'Bill',        src: '/images/logos/bill.png' },
 ];
 
 const featured = insights[0];
@@ -103,15 +109,19 @@ const dateFmt = (d: string | Date) =>
     </Container>
   </section>
 
-  <!-- ═════════════ TRUSTED PLATFORMS ═════════════ -->
+  <!-- ═════════════ TRUSTED PLATFORMS (infinite marquee) ═════════════ -->
   <section class="relative bg-paper py-10 md:py-14">
-    <Container width="wide">
-      <div class="flex flex-col items-center gap-8 md:flex-row md:gap-14">
-        <p class="font-display text-[13px] tracking-[0.04em] text-[var(--color-text-body)] md:whitespace-nowrap">Trusted Platforms We Work With</p>
-        <div class="flex flex-1 flex-wrap items-center justify-around gap-x-10 gap-y-6 opacity-70 [filter:grayscale(0.9)]">
-          {platforms.map((p) => (
-            <img src={p.src} alt={p.name} class="h-7 w-auto md:h-8" loading="lazy" />
-          ))}
+    <Container width="wide" class="overflow-hidden">
+      <div class="flex flex-col items-center gap-8 md:flex-row md:gap-10">
+        <p class="shrink-0 font-display text-[13px] tracking-[0.04em] text-[var(--color-text-body)] md:whitespace-nowrap">Trusted Platforms We Work With</p>
+
+        <!-- Mask both ends so logos fade in/out smoothly -->
+        <div class="relative w-full overflow-hidden" style="mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);">
+          <div class="marquee items-center gap-12 [filter:grayscale(1)]">
+            {[...platforms, ...platforms].map((p) => (
+              <img src={p.src} alt={p.name} class="h-7 w-auto shrink-0 opacity-60 md:h-8" loading="lazy" />
+            ))}
+          </div>
         </div>
       </div>
     </Container>
