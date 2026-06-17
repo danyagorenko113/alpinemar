@@ -194,35 +194,32 @@ const drives = [
             const display = m.name.replace(/,\s*CPA$/, '');
             const isCpa = /CPA/.test(m.name);
             return (
-              <article class="group flex w-[78%] flex-none snap-start flex-col overflow-hidden rounded-[1.5rem] border border-line bg-white transition-colors hover:border-delft hover:bg-[#12122d] hover:text-white sm:w-[44%] lg:w-[calc((100%-3rem)/3)]">
-                <div class="flex flex-col gap-5 p-7">
-                  <div class="size-[148px] overflow-hidden rounded-[1rem] bg-navy-50">
-                    <img src={m.photo} alt={display} class="h-full w-full object-cover" loading="lazy" />
-                  </div>
-                  <div class="flex flex-col gap-1">
-                    <h3 class="am-h5-display am-gradient-ink transition-all duration-300 group-hover:[background-image:none] group-hover:!text-white">
-                      {display}{isCpa && <span>, CPA</span>}
-                    </h3>
-                  </div>
+              <article class="group flex w-[78%] flex-none snap-start flex-col overflow-hidden rounded-[14px] border border-line bg-white p-5 transition-colors hover:border-delft hover:bg-[#12122d] hover:text-white sm:w-[44%] lg:w-[calc((100%-3rem)/3)]">
+                <div class="size-[148px] overflow-hidden rounded-[12px] bg-navy-50">
+                  <img src={m.photo} alt={display} class="h-full w-full object-cover" loading="lazy" />
                 </div>
 
-                <dl class="grid grid-cols-1 border-t border-line text-[14px] transition-colors duration-300 group-hover:border-white/15">
-                  <div class="flex items-center justify-between gap-4 border-b border-line px-7 py-3.5 transition-colors duration-300 group-hover:border-white/15">
-                    <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Role</dt>
-                    <dd class="text-right font-display text-[var(--color-text-head)] transition-colors group-hover:text-white">{m.role}</dd>
+                <h3 class="mt-5 font-display text-[22px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)]">
+                  {display}{isCpa && <span>, CPA</span>}
+                </h3>
+
+                <dl class="-mx-5 mt-5 grid grid-cols-1 border-t border-line text-[14px] transition-colors duration-300 group-hover:border-white/15">
+                  <div class="flex items-center gap-6 border-b border-line px-5 py-3 transition-colors duration-300 group-hover:border-white/15">
+                    <dt class="w-12 shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Role</dt>
+                    <dd class="font-display text-[13px] text-[var(--color-text-head)] transition-colors group-hover:text-white">{m.role}</dd>
                   </div>
-                  <div class="flex items-center justify-between gap-4 px-7 py-3.5">
-                    <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Based</dt>
-                    <dd class="text-right font-display text-[var(--color-text-head)] transition-colors group-hover:text-white">Miami</dd>
+                  <div class="flex items-center gap-6 px-5 py-3">
+                    <dt class="w-12 shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-text-body)] transition-colors group-hover:text-white/65">Based</dt>
+                    <dd class="font-display text-[13px] text-[var(--color-text-head)] transition-colors group-hover:text-white">Miami</dd>
                   </div>
                 </dl>
 
-                <div class="flex items-center gap-3 border-t border-line px-7 py-4 transition-colors duration-300 group-hover:border-white/15">
-                  <a href={linkedinFor(display)} target="_blank" rel="noopener" aria-label={`${display} on LinkedIn`} class="inline-flex size-9 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/20 group-hover:text-white">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V10.5H5.7v7.84h2.64Zm-1.32-8.92a1.53 1.53 0 1 0 0-3.06 1.53 1.53 0 0 0 0 3.06Zm11.32 8.92v-4.3c0-2.3-1.23-3.37-2.88-3.37a2.49 2.49 0 0 0-2.26 1.25v-1.07h-2.64v7.49h2.64v-4.16c0-1.1.21-2.17 1.57-2.17 1.34 0 1.34 1.26 1.34 2.24v4.09h2.23Z"/></svg>
+                <div class="-mx-5 mt-0 flex items-center gap-2.5 border-t border-line px-5 pt-4 transition-colors duration-300 group-hover:border-white/15">
+                  <a href={linkedinFor(display)} target="_blank" rel="noopener" aria-label={`${display} on LinkedIn`} class="inline-flex size-7 items-center justify-center rounded-[5px] border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/25 group-hover:text-white">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V10.5H5.7v7.84h2.64Zm-1.32-8.92a1.53 1.53 0 1 0 0-3.06 1.53 1.53 0 0 0 0 3.06Zm11.32 8.92v-4.3c0-2.3-1.23-3.37-2.88-3.37a2.49 2.49 0 0 0-2.26 1.25v-1.07h-2.64v7.49h2.64v-4.16c0-1.1.21-2.17 1.57-2.17 1.34 0 1.34 1.26 1.34 2.24v4.09h2.23Z"/></svg>
                   </a>
-                  <a href={emailFor(display)} aria-label={`Email ${display}`} class="inline-flex size-9 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/20 group-hover:text-white">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                  <a href={emailFor(display)} aria-label={`Email ${display}`} class="inline-flex size-7 items-center justify-center rounded-[5px] border border-line text-[var(--color-text-head)] transition-colors hover:border-scooter hover:text-scooter group-hover:border-white/25 group-hover:text-white">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
                   </a>
                 </div>
               </article>
@@ -234,15 +231,20 @@ const drives = [
         <div class="mt-10 flex items-center justify-between gap-6">
           <div id="team-dots" class="flex items-center gap-2">
             {Array.from({ length: Math.max(1, teamCards.length - 2) }).map((_, i) => (
-              <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-6 rounded-full bg-line transition-colors data-[active=1]:bg-delft"></button>
+              <button
+                type="button"
+                data-dot={i}
+                aria-label={`Slide ${i + 1}`}
+                class="h-1.5 w-1.5 rounded-full bg-line transition-all duration-300 data-[active=1]:w-6 data-[active=1]:bg-scooter"
+              ></button>
             ))}
           </div>
           <div class="flex items-center gap-3">
-            <button type="button" id="team-prev" aria-label="Previous" class="inline-flex size-12 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
+            <button type="button" id="team-prev" aria-label="Previous" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
             </button>
-            <button type="button" id="team-next" aria-label="Next" class="inline-flex size-12 items-center justify-center rounded-full bg-delft text-white transition-colors hover:bg-scooter">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            <button type="button" id="team-next" aria-label="Next" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
             </button>
           </div>
         </div>
@@ -295,25 +297,23 @@ const drives = [
     /* First team card permanently in "active" navy state per Figma default. */
     #team-track > article:first-child {
       background-color: #12122d;
-      border-color: var(--color-delft);
+      border-color: #12122d;
       color: #fff;
     }
-    #team-track > article:first-child h3 {
-      background: none !important;
-      -webkit-background-clip: initial !important;
-      background-clip: initial !important;
-      -webkit-text-fill-color: #fff !important;
-      color: #fff !important;
-    }
+    #team-track > article:first-child h3 { color: #fff; }
     #team-track > article:first-child dl,
     #team-track > article:first-child .border-line {
       border-color: rgba(255, 255, 255, 0.14) !important;
     }
-    #team-track > article:first-child dt { color: rgba(255, 255, 255, 0.65); }
+    #team-track > article:first-child dt { color: rgba(255, 255, 255, 0.55); }
     #team-track > article:first-child dd { color: #fff; }
     #team-track > article:first-child a {
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.22);
       color: #fff;
+    }
+    #team-track > article:first-child a:hover {
+      border-color: var(--color-scooter);
+      color: var(--color-scooter);
     }
   </style>
 
