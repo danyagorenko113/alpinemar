@@ -2,191 +2,82 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
-import { serviceMenu, industryMenu, companyMenu } from '@/data/navigation';
-import { site } from '@/data/site';
 
-const services = await getCollection('services');
-const industries = await getCollection('industries');
-const insights = (await getCollection('insights')).sort((a, b) => +b.data.date - +a.data.date);
+const SPANISH = new Set(['creacion-de-empresas', 'servicios-contables', 'servicios-tributarios-en-florida']);
+const services = (await getCollection('services'))
+  .filter((s) => !SPANISH.has(s.id))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title))
+  .map((s) => ({ title: s.data.title, href: s.data.path }));
+const industries = (await getCollection('industries'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title))
+  .map((s) => ({ title: s.data.title, href: s.data.path }));
+const insights = (await getCollection('insights'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
+  .slice(0, 24)
+  .map((p) => ({ title: p.data.title, href: `/blog/${p.id.replace(/\.md$/, '').split('/').pop()}/` }));
 
-const tools = [
-  { name: 'Free tools hub',          href: '/tools/' },
-  { name: 'Tax Savings Estimator',   href: '/tools/tax-savings-estimator/' },
-  { name: 'Burn Rate Calculator',    href: '/tools/burn-rate-calculator/' },
-  { name: 'Quarterly Tax Estimator', href: '/tools/quarterly-tax-estimator/' },
-  { name: 'S-Corp vs LLC',           href: '/tools/s-corp-vs-llc/' },
-  { name: '1031 Exchange Savings',   href: '/tools/1031-exchange-savings/' },
-  { name: 'R&D Credit Estimator',    href: '/tools/r-and-d-credit/' },
-  { name: 'Service navigator (4-question quiz)', href: '/find-your-service/' },
+const sections = [
+  {
+    title: 'Company',
+    items: [
+      { title: 'Home', href: '/' },
+      { title: 'About Us', href: '/about-us/' },
+      { title: 'In The Media', href: '/in-the-media/' },
+      { title: 'Find Your Service', href: '/find-your-service/' },
+      { title: 'Contact', href: '/contact/' },
+      { title: 'Privacy Policy', href: '/privacy-policy/' },
+    ],
+  },
+  { title: `Services (${services.length})`,    items: services },
+  { title: `Industries (${industries.length})`, items: industries },
+  { title: 'Latest Insights',                   items: insights },
+  {
+    title: 'Tools',
+    items: [
+      { title: 'All Tools', href: '/tools/' },
+      { title: '1031 Exchange Savings', href: '/tools/1031-exchange-savings/' },
+      { title: 'Burn Rate Calculator', href: '/tools/burn-rate-calculator/' },
+      { title: 'Quarterly Tax Estimator', href: '/tools/quarterly-tax-estimator/' },
+      { title: 'R&D Credit', href: '/tools/r-and-d-credit/' },
+      { title: 'S-Corp vs LLC', href: '/tools/s-corp-vs-llc/' },
+      { title: 'Tax Savings Estimator', href: '/tools/tax-savings-estimator/' },
+    ],
+  },
+  { title: 'Reports', items: [{ title: 'All Reports', href: '/reports/' }] },
 ];
-
-const reports = [
-  { name: 'Reports hub',                              href: '/reports/' },
-  { name: 'State of Florida Real Estate Tax',         href: '/reports/florida-real-estate-tax-2026/' },
-  { name: 'SaaS R&D Credit Playbook',                 href: '/reports/saas-rd-credit-playbook-2026/' },
-  { name: 'HNW Estate Planning in Florida',           href: '/reports/hnw-estate-planning-florida-2026/' },
-];
-
-const company = [
-  { name: 'Home',                  href: '/' },
-  { name: 'About Us',              href: '/about-us/' },
-  { name: 'Public Engagement Letter', href: '/about/engagement-letter/' },
-  { name: 'Insights',              href: '/blog/' },
-  { name: 'In the Media',          href: '/in-the-media/' },
-  { name: 'Contact',               href: '/contact/' },
-  { name: 'Privacy Policy',        href: '/privacy-policy/' },
-  { name: 'XML Sitemap',           href: '/sitemap-index.xml' },
-];
-
-const externalLinks = [
-  { name: 'Client Portal', href: site.clientPortal },
-  { name: 'IT Portal',     href: site.itPortal },
-];
-
-const totalPages = services.length + industries.length + insights.length + tools.length + reports.length + company.length;
 ---
 
-<BaseLayout
-  rawTitle="Site Map | Alpine Mar"
-  description="A complete index of every page on alpinemar.com — services, industries, tools, reports, and insights."
->
-  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-40"></div>
-    </div>
-    <Mountains tone="light" class="pointer-events-none absolute bottom-0 left-0 h-32 w-full opacity-50" />
-    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block leading-none text-hero-xl">{totalPages}</span>
-    </div>
+<BaseLayout rawTitle="Sitemap — Alpine Mar" description="A clickable map of every page on alpinemar.com.">
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-    <Container width="xl" class="relative z-10 pb-16 lg:pb-20">
-      <div class="max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Site index · {totalPages} pages</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-md">Everything, in one place.</h1>
-        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-navy-700">
-          A complete index of every page on alpinemar.com — services, industries, tools, reports,
-          insights, and company.
-        </p>
+    <Container width="wide" class="relative z-10">
+      <div class="mx-auto max-w-[64ch] text-center">
+        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">Sitemap</h1>
+        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">Every page on alpinemar.com, organised by section.</p>
       </div>
     </Container>
   </section>
 
-  <section class="border-t border-line bg-paper py-16 lg:py-20">
-    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-14">
-      <!-- Services -->
-      <div class="lg:col-span-6" data-reveal>
-        <div class="flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="briefcase" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Services · {services.length}</p>
-        </div>
-        <div class="mt-5 space-y-7">
-          {serviceMenu.map((group) => (
-            <div>
-              <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{group.label}</p>
-              <ul class="mt-3 columns-1 sm:columns-2 [&>li]:break-inside-avoid">
-                {group.items.map((it) => (
-                  <li>
-                    <a href={it.href} class="block py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">↳ {it.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Industries -->
-      <div class="lg:col-span-6" data-reveal data-from="right">
-        <div class="flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="layers" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Industries · {industries.length}</p>
-        </div>
-        <ul class="mt-5 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
-          {industryMenu.map((ind) => (
-            <li>
-              <a href={ind.href} class="flex items-center gap-2 py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">
-                <span class="flex size-5 items-center justify-center text-teal-700"><Icon name={ind.icon} class="h-3 w-3" /></span>
-                {ind.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <!-- Tools -->
-        <div class="mt-12 flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="sparkles" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Free tools · {tools.length}</p>
-        </div>
-        <ul class="mt-5 space-y-1.5">
-          {tools.map((t) => (
-            <li><a href={t.href} class="block py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">↳ {t.name}</a></li>
-          ))}
-        </ul>
-
-        <!-- Reports -->
-        <div class="mt-12 flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="file-text" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Industry reports · {reports.length}</p>
-        </div>
-        <ul class="mt-5 space-y-1.5">
-          {reports.map((r) => (
-            <li><a href={r.href} class="block py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">↳ {r.name}</a></li>
-          ))}
-        </ul>
-
-        <!-- Company -->
-        <div class="mt-12 flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="building" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Company · {company.length}</p>
-        </div>
-        <ul class="mt-5 space-y-1.5">
-          {company.map((c) => (
-            <li><a href={c.href} class="block py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">↳ {c.name}</a></li>
-          ))}
-        </ul>
-
-        <!-- External -->
-        <div class="mt-12 flex items-center gap-3 border-b border-navy-900 pb-3">
-          <Icon name="globe" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">External portals</p>
-        </div>
-        <ul class="mt-5 space-y-1.5">
-          {externalLinks.map((e) => (
-            <li>
-              <a href={e.href} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 py-1.5 text-[0.92rem] text-navy-700 transition-colors hover:text-teal-700">
-                ↳ {e.name}
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Container>
-  </section>
-
-  <!-- Insights — all 88 -->
-  <section class="border-t border-line bg-navy-50 py-16 lg:py-20">
-    <Container width="xl">
-      <div class="flex flex-wrap items-end justify-between gap-3 border-b border-navy-900 pb-3" data-reveal>
-        <div class="flex items-center gap-3">
-          <Icon name="file-text" class="h-4 w-4 text-teal-700" />
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-900">Insights · {insights.length} articles</p>
-        </div>
-        <a href="/blog/" class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700 transition-colors hover:text-teal-600">Browse the blog →</a>
-      </div>
-      <ul class="mt-6 columns-1 gap-x-8 sm:columns-2 lg:columns-3 [&>li]:break-inside-avoid">
-        {insights.map((p) => (
-          <li class="py-1.5">
-            <a href={`/blog/${p.id}/`} class="block text-[0.88rem] leading-snug text-navy-700 transition-colors hover:text-teal-700">↳ {p.data.title}</a>
-          </li>
+  <!-- ═════════════ BODY ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+        {sections.map((s) => (
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{s.title}</h2>
+            <ul class="mt-6 space-y-3.5">
+              {s.items.map((it) => (
+                <li>
+                  <a href={it.href} class="font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
     </Container>
   </section>
-
-  <CtaSection variant="default" />
 </BaseLayout>

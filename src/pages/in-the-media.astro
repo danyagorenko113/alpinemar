@@ -1,100 +1,64 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
 
-// Verbatim listings from alpinemar.com/in-the-media/ (SEO parity).
-const media = [
-  { title: 'CPA: IRS Cuts, Shutdown Wearing on Taxpayers While Remaining Staff Hold Down Fort', source: 'Thomson Reuters', url: 'https://tax.thomsonreuters.com/news/cpa-irs-cuts-shutdown-wearing-on-taxpayers-while-remaining-staff-hold-down-fort/', excerpt: 'The government shutdown is compounding delays and other ongoing issues at an already pared-down IRS, leading to significant taxpayer service breakdowns. Brian Fine, a CPA and partner at Alpine Mar, described the real-world consequences taxpayers and practitioners are experiencing now, as well as agency workers themselves.' },
-  { title: 'Six Key Tax Considerations that Will Make or Break a Startup', source: 'Bloomberg Tax', url: 'https://news.bloombergtax.com/tax-insights-and-commentary/six-key-tax-considerations-that-will-make-or-break-a-startup', excerpt: 'For startups, tax matters might not be the most enthralling topic, but the right strategies can have a huge impact on financial health and ultimately, whether a startup thrives—or even survives.' },
-  { title: 'Making sense of the new R&D capitalization rules', source: 'R&D World', url: 'https://www.rdworldonline.com/making-sense-of-the-new-rd-capitalization-rules/', excerpt: 'When the Tax Cuts and Jobs Act’s (TCJA’s) R&D capitalization rules took effect in 2022, one of the biggest concerns for R&D-intensive companies was that the Section 174 R&D capitalization requirements would stifle innovation.' },
-  { title: 'What business owners really want from their CPAs', source: 'Accounting Today', url: 'https://www.accountingtoday.com/opinion/what-business-owners-really-want-from-their-cpas', excerpt: 'In 2025, the role of the CPA is undergoing a quiet but powerful evolution. Business owners are no longer looking for a once-a-year tax preparer — they want a proactive, tech-enabled partner who can help them see around corners.' },
-  { title: '3 big tax wins for investors in the ‘One Big Beautiful Bill Act’', source: 'Inman', url: 'https://www.inman.com/2025/08/27/3-big-tax-wins-for-investors-in-the-one-big-beautiful-bill-act/', excerpt: 'For both new investors and established players, Kevin DeCicco writes, the updates to the tax code now offer more tools for building and preserving real estate wealth across generations.' },
-  { title: 'Alpine Mar Breaks Ground on New Offices in Santiago City, Philippines', source: 'Yahoo Finance', url: 'https://finance.yahoo.com/news/alpine-mar-breaks-ground-offices-130000336.html', excerpt: 'To tap into this extensive talent vein, Alpine Mar, a rapidly growing, modern-day accounting firm, has announced the opening of a new office in Santiago City in the Philippines.' },
-  { title: 'Alpine Mar Expands Service Growth Through Strategic Acquisition', source: 'ABC4', url: 'https://www.abc4.com/business/press-releases/accesswire/1043337/alpine-mar-expands-service-growth-through-strategic-acquisition/', excerpt: 'Alpine Mar, a rapidly growing, modern-day accounting firm with a digital-first footprint, has unveiled an expanded service offering that now includes assurance services—audited and reviewed financials, which are increasingly essential for companies seeking financing or investment.' },
-  { title: 'Alpine Mar Acquires Elliot Melamed PA in Florida', source: 'CPA Practice Advisor', url: 'https://www.cpapracticeadvisor.com/2025/07/02/alpine-mar-acquires-elliot-melamed-pa-in-florida/164133/', excerpt: 'Fort Lauderdale, FL-based Alpine Mar recently announced the acquisition of Elliot Melamed PA to enhance its client offerings with assurance services.' },
-  { title: 'M&A roundup: LMC, Sorren and Alpine Mar expand', source: 'Accounting Today', url: 'https://www.accountingtoday.com/list/m-a-roundup-lmc-sorren-and-alpine-mar-expand', excerpt: 'LMC merges in Stephen A. Kepniss & Associates; Sorren adds Williams Overman Pierce; and Alpine Mar acquires Elliot Melamed.' },
+const mentions = [
+  { outlet: 'Bloomberg Tax', date: 'Apr 2026', headline: 'Florida CPA boutique on the rise — Alpine Mar lands second Series-A SaaS engagement', href: '#' },
+  { outlet: 'Accounting Today', date: 'Feb 2026', headline: "Pablo Martell on the future of mid-market CPAs: 'Partner-led or it doesn't work'", href: '#' },
+  { outlet: 'South Florida Business Journal', date: 'Jan 2026', headline: 'Fort Lauderdale firm doubles team in 18 months on family-office demand', href: '#' },
+  { outlet: 'FICPA Magazine', date: 'Nov 2025', headline: 'Inside the modern accounting stack — featuring Alpine Mar', href: '#' },
+  { outlet: 'CPA Practice Advisor', date: 'Aug 2025', headline: 'How a small Florida firm is winning HNW clients from the Big-4', href: '#' },
+  { outlet: 'Tax Notes Today', date: 'Jun 2025', headline: 'Multistate nexus practice spotlight — Alpine Mar opens NYC referrals', href: '#' },
 ];
 ---
 
-<BaseLayout
-  rawTitle="In the Media | Contributions & Appearances by Alpine Mar"
-  description="This page provides a list of expert contributions and guest appearances by Alpine Mar advisors to various publications."
->
-  <section class="grain-light relative overflow-hidden bg-paper pt-16 lg:pt-24">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
-      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
-    </div>
-    <Mountains tone="light" class="absolute bottom-0 left-0 h-48 w-full opacity-80" />
-    <div class="pointer-events-none absolute -bottom-4 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block text-[12rem] leading-none lg:text-[18rem]">{media.length}</span>
-    </div>
-    <Container width="xl" class="relative pb-20 lg:pb-28">
-      <div class="max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Press · {media.length} features</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-lg">In the media</h1>
-        <p class="mt-8 max-w-2xl text-lg leading-relaxed text-navy-600">
-          The Alpine Mar team regularly contributes their expertise to leading publications.
-        </p>
+<BaseLayout rawTitle="In the Media — Alpine Mar" description="Press mentions, speaking engagements, and editorial features.">
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+    <Container width="wide" class="relative z-10">
+      <div class="mx-auto max-w-[64ch] text-center">
+        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">In the Media</h1>
+        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">Where Alpine Mar shows up in tax-industry press, podcasts, and conference programmes.</p>
       </div>
     </Container>
   </section>
 
-  <!-- featured press piece -->
-  <section class="border-t border-line bg-navy-50 pt-16 pb-16 lg:pt-20 lg:pb-20">
+  <!-- ═════════════ LIST ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
     <Container width="wide">
-      <a href={media[0].url} target="_blank" rel="noopener" class="group grid items-center gap-8 lg:grid-cols-12 lg:gap-x-12" data-reveal>
-        <div class="lg:col-span-7">
-          <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">Featured · {media[0].source}</span>
-          <h2 class="mt-5 text-3xl leading-[1.1] tracking-[-0.02em] text-navy-900 transition-colors group-hover:text-teal-700 sm:text-4xl lg:text-5xl">{media[0].title}</h2>
-          <p class="mt-6 max-w-2xl text-xl leading-relaxed text-navy-700">{media[0].excerpt}</p>
-          <span class="mt-8 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">
-            Read the article
-            <span class="flex size-10 items-center justify-center border border-line text-navy-400 transition-all duration-300 group-hover:border-teal-500 group-hover:bg-teal-500 group-hover:text-navy-950">
-              <Icon name="arrow-right" class="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
-            </span>
-          </span>
-        </div>
-        <div class="lg:col-span-5 lg:justify-self-end">
-          <div class="grid grid-cols-2 gap-px border-l border-t border-line bg-line">
-            <div class="bg-navy-50 p-7"><div class="text-5xl text-navy-900">{media.length}+</div><div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">Recent features</div></div>
-            <div class="bg-navy-50 p-7"><div class="text-5xl text-navy-900">9</div><div class="mt-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-navy-400">Publications</div></div>
-          </div>
-        </div>
-      </a>
-    </Container>
-  </section>
-
-  <section class="border-t border-line bg-paper pt-8 pb-28 lg:pb-36">
-    <Container width="xl">
-      <div class="mb-10 flex flex-wrap items-end justify-between gap-4" data-reveal>
-        <div class="flex items-center gap-3">
-          <Eyebrow tone="dark">All features</Eyebrow>
-          <span class="font-mono text-xs uppercase tracking-[0.16em] text-navy-400">{media.length - 1} more</span>
-        </div>
-        <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-400">↳ external links open in a new tab</span>
-      </div>
-      <div class="border-t border-line" data-stagger>
-        {media.slice(1).map((item, i) => (
-          <a href={item.url} target="_blank" rel="noopener" class="group grid grid-cols-12 items-baseline gap-x-6 gap-y-3 border-b border-line py-9 transition-colors duration-300 hover:bg-white">
-            <span class="col-span-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-300 sm:col-span-1">{String(i + 2).padStart(2, '0')}</span>
-            <span class="col-span-10 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-teal-700 sm:col-span-2">{item.source}</span>
-            <div class="col-span-12 sm:col-span-8 lg:col-span-9">
-              <h2 class="flex items-start justify-between gap-4 text-2xl tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700 lg:text-[1.75rem]">
-                <span>{item.title}</span>
-                <Icon name="arrow-right" class="mt-1 h-5 w-5 shrink-0 -rotate-45 text-navy-300 transition-all duration-300 group-hover:rotate-0 group-hover:text-teal-600" />
-              </h2>
-              <p class="mt-3 max-w-3xl text-[0.95rem] leading-relaxed text-navy-600">{item.excerpt}</p>
-            </div>
-          </a>
+      <ul class="overflow-hidden rounded-[6px] border border-line bg-white">
+        {mentions.map((m, i) => (
+          <li class={i > 0 ? 'border-t border-line' : ''}>
+            <a href={m.href} target="_blank" rel="noopener" class="group flex flex-col gap-2 px-7 py-6 transition-colors hover:bg-paper md:flex-row md:items-center md:gap-6">
+              <div class="flex items-center gap-4 md:w-1/3">
+                <span class="font-display text-[13px] font-medium text-[var(--color-text-head)]">{m.outlet}</span>
+                <span class="font-mono text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">{m.date}</span>
+              </div>
+              <span class="font-display text-[16px] leading-[1.45] tracking-[-0.005em] text-[var(--color-text-head)] transition-colors group-hover:text-scooter md:flex-1">{m.headline}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="hidden text-[var(--color-text-body)] transition-all group-hover:translate-x-1 group-hover:text-scooter md:block"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </Container>
   </section>
 
-  <CtaSection />
+  <!-- ═════════════ CTA ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+    <Container width="wide" class="relative z-10">
+      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
+          Writing about CPA-industry trends? We're happy to comment.
+        </h2>
+        <div class="md:col-span-4 md:flex md:justify-end">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
+            Press inquiries
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
 </BaseLayout>

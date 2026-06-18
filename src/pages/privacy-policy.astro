@@ -1,184 +1,90 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
 import { site } from '@/data/site';
 
 const effective = 'January 1, 2026';
 
 const sections = [
   {
-    id: 'website-visitors',
-    eyebrow: 'A · Website visitors',
-    title: 'When you browse alpinemar.com',
+    title: 'Website visitors',
     body: [
-      'When you visit this website we collect limited operational information: page URL, referrer, browser user-agent, IP address, and time of visit, retained in standard web-server logs for up to 90 days for security and performance monitoring.',
-      'We use small amounts of browser storage (localStorage / sessionStorage) for functional purposes only — remembering whether you have dismissed the deadline ticker, your sound-effect preference, and whether you have used the "Ask a CPA" widget this session. We do not place advertising cookies or share browsing data with third-party advertisers.',
-      'If you submit a contact form or the "Ask a CPA" widget, we collect the information you provide (name, email, phone, question) and use it solely to respond to your inquiry. Submitted contact-form data is retained for up to 24 months for follow-up purposes; you may request deletion at any time.',
+      "When you browse alpinemar.com we collect limited operational information: page URL, referrer, browser user-agent, IP address, and time of visit, retained in standard web-server logs for up to 90 days for security and performance monitoring.",
+      "We use small amounts of browser storage (localStorage / sessionStorage) for functional purposes only — remembering whether you have dismissed the deadline ticker and similar UI state. We do not place advertising cookies or share browsing data with third-party advertisers.",
+      "If you submit a contact form, we collect the information you provide (name, email, phone, message) and use it solely to respond to your inquiry. Submitted contact-form data is retained for up to 24 months for follow-up purposes; you may request deletion at any time.",
     ],
   },
   {
-    id: 'rights',
-    eyebrow: 'B · Your rights',
-    title: 'CCPA, GDPR, and Florida Digital Bill of Rights',
+    title: 'Your rights',
     body: [
-      'Depending on where you reside, you may have rights to access, correct, port, or delete the personal information we hold about you, and to opt out of certain processing. California, Florida (effective 2024 for qualifying businesses), and EU/UK residents have specific statutory rights under CCPA/CPRA, the Florida Digital Bill of Rights, and GDPR/UK GDPR respectively.',
-      'We do not sell or share personal information for cross-context behavioural advertising under CCPA, and we do not engage in targeted advertising under the Florida Digital Bill of Rights.',
-      'To exercise any of these rights, contact us at {email}. We respond to verifiable requests within the timeframes required by applicable law (45 days under CCPA, one month under GDPR).',
+      "Depending on where you reside, you may have rights to access, correct, port, or delete the personal information we hold about you, and to opt out of certain processing. California, Florida, and EU/UK residents have specific statutory rights under CCPA/CPRA, the Florida Digital Bill of Rights, and GDPR/UK GDPR respectively.",
+      "We do not sell or share personal information for cross-context behavioural advertising under CCPA, and we do not engage in targeted advertising under the Florida Digital Bill of Rights.",
+      `To exercise any of these rights, contact us at ${site.email}. We respond to verifiable requests within the timeframes required by applicable law (45 days under CCPA, one month under GDPR).`,
     ],
   },
   {
-    id: 'overview',
-    eyebrow: '01 · Overview',
     title: 'Our commitment',
     body: [
-      'Your privacy is of the utmost importance at Alpine Mar and maintaining your trust and confidence is one of our top priorities. We collect sensitive non-public information throughout our engagements and adhere to strict security protocol during the transmitting and handling of information.',
+      "Your privacy is of the utmost importance at Alpine Mar. We collect sensitive non-public information throughout our engagements and adhere to strict security protocol during the transmitting and handling of information.",
     ],
   },
   {
-    id: 'information',
-    eyebrow: '02 · Information',
     title: 'Information we collect',
     body: [
-      'In the course of providing tax, accounting, and advisory services, we collect non-public personal information from a variety of sources, including: forms and documents you share with us, returns and statements we prepare on your behalf, and communications with you and authorised third parties.',
-      'We do not collect more than is necessary to deliver the service you have engaged us for.',
+      "In the course of providing tax, accounting, and advisory services, we collect non-public personal information from a variety of sources, including: forms and documents you share with us, returns and statements we prepare on your behalf, and communications with you and authorised third parties.",
+      "We do not collect more than is necessary to deliver the service you have engaged us for.",
     ],
   },
   {
-    id: 'use',
-    eyebrow: '03 · Use',
-    title: 'How we use your information',
+    title: 'Information we share',
     body: [
-      'As Certified Public Accountants, we adhere to the highest level of professional responsibility and obligations to protect the integrity and confidentiality of your information. We use your information only to deliver the engaged services, comply with our professional and legal obligations, and respond to your requests.',
-      'Internally, we restrict access to your information to the team members involved in your engagement, on a need-to-know basis.',
+      "Alpine Mar restricts access to non-public personal information to those employees who need to know to provide products and services. Information is shared only as required by law (e.g., tax authority filings made on your behalf) or with your consent.",
+      "We do not disclose any non-public personal information about our clients or former clients to anyone except as permitted or required by law.",
     ],
   },
   {
-    id: 'sharing',
-    eyebrow: '04 · Sharing',
-    title: 'Sharing & third parties',
+    title: 'How we protect information',
     body: [
-      'As a matter of practice, we will not transmit information to unaffiliated third parties outside the scope of work without your knowledge or consent. Furthermore, we will not engage with unaffiliated third parties that do not adhere to similar security protocols with respect to the transmitting and handling of sensitive non-public information.',
+      "We maintain physical, electronic, and procedural safeguards to protect non-public personal information. These include encrypted document portals, role-based access controls, and ongoing staff training on data security.",
     ],
   },
   {
-    id: 'rights',
-    eyebrow: '05 · Your rights',
-    title: 'Access, correction, and deletion',
+    title: 'Updates to this policy',
     body: [
-      'You may request a summary of the personal information we hold about you, request that we correct inaccuracies, or — subject to our legal and professional retention obligations — request that we delete it. To exercise any of these rights, please contact us at the address below.',
-    ],
-  },
-  {
-    id: 'contact',
-    eyebrow: '06 · Contact',
-    title: 'Questions or concerns',
-    body: [
-      'If you have any questions or concerns about this policy or how we handle your information, please contact us — we are happy to answer in plain language.',
+      "Alpine Mar may update this privacy policy as our practices evolve or as required by law. The effective date above reflects the most recent revision. Material changes will be communicated through the website prior to taking effect.",
     ],
   },
 ];
 ---
 
-<BaseLayout
-  rawTitle="Privacy Policy - Alpine Mar"
-  description="Read the privacy policy for using the Alpine Mar website."
->
-  <!-- ═══════════════ Hero ═══════════════ -->
-  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
-      <div class="float-slow absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full bg-teal-500/12 blur-[150px]"></div>
-    </div>
-    <Mountains tone="light" class="absolute bottom-0 left-0 h-40 w-full opacity-80" />
-    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block text-[10rem] leading-none lg:text-[14rem]">01</span>
-    </div>
-    <Container width="xl" class="relative pb-20 lg:pb-28">
-      <div class="max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Legal · Effective {effective}</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-md">Privacy Policy</h1>
-        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
-          A short, plain-language summary of what we collect, why we collect it, and what your
-          rights are. The detail is below — written so you can actually read it.
-        </p>
-      </div>
+<BaseLayout rawTitle="Privacy Policy — Alpine Mar" description="How Alpine Mar collects, uses, and protects your personal information.">
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-      <!-- TLDR strip -->
-      <div class="mt-12 grid gap-px border-l border-t border-line sm:grid-cols-3" data-stagger>
-        <div class="border-b border-r border-line bg-paper/80 p-6">
-          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">What we collect</p>
-          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Only what's needed to deliver your engaged engagement.</p>
-        </div>
-        <div class="border-b border-r border-line bg-paper/80 p-6">
-          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">Who sees it</p>
-          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Only the team members on your engagement — never sold, never shared without consent.</p>
-        </div>
-        <div class="border-b border-r border-line bg-paper/80 p-6">
-          <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">Your rights</p>
-          <p class="mt-3 text-[0.95rem] leading-relaxed text-navy-700">Access, correct, or delete — within our professional retention rules.</p>
-        </div>
+    <Container width="wide" class="relative z-10">
+      <div class="mx-auto max-w-[64ch] text-center">
+        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">Privacy Policy</h1>
+        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">Effective {effective}</p>
       </div>
     </Container>
   </section>
 
-  <!-- ═══════════════ Body + sticky TOC ═══════════════ -->
-  <section class="border-t border-line bg-paper py-20 lg:py-24">
-    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-16">
-      <aside class="lg:col-span-3" data-reveal data-from="left">
-        <nav aria-label="On this page" class="sticky top-28">
-          <p class="border-b border-navy-900 pb-3 font-mono text-xs uppercase tracking-[0.18em] text-navy-900">In this policy</p>
-          <ul class="mt-4 space-y-2.5">
-            {sections.map((s, i) => (
-              <li class="flex items-baseline gap-3">
-                <span class="font-mono text-[0.66rem] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
-                <a href={`#${s.id}`} class="text-sm leading-snug text-navy-700 transition-colors hover:text-teal-700">{s.title}</a>
-              </li>
-            ))}
-          </ul>
-          <p class="mt-7 border-t border-line pt-4 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">
-            Effective {effective}
-          </p>
-        </nav>
-      </aside>
-
-      <article class="lg:col-span-9" data-reveal>
-        <div class="space-y-16">
-          {sections.map((s, i) => (
-            <section id={s.id} class="scroll-mt-28 border-t border-line pt-10 first:border-t-0 first:pt-0">
-              <div class="flex items-center gap-3">
-                <span class="block h-px w-10 bg-teal-500"></span>
-                <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">{s.eyebrow}</p>
-              </div>
-              <h2 class="mt-5 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">{s.title}</h2>
-              <div class="mt-7 space-y-5 text-lg leading-relaxed text-navy-700">
-                {s.body.map((p) => (
-                  <p set:html={p.replace('{email}', `<a href="mailto:${site.email}" class="text-teal-700 underline underline-offset-4 hover:text-teal-600">${site.email}</a>`)} />
-                ))}
-                {s.id === 'contact' && (
-                  <div class="mt-8 border border-line bg-navy-50/60 p-6">
-                    <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Privacy contact</p>
-                    <ul class="mt-4 space-y-2.5 text-base text-navy-800">
-                      <li class="flex items-center gap-2.5"><Icon name="message-circle" class="h-4 w-4 text-teal-700" /><a href={`mailto:${site.email}`} class="hover:text-teal-700">{site.email}</a></li>
-                      <li class="flex items-center gap-2.5"><Icon name="phone" class="h-4 w-4 text-teal-700" /><a href={`tel:${site.phoneHref}`} class="hover:text-teal-700">{site.phone}</a></li>
-                      <li class="flex items-center gap-2.5"><Icon name="award" class="h-4 w-4 text-teal-700" /><span>515 E Las Olas Blvd, Suite 120 · Fort Lauderdale, FL 33301</span></li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </section>
+  <!-- ═════════════ BODY ═════════════ -->
+  <section class="relative bg-paper py-20 md:py-24">
+    <Container width="reading">
+      <div class="rounded-[6px] border border-line bg-white p-8 md:p-12">
+        <div class="prose-am">
+          {sections.map((s) => (
+            <>
+              <h2>{s.title}</h2>
+              {s.body.map((p) => <p>{p}</p>)}
+            </>
           ))}
+          <h2>Questions</h2>
+          <p>Email <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={`tel:${site.phoneHref}`}>{site.phone}</a>. Our managing partner reviews privacy inquiries personally.</p>
         </div>
-
-        <p class="mt-16 border-t border-line pt-6 text-sm leading-relaxed text-navy-400">
-          Members of the American Institute of Certified Public Accountants and the Florida Institute of Certified Public Accountants.
-        </p>
-      </article>
+      </div>
     </Container>
   </section>
-
-  <CtaSection />
 </BaseLayout>
