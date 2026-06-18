@@ -3,407 +3,159 @@ import type { GetStaticPathsOptions } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
 
 const slugifyTag = (t: string) =>
   t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const all = (await getCollection('insights')).sort(
-    (a, b) => +b.data.date - +a.data.date,
-  );
+  const all = (await getCollection('insights'))
+    .filter((p) => !p.data.draft)
+    .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
   return paginate(all, { pageSize: 12 });
 }
 
 const { page } = Astro.props;
 
-// All posts (for tag aggregation across the whole archive)
-const allPosts = (await getCollection('insights')).sort(
-  (a, b) => +b.data.date - +a.data.date,
-);
+const allPosts = (await getCollection('insights'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
 
-// Aggregate tags across the whole archive, sorted by frequency
 const tagCounts = new Map<string, number>();
 for (const post of allPosts) {
-  for (const t of post.data.tags ?? []) {
-    tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
-  }
+  for (const t of post.data.tags ?? []) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
 }
 const topTags = [...tagCounts.entries()]
   .sort((a, b) => b[1] - a[1])
   .slice(0, 10)
-  .map(([t, n]) => ({ tag: t, count: n }));
+  .map(([t, n]) => ({ tag: t, count: n, slug: slugifyTag(t) }));
 
 const isFirstPage = page.currentPage === 1;
-// Featured = newest post, only on page 1
 const featured = isFirstPage ? page.data[0] : null;
 const rest = isFirstPage ? page.data.slice(1) : page.data;
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-const pageTitle = isFirstPage
-  ? 'Insights, Tax & Accounting Articles | Alpine Mar'
-  : `Insights · Page ${page.currentPage} | Alpine Mar`;
-
-// Lightweight search index — title, excerpt, tags, date, cover, href —
-// across the full archive. Powers the inline search on this page.
-const searchIndex = allPosts.map((p) => ({
-  t: p.data.title,
-  e: p.data.excerpt,
-  d: p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-  c: p.data.cover ?? '',
-  h: `/blog/${p.id}/`,
-  g: p.data.tags ?? [],
-}));
+const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
+const dateFmt = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
 <BaseLayout
-  rawTitle={pageTitle}
-  description="Insights, guides, and news on tax, accounting, and advisory from the Alpine Mar team."
+  rawTitle={isFirstPage ? 'Insights — Alpine Mar' : `Insights · Page ${page.currentPage} — Alpine Mar`}
+  description="Practical perspectives on tax, finance, and business, written by the people who work in it every day."
 >
-  <!-- ═══════════════ Hero ═══════════════ -->
-  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-40"></div>
-      <div class="float-slow absolute -right-32 -top-40 h-[320px] w-[320px] rounded-full bg-teal-500/6 blur-[100px]"></div>
-    </div>
-    <Mountains tone="light" class="pointer-events-none absolute bottom-0 left-0 h-32 w-full opacity-50" />
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-    <div class="pointer-events-none absolute bottom-0 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block leading-none text-[6rem] lg:text-[10rem]">{String(page.currentPage).padStart(2, '0')}</span>
-    </div>
-
-    <Container width="xl" class="relative z-10 pb-16 lg:pb-20">
-      <div class="max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Insights{!isFirstPage && ` · Page ${page.currentPage}`}</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-lg">
-          {isFirstPage ? 'Our blog & news' : 'More from the team'}
-        </h1>
-        <p class="mt-8 max-w-2xl text-xl leading-relaxed text-navy-700">
-          Practical guidance on tax, accounting, and advisory — written by the Alpine Mar team.
-          <span class="font-mono text-base text-navy-500">· {allPosts.length} articles</span>
+    <Container width="wide" class="relative z-10">
+      <div class="mx-auto max-w-[64ch] text-center">
+        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">Insights</h1>
+        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">
+          Practical perspectives on tax, finance, and business — written by the people who work in it every day.
         </p>
       </div>
-
-      <!-- Inline search — soft, real-time, no submit -->
-      <div class="relative mt-12" data-reveal>
-        <label class="relative block">
-          <span class="sr-only">Search articles</span>
-          <span class="pointer-events-none absolute left-5 top-1/2 flex -translate-y-1/2 items-center gap-3 text-navy-300">
-            <Icon name="search" class="h-4 w-4" />
-          </span>
-          <input
-            id="blog-search"
-            type="search"
-            autocomplete="off"
-            placeholder="Search 88 articles — e.g. burn rate, S-Corp, 1031, R&D credit…"
-            class="block w-full border border-line bg-paper py-4 pl-14 pr-32 text-base text-navy-900 placeholder:text-navy-400 transition-[border-color,box-shadow] duration-200 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/15"
-          />
-          <span class="pointer-events-none absolute right-5 top-1/2 hidden -translate-y-1/2 items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-navy-400 sm:flex">
-            <kbd class="border border-line bg-paper px-1.5 py-0.5">/</kbd>
-            <span>or just start typing</span>
-          </span>
-          <button id="blog-search-clear" type="button" aria-label="Clear search" class="absolute right-3 top-1/2 hidden size-7 -translate-y-1/2 items-center justify-center text-navy-400 transition-colors hover:text-navy-900">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
-          </button>
-        </label>
-        <p id="blog-search-meta" class="mt-3 hidden font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500"></p>
-      </div>
-
-      <!-- Tag filter strip — links into tag-routes for full-collection filtering -->
-      {topTags.length > 0 && (
-        <div class="relative mt-12 border-t border-line pt-6" data-reveal>
-          <div class="flex items-center gap-3 pb-3">
-            <Icon name="filter" class="h-3.5 w-3.5 text-teal-700" />
-            <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-navy-500">Filter by topic</p>
-          </div>
-          <div class="-mx-1 flex flex-wrap items-center gap-1.5">
-            <a href="/blog/" class="border border-navy-900 bg-navy-900 px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper">All <span class="ml-1.5 opacity-60">{allPosts.length}</span></a>
-            {topTags.map((t) => (
-              <a
-                href={`/blog/topic/${slugifyTag(t.tag)}/`}
-                class="border border-line bg-paper px-3.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-navy-700 transition-colors hover:border-teal-500 hover:text-teal-700"
-              >
-                {t.tag} <span class="ml-1.5 text-navy-400">{t.count}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
     </Container>
   </section>
 
-  <!-- ═══════════════ Search results (only when query present) ═══════════════ -->
-  <section id="blog-search-section" class="hidden border-t border-line bg-paper py-12 lg:py-16">
-    <Container width="xl">
-      <div id="blog-search-results" class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
-        <!-- populated by JS -->
-      </div>
-      <p id="blog-search-empty" class="hidden py-16 text-center text-lg text-navy-500">
-        Nothing matched <span id="blog-search-empty-q" class="font-medium text-navy-900"></span>.
-        <span class="block mt-2 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">Try a topic above — or call us and just ask.</span>
-      </p>
-    </Container>
-  </section>
-
-  <!-- ═══════════════ Featured (page 1 only) — hidden while searching ═══════════════ -->
-  {featured && (
-    <section id="blog-featured-section" class="border-t border-line bg-navy-50 py-16 lg:py-20" data-filter-host>
-      <Container width="xl">
-        <a href={`/blog/${featured.id}/`} data-tags={(featured.data.tags ?? []).join(',')} class="filterable group grid items-center gap-10 lg:grid-cols-2 lg:gap-x-14" data-reveal>
-          {featured.data.cover && (
-            <div class="relative overflow-hidden">
-              <span class="absolute left-5 top-5 z-10 bg-paper/95 px-3 py-1.5 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-900 backdrop-blur-sm">Featured · Latest</span>
-              <img src={featured.data.cover} alt={featured.data.title} class="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            </div>
-          )}
-          <div>
-            <span class="font-mono text-xs uppercase tracking-[0.16em] text-teal-700">{fmt(featured.data.date)}</span>
-            <h2 class="mt-5 text-3xl leading-[1.12] tracking-[-0.02em] text-navy-900 transition-colors group-hover:text-teal-700 sm:text-4xl lg:text-[2.75rem]">{featured.data.title}</h2>
-            <p class="mt-6 max-w-xl text-lg leading-relaxed text-navy-700">{featured.data.excerpt}</p>
-            {featured.data.tags && featured.data.tags.length > 0 && (
-              <div class="mt-7 flex flex-wrap gap-1.5">
-                {featured.data.tags.slice(0, 4).map((t) => (
-                  <span class="border border-line bg-paper px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-navy-600">{t}</span>
-                ))}
-              </div>
-            )}
-            <span class="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700">Read article <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /></span>
-          </div>
+  <!-- ═════════════ TAG FILTER STRIP ═════════════ -->
+  <section class="relative bg-paper py-10 md:py-14">
+    <Container width="wide">
+      <div class="flex flex-wrap items-center gap-2">
+        <a href="/blog/" class={`rounded-[6px] px-4 py-2 font-display text-[13px] font-medium transition-colors ${isFirstPage ? 'bg-[#1F3062] text-white' : 'border border-line bg-white text-[var(--color-text-head)] hover:border-[#12122D]'}`}>
+          All <span class="opacity-70">· {allPosts.length}</span>
         </a>
-      </Container>
-    </section>
-  )}
-
-  <!-- ═══════════════ Article grid ═══════════════ -->
-  <section id="blog-grid-section" class="border-t border-line bg-paper py-12 lg:py-16" data-filter-host>
-    <Container width="xl">
-      {rest.length === 0 && (
-        <p class="py-16 text-center text-lg text-navy-500">No articles match this filter — try another topic.</p>
-      )}
-      <div id="post-grid" class="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3" data-stagger>
-        {rest.map((post) => (
-          <a href={`/blog/${post.id}/`} data-tags={(post.data.tags ?? []).join(',')} class="filterable group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper transition-colors duration-300 hover:bg-white focus-visible:[outline-offset:-2px]">
-            <span class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-teal-500 transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true"></span>
-            {post.data.cover && (
-              <div class="relative aspect-[16/10] overflow-hidden">
-                <img src={post.data.cover} alt={post.data.title} loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-            )}
-            <div class="flex flex-1 flex-col p-7 lg:p-8">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">{fmt(post.data.date)}</span>
-              <h3 class="mt-3 text-xl leading-snug tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">{post.data.title}</h3>
-              <p class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-navy-600">{post.data.excerpt}</p>
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="mt-5 flex flex-wrap gap-1.5">
-                  {post.data.tags.slice(0, 3).map((t) => (
-                    <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-500">{t}</span>
-                  ))}
-                </div>
-              )}
-              <span class="mt-6 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-teal-700">Read more <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" /></span>
-            </div>
+        {topTags.map((t) => (
+          <a href={`/blog/topic/${t.slug}/`} class="rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">
+            {t.tag} <span class="opacity-70">· {t.count}</span>
           </a>
         ))}
       </div>
     </Container>
   </section>
 
-  <!-- ═══════════════ Pagination ═══════════════ -->
-  <section id="blog-pagination-section" class="border-t border-line bg-paper pb-24">
-    <Container width="xl">
-      <nav aria-label="Pagination" class="flex flex-col items-center gap-6 pt-12 sm:flex-row sm:justify-between">
-        <span class="font-mono text-xs uppercase tracking-[0.14em] text-navy-500">
-          Page {page.currentPage} <span class="text-navy-300">of</span> {page.lastPage}
-        </span>
-        <div class="flex items-center gap-2">
-          <a href={page.url.prev ?? '#'} aria-disabled={!page.url.prev} class:list={[
-            'group inline-flex items-center gap-2.5 border px-5 py-3 font-mono text-[0.72rem] uppercase tracking-[0.1em] transition-colors',
-            page.url.prev ? 'border-line text-navy-900 hover:border-navy-900' : 'pointer-events-none border-line text-navy-300',
-          ]}>
-            <Icon name="arrow-right" class="h-3.5 w-3.5 -scale-x-100 transition-transform duration-200 group-hover:-translate-x-1" /> Newer
-          </a>
-          <a href={page.url.next ?? '#'} aria-disabled={!page.url.next} class:list={[
-            'group inline-flex items-center gap-2.5 border px-5 py-3 font-mono text-[0.72rem] uppercase tracking-[0.1em] transition-colors',
-            page.url.next ? 'border-line text-navy-900 hover:border-navy-900' : 'pointer-events-none border-line text-navy-300',
-          ]}>
-            Older <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
-        </div>
-      </nav>
+  <!-- ═════════════ FEATURED (first page only) ═════════════ -->
+  {featured && (
+    <section class="relative bg-paper pb-10 md:pb-14">
+      <Container width="wide">
+        <a href={`/blog/${slugOf(featured.id)}/`} class="group grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
+          <div class="relative aspect-[5/4] overflow-hidden bg-navy-50 md:aspect-auto md:min-h-[420px]">
+            <img src={featured.data.heroImage || '/images/about/collage-1.jpg'} alt={featured.data.title} class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+          </div>
+          <div class="flex flex-col gap-6 p-8 md:p-12">
+            <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+              <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                <span class="block size-1.5 bg-[#12122D]"></span>
+                Featured
+              </span>
+              <span>{dateFmt(featured.data.date)}</span>
+            </div>
+            <h2 class="font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[32px]">{featured.data.title}</h2>
+            <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{featured.data.description}</p>
+            <div class="mt-auto flex items-center justify-between gap-4">
+              <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+              <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </Container>
+    </section>
+  )}
+
+  <!-- ═════════════ POSTS GRID ═════════════ -->
+  <section class="relative bg-paper pb-20 md:pb-24">
+    <Container width="wide">
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {rest.map((p) => (
+          <li>
+            <a href={`/blog/${slugOf(p.id)}/`} class="group flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
+              {p.data.heroImage && (
+                <div class="aspect-[16/10] overflow-hidden bg-navy-50">
+                  <img src={p.data.heroImage} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              )}
+              <div class="flex flex-1 flex-col p-6">
+                <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
+                  <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                    <span class="block size-1.5 bg-[#12122D]"></span>
+                    {p.data.tags?.[0] ?? 'Insight'}
+                  </span>
+                  <span>{dateFmt(p.data.date)}</span>
+                </div>
+                <h3 class="mt-5 font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{p.data.title}</h3>
+                {p.data.description && (
+                  <p class="mt-3 line-clamp-3 font-display text-[13px] leading-[1.55] text-[var(--color-text-body)]">{p.data.description}</p>
+                )}
+                <div class="mt-auto flex items-center justify-between gap-4 pt-6">
+                  <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
+                  <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-[#1F3062] text-white transition-transform group-hover:translate-x-1">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Pagination -->
+      {(page.url.prev || page.url.next) && (
+        <nav aria-label="Pagination" class="mt-14 flex items-center justify-between gap-4 rounded-[6px] border border-line bg-white p-6">
+          {page.url.prev ? (
+            <a href={page.url.prev} class="inline-flex items-center gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+              Previous
+            </a>
+          ) : <span></span>}
+          <span class="font-display text-[13px] text-[var(--color-text-body)]">Page {page.currentPage} of {page.lastPage}</span>
+          {page.url.next ? (
+            <a href={page.url.next} class="inline-flex items-center gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+              Next
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          ) : <span></span>}
+        </nav>
+      )}
     </Container>
   </section>
-
-  <CtaSection variant="post" />
-
-  <script define:vars={{ INDEX: searchIndex }}>
-    // Soft, real-time inline search across the full archive (88 articles).
-    // No submit; no jumping; debounced typing. Esc / cross clears.
-
-    function bindBlogSearch() {
-      const input = document.getElementById('blog-search');
-      if (!input) return;
-      const clearBtn = document.getElementById('blog-search-clear');
-      const meta = document.getElementById('blog-search-meta');
-      const resultsSection = document.getElementById('blog-search-section');
-      const resultsGrid = document.getElementById('blog-search-results');
-      const emptyEl = document.getElementById('blog-search-empty');
-      const emptyQ  = document.getElementById('blog-search-empty-q');
-      // Hide-on-search sections:
-      const hideOnSearch = [
-        document.getElementById('blog-featured-section'),
-        document.getElementById('blog-grid-section'),
-        document.getElementById('blog-pagination-section'),
-      ].filter(Boolean);
-
-      if (input.dataset.bound === '1') return;
-      input.dataset.bound = '1';
-
-      const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
-      function highlight(text, terms) {
-        if (!terms.length) return escapeHtml(text);
-        let html = escapeHtml(text);
-        for (const t of terms) {
-          if (!t) continue;
-          const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')})`, 'ig');
-          html = html.replace(re, '<mark class="bg-teal-500/25 text-navy-900 not-italic">$1</mark>');
-        }
-        return html;
-      }
-
-      function render(q) {
-        const tokens = q.toLowerCase().split(/\\s+/).filter(Boolean);
-        if (!tokens.length) {
-          resultsSection.classList.add('hidden');
-          hideOnSearch.forEach((s) => s && s.classList.remove('hidden'));
-          meta.classList.add('hidden');
-          clearBtn.classList.add('hidden');
-          clearBtn.classList.remove('flex');
-          return;
-        }
-
-        // Score each post; require all tokens to appear somewhere
-        const scored = [];
-        for (const p of INDEX) {
-          const hay = (p.t + ' ' + p.e + ' ' + p.g.join(' ')).toLowerCase();
-          let ok = true;
-          let s = 0;
-          for (const t of tokens) {
-            const idx = hay.indexOf(t);
-            if (idx < 0) { ok = false; break; }
-            s += 100 - Math.min(idx, 99);
-            if (p.t.toLowerCase().includes(t)) s += 60;
-            if (p.g.some((g) => g.toLowerCase().includes(t))) s += 30;
-          }
-          if (ok) scored.push({ p, s });
-        }
-        scored.sort((a, b) => b.s - a.s);
-
-        // Show results section, hide grid sections
-        resultsSection.classList.remove('hidden');
-        hideOnSearch.forEach((s) => s && s.classList.add('hidden'));
-        meta.classList.remove('hidden');
-        clearBtn.classList.remove('hidden');
-        clearBtn.classList.add('flex');
-
-        meta.innerHTML = scored.length
-          ? '↳ ' + scored.length + ' article' + (scored.length === 1 ? '' : 's') + ' matching <span class="text-teal-700">' + escapeHtml(q) + '</span>'
-          : '↳ No matches for <span class="text-teal-700">' + escapeHtml(q) + '</span>';
-
-        if (!scored.length) {
-          resultsGrid.innerHTML = '';
-          emptyEl.classList.remove('hidden');
-          emptyQ.textContent = '"' + q + '"';
-          return;
-        }
-        emptyEl.classList.add('hidden');
-
-        resultsGrid.innerHTML = scored.slice(0, 60).map(({ p }) => {
-          const title = highlight(p.t, tokens);
-          const excerpt = highlight(p.e, tokens);
-          const tags = p.g.slice(0, 3).map((t) =>
-            '<span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-500">' + escapeHtml(t) + '</span>'
-          ).join('');
-          const cover = p.c
-            ? '<div class="relative aspect-[16/10] overflow-hidden"><img src="' + escapeHtml(p.c) + '" alt="" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/></div>'
-            : '';
-          return '<a href="' + p.h + '" class="group relative flex flex-col overflow-hidden border-b border-r border-line bg-paper transition-colors duration-300 hover:bg-white">' +
-            '<span class="absolute inset-x-0 top-0 z-20 h-1 origin-left scale-x-0 bg-teal-500 transition-transform duration-300 group-hover:scale-x-100"></span>' +
-            cover +
-            '<div class="flex flex-1 flex-col p-7 lg:p-8">' +
-              '<span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">' + escapeHtml(p.d) + '</span>' +
-              '<h3 class="mt-3 text-xl leading-snug tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">' + title + '</h3>' +
-              '<p class="mt-4 flex-1 text-[0.95rem] leading-relaxed text-navy-600">' + excerpt + '</p>' +
-              (tags ? '<div class="mt-5 flex flex-wrap gap-1.5">' + tags + '</div>' : '') +
-              '<span class="mt-6 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-teal-700">Read more</span>' +
-            '</div>' +
-          '</a>';
-        }).join('');
-      }
-
-      // Auto-scroll to keep input + results in view. We only nudge the page
-      // the first time a query becomes non-empty; while typing further we
-      // leave the scroll alone so the user can read.
-      let scrolledForQuery = false;
-      function nudgeIntoView() {
-        // Position the input ~120 px below the top so results below it are
-        // visible without hiding the input itself.
-        const rect = input.getBoundingClientRect();
-        if (rect.top < 60 || rect.top > 240) {
-          const target = window.scrollY + rect.top - 120;
-          window.scrollTo({ top: target, behavior: 'smooth' });
-        }
-      }
-
-      // Debounced input
-      let dt;
-      input.addEventListener('input', (e) => {
-        clearTimeout(dt);
-        const v = e.target.value;
-        dt = setTimeout(() => {
-          render(v);
-          if (v.trim() && !scrolledForQuery) {
-            scrolledForQuery = true;
-            nudgeIntoView();
-          }
-          if (!v.trim()) scrolledForQuery = false;
-        }, 60);
-      });
-
-      // Also nudge on focus so the input lands in a comfortable position.
-      input.addEventListener('focus', () => { nudgeIntoView(); });
-
-      // Esc clears
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && input.value) {
-          input.value = '';
-          render('');
-        }
-      });
-
-      // × clear
-      clearBtn?.addEventListener('click', () => {
-        input.value = '';
-        render('');
-        input.focus();
-      });
-
-      // "/" focuses search from anywhere on the page
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== '/' || e.metaKey || e.ctrlKey) return;
-        if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName ?? '')) return;
-        e.preventDefault();
-        input.focus();
-      });
-    }
-
-    bindBlogSearch();
-    document.addEventListener('astro:after-swap', bindBlogSearch);
-  </script>
 </BaseLayout>
