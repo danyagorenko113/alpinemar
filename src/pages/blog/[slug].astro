@@ -5,7 +5,7 @@ import Container from '@/components/Container.astro';
 import { breadcrumb } from '@/data/schema';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('insights')).filter((p) => !p.data.draft);
+  const posts = await getCollection('insights');
   return posts.map((post) => ({
     params: { slug: post.id.replace(/\.md$/, '').split('/').pop() },
     props: { post, all: posts },
@@ -27,8 +27,8 @@ const slugifyTag = (t: string) =>
 const dateFmt = (d: string | Date) =>
   new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-const wordCount = (post.body ?? '').split(/\s+/).filter(Boolean).length;
-const readingMin = Math.max(2, Math.round(wordCount / 220));
+// Approximate reading time from excerpt length (post.body unavailable in static)
+const readingMin = Math.max(2, Math.round((post.data.excerpt?.length ?? 400) / 200));
 
 const schema = breadcrumb([
   { name: 'Home', path: '/' },
@@ -39,8 +39,8 @@ const schema = breadcrumb([
 
 <BaseLayout
   rawTitle={post.data.seo?.title ?? `${post.data.title} | Alpine Mar`}
-  description={post.data.seo?.description ?? post.data.description}
-  image={post.data.heroImage}
+  description={post.data.seo?.description ?? post.data.excerpt}
+  image={post.data.cover}
   schema={schema}
 >
   <!-- ═════════════ HERO ═════════════ -->
@@ -70,13 +70,13 @@ const schema = breadcrumb([
 
       <h1 class="mt-7 font-display text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-text-head)] sm:text-[44px] md:text-[52px]">{post.data.title}</h1>
 
-      {post.data.description && (
-        <p class="mt-6 font-display text-[18px] leading-[1.55] text-[var(--color-text-body)]">{post.data.description}</p>
+      {post.data.excerpt && (
+        <p class="mt-6 font-display text-[18px] leading-[1.55] text-[var(--color-text-body)]">{post.data.excerpt}</p>
       )}
 
-      {post.data.heroImage && (
+      {post.data.cover && (
         <div class="mt-10 overflow-hidden rounded-[6px] bg-navy-50">
-          <img src={post.data.heroImage} alt={post.data.title} class="h-auto w-full" />
+          <img src={post.data.cover} alt={post.data.title} class="h-auto w-full" />
         </div>
       )}
     </Container>
@@ -105,9 +105,9 @@ const schema = breadcrumb([
           {related.map((p) => (
             <li>
               <a href={`/blog/${slugOf(p.id)}/`} class="group flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
-                {p.data.heroImage && (
+                {p.data.cover && (
                   <div class="aspect-[16/10] overflow-hidden bg-navy-50">
-                    <img src={p.data.heroImage} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    <img src={p.data.cover} alt={p.data.title} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                   </div>
                 )}
                 <div class="flex flex-1 flex-col p-6">
