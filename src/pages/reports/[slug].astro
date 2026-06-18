@@ -1,10 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
-import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
-import CtaSection from '@/components/CtaSection.astro';
 import { REPORTS } from '@/data/reports';
 
 export async function getStaticPaths() {
@@ -19,86 +15,106 @@ const { report } = Astro.props;
   rawTitle={`${report.title} ${report.year} | Alpine Mar Report`}
   description={report.subtitle}
 >
-  <section class="grain-light relative overflow-hidden bg-paper pt-14 lg:pt-20">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
-      <div class="float-slow absolute -right-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
-    </div>
-    <Mountains tone="light" class="absolute bottom-0 left-0 h-44 w-full opacity-80" />
-    <div class="pointer-events-none absolute -bottom-2 right-2 select-none lg:right-10" aria-hidden="true">
-      <span class="text-outline block leading-none text-hero-xl">{report.year}</span>
-    </div>
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] pt-14 pb-16 text-white md:pt-20 md:pb-20">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-    <Container width="xl" class="relative pb-20 lg:pb-28">
-      <nav class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-navy-400" data-reveal data-speed="fast">
-        <a href="/reports/" class="text-navy-500 hover:text-navy-900">Reports</a><span aria-hidden="true">/</span><span class="text-navy-700">{report.industry}</span>
+    <Container width="wide" class="relative z-10">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-white/70">
+          <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
+          <li aria-hidden="true" class="opacity-55">/</li>
+          <li><a href="/reports/" class="transition-colors hover:text-scooter">Reports</a></li>
+          <li aria-hidden="true" class="opacity-55">/</li>
+          <li class="font-medium text-white">{report.industry}</li>
+        </ol>
       </nav>
-      <div class="mt-7 max-w-3xl" data-reveal data-speed="slow">
-        <Eyebrow tone="dark">Report · {report.year} · {report.pages} pages</Eyebrow>
-        <h1 class="mt-7 text-navy-900 text-hero-md">{report.title}</h1>
-        <p class="mt-7 max-w-2xl text-xl leading-relaxed text-navy-700">{report.subtitle}</p>
-        <div class="mt-9 flex flex-wrap items-center gap-3">
-          <button type="button" onclick="window.print()" class="group inline-flex items-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
-            <Icon name="file-text" class="h-4 w-4" /> Save as PDF
+
+      <div class="max-w-3xl">
+        <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">Report · {report.year} · {report.pages} pages</p>
+        <h1 class="mt-5 font-display text-[40px] font-medium leading-[1.1] tracking-[-0.02em] text-white sm:text-[52px] md:text-[64px]">{report.title}</h1>
+        <p class="mt-6 font-display text-[18px] leading-[1.55] text-white/80">{report.subtitle}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <button type="button" onclick="window.print()" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+            Save as PDF
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
           </button>
-          <a href={report.industryHref} class="inline-flex items-center gap-2 border border-line px-7 py-4 font-mono text-[0.78rem] uppercase tracking-[0.08em] text-navy-700 transition-colors hover:border-navy-900">
-            Industry page <Icon name="arrow-right" class="h-4 w-4" />
+          <a href={report.industryHref} class="inline-flex items-center gap-2 rounded-[6px] border border-white/25 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:border-scooter hover:text-scooter">
+            Industry page
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
       </div>
     </Container>
   </section>
 
-  <!-- Intro + key takeaways -->
-  <section class="border-t border-line bg-paper py-16 lg:py-20">
-    <Container width="xl" class="grid gap-14 lg:grid-cols-12 lg:gap-x-14">
-      <div class="lg:col-span-7" data-reveal>
-        <!-- Illustrative banner -->
-        <div class="mb-7 flex items-start gap-3 border-l-2 border-teal-500 bg-navy-50/70 p-4">
-          <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center bg-teal-500/15 text-teal-700"><Icon name="award" class="h-3.5 w-3.5" /></span>
-          <p class="text-[0.85rem] leading-relaxed text-navy-700">
-            <span class="block font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">↳ Illustrative model</span>
-            Figures and benchmarks are reference values modelled to show typical impact — not aggregated firm-engagement data. Verify with a CPA before acting.
-          </p>
-        </div>
-        <Eyebrow tone="dark">Foreword</Eyebrow>
-        <p class="mt-6 text-lg leading-relaxed text-navy-700">{report.intro}</p>
-      </div>
-      <div class="lg:col-span-5" data-reveal data-from="right">
-        <Eyebrow tone="dark">Key takeaways</Eyebrow>
-        <ol class="mt-6 grid border-l border-t border-line">
-          {report.takeaways.map((t, i) => (
-            <li class="flex items-start gap-4 border-b border-r border-line p-5">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-700">{String(i + 1).padStart(2, '0')}</span>
-              <span class="text-base leading-relaxed text-navy-800">{t}</span>
-            </li>
-          ))}
-        </ol>
+  <!-- ═════════════ DISCLAIMER ═════════════ -->
+  <section class="relative bg-paper pt-16">
+    <Container width="reading">
+      <div class="flex items-start gap-3 rounded-[6px] border border-scooter/30 bg-scooter/8 p-5">
+        <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-scooter text-white">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><line x1="12" x2="12" y1="8" y2="13"/><line x1="12" x2="12" y1="16" y2="16"/></svg>
+        </span>
+        <p class="font-display text-[13px] leading-[1.55] text-[var(--color-text-head)]">
+          <span class="block font-display text-[12px] font-medium uppercase tracking-[0.1em] text-scooter">Illustrative model</span>
+          Figures and benchmarks are reference values modelled to show typical impact — not aggregated firm-engagement data. Verify with a CPA before acting.
+        </p>
       </div>
     </Container>
   </section>
 
-  <!-- Sections -->
-  <section class="border-t border-line bg-paper py-16 lg:py-20">
-    <Container width="xl">
-      <div class="space-y-20" data-stagger>
+  <!-- ═════════════ FOREWORD + KEY TAKEAWAYS ═════════════ -->
+  <section class="relative bg-paper py-14 md:py-20">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-7">
+          <div class="mb-6 flex items-center gap-3 text-[var(--color-text-head)]">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em]">Foreword</span>
+          </div>
+          <p class="font-display text-[16px] leading-[1.7] text-[var(--color-text-head)]">{report.intro}</p>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="mb-6 flex items-center gap-3 text-[var(--color-text-head)]">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em]">Key takeaways</span>
+          </div>
+          <ol class="overflow-hidden rounded-[6px] border border-line bg-white">
+            {report.takeaways.map((t, i) => (
+              <li class={`flex items-start gap-4 p-5 ${i > 0 ? 'border-t border-line' : ''}`}>
+                <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">{String(i + 1).padStart(2, '0')}</span>
+                <span class="font-display text-[14px] leading-[1.5] text-[var(--color-text-head)]">{t}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ SECTIONS ═════════════ -->
+  <section class="relative bg-paper pb-16 md:pb-24">
+    <Container width="wide">
+      <div class="space-y-20">
         {report.sections.map((s) => (
-          <div class="grid gap-10 lg:grid-cols-12 lg:gap-x-14">
+          <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
             <div class="lg:col-span-4">
-              <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">{s.heading}</p>
+              <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-scooter">{s.heading}</p>
             </div>
             <div class="space-y-5 lg:col-span-8">
-              {s.body.map((p) => <p class="text-base leading-relaxed text-navy-700">{p}</p>)}
+              {s.body.map((p) => (
+                <p class="font-display text-[15px] leading-[1.7] text-[var(--color-text-body)]">{p}</p>
+              ))}
               {s.data && (
-                <div class="mt-7 grid gap-px border-l border-t border-line bg-line sm:grid-cols-3">
+                <ul class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
                   {s.data.map((d) => (
-                    <div class="border-b border-r border-line bg-paper p-5">
-                      <p class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">{d.label}</p>
-                      <p class="mt-2 font-heading text-2xl tracking-[-0.02em] text-navy-900">{d.value}</p>
-                      {d.sub && <p class="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-navy-500">{d.sub}</p>}
-                    </div>
+                    <li class="rounded-[6px] border border-line bg-white p-5">
+                      <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">{d.label}</p>
+                      <p class="mt-2 font-display text-[24px] font-medium tracking-[-0.02em] text-[var(--color-text-head)]">{d.value}</p>
+                      {d.sub && <p class="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">{d.sub}</p>}
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
           </div>
@@ -107,19 +123,37 @@ const { report } = Astro.props;
     </Container>
   </section>
 
+  <!-- ═════════════ CALC TOOL CTA (optional) ═════════════ -->
   {report.ctaTool && (
-    <section class="border-t border-line bg-navy-50 py-16">
-      <Container width="xl" class="flex flex-wrap items-center justify-between gap-6" data-reveal>
-        <div>
-          <Eyebrow tone="dark">Run the numbers</Eyebrow>
-          <p class="mt-5 max-w-xl text-2xl tracking-[-0.01em] text-navy-900">Calculate this for your own situation.</p>
+    <section class="relative bg-white py-16 md:py-20">
+      <Container width="wide">
+        <div class="flex flex-col items-start justify-between gap-6 rounded-[6px] border border-line bg-paper p-8 md:flex-row md:items-center md:p-12">
+          <div>
+            <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Run the numbers</p>
+            <h2 class="mt-3 font-display text-[24px] font-medium tracking-[-0.01em] text-[var(--color-text-head)] md:text-[28px]">Calculate this for your own situation.</h2>
+          </div>
+          <a href={report.ctaTool.href} class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+            {report.ctaTool.label}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
         </div>
-        <a href={report.ctaTool.href} class="group inline-flex items-center gap-2.5 bg-navy-900 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-paper transition-all duration-200 hover:bg-navy-800">
-          {report.ctaTool.label} <Icon name="arrow-right" class="h-4 w-4" />
-        </a>
       </Container>
     </section>
   )}
 
-  <CtaSection variant="industry" context={report.industry} />
+  <!-- ═════════════ FINAL CTA ═════════════ -->
+  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
+    <Container width="wide" class="relative z-10">
+      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Want this analysis for your own {report.industry.toLowerCase()} situation?</h2>
+        <div class="md:col-span-4 md:flex md:justify-end">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
+            Request a Consultation
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
 </BaseLayout>
