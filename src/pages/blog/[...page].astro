@@ -3,6 +3,7 @@ import type { GetStaticPathsOptions } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import { collectionPageSchema, breadcrumb } from '@/data/schema';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const all = (await getCollection('insights'))
@@ -44,11 +45,25 @@ const searchIndex = allPosts.map((p) => ({
   h: `/blog/${slugOf(p.id)}/`,
   g: p.data.tags ?? [],
 }));
+
+const schema = [
+  collectionPageSchema({
+    name: 'Insights',
+    description: 'Practical perspectives on tax, finance, and business from Alpine Mar CPAs.',
+    path: '/blog/',
+    itemCount: allPosts.length,
+  }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Insights', path: '/blog/' },
+  ]),
+];
 ---
 
 <BaseLayout
   rawTitle={isFirstPage ? 'Insights — Alpine Mar' : `Insights · Page ${page.currentPage} — Alpine Mar`}
   description="Practical perspectives on tax, finance, and business — written by the people who work in it every day."
+  schema={schema}
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">

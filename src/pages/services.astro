@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import { collectionPageSchema, breadcrumb } from '@/data/schema';
 
 type Group = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance';
 
@@ -79,11 +80,25 @@ const partners = [
 
 // Icon — single shared briefcase-style glyph used in the Figma template
 const svcIcon = '/icons/about/quality.svg';
+
+const schema = [
+  collectionPageSchema({
+    name: 'Our Services',
+    description: "Tax, accounting, advisory and compliance services from Florida's modern-day CPA firm.",
+    path: '/services/',
+    itemCount: services.length,
+  }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services/' },
+  ]),
+];
 ---
 
 <BaseLayout
   rawTitle="Our Services — Alpine Mar"
   description="Tax, accounting, advisory and compliance services — built around your business by senior CPAs from Florida's modern-day accounting firm."
+  schema={schema}
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">

@@ -41,6 +41,20 @@ export const websiteSchema = {
   publisher: { '@id': ORG_ID },
 };
 
+// Hub / list page (services, industries, insights archive)
+export function collectionPageSchema(opts: { name: string; description: string; path: string; itemCount?: number }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: opts.name,
+    description: opts.description,
+    url: abs(opts.path),
+    isPartOf: { '@id': `${site.url}/#website` },
+    publisher: { '@id': ORG_ID },
+    ...(opts.itemCount ? { numberOfItems: opts.itemCount } : {}),
+  };
+}
+
 export function breadcrumb(items: { name: string; path: string }[]) {
   return {
     '@context': 'https://schema.org',

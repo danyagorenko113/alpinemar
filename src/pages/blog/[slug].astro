@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import { breadcrumb } from '@/data/schema';
+import { breadcrumb, articleSchema } from '@/data/schema';
 
 export async function getStaticPaths() {
   const posts = await getCollection('insights');
@@ -34,11 +34,21 @@ const readingMin = Math.max(2, Math.round((post.data.excerpt?.length ?? 400) / 2
 
 const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
 
-const schema = breadcrumb([
-  { name: 'Home', path: '/' },
-  { name: 'Insights', path: '/blog/' },
-  { name: post.data.title, path: `/blog/${slugOf(post.id)}/` },
-]);
+const schema = [
+  articleSchema({
+    title: post.data.title,
+    description: post.data.excerpt,
+    date: new Date(post.data.date),
+    cover: post.data.cover,
+    path: `/blog/${slugOf(post.id)}/`,
+    author: post.data.author,
+  }),
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name: 'Insights', path: '/blog/' },
+    { name: post.data.title, path: `/blog/${slugOf(post.id)}/` },
+  ]),
+];
 ---
 
 <BaseLayout
