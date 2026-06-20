@@ -74,48 +74,52 @@ const popularServices = [
     </div>
   </Container>
 
-  <!-- ═══════════════ Services mega panel ═══════════════ -->
-  <div id="mega-services" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200" data-mega-panel="services">
+  <!-- ═════════════ Services mega panel ═════════════ -->
+  <div id="mega-services" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-b border-line bg-white opacity-0 shadow-[0_30px_60px_-30px_rgba(18,18,45,0.25)] transition-[opacity,transform] duration-200" data-mega-panel="services">
     <Container width="wide" class="py-10">
+
       <!-- Header strip -->
-      <div class="mb-8 flex items-end justify-between gap-6 border-b border-line pb-4">
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-6 border-b border-line pb-5">
         <div>
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Services · 31 specialised offerings</p>
-          <p class="mt-2 font-heading text-2xl tracking-[-0.01em] text-navy-900">What can we run for you?</p>
+          <div class="flex items-center gap-3">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em] text-[var(--color-text-head)]">Services · 31 specialised offerings</span>
+          </div>
+          <p class="mt-3 font-display text-[24px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">What can we run for you?</p>
         </div>
-        <div class="flex items-center gap-5 text-xs">
-          <a href="/find-your-service/" class="inline-flex items-center gap-2 border border-line bg-paper px-4 py-2 font-mono uppercase tracking-[0.12em] text-navy-900 transition-colors hover:border-navy-900">
-            <Icon name="sparkles" class="h-3.5 w-3.5 text-teal-700" /> Take the 4-question quiz
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="/find-your-service/" class="inline-flex items-center gap-2 rounded-[6px] border border-line bg-white px-4 py-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">
+            Take the 4-question quiz
           </a>
-          <a href="/services/" class="inline-flex items-center gap-2 font-mono uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">View all <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+          <a href="/services/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-4 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-scooter">
+            View all
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
         </div>
       </div>
 
       <!-- 5 categories grid -->
-      <div class="grid grid-cols-5 gap-x-6">
+      <div class="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
         {serviceMenu.map((group) => (
-          <div class="flex flex-col">
-            <a href="/services/" class="flex items-center gap-2.5">
-              <span class="flex size-8 items-center justify-center rounded-full bg-teal-500 text-navy-950">
-                <Icon name={group.icon} class="h-4 w-4" />
-              </span>
-              <span class="font-heading text-sm font-medium tracking-[-0.005em] text-navy-900">{group.label}</span>
+          <div class="flex flex-col rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+            <a href="/services/" class="flex items-baseline gap-2">
+              <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
             </a>
-            <p class="mt-2.5 line-clamp-2 text-[0.72rem] leading-snug text-navy-500">{group.blurb}</p>
-            <ul class="mt-4 space-y-2.5 border-t border-line pt-4">
-              {group.items.slice(0, 7).map((it) => (
+            <p class="mt-3 line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{group.blurb}</p>
+            <ul class="mt-5 space-y-2.5 border-t border-line pt-4">
+              {group.items.slice(0, 6).map((it) => (
                 <li>
                   <a href={it.href} class="group/link block">
-                    <span class="block text-[0.82rem] leading-tight text-navy-900 transition-colors group-hover/link:text-teal-700">{it.name}</span>
+                    <span class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors group-hover/link:text-scooter">{it.name}</span>
                     {'desc' in it && (
-                      <span class="mt-0.5 line-clamp-1 text-[0.68rem] leading-snug text-navy-400">{(it as any).desc}</span>
+                      <span class="mt-0.5 line-clamp-1 font-display text-[11px] leading-snug text-[var(--color-text-body)]">{(it as any).desc}</span>
                     )}
                   </a>
                 </li>
               ))}
-              {group.items.length > 7 && (
+              {group.items.length > 6 && (
                 <li>
-                  <a href="/services/" class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-700">+ {group.items.length - 7} more →</a>
+                  <a href="/services/" class="font-mono text-[10px] uppercase tracking-[0.14em] text-scooter">+ {group.items.length - 6} more →</a>
                 </li>
               )}
             </ul>
@@ -124,104 +128,126 @@ const popularServices = [
       </div>
 
       <!-- Popular row + CTA -->
-      <div class="mt-9 grid grid-cols-12 gap-6 border-t border-line pt-6">
-        <div class="col-span-8">
-          <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-500">Most-requested</p>
-          <ul class="mt-3 flex flex-wrap gap-1.5">
+      <div class="mt-8 grid grid-cols-1 gap-6 border-t border-line pt-6 lg:grid-cols-12">
+        <div class="lg:col-span-8">
+          <p class="font-display text-[12px] font-medium uppercase tracking-[0.08em] text-scooter">Most requested</p>
+          <ul class="mt-4 flex flex-wrap gap-2">
             {popularServices.map((p) => (
               <li>
-                <a href={p.href} class="group/p inline-flex items-center gap-2 border border-line bg-paper px-3.5 py-1.5 text-[0.78rem] text-navy-900 transition-colors hover:border-navy-900 hover:bg-navy-50">
-                  <span class="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-teal-700">{p.tag}</span>
+                <a href={p.href} class="group/p inline-flex items-center gap-2 rounded-[6px] border border-line bg-white px-3.5 py-1.5 font-display text-[13px] text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">
+                  <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-scooter">{p.tag}</span>
                   <span class="block h-3 w-px bg-line"></span>
                   {p.name}
-                  <Icon name="arrow-right" class="h-3 w-3 text-navy-400 transition-transform group-hover/p:translate-x-0.5" />
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover/p:translate-x-0.5"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
               </li>
             ))}
           </ul>
         </div>
-        <div class="col-span-4 flex items-center justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2.5 bg-teal-500 px-5 py-2.5 font-mono text-[0.7rem] font-medium uppercase tracking-[0.1em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
-            Request consultation <Icon name="arrow-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+        <div class="flex items-center lg:col-span-4 lg:justify-end">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-5 py-2.5 font-display text-[13px] font-medium text-white transition-colors hover:bg-[#12122D]">
+            Request consultation
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
       </div>
     </Container>
   </div>
 
-  <!-- ═══════════════ Industries mega panel ═══════════════ -->
-  <div id="mega-industries" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-y border-line bg-paper opacity-0 transition-[opacity,transform] duration-200" data-mega-panel="industries">
+  <!-- ═════════════ Industries mega panel ═════════════ -->
+  <div id="mega-industries" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-b border-line bg-white opacity-0 shadow-[0_30px_60px_-30px_rgba(18,18,45,0.25)] transition-[opacity,transform] duration-200" data-mega-panel="industries">
     <Container width="wide" class="py-10">
-      <div class="mb-8 flex items-end justify-between gap-6 border-b border-line pb-4">
+
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-6 border-b border-line pb-5">
         <div>
-          <p class="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-teal-700">Industries · 11 specialised verticals</p>
-          <p class="mt-2 font-heading text-2xl tracking-[-0.01em] text-navy-900">Built for your sector.</p>
+          <div class="flex items-center gap-3">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em] text-[var(--color-text-head)]">Industries · 11 specialised verticals</span>
+          </div>
+          <p class="mt-3 font-display text-[24px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Built for your sector.</p>
         </div>
-        <a href="/industries/" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-teal-700 transition-colors hover:text-teal-600">View all <Icon name="arrow-right" class="h-3.5 w-3.5" /></a>
+        <a href="/industries/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-4 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-scooter">
+          View all
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
       </div>
 
-      <div class="grid grid-cols-4 gap-px border-l border-t border-line bg-line">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {industryMenu.map((ind, i) => (
-          <a href={ind.href} class="group/ind flex items-start gap-4 border-b border-r border-line bg-paper p-4 transition-colors hover:bg-navy-50">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-teal-500 text-navy-950 transition-colors group-hover/ind:bg-teal-500 group-hover/ind:text-navy-950">
-              <Icon name={ind.icon} class="h-4 w-4" />
-            </span>
-            <span class="flex-1">
-              <span class="flex items-center justify-between gap-2">
-                <span class="font-heading text-sm font-medium leading-tight text-navy-900 transition-colors group-hover/ind:text-teal-700">{ind.name}</span>
-                <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-300">{String(i + 1).padStart(2, '0')}</span>
-              </span>
-              <span class="mt-1 block text-[0.7rem] leading-snug text-navy-500">{ind.desc}</span>
+          <a href={ind.href} class="group/ind flex h-full flex-col gap-2.5 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+            <div class="flex items-center justify-between gap-3">
+              <span class="font-display text-[15px] font-medium leading-tight tracking-[-0.005em] text-[var(--color-text-head)] transition-colors group-hover/ind:text-scooter">{ind.name}</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <p class="line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{ind.desc}</p>
+            <span class="mt-auto inline-flex items-center gap-1.5 font-display text-[12px] font-medium text-[var(--color-text-head)] transition-colors group-hover/ind:text-scooter">
+              Learn more
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover/ind:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
             </span>
           </a>
         ))}
-        <!-- "All industries" CTA tile fills the last cell -->
-        <a href="/industries/" class="group/ind flex items-center justify-center gap-3 border-b border-r border-line bg-navy-900 p-4 text-paper transition-colors hover:bg-navy-800">
-          <span class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-teal-300">View all 11 →</span>
+        <a href="/industries/" class="group/ind flex items-center justify-center gap-2 rounded-[6px] bg-[#12122D] p-5 text-white transition-colors hover:bg-scooter">
+          <span class="font-display text-[14px] font-medium">View all 11 industries</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover/ind:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </div>
     </Container>
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-paper lg:hidden">
+  <div id="mobile-menu" class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-white lg:hidden">
     <Container width="wide" class="flex flex-col py-4">
       <details class="border-b border-line">
-        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Services <span class="font-mono text-xs text-navy-400">+</span></summary>
-        <div class="pb-4">
+        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
+          Services
+          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line transition-transform group-open:rotate-45">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="pb-5">
           {serviceMenu.map((group) => (
-            <div class="mt-4 first:mt-2">
-              <div class="flex items-center gap-2">
-                <span class="flex size-6 items-center justify-center rounded-full bg-teal-500 text-navy-950"><Icon name={group.icon} class="h-3 w-3" /></span>
-                <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-700">{group.label}</span>
-              </div>
-              <ul class="mt-2.5 space-y-2 border-l border-line pl-3.5">
-                {group.items.map((it) => <li><a href={it.href} class="block text-sm text-navy-700">{it.name}</a></li>)}
+            <div class="mt-5 first:mt-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
+              <ul class="mt-3 space-y-2 border-l border-line pl-4">
+                {group.items.map((it) => (
+                  <li>
+                    <a href={it.href} class="block font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.name}</a>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
-          <a href="/services/" class="mt-4 inline-block font-mono text-xs uppercase tracking-[0.12em] text-teal-700">View all services →</a>
+          <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+            View all services
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
         </div>
       </details>
       <details class="border-b border-line">
-        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">Industries <span class="font-mono text-xs text-navy-400">+</span></summary>
-        <div class="grid grid-cols-2 gap-2 pb-4">
+        <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
+          Industries
+          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line transition-transform group-open:rotate-45">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="grid grid-cols-1 gap-2 pb-5 sm:grid-cols-2">
           {industryMenu.map((ind) => (
-            <a href={ind.href} class="flex items-center gap-2 py-1.5 text-sm text-navy-700">
-              <span class="flex size-5 items-center justify-center text-teal-700"><Icon name={ind.icon} class="h-3 w-3" /></span>
-              {ind.name}
-            </a>
+            <a href={ind.href} class="font-display text-[14px] text-[var(--color-text-body)] py-1.5 transition-colors hover:text-scooter">{ind.name}</a>
           ))}
+          <a href="/industries/" class="mt-3 inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter sm:col-span-2">
+            View all 11 industries
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
         </div>
       </details>
-      <a href="/blog/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Insights</a>
-      <a href="/about-us/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">About Us</a>
-      <a href="/contact/" class="border-b border-line py-3.5 font-body text-sm font-medium text-navy-900">Contact</a>
-      <a href={site.clientPortal} target="_blank" rel="noopener" class="flex items-center justify-between py-3.5 font-body text-sm font-medium text-navy-900">
+      <a href="/blog/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Insights</a>
+      <a href="/about-us/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">About Us</a>
+      <a href="/contact/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Contact</a>
+      <a href={site.clientPortal} target="_blank" rel="noopener" class="flex items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
         Client Portal
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="text-navy-400"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="text-[var(--color-text-body)]"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
-      <Button href="/contact/" variant="primary" class="mt-3 w-full">Request Consultation</Button>
+      <Button href="/contact/" variant="primary" class="mt-4 w-full">Request Consultation</Button>
     </Container>
   </div>
 </header>
