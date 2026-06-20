@@ -36,7 +36,7 @@ const states = [
       <div class="max-w-2xl">
         <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[40px] md:text-[48px]">Quarterly Tax Estimator</h1>
         <p class="mt-4 font-display text-[15px] leading-[1.55] text-white/75">Income, entity type, state → your next quarterly payment and all four IRS due dates. Skip the April-15 panic.</p>
-        <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Free · No signup · Directional estimate only</p>
+        <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Free · No signup · Directional estimate only</p>
       </div>
     </Container>
   </section>
@@ -51,7 +51,7 @@ const states = [
           <!-- Q1 income -->
           <div class="rounded-[6px] border border-line bg-white p-7">
             <div class="flex items-center gap-3">
-              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 01</span>
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Step 01</span>
               <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Income</span>
             </div>
             <label class="mt-5 block">
@@ -68,7 +68,7 @@ const states = [
           <!-- Q2 entity -->
           <div class="rounded-[6px] border border-line bg-white p-7">
             <div class="flex items-center gap-3">
-              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 02</span>
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Step 02</span>
               <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Entity</span>
             </div>
             <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">Entity &amp; income source</p>
@@ -88,7 +88,7 @@ const states = [
           <!-- Q3 state -->
           <div class="rounded-[6px] border border-line bg-white p-7">
             <div class="flex items-center gap-3">
-              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 03</span>
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Step 03</span>
               <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">State</span>
             </div>
             <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">State tax rate</p>
@@ -106,7 +106,7 @@ const states = [
         <!-- Result aside -->
         <aside class="lg:col-span-5">
           <div class="sticky top-28 rounded-[6px] bg-[#12122D] p-8 text-white">
-            <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Each quarter you owe</p>
+            <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Each quarter you owe</p>
             <p class="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">Approximate per-quarter payment</p>
             <p class="mt-2 font-display text-[56px] font-medium tracking-[-0.02em] text-white"><span id="q-result">—</span></p>
             <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">Annual total <span id="q-annual" class="text-scooter">—</span></p>
