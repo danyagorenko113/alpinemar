@@ -1,13 +1,25 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+
+const fields = [
+  { id: 'price', label: 'Sale price',                sub: 'What buyer is paying for the property.',                                      value: 1500000, presets: [500000, 1000000, 1500000, 3000000, 5000000] },
+  { id: 'basis', label: 'Adjusted basis',            sub: 'Original cost − accumulated depreciation + improvements.',                    value: 600000,  presets: [200000, 400000, 600000, 1000000, 1500000] },
+  { id: 'depr',  label: 'Accumulated depreciation',  sub: 'Total depreciation taken over hold period. Recaptured at up to 25%.',         value: 250000,  presets: [50000, 150000, 250000, 500000, 750000] },
+];
+
+const states = [
+  { v: 0,  label: 'FL · TX · No-tax' },
+  { v: 5,  label: 'Mid (5%)' },
+  { v: 13, label: 'CA · NY (13%)' },
+];
 ---
 
 <BaseLayout
   rawTitle="1031 Exchange Savings Calculator | Alpine Mar"
   description="See how much capital-gains tax you can defer with a 1031 exchange on investment real estate. Free, Florida-aware, no signup."
 >
-    <!-- ═════════════ HERO ═════════════ -->
+  <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-12 text-white md:pt-16 md:pb-16">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
@@ -22,94 +34,96 @@ import Container from '@/components/Container.astro';
       </nav>
       <div class="max-w-2xl">
         <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[40px] md:text-[48px]">1031 Exchange Savings</h1>
-        <p class="mt-4 font-display text-[15px] leading-[1.55] text-white/75">How much capital gains tax you defer by rolling proceeds into a like-kind property.</p>
+        <p class="mt-4 font-display text-[15px] leading-[1.55] text-white/75">How much capital gains tax you defer by rolling proceeds into a like-kind investment property.</p>
         <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Free · No signup · Directional estimate only</p>
       </div>
     </Container>
   </section>
 
-  <section class="border-t border-line bg-paper py-12 lg:py-20">
-    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
-      <form id="x-form" class="lg:col-span-7 space-y-8" data-reveal>
-        {[
-          { id: 'price',   label: 'Sale price',        sub: 'What buyer is paying for the property.', value: 1500000, presets: [500000, 1000000, 1500000, 3000000, 5000000] },
-          { id: 'basis',   label: 'Adjusted basis',    sub: 'Original cost − accumulated depreciation + improvements.', value: 600000, presets: [200000, 400000, 600000, 1000000, 1500000] },
-          { id: 'depr',    label: 'Accumulated depreciation', sub: 'Total depreciation taken over hold period. Recaptured at up to 25%.', value: 250000, presets: [50000, 150000, 250000, 500000, 750000] },
-        ].map((f, i) => (
-          <fieldset class={i === 0 ? 'border-t border-navy-900 pt-6' : 'border-t border-line pt-6'}>
-            <legend class="flex items-baseline gap-3">
-              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q{i + 1} / 04</span>
-              <span class="font-heading text-xl text-navy-900 sm:text-2xl">{f.label}.</span>
-            </legend>
-            <p class="mt-2 max-w-md text-sm text-navy-500">{f.sub}</p>
-            <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
-              <span class="font-heading text-3xl text-navy-300">$</span>
-              <input id={f.id} type="number" inputmode="numeric" min="0" step="1000" value={f.value} class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
-              <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD</span>
+  <!-- ═════════════ CALCULATOR ═════════════ -->
+  <section class="relative bg-paper py-16 md:py-20">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+
+        <form id="x-form" class="flex flex-col gap-8 lg:col-span-7">
+          {fields.map((f, i) => (
+            <div class="rounded-[6px] border border-line bg-white p-7">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step {String(i + 1).padStart(2, '0')}</span>
+                <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">{f.label}</span>
+              </div>
+              <label class="mt-5 block">
+                <span class="font-display text-[16px] font-medium text-[var(--color-text-head)]">{f.label}</span>
+                <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">{f.sub}</p>
+                <div class="mt-4 flex items-baseline gap-2 border-b-2 border-line transition-colors focus-within:border-scooter">
+                  <span class="font-display text-[28px] text-[var(--color-text-body)]">$</span>
+                  <input id={f.id} type="number" inputmode="numeric" min="0" step="1000" value={f.value} class="w-full bg-transparent py-2 font-display text-[28px] font-medium text-[var(--color-text-head)] focus:outline-none" />
+                  <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">USD</span>
+                </div>
+              </label>
+              <div class="mt-4 flex flex-wrap gap-1.5">
+                {f.presets.map((v) => (
+                  <button type="button" data-preset-field={f.id} data-preset-value={v} class="rounded-[4px] border border-line bg-white px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)] transition-colors hover:border-[#12122D] hover:text-scooter">${(v / 1000).toLocaleString()}k</button>
+                ))}
+              </div>
             </div>
-            <div class="mt-3 flex flex-wrap gap-1.5">
-              {f.presets.map((v) => (
-                <button type="button" data-preset-field={f.id} data-preset-value={v} class="border border-line bg-paper px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-600 transition-colors hover:border-teal-500 hover:text-teal-700">${(v / 1000).toLocaleString()}k</button>
+          ))}
+
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 04</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">State</span>
+            </div>
+            <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">State capital gains rate</p>
+            <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {states.map((opt) => (
+                <label class="group flex cursor-pointer items-center gap-3 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                  <input type="radio" name="x-state" value={opt.v} class="peer accent-scooter" checked={opt.v === 0} />
+                  <span class="font-display text-[14px] font-medium text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
+                </label>
               ))}
             </div>
-          </fieldset>
-        ))}
+          </div>
+        </form>
 
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q4 / 04</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">State capital gains rate.</span>
-          </legend>
-          <div class="mt-6 grid gap-2 sm:grid-cols-3">
-            {[
-              { v: 0,  label: 'FL · TX · No-tax' },
-              { v: 5,  label: 'Mid (5%)' },
-              { v: 13, label: 'CA · NY (13%)' },
-            ].map((opt) => (
-              <label class="group flex cursor-pointer items-center gap-3 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
-                <input type="radio" name="x-state" value={opt.v} class="peer accent-teal-500" checked={opt.v === 0} />
-                <span class="text-sm font-medium text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      </form>
+        <aside class="lg:col-span-5">
+          <div class="sticky top-28 overflow-hidden rounded-[6px] border border-line">
+            <div class="bg-paper p-7">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Straight sale · tax bill</p>
+              <p class="mt-2 font-display text-[36px] font-medium tracking-[-0.02em] text-[var(--color-text-head)]"><span id="x-straight">—</span></p>
+              <ul class="mt-5 space-y-2 font-display text-[13px] text-[var(--color-text-body)]">
+                <li class="flex justify-between"><span>Federal capital gains</span><span id="x-fed" class="text-[var(--color-text-head)]">—</span></li>
+                <li class="flex justify-between"><span>Depreciation recapture</span><span id="x-recap" class="text-[var(--color-text-head)]">—</span></li>
+                <li class="flex justify-between"><span>State tax</span><span id="x-state-tax" class="text-[var(--color-text-head)]">—</span></li>
+                <li class="flex justify-between border-t border-line pt-2"><span>NIIT (3.8%)</span><span id="x-niit" class="text-[var(--color-text-head)]">—</span></li>
+              </ul>
+            </div>
 
-      <aside class="lg:col-span-5" data-reveal data-from="right">
-        <div class="sticky top-28 space-y-px border border-navy-900">
-          <div class="bg-paper p-6 lg:p-7">
-            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-500">Straight sale · tax bill</p>
-            <p class="mt-2 font-heading text-4xl font-semibold tracking-[-0.02em] text-navy-900"><span id="x-straight">—</span></p>
-            <ul class="mt-4 space-y-1 text-sm text-navy-600">
-              <li class="flex justify-between"><span>Federal capital gains</span><span id="x-fed">—</span></li>
-              <li class="flex justify-between"><span>Depreciation recapture</span><span id="x-recap">—</span></li>
-              <li class="flex justify-between"><span>State tax</span><span id="x-state-tax">—</span></li>
-              <li class="flex justify-between border-t border-line pt-1"><span>NIIT (3.8%)</span><span id="x-niit">—</span></li>
-            </ul>
+            <div class="bg-scooter p-7 text-white">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-white/85">1031 exchange · deferred</p>
+              <p class="mt-2 font-display text-[44px] font-medium tracking-[-0.02em] text-white"><span id="x-deferred">—</span></p>
+              <p class="mt-3 font-display text-[13px] leading-[1.5] text-white/90">Stays in the next property as additional purchasing power. Compounds across multiple exchanges ("swap till you drop").</p>
+            </div>
+
+            <div class="bg-white p-7">
+              <a href="/contact/?service=Real%20Estate%20CPA%20Services" class="group inline-flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1F3062] px-5 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+                Plan the exchange
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <p class="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">45-day ID · 180-day close · state deferral varies (CA clawback, NY pickup)</p>
+            </div>
           </div>
-          <div class="bg-teal-500 p-6 text-navy-950 lg:p-7">
-            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-900">1031 exchange · deferred</p>
-            <p class="mt-2 font-heading text-5xl font-semibold tracking-[-0.02em] text-navy-950"><span id="x-deferred">—</span></p>
-            <p class="mt-3 text-sm leading-snug text-navy-900">Stays in the next property as additional purchasing power. Compounds across multiple exchanges (the "swap till you drop" strategy).</p>
-          </div>
-          <div class="bg-navy-50 p-6">
-            <a href="/contact/?service=Real%20Estate%20CPA%20Services" class="group inline-flex w-full items-center justify-center gap-2.5 border border-navy-900 px-6 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
-              Plan the exchange 
-            </a>
-            <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ Estimate only · not tax advice · 45-day ID · 180-day close</p>
-            <p class="mt-2 text-center font-mono text-[0.6rem] uppercase tracking-[0.12em] text-navy-400">State tax deferral varies (e.g. CA clawback, NY pickup) — verify with a CPA</p>
-          </div>
-        </div>
-      </aside>
+        </aside>
+      </div>
     </Container>
   </section>
 
-    <!-- ═════════════ FINAL CTA ═════════════ -->
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
       <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Calculator gave you a surprise? Talk to a partner.</h2>
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Selling soon? Plan the exchange before you sign the listing.</h2>
         <div class="md:col-span-4 md:flex md:justify-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
@@ -119,7 +133,6 @@ import Container from '@/components/Container.astro';
       </div>
     </Container>
   </section>
-
 
   <script>
     const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
@@ -132,10 +145,6 @@ import Container from '@/components/Container.astro';
     const LT_GAIN_RATE = 0.20;
     const RECAP_RATE = 0.25;
     const NIIT_RATE = 0.038;
-    // §1411 NIIT only applies above MFJ AGI threshold ($250k); we approximate
-    // by assuming the seller already exceeds threshold (typical for 1031
-    // sellers) — but the actual NIIT base is net investment income, not the
-    // full gain. We apply NIIT only to the long-term gain portion (not recapture).
 
     function calc() {
       const p = Math.max(0, +(price?.value || 0));
@@ -148,7 +157,6 @@ import Container from '@/components/Container.astro';
 
       const fedTax = longTermGain * LT_GAIN_RATE;
       const recapTax = d * RECAP_RATE;
-      // NIIT applies to long-term gain only (not recapture, which is ordinary)
       const niitTax = longTermGain * NIIT_RATE;
       const stateTax = totalGain * stateRate;
       const totalTax = fedTax + recapTax + niitTax + stateTax;

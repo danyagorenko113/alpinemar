@@ -1,13 +1,21 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+
+const presets = [250000, 500000, 1000000, 2500000, 5000000];
+const growths = [
+  { v: -5, label: 'Cutting (−5%/mo)' },
+  { v: 0,  label: 'Flat (0%)' },
+  { v: 5,  label: 'Scaling (+5%/mo)' },
+  { v: 10, label: 'Growing fast (+10%)' },
+];
 ---
 
 <BaseLayout
-  rawTitle="Burn Rate & Runway Calculator | Alpine Mar"
+  rawTitle="Burn Rate &amp; Runway Calculator | Alpine Mar"
   description="Free runway calculator. Cash on hand + monthly burn → runway in months, with thresholds that change founder behaviour."
 >
-    <!-- ═════════════ HERO ═════════════ -->
+  <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-12 text-white md:pt-16 md:pb-16">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
@@ -28,106 +36,108 @@ import Container from '@/components/Container.astro';
     </Container>
   </section>
 
-  <section class="border-t border-line bg-paper py-12 lg:py-20">
-    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
-      <form id="burn-form" class="lg:col-span-7 space-y-8" data-reveal>
-        <fieldset class="border-t border-navy-900 pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 03</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Cash on hand right now.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">Bank + sweep + treasuries. Anything liquid in &lt;30 days.</p>
-          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
-            <span class="font-heading text-3xl text-navy-300">$</span>
-            <input id="cash" type="number" inputmode="numeric" min="0" step="1000" value="800000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
-            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD</span>
-          </div>
-          <div class="mt-3 flex flex-wrap gap-1.5">
-            {[250000, 500000, 1000000, 2500000, 5000000].map((v) => (
-              <button type="button" data-preset-cash={v} class="border border-line bg-paper px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-600 transition-colors hover:border-teal-500 hover:text-teal-700">${(v / 1000).toLocaleString()}k</button>
-            ))}
-          </div>
-        </fieldset>
+  <!-- ═════════════ CALCULATOR ═════════════ -->
+  <section class="relative bg-paper py-16 md:py-20">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
 
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 03</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Monthly cash burn.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">Net of revenue. (Expenses − collected revenue, last 3-month average.)</p>
-          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
-            <span class="font-heading text-3xl text-navy-300">$</span>
-            <input id="burn" type="number" inputmode="numeric" min="0" step="500" value="120000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
-            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / month</span>
-          </div>
-        </fieldset>
-
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q3 / 03</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Burn growth rate.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">How fast burn is climbing month-over-month. Default: flat.</p>
-          <div class="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {[
-              { v: -5, label: 'Cutting (−5%/mo)' },
-              { v: 0,  label: 'Flat (0%)' },
-              { v: 5,  label: 'Scaling (+5%/mo)' },
-              { v: 10, label: 'Growing fast (+10%)' },
-            ].map((g) => (
-              <label class="group flex cursor-pointer flex-col gap-1 border border-line bg-paper px-3 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
-                <input type="radio" name="growth" value={g.v} class="peer sr-only" checked={g.v === 0} />
-                <span class="text-sm leading-tight font-medium text-navy-900 group-has-[:checked]:text-paper">{g.label}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      </form>
-
-      <aside class="lg:col-span-5" data-reveal data-from="right">
-        <div id="result-card" class="sticky top-28 border border-navy-900 bg-navy-900 p-7 text-paper lg:p-9 transition-colors">
-          <div class="flex items-center gap-3">
-            <span class="block h-px w-8 bg-teal-400"></span>
-            <p id="zone-label" class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">Live runway</p>
-          </div>
-          <p class="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Months of runway</p>
-          <p class="mt-2 font-heading text-7xl font-semibold tracking-[-0.02em] text-white"><span id="r-months">—</span></p>
-          <p class="mt-3 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Cash-out date <span id="r-date" class="text-teal-300">—</span></p>
-
-          <div class="mt-8 border-l border-t border-white/10">
-            <div class="grid grid-cols-3 gap-px">
-              <div class="border-b border-r border-white/10 p-3 text-center">
-                <p class="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-navy-400">&lt; 6mo</p>
-                <p class="mt-1 text-[0.66rem] uppercase tracking-[0.12em] text-rose-300">Raise or cut</p>
+        <form id="burn-form" class="flex flex-col gap-8 lg:col-span-7">
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 01</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Cash</span>
+            </div>
+            <label class="mt-5 block">
+              <span class="font-display text-[16px] font-medium text-[var(--color-text-head)]">Cash on hand right now</span>
+              <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Bank + sweep + treasuries. Anything liquid in &lt;30 days.</p>
+              <div class="mt-4 flex items-baseline gap-2 border-b-2 border-line transition-colors focus-within:border-scooter">
+                <span class="font-display text-[28px] text-[var(--color-text-body)]">$</span>
+                <input id="cash" type="number" inputmode="numeric" min="0" step="1000" value="800000" class="w-full bg-transparent py-2 font-display text-[28px] font-medium text-[var(--color-text-head)] focus:outline-none" />
+                <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">USD</span>
               </div>
-              <div class="border-b border-r border-white/10 p-3 text-center">
-                <p class="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-navy-400">6–18mo</p>
-                <p class="mt-1 text-[0.66rem] uppercase tracking-[0.12em] text-amber-300">Plan</p>
-              </div>
-              <div class="border-b border-r border-white/10 p-3 text-center">
-                <p class="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-navy-400">&gt; 18mo</p>
-                <p class="mt-1 text-[0.66rem] uppercase tracking-[0.12em] text-teal-300">Optimise</p>
-              </div>
+            </label>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              {presets.map((v) => (
+                <button type="button" data-preset-cash={v} class="rounded-[4px] border border-line bg-white px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)] transition-colors hover:border-[#12122D] hover:text-scooter">${(v / 1000).toLocaleString()}k</button>
+              ))}
             </div>
           </div>
 
-          <p id="r-advice" class="mt-6 text-sm leading-relaxed text-navy-200">Enter numbers to see what zone you're in.</p>
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 02</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Burn</span>
+            </div>
+            <label class="mt-5 block">
+              <span class="font-display text-[16px] font-medium text-[var(--color-text-head)]">Monthly cash burn</span>
+              <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Net of revenue. (Expenses − collected revenue, last 3-month average.)</p>
+              <div class="mt-4 flex items-baseline gap-2 border-b-2 border-line transition-colors focus-within:border-scooter">
+                <span class="font-display text-[28px] text-[var(--color-text-body)]">$</span>
+                <input id="burn" type="number" inputmode="numeric" min="0" step="500" value="120000" class="w-full bg-transparent py-2 font-display text-[28px] font-medium text-[var(--color-text-head)] focus:outline-none" />
+                <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">USD / mo</span>
+              </div>
+            </label>
+          </div>
 
-          <a href="/contact/?service=Fractional%20CFO" class="group mt-7 inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400">
-            Talk to a fractional CFO 
-          </a>
-          <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ Estimate only · not financial advice</p>
-        </div>
-      </aside>
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 03</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Growth</span>
+            </div>
+            <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">Burn growth rate</p>
+            <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">How fast burn is climbing month-over-month.</p>
+            <div class="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {growths.map((g) => (
+                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-3 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                  <input type="radio" name="growth" value={g.v} class="peer sr-only" checked={g.v === 0} />
+                  <span class="font-display text-[13px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{g.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </form>
+
+        <aside class="lg:col-span-5">
+          <div id="result-card" class="sticky top-28 rounded-[6px] bg-[#12122D] p-8 text-white">
+            <p id="zone-label" class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Live runway</p>
+            <p class="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">Months of runway</p>
+            <p class="mt-2 font-display text-[64px] font-medium tracking-[-0.02em] text-white"><span id="r-months">—</span></p>
+            <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">Cash-out date <span id="r-date" class="text-scooter">—</span></p>
+
+            <ul class="mt-6 grid grid-cols-3 gap-2">
+              <li class="rounded-[4px] bg-white/[0.06] p-3 text-center">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">&lt; 6mo</p>
+                <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-rose-300">Raise/cut</p>
+              </li>
+              <li class="rounded-[4px] bg-white/[0.06] p-3 text-center">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">6–18mo</p>
+                <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-amber-300">Plan</p>
+              </li>
+              <li class="rounded-[4px] bg-white/[0.06] p-3 text-center">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">&gt; 18mo</p>
+                <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-scooter">Optimise</p>
+              </li>
+            </ul>
+
+            <p id="r-advice" class="mt-6 font-display text-[14px] leading-[1.55] text-white/75">Enter numbers to see what zone you're in.</p>
+
+            <a href="/contact/?service=Fractional%20CFO" class="group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-[6px] bg-scooter px-5 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
+              Talk to a fractional CFO
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <p class="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-white/45">Estimate only · not financial advice</p>
+          </div>
+        </aside>
+      </div>
     </Container>
   </section>
 
-    <!-- ═════════════ FINAL CTA ═════════════ -->
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
       <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Calculator gave you a surprise? Talk to a partner.</h2>
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Numbers don't add up? Talk to a CFO.</h2>
         <div class="md:col-span-4 md:flex md:justify-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
@@ -138,20 +148,16 @@ import Container from '@/components/Container.astro';
     </Container>
   </section>
 
-
   <script>
     const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
     const cash = $('#cash') as HTMLInputElement | null;
     const burn = $('#burn') as HTMLInputElement | null;
     const rMonths = $('#r-months'), rDate = $('#r-date'), rAdvice = $('#r-advice'), zoneLabel = $('#zone-label');
-    const card = $('#result-card');
 
     function calc() {
       const c = Math.max(0, +(cash?.value || 0));
       const b = Math.max(1, +(burn?.value || 0));
       const g = +(document.querySelector('input[name="growth"]:checked') as HTMLInputElement)?.value || 0;
-      // Compounding monthly: cumulative burn over k months at growth g
-      // Solve for k where sum_{i=0..k-1} b*(1+g/100)^i >= c
       let cum = 0, k = 0;
       const factor = 1 + g / 100;
       while (cum < c && k < 360) {
@@ -161,27 +167,18 @@ import Container from '@/components/Container.astro';
       const months = k;
 
       if (rMonths) rMonths.textContent = months >= 360 ? '∞' : String(months);
-      // Cash-out date — months from today
       const out = new Date();
       out.setMonth(out.getMonth() + months);
       if (rDate) rDate.textContent = out.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
-      // Zone styling — stays in brand palette; uses border + label colour
-      // instead of changing the entire background.
-      card?.classList.remove('border-rose-500/40','border-amber-400/40','border-teal-500/40');
       let zone = 'Optimise';
       let advice = 'Sufficient runway to focus on working capital, taxes, and capital-efficient hires rather than fundraising. A fractional CFO can compress the next 12 months.';
       if (months < 6) {
-        zone = 'Raise or cut'; card?.classList.add('border-rose-500/40');
+        zone = 'Raise or cut';
         advice = 'Under six months. The choice narrows to: raise capital or reduce burn. A plan should be in place this month.';
-      } else if (months < 12) {
-        zone = 'Plan'; card?.classList.add('border-amber-400/40');
-        advice = 'In the planning window. Time to lock the next four quarters of spend, qualify investors, and tighten unit economics before fundraising.';
       } else if (months < 18) {
-        zone = 'Plan'; card?.classList.add('border-amber-400/40');
-        advice = 'Healthy buffer with limited slack. Map out the milestones to hit before the cash-out date and what each is worth to the next round.';
-      } else {
-        card?.classList.add('border-teal-500/40');
+        zone = 'Plan';
+        advice = 'In the planning window. Time to lock the next four quarters of spend, qualify investors, and tighten unit economics before fundraising.';
       }
       if (zoneLabel) zoneLabel.textContent = zone;
       if (rAdvice) rAdvice.textContent = advice;

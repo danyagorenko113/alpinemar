@@ -1,14 +1,31 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+
+const presets = [100000, 250000, 500000, 1000000, 2500000];
+const entities = [
+  { id: 'sole',    label: 'Sole prop / 1099',          sub: 'Schedule C · SE tax' },
+  { id: 'llc',     label: 'Single-member LLC',         sub: 'Same as sole prop' },
+  { id: 'scorp',   label: 'S-Corp',                    sub: 'W-2 salary + K-1' },
+  { id: 'ccorp',   label: 'C-Corp',                    sub: 'Corporate 21% + dividends' },
+  { id: 'partner', label: 'Partnership / multi-LLC',   sub: 'K-1 pass-through' },
+  { id: 'w2',      label: 'W-2 employee',              sub: 'High earner · benefits-heavy' },
+];
+const states = [
+  { id: 'fl',   label: 'Florida',                              rate: 0 },
+  { id: 'tx',   label: 'Texas',                                rate: 0 },
+  { id: 'nh',   label: 'No-tax (NV, WY, TN, SD, AK, WA)',      rate: 0 },
+  { id: 'mid',  label: 'Mid (avg 5%)',                         rate: 5 },
+  { id: 'high', label: 'NY · CA · NJ (10%+)',                  rate: 10 },
+  { id: 'oth',  label: 'Other US state',                       rate: 5 },
+];
 ---
 
 <BaseLayout
   rawTitle="Tax Savings Estimator — Free Calculator | Alpine Mar"
   description="Estimate what proactive tax planning could save you. 3 questions, no signup, CPA-built. Florida-aware."
 >
-  <!-- ═══════════════ Hero ═══════════════ -->
-    <!-- ═════════════ HERO ═════════════ -->
+  <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-12 text-white md:pt-16 md:pb-16">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
@@ -29,138 +46,129 @@ import Container from '@/components/Container.astro';
     </Container>
   </section>
 
-  <!-- ═══════════════ Calculator ═══════════════ -->
-  <section class="border-t border-line bg-paper py-12 lg:py-20">
-    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
-      <!-- Inputs -->
-      <form id="tax-form" class="lg:col-span-7 space-y-8" data-reveal novalidate>
-        <fieldset class="border-t border-navy-900 pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 03</span>
-            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">Your projected annual income.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">Business net income (after expenses) or total taxable comp. Estimate fine.</p>
-          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
-            <span class="font-heading text-3xl text-navy-300">$</span>
-            <input id="t-income" type="number" inputmode="numeric" min="0" step="1000" value="250000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium tracking-[-0.01em] text-navy-900 focus:outline-none placeholder:text-navy-300" />
-            <span class="shrink-0 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / year</span>
-          </div>
-          <div class="mt-3 flex flex-wrap gap-1.5">
-            {[100000, 250000, 500000, 1000000, 2500000].map((v) => (
-              <button type="button" data-preset-income={v} class="border border-line bg-paper px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-600 transition-colors hover:border-teal-500 hover:text-teal-700">${(v / 1000).toLocaleString()}k</button>
-            ))}
-          </div>
-        </fieldset>
+  <!-- ═════════════ CALCULATOR ═════════════ -->
+  <section class="relative bg-paper py-16 md:py-20">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
 
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 03</span>
-            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">Entity type.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">Drives how the income is taxed and which strategies apply.</p>
-          <div class="mt-6 grid gap-2 sm:grid-cols-2">
-            {[
-              { id: 'sole', label: 'Sole prop / 1099', sub: 'Schedule C, SE tax' },
-              { id: 'llc',  label: 'Single-member LLC', sub: 'Same as sole prop' },
-              { id: 'scorp', label: 'S-Corp', sub: 'W-2 salary + K-1' },
-              { id: 'ccorp', label: 'C-Corp', sub: 'Corporate 21% + dividends' },
-              { id: 'partner', label: 'Partnership / multi-LLC', sub: 'K-1 pass-through' },
-              { id: 'w2',   label: 'W-2 employee', sub: 'High earner · benefits-heavy' },
-            ].map((opt) => (
-              <label class="group flex cursor-pointer items-start gap-3 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900 has-[:checked]:text-paper">
-                <input type="radio" name="entity" value={opt.id} class="peer mt-1 accent-teal-500" checked={opt.id === 'scorp'} />
-                <span>
-                  <span class="block text-sm font-medium leading-tight text-navy-900 peer-checked:text-paper group-has-[:checked]:text-paper">{opt.label}</span>
-                  <span class="mt-1 block font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">{opt.sub}</span>
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q3 / 03</span>
-            <span class="font-heading text-xl tracking-[-0.01em] text-navy-900 sm:text-2xl">State of residence.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">State tax + reciprocity can move 4–13% of taxable income.</p>
-          <div class="mt-6 grid gap-2 sm:grid-cols-3">
-            {[
-              { id: 'fl',   label: 'Florida',    rate: 0 },
-              { id: 'tx',   label: 'Texas',      rate: 0 },
-              { id: 'nh',   label: 'No-tax (NV, WY, TN, SD, AK, WA)', rate: 0 },
-              { id: 'mid',  label: 'Mid (avg 5%)', rate: 5 },
-              { id: 'high', label: 'NY · CA · NJ (10%+)', rate: 10 },
-              { id: 'oth',  label: 'Other US state', rate: 5 },
-            ].map((opt) => (
-              <label class="group flex cursor-pointer flex-col gap-1 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
-                <input type="radio" name="state" value={opt.id} data-rate={opt.rate} class="peer sr-only" checked={opt.id === 'fl'} />
-                <span class="text-sm font-medium leading-tight text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
-                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">State rate · {opt.rate}%</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      </form>
-
-      <!-- Result panel — sticky -->
-      <aside class="lg:col-span-5" data-reveal data-from="right">
-        <div class="sticky top-28 border border-navy-900 bg-navy-900 p-7 text-paper lg:p-9">
-          <div class="flex items-center gap-3">
-            <span class="block h-px w-8 bg-teal-400"></span>
-            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">Live estimate</p>
-          </div>
-
-          <p class="mt-6 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Current effective rate</p>
-          <p class="mt-2 font-heading text-5xl font-semibold tracking-[-0.02em] text-white"><span id="r-current">—</span><span class="text-navy-300">%</span></p>
-
-          <p class="mt-7 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-teal-300">Achievable with planning</p>
-          <p class="mt-2 font-heading text-5xl font-semibold tracking-[-0.02em] text-teal-300"><span id="r-target">—</span><span class="text-teal-400/60">%</span></p>
-
-          <div class="mt-8 grid grid-cols-2 gap-px border-l border-t border-white/10">
-            <div class="border-b border-r border-white/10 p-4">
-              <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">Annual delta</p>
-              <p class="mt-1 font-heading text-2xl text-white"><span id="r-savings">—</span></p>
+        <form id="tax-form" class="flex flex-col gap-8 lg:col-span-7" novalidate>
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 01</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Income</span>
             </div>
-            <div class="border-b border-r border-white/10 p-4">
-              <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">5-year delta</p>
-              <p class="mt-1 font-heading text-2xl text-teal-300"><span id="r-savings-5y">—</span></p>
+            <label class="mt-5 block">
+              <span class="font-display text-[16px] font-medium text-[var(--color-text-head)]">Your projected annual income</span>
+              <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Business net income (after expenses) or total taxable comp.</p>
+              <div class="mt-4 flex items-baseline gap-2 border-b-2 border-line transition-colors focus-within:border-scooter">
+                <span class="font-display text-[28px] text-[var(--color-text-body)]">$</span>
+                <input id="t-income" type="number" inputmode="numeric" min="0" step="1000" value="250000" class="w-full bg-transparent py-2 font-display text-[28px] font-medium text-[var(--color-text-head)] focus:outline-none" />
+                <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">USD / yr</span>
+              </div>
+            </label>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              {presets.map((v) => (
+                <button type="button" data-preset-income={v} class="rounded-[4px] border border-line bg-white px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)] transition-colors hover:border-[#12122D] hover:text-scooter">${(v / 1000).toLocaleString()}k</button>
+              ))}
             </div>
           </div>
 
-          <ul id="r-strategies" class="mt-8 space-y-2.5 text-sm leading-relaxed text-navy-200">
-            <!-- populated by JS -->
-          </ul>
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 02</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Entity</span>
+            </div>
+            <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">Entity type</p>
+            <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Drives how the income is taxed and which strategies apply.</p>
+            <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              {entities.map((opt) => (
+                <label class="group flex cursor-pointer items-start gap-3 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                  <input type="radio" name="entity" value={opt.id} class="peer mt-1 accent-scooter" checked={opt.id === 'scorp'} />
+                  <span>
+                    <span class="block font-display text-[14px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
+                    <span class="mt-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-body)] group-has-[:checked]:text-scooter">{opt.sub}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
 
-          <a href="/contact/?service=Tax%20Planning" class="group mt-8 inline-flex w-full items-center justify-center gap-2.5 bg-teal-500 px-7 py-4 font-mono text-[0.8rem] font-medium uppercase tracking-[0.08em] text-navy-950 transition-all duration-200 hover:bg-teal-400 active:scale-[0.98]">
-            Verify this with a partner 
-          </a>
-          <p class="mt-3 text-center font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-400">↳ Estimate only · not tax advice</p>
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 03</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">State</span>
+            </div>
+            <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">State of residence</p>
+            <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">State tax + reciprocity can move 4–13% of taxable income.</p>
+            <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {states.map((opt) => (
+                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                  <input type="radio" name="state" value={opt.id} data-rate={opt.rate} class="peer sr-only" checked={opt.id === 'fl'} />
+                  <span class="font-display text-[13px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-body)] group-has-[:checked]:text-scooter">State rate · {opt.rate}%</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </form>
+
+        <aside class="lg:col-span-5">
+          <div class="sticky top-28 rounded-[6px] bg-[#12122D] p-8 text-white">
+            <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Live estimate</p>
+
+            <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">Current effective rate</p>
+            <p class="mt-2 font-display text-[48px] font-medium tracking-[-0.02em] text-white"><span id="r-current">—</span><span class="text-white/55">%</span></p>
+
+            <p class="mt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-scooter">Achievable with planning</p>
+            <p class="mt-2 font-display text-[48px] font-medium tracking-[-0.02em] text-scooter"><span id="r-target">—</span><span class="text-scooter/55">%</span></p>
+
+            <ul class="mt-7 grid grid-cols-2 gap-2">
+              <li class="rounded-[4px] bg-white/[0.06] p-4">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">Annual delta</p>
+                <p class="mt-1 font-display text-[22px] font-medium text-white"><span id="r-savings">—</span></p>
+              </li>
+              <li class="rounded-[4px] bg-white/[0.06] p-4">
+                <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">5-year delta</p>
+                <p class="mt-1 font-display text-[22px] font-medium text-scooter"><span id="r-savings-5y">—</span></p>
+              </li>
+            </ul>
+
+            <ul id="r-strategies" class="mt-7 space-y-2.5 font-display text-[13px] leading-[1.55] text-white/75"></ul>
+
+            <a href="/contact/?service=Tax%20Planning" class="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-[6px] bg-scooter px-5 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
+              Verify this with a partner
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <p class="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-white/45">Estimate only · not tax advice</p>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ═════════════ METHODOLOGY ═════════════ -->
+  <section class="relative bg-white py-20 md:py-24">
+    <Container width="wide">
+      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">How this works</span>
+      </div>
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-5">Math, not magic.</h2>
+        <div class="flex flex-col gap-5 font-display text-[15px] leading-[1.7] text-[var(--color-text-body)] md:col-span-7">
+          <p>The estimate is a marginal-rate model: federal brackets (2026) + the state rate you select + entity-specific adjustments (SE tax for sole prop / LLC, payroll-tax split for S-Corp, double tax for C-Corp). The "achievable" rate assumes typical planning levers we use on actual engagements — entity election, retirement plan layering, accountable-plan reimbursements, R&amp;D / QBI / depreciation positioning.</p>
+          <p>Real numbers depend on your full situation — state nexus, deductible benefits, family structure, prior-year carryovers. The tool exists to start the conversation, not to replace one.</p>
         </div>
-      </aside>
-    </Container>
-  </section>
-
-  <!-- ═══════════════ Methodology / disclaimer ═══════════════ -->
-  <section class="border-t border-line bg-navy-50 py-16 lg:py-20">
-    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
-      <div class="lg:col-span-4" data-reveal>
-        <span class="inline-flex items-center gap-2 text-[var(--color-text-head)]"><span class="block size-2 bg-scooter"></span><span class="font-display text-[14px] tracking-[-0.005em]">How this works</span></span>
-        <h2 class="mt-6 text-3xl tracking-[-0.02em] text-navy-900 sm:text-4xl">Math, not magic.</h2>
-      </div>
-      <div class="lg:col-span-8 text-base leading-relaxed text-navy-700 space-y-5" data-reveal>
-        <p>The estimate is a marginal-rate model: federal brackets (2026) + the state rate you select + entity-specific adjustments (SE tax for sole prop / LLC, payroll-tax split for S-Corp, double tax for C-Corp). The "achievable" rate assumes typical planning levers we use on actual engagements — entity election, retirement plan layering, accountable-plan reimbursements, R&D / QBI / depreciation positioning.</p>
-        <p>Real numbers depend on your full situation — state nexus, deductible benefits, family structure, prior-year carryovers. The tool exists to start the conversation, not to replace one.</p>
       </div>
     </Container>
   </section>
 
-    <!-- ═════════════ FINAL CTA ═════════════ -->
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
       <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Calculator gave you a surprise? Talk to a partner.</h2>
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Numbers worth verifying? Talk to a partner.</h2>
         <div class="md:col-span-4 md:flex md:justify-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
@@ -171,7 +179,6 @@ import Container from '@/components/Container.astro';
     </Container>
   </section>
 
-
   <script>
     const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
     const income = $('#t-income') as HTMLInputElement | null;
@@ -179,7 +186,6 @@ import Container from '@/components/Container.astro';
     const rSav = $('#r-savings'), rSav5 = $('#r-savings-5y');
     const rList = $('#r-strategies');
 
-    // Marginal federal rate (rough effective on the marginal income block for 2026 single)
     const federalEffective = (inc: number, entity: string) => {
       let base: number;
       if (inc < 50_000)        base = 12;
@@ -188,18 +194,14 @@ import Container from '@/components/Container.astro';
       else if (inc < 400_000)  base = 28;
       else if (inc < 750_000)  base = 32;
       else                     base = 36;
-
-      // Entity-specific overlay
-      if (entity === 'sole' || entity === 'llc') base += 9; // SE tax (~15.3% on ~half of net)
-      if (entity === 'scorp')                    base += 3; // payroll tax on reasonable salary only
-      if (entity === 'ccorp')                    base += 6; // double-tax leak on dividends
-      if (entity === 'partner')                  base += 6; // SE on guaranteed payments
-      if (entity === 'w2')                       base += 7.65; // FICA
-
+      if (entity === 'sole' || entity === 'llc') base += 9;
+      if (entity === 'scorp')                    base += 3;
+      if (entity === 'ccorp')                    base += 6;
+      if (entity === 'partner')                  base += 6;
+      if (entity === 'w2')                       base += 7.65;
       return base;
     };
 
-    // Strategies surfaced by entity — order = expected impact
     const playbook: Record<string, string[]> = {
       sole:    ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
       llc:     ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
@@ -215,7 +217,6 @@ import Container from '@/components/Container.astro';
       const stateRate = +(document.querySelector('input[name="state"]:checked') as HTMLInputElement)?.dataset.rate! || 0;
       const fedCurrent = federalEffective(inc, entity);
       const current = Math.min(45, fedCurrent + stateRate);
-      // Typical planning win — 4-9 pts depending on entity
       const headroom = entity === 'w2' ? 3 : entity === 'sole' || entity === 'llc' ? 8.5 : 6.5;
       const target = Math.max(8, Math.round((current - headroom) * 10) / 10);
       const savings = Math.round((inc * (current - target)) / 100);
@@ -230,8 +231,8 @@ import Container from '@/components/Container.astro';
         const moves = playbook[entity] || playbook.scorp;
         rList.innerHTML = moves.map((m, i) => `
           <li class="flex items-start gap-2.5">
-            <span class="mt-1.5 size-1.5 shrink-0 bg-teal-400"></span>
-            <span><span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-teal-400 mr-2">${String(i+1).padStart(2,'0')}</span>${m}</span>
+            <span class="mt-1.5 size-1.5 shrink-0 bg-scooter"></span>
+            <span><span class="font-mono text-[10px] uppercase tracking-[0.14em] text-scooter mr-2">${String(i+1).padStart(2,'0')}</span>${m}</span>
           </li>`).join('');
       }
     }

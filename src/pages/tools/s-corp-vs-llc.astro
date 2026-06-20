@@ -1,13 +1,19 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+
+const salaryOpts = [
+  { v: 40, label: '40% of profit', sub: 'Aggressive' },
+  { v: 50, label: '50% of profit', sub: 'Typical' },
+  { v: 60, label: '60% of profit', sub: 'Conservative' },
+];
 ---
 
 <BaseLayout
   rawTitle="S-Corp vs LLC Tax Calculator | Alpine Mar"
   description="Free side-by-side comparison: LLC self-employment tax vs S-Corp salary+distribution. See the break-even where S-Corp election starts paying."
 >
-    <!-- ═════════════ HERO ═════════════ -->
+  <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-12 text-white md:pt-16 md:pb-16">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
@@ -22,102 +28,100 @@ import Container from '@/components/Container.astro';
       </nav>
       <div class="max-w-2xl">
         <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[40px] md:text-[48px]">S-Corp vs LLC</h1>
-        <p class="mt-4 font-display text-[15px] leading-[1.55] text-white/75">Profit + state → side-by-side comparison of self-employment tax savings under an S-Corp election.</p>
+        <p class="mt-4 font-display text-[15px] leading-[1.55] text-white/75">Profit + reasonable-comp split → side-by-side comparison of self-employment tax savings under an S-Corp election.</p>
         <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Free · No signup · Directional estimate only</p>
       </div>
     </Container>
   </section>
 
-  <section class="border-t border-line bg-paper py-12 lg:py-20">
-    <Container width="xl" class="grid gap-10 lg:grid-cols-12 lg:gap-x-12">
-      <form id="s-form" class="lg:col-span-7 space-y-8" data-reveal>
-        <fieldset class="border-t border-navy-900 pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q1 / 02</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Annual net business income.</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">Net of expenses, before owner pay. The number you'd take home as profit.</p>
-          <div class="mt-6 flex items-baseline gap-3 border-b-2 border-line focus-within:border-teal-500 transition-colors">
-            <span class="font-heading text-3xl text-navy-300">$</span>
-            <input id="s-income" type="number" inputmode="numeric" min="0" step="1000" value="150000" class="w-full bg-transparent py-2 font-heading text-3xl font-medium text-navy-900 focus:outline-none" />
-            <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-400">USD / year</span>
-          </div>
-          <div class="mt-4">
-            <input id="s-slider" type="range" min="20000" max="500000" step="5000" value="150000" class="w-full accent-teal-500" />
-            <div class="mt-1 flex justify-between font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">
-              <span>$20k</span><span>$500k</span>
-            </div>
-          </div>
-        </fieldset>
+  <!-- ═════════════ CALCULATOR ═════════════ -->
+  <section class="relative bg-paper py-16 md:py-20">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
 
-        <fieldset class="border-t border-line pt-6">
-          <legend class="flex items-baseline gap-3">
-            <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-700">Q2 / 02</span>
-            <span class="font-heading text-xl text-navy-900 sm:text-2xl">Reasonable salary (S-Corp only).</span>
-          </legend>
-          <p class="mt-2 max-w-md text-sm text-navy-500">What you'd be paid as a market-rate W-2 employee doing your role. IRS requires this be "reasonable" — typically 40–60% of profit.</p>
-          <div class="mt-6 grid gap-2 sm:grid-cols-3">
-            {[
-              { v: 40, label: '40% of profit', sub: 'Aggressive' },
-              { v: 50, label: '50% of profit', sub: 'Typical' },
-              { v: 60, label: '60% of profit', sub: 'Conservative' },
-            ].map((opt) => (
-              <label class="group flex cursor-pointer flex-col gap-1 border border-line bg-paper px-4 py-3 transition-colors hover:border-teal-500 has-[:checked]:border-navy-900 has-[:checked]:bg-navy-900">
-                <input type="radio" name="salary-ratio" value={opt.v} class="peer sr-only" checked={opt.v === 50} />
-                <span class="text-sm font-medium text-navy-900 group-has-[:checked]:text-paper">{opt.label}</span>
-                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-navy-400 group-has-[:checked]:text-teal-300">{opt.sub}</span>
-              </label>
-            ))}
+        <form id="s-form" class="flex flex-col gap-8 lg:col-span-7">
+          <div class="rounded-[6px] border border-line bg-white p-7">
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 01</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Profit</span>
+            </div>
+            <label class="mt-5 block">
+              <span class="font-display text-[16px] font-medium text-[var(--color-text-head)]">Annual net business income</span>
+              <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Net of expenses, before owner pay.</p>
+              <div class="mt-4 flex items-baseline gap-2 border-b-2 border-line transition-colors focus-within:border-scooter">
+                <span class="font-display text-[28px] text-[var(--color-text-body)]">$</span>
+                <input id="s-income" type="number" inputmode="numeric" min="0" step="1000" value="150000" class="w-full bg-transparent py-2 font-display text-[28px] font-medium text-[var(--color-text-head)] focus:outline-none" />
+                <span class="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">USD / yr</span>
+              </div>
+            </label>
+            <div class="mt-5">
+              <input id="s-slider" type="range" min="20000" max="500000" step="5000" value="150000" class="w-full accent-scooter" />
+              <div class="mt-1 flex justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">
+                <span>$20k</span><span>$500k</span>
+              </div>
+            </div>
           </div>
-        </fieldset>
-      </form>
 
-      <aside class="lg:col-span-5" data-reveal data-from="right">
-        <div class="sticky top-28 space-y-px border border-navy-900">
-          <!-- LLC side -->
-          <div class="bg-paper p-6 lg:p-7">
+          <div class="rounded-[6px] border border-line bg-white p-7">
             <div class="flex items-center gap-3">
-              <span class="block h-px w-8 bg-navy-300"></span>
-              <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-500">LLC · Sole prop</p>
+              <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Step 02</span>
+              <span class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-body)]">Salary split</span>
             </div>
-            <p class="mt-3 text-sm text-navy-500">Total tax on full profit</p>
-            <p class="mt-1 font-heading text-4xl font-semibold tracking-[-0.02em] text-navy-900"><span id="r-llc">—</span></p>
-            <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-400">Effective rate <span id="r-llc-rate" class="text-navy-900">—</span></p>
-          </div>
-          <!-- S-Corp side (highlighted) -->
-          <div class="bg-navy-900 p-6 text-paper lg:p-7">
-            <div class="flex items-center gap-3">
-              <span class="block h-px w-8 bg-teal-400"></span>
-              <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-teal-400">S-Corp election</p>
+            <p class="mt-5 font-display text-[16px] font-medium text-[var(--color-text-head)]">Reasonable salary (S-Corp only)</p>
+            <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">What you'd be paid as a market-rate W-2 doing your role. Typically 40–60% of profit.</p>
+            <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {salaryOpts.map((opt) => (
+                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                  <input type="radio" name="salary-ratio" value={opt.v} class="peer sr-only" checked={opt.v === 50} />
+                  <span class="font-display text-[14px] font-medium text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-body)] group-has-[:checked]:text-scooter">{opt.sub}</span>
+                </label>
+              ))}
             </div>
-            <p class="mt-3 text-sm text-navy-300">Payroll tax on salary only</p>
-            <p class="mt-1 font-heading text-4xl font-semibold tracking-[-0.02em] text-white"><span id="r-scorp">—</span></p>
-            <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-navy-300">Effective rate <span id="r-scorp-rate" class="text-white">—</span></p>
           </div>
-          <!-- Verdict -->
-          <div class="bg-teal-500 p-6 text-navy-950 lg:p-7">
-            <p class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-navy-900">Annual S-Corp savings</p>
-            <p class="mt-1 font-heading text-5xl font-semibold tracking-[-0.02em] text-navy-950"><span id="r-savings">—</span></p>
-            <p id="r-verdict" class="mt-3 text-sm leading-snug text-navy-900">—</p>
+        </form>
+
+        <aside class="lg:col-span-5">
+          <div class="sticky top-28 overflow-hidden rounded-[6px] border border-line bg-white">
+            <div class="bg-paper p-6 lg:p-7">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">LLC · Sole prop</p>
+              <p class="mt-3 font-display text-[13px] text-[var(--color-text-body)]">Total tax on full profit</p>
+              <p class="mt-1 font-display text-[36px] font-medium tracking-[-0.02em] text-[var(--color-text-head)]"><span id="r-llc">—</span></p>
+              <p class="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">Effective rate <span id="r-llc-rate" class="text-[var(--color-text-head)]">—</span></p>
+            </div>
+
+            <div class="bg-[#12122D] p-6 text-white lg:p-7">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">S-Corp election</p>
+              <p class="mt-3 font-display text-[13px] text-white/75">Payroll tax on salary only</p>
+              <p class="mt-1 font-display text-[36px] font-medium tracking-[-0.02em] text-white"><span id="r-scorp">—</span></p>
+              <p class="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-white/55">Effective rate <span id="r-scorp-rate" class="text-white">—</span></p>
+            </div>
+
+            <div class="bg-scooter p-6 text-white lg:p-7">
+              <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-white/85">Annual S-Corp savings</p>
+              <p class="mt-1 font-display text-[40px] font-medium tracking-[-0.02em] text-white"><span id="r-savings">—</span></p>
+              <p id="r-verdict" class="mt-3 font-display text-[13px] leading-[1.5] text-white/90">—</p>
+            </div>
+
+            <div class="bg-white p-6">
+              <a href="/contact/?service=Entity%20Structuring" class="group inline-flex w-full items-center justify-center gap-2 rounded-[6px] bg-[#1F3062] px-5 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+                Discuss S-Corp election
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+              </a>
+              <p class="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">S-Corp adds payroll + ongoing CPA cost ($1,500–2,500/yr typical)</p>
+            </div>
           </div>
-          <div class="bg-navy-50 p-6">
-            <a href="/contact/?service=Entity%20Structuring" class="group inline-flex w-full items-center justify-center gap-2.5 border border-navy-900 px-6 py-3.5 font-mono text-[0.78rem] font-medium uppercase tracking-[0.08em] text-navy-900 transition-all duration-200 hover:bg-navy-900 hover:text-paper">
-              Discuss S-Corp election 
-            </a>
-            <p class="mt-3 text-center font-mono text-[0.6rem] uppercase tracking-[0.14em] text-navy-400">↳ S-Corp adds payroll setup + ongoing CPA cost ($1,500-2,500/yr typical)</p>
-            <p class="mt-2 text-center font-mono text-[0.6rem] uppercase tracking-[0.12em] text-navy-400">Estimate only · not tax advice · final outcome depends on reasonable-comp study</p>
-          </div>
-        </div>
-      </aside>
+        </aside>
+      </div>
     </Container>
   </section>
 
-    <!-- ═════════════ FINAL CTA ═════════════ -->
+  <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
       <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Calculator gave you a surprise? Talk to a partner.</h2>
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Thinking S-Corp? Talk to a partner first.</h2>
         <div class="md:col-span-4 md:flex md:justify-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
             Request a Consultation
@@ -128,7 +132,6 @@ import Container from '@/components/Container.astro';
     </Container>
   </section>
 
-
   <script>
     const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
     const income = $('#s-income') as HTMLInputElement | null;
@@ -136,9 +139,9 @@ import Container from '@/components/Container.astro';
     const llc = $('#r-llc'), scorp = $('#r-scorp'), savings = $('#r-savings');
     const llcRate = $('#r-llc-rate'), scorpRate = $('#r-scorp-rate'), verdict = $('#r-verdict');
 
-    const SS_BASE = 176_100; // 2026 SS wage base (SSA Oct 2025)
+    const SS_BASE = 176_100;
     const SE_RATE = 0.153;
-    const PAYROLL_RATE = 0.153; // employer + employee on W-2 salary
+    const PAYROLL_RATE = 0.153;
     const FED_BRACKET = (i: number) => {
       if (i < 50_000) return 0.12;
       if (i < 110_000) return 0.18;
@@ -153,17 +156,14 @@ import Container from '@/components/Container.astro';
       const salaryRatio = +(document.querySelector('input[name="salary-ratio"]:checked') as HTMLInputElement)?.value / 100 || 0.5;
       const fed = FED_BRACKET(inc);
 
-      // LLC: SE tax on (full profit × 0.9235), capped at SS base
       const llcSE = Math.min(inc * 0.9235, SS_BASE) * SE_RATE + Math.max(0, inc * 0.9235 - SS_BASE) * 0.029;
       const llcIncomeTax = inc * fed;
       const llcTotal = llcIncomeTax + llcSE;
       const llcEff = (llcTotal / inc) * 100;
 
-      // S-Corp: payroll tax on salary only
       const salary = inc * salaryRatio;
-      const distribution = inc - salary;
       const scorpPayroll = Math.min(salary, SS_BASE) * PAYROLL_RATE + Math.max(0, salary - SS_BASE) * 0.029;
-      const scorpIncomeTax = inc * fed; // both salary + distribution flow through K-1 personal
+      const scorpIncomeTax = inc * fed;
       const scorpTotal = scorpIncomeTax + scorpPayroll;
       const scorpEff = (scorpTotal / inc) * 100;
 
@@ -177,11 +177,11 @@ import Container from '@/components/Container.astro';
 
       if (verdict) {
         if (delta < 1500) {
-          verdict.textContent = `At this income, projected S-Corp savings (~$${Math.round(delta).toLocaleString()}) may not cover the extra payroll + CPA setup costs ($1,500–2,500). Final outcome depends on reasonable-compensation analysis — speak with a CPA before electing.`;
+          verdict.textContent = `At this income, projected S-Corp savings (~$${Math.round(delta).toLocaleString()}) may not cover the extra payroll + CPA setup costs ($1,500–2,500). Final outcome depends on reasonable-compensation analysis.`;
         } else if (delta < 4000) {
           verdict.textContent = `Projected savings (~$${Math.round(delta).toLocaleString()}/yr) start to outweigh the extra compliance cost. The reasonable-compensation study is what determines whether this holds up in practice.`;
         } else {
-          verdict.textContent = `Projected S-Corp savings on payroll tax are material (~$${Math.round(delta).toLocaleString()}/yr) at this income level. The reasonable-compensation analysis is the part that determines whether the savings hold up under IRS scrutiny.`;
+          verdict.textContent = `Projected S-Corp savings on payroll tax are material (~$${Math.round(delta).toLocaleString()}/yr) at this income. The reasonable-compensation analysis determines whether the savings hold up under IRS scrutiny.`;
         }
       }
     }
