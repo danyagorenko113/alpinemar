@@ -9,38 +9,49 @@
   .am-glossary {
     cursor: help;
     text-decoration: underline dotted;
-    text-decoration-color: var(--color-teal-500);
+    text-decoration-color: var(--color-scooter);
     text-underline-offset: 4px;
     text-decoration-thickness: 1.5px;
-    background: linear-gradient(transparent 60%, rgba(51,187,220,0.10) 60%);
   }
-  .am-glossary:hover { color: var(--color-teal-700); }
+  .am-glossary:hover { color: var(--color-scooter); }
   .am-glossary-pop {
     position: absolute; z-index: 60;
     max-width: 320px;
-    border: 1px solid var(--color-navy-900);
-    background: var(--color-navy-900);
-    color: var(--color-paper);
-    padding: 1rem 1.1rem;
-    box-shadow: 0 24px 60px rgba(10, 10, 28, 0.45);
-    font-family: var(--font-body);
-    font-size: 0.85rem;
+    border-radius: 6px;
+    background: #12122D;
+    color: #fff;
+    padding: 1.1rem 1.25rem;
+    box-shadow: 0 24px 60px -12px rgba(18, 18, 45, 0.55);
+    font-family: var(--font-display);
+    font-size: 14px;
     line-height: 1.55;
     opacity: 0; transform: translateY(6px);
     transition: opacity 0.18s ease, transform 0.18s ease;
     pointer-events: none;
   }
   .am-glossary-pop[data-shown="1"] { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .am-glossary-pop .am-term { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-teal-400); }
-  .am-glossary-pop .am-def { margin-top: 0.5rem; color: var(--color-navy-200); }
-  .am-glossary-pop .am-link {
-    margin-top: 0.7rem;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: var(--font-mono); font-size: 0.62rem;
-    text-transform: uppercase; letter-spacing: 0.14em;
-    color: var(--color-teal-300);
-    border-bottom: 1px solid var(--color-teal-500); padding-bottom: 1px;
+  .am-glossary-pop .am-term {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-scooter);
   }
+  .am-glossary-pop .am-def {
+    margin-top: 0.55rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .am-glossary-pop .am-link {
+    margin-top: 0.85rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-scooter);
+    border-bottom: 1px solid var(--color-scooter);
+    padding-bottom: 2px;
+  }
+  .am-glossary-pop .am-link:hover { color: #fff; border-color: #fff; }
 </style>
 
 <div id="am-glossary-pop" class="am-glossary-pop" role="tooltip" aria-hidden="true">

@@ -48,43 +48,43 @@ for (const p of posts) {
 <button
   type="button"
   id="cmdk-launcher"
-  class="fixed bottom-6 left-6 z-50 hidden items-center gap-2 border border-line bg-paper/95 backdrop-blur px-3 py-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-700 shadow-[0_12px_40px_rgba(10,10,28,0.08)] transition-colors hover:border-navy-900 lg:flex"
+  class="fixed bottom-6 left-6 z-50 hidden items-center gap-2 rounded-[6px] border border-line bg-white/95 px-3.5 py-2.5 font-display text-[12px] font-medium text-[var(--color-text-head)] shadow-[0_12px_40px_-12px_rgba(18,18,45,0.18)] backdrop-blur transition-colors hover:border-[#12122D] lg:inline-flex"
   aria-haspopup="dialog"
   aria-controls="cmdk-panel"
 >
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
   Search
-  <kbd class="ml-1.5 inline-flex items-center gap-0.5 border border-line bg-navy-50 px-1.5 py-0.5 text-[0.62rem] text-navy-700">⌘K</kbd>
+  <kbd class="ml-1 inline-flex items-center gap-0.5 rounded-[4px] border border-line bg-paper px-1.5 py-0.5 font-mono text-[10px] uppercase text-[var(--color-text-body)]">⌘K</kbd>
 </button>
 
 <div
   id="cmdk-panel"
-  class="fixed inset-0 z-[80] hidden items-start justify-center bg-navy-950/40 backdrop-blur-md p-4 pt-[18vh]"
+  class="fixed inset-0 z-[80] hidden items-start justify-center bg-[#0a0a1c]/55 p-4 pt-[14vh] backdrop-blur-md"
   role="dialog"
   aria-modal="true"
   aria-label="Search Alpine Mar"
 >
-  <div class="grain w-full max-w-2xl overflow-hidden border border-navy-900 bg-paper shadow-[0_30px_80px_rgba(10,10,28,0.45)]">
+  <div class="w-full max-w-2xl overflow-hidden rounded-[6px] border border-line bg-white shadow-[0_30px_80px_-20px_rgba(18,18,45,0.45)]">
     <header class="relative flex items-center gap-3 border-b border-line px-5 py-4">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="text-teal-700" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="text-[var(--color-text-body)]" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input
         id="cmdk-input"
         type="search"
         autocomplete="off"
         placeholder="Search services, industries, articles, tools…"
-        class="flex-1 bg-transparent text-base text-navy-900 placeholder:text-navy-300 focus:outline-none"
+        class="flex-1 bg-transparent font-display text-[15px] text-[var(--color-text-head)] placeholder:text-[var(--color-text-body)]/55 focus:outline-none"
       />
-      <kbd class="hidden border border-line bg-navy-50 px-2 py-1 font-mono text-[0.66rem] uppercase tracking-[0.12em] text-navy-500 sm:inline-block">ESC</kbd>
+      <kbd class="hidden rounded-[4px] border border-line bg-paper px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-body)] sm:inline-block">ESC</kbd>
     </header>
     <div class="max-h-[60vh] overflow-y-auto" id="cmdk-list">
       <!-- populated by JS -->
     </div>
-    <footer class="flex items-center justify-between border-t border-line bg-navy-50/60 px-5 py-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-navy-500">
+    <footer class="flex items-center justify-between gap-3 border-t border-line bg-paper px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">
       <span class="flex items-center gap-3">
-        <span class="flex items-center gap-1.5"><kbd class="border border-line bg-paper px-1.5 py-0.5">↑↓</kbd>navigate</span>
-        <span class="flex items-center gap-1.5"><kbd class="border border-line bg-paper px-1.5 py-0.5">↵</kbd>open</span>
+        <span class="flex items-center gap-1.5"><kbd class="rounded-[3px] border border-line bg-white px-1.5 py-0.5">↑↓</kbd>navigate</span>
+        <span class="flex items-center gap-1.5"><kbd class="rounded-[3px] border border-line bg-white px-1.5 py-0.5">↵</kbd>open</span>
       </span>
-      <span>Powered by Alpine Mar · {index.length} entries</span>
+      <span>{index.length} entries</span>
     </footer>
   </div>
 </div>
@@ -127,18 +127,18 @@ for (const p of posts) {
       l.innerHTML = filtered.length
         ? filtered.slice(0, 30).map((item, i) => `
             <a href="${item.href}" data-idx="${i}"
-               class="cmdk-row flex items-center gap-4 border-b border-line px-5 py-3.5 transition-colors ${i === activeIdx ? 'bg-navy-900 text-paper' : 'hover:bg-navy-50'}">
-              <span class="font-mono text-[0.6rem] uppercase tracking-[0.16em] ${i === activeIdx ? 'text-teal-300' : 'text-teal-700'}">${item.kind}</span>
+               class="cmdk-row flex items-center gap-4 border-b border-line px-5 py-3.5 transition-colors ${i === activeIdx ? 'bg-[#12122D] text-white' : 'hover:bg-paper'}">
+              <span class="font-mono text-[10px] uppercase tracking-[0.16em] ${i === activeIdx ? 'text-scooter' : 'text-[var(--color-text-body)]'}">${item.kind}</span>
               <span class="flex-1 truncate">
-                <span class="block truncate text-sm ${i === activeIdx ? 'text-white' : 'text-navy-900'}">${item.title}</span>
-                ${item.summary ? `<span class="mt-0.5 block truncate text-[0.78rem] ${i === activeIdx ? 'text-navy-300' : 'text-navy-500'}">${item.summary}</span>` : ''}
+                <span class="block truncate font-display text-[14px] font-medium ${i === activeIdx ? 'text-white' : 'text-[var(--color-text-head)]'}">${item.title}</span>
+                ${item.summary ? `<span class="mt-0.5 block truncate font-display text-[12px] ${i === activeIdx ? 'text-white/65' : 'text-[var(--color-text-body)]'}">${item.summary}</span>` : ''}
               </span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="${i === activeIdx ? 'text-teal-300' : 'text-navy-300'}"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="${i === activeIdx ? 'text-scooter' : 'text-[var(--color-text-body)]'}"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           `).join('')
-        : `<div class="px-5 py-12 text-center text-navy-500">
-             <p class="text-sm">No results.</p>
-             <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-400">Try <span class="text-teal-700">"tax planning"</span> or <span class="text-teal-700">"runway"</span></p>
+        : `<div class="px-5 py-14 text-center">
+             <p class="font-display text-[14px] text-[var(--color-text-head)]">No results.</p>
+             <p class="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">Try <span class="text-[#1F3062]">"tax planning"</span> or <span class="text-[#1F3062]">"runway"</span></p>
            </div>`;
     }
 
@@ -184,13 +184,13 @@ for (const p of posts) {
         e.preventDefault();
         activeIdx = Math.min(activeIdx + 1, Math.min(filtered.length, 30) - 1);
         render();
-        document.querySelector('.cmdk-row.bg-navy-900')?.scrollIntoView({ block: 'nearest' });
+        document.querySelector('.cmdk-row.bg-\\[\\#12122D\\]')?.scrollIntoView({ block: 'nearest' });
       }
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         activeIdx = Math.max(activeIdx - 1, 0);
         render();
-        document.querySelector('.cmdk-row.bg-navy-900')?.scrollIntoView({ block: 'nearest' });
+        document.querySelector('.cmdk-row.bg-\\[\\#12122D\\]')?.scrollIntoView({ block: 'nearest' });
       }
       if (e.key === 'Enter') {
         e.preventDefault();
