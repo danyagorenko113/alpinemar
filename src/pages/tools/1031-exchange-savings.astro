@@ -135,47 +135,49 @@ const states = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const price = $('#price') as HTMLInputElement | null;
-    const basis = $('#basis') as HTMLInputElement | null;
-    const depr  = $('#depr')  as HTMLInputElement | null;
-    const fed = $('#x-fed'), recap = $('#x-recap'), st = $('#x-state-tax'), niit = $('#x-niit');
-    const straight = $('#x-straight'), deferred = $('#x-deferred');
+    function initExchangeCalculator() {
+      const form = document.getElementById('x-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    const LT_GAIN_RATE = 0.20;
-    const RECAP_RATE = 0.25;
-    const NIIT_RATE = 0.038;
+      const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
+      const price = $('#price') as HTMLInputElement | null;
+      const basis = $('#basis') as HTMLInputElement | null;
+      const depr  = $('#depr')  as HTMLInputElement | null;
+      const fed = $('#x-fed'), recap = $('#x-recap'), st = $('#x-state-tax'), niit = $('#x-niit');
+      const straight = $('#x-straight'), deferred = $('#x-deferred');
 
-    function calc() {
-      const p = Math.max(0, +(price?.value || 0));
-      const b = Math.max(0, +(basis?.value || 0));
-      const d = Math.max(0, +(depr?.value || 0));
-      const stateRate = (+(document.querySelector('input[name="x-state"]:checked') as HTMLInputElement)?.value || 0) / 100;
+      function calc() {
+        const p = Math.max(0, +(price?.value || 0));
+        const b = Math.max(0, +(basis?.value || 0));
+        const d = Math.max(0, +(depr?.value || 0));
+        const stateRate = (+(document.querySelector('input[name="x-state"]:checked') as HTMLInputElement)?.value || 0) / 100;
+        const totalGain = Math.max(0, p - b);
+        const longTermGain = Math.max(0, totalGain - d);
+        const fedTax = longTermGain * 0.20;
+        const recapTax = d * 0.25;
+        const niitTax = longTermGain * 0.038;
+        const stateTax = totalGain * stateRate;
+        const totalTax = fedTax + recapTax + niitTax + stateTax;
 
-      const totalGain = Math.max(0, p - b);
-      const longTermGain = Math.max(0, totalGain - d);
+        if (fed) fed.textContent = '$' + Math.round(fedTax).toLocaleString();
+        if (recap) recap.textContent = '$' + Math.round(recapTax).toLocaleString();
+        if (st) st.textContent = '$' + Math.round(stateTax).toLocaleString();
+        if (niit) niit.textContent = '$' + Math.round(niitTax).toLocaleString();
+        if (straight) straight.textContent = '$' + Math.round(totalTax).toLocaleString();
+        if (deferred) deferred.textContent = '$' + Math.round(totalTax).toLocaleString();
+      }
 
-      const fedTax = longTermGain * LT_GAIN_RATE;
-      const recapTax = d * RECAP_RATE;
-      const niitTax = longTermGain * NIIT_RATE;
-      const stateTax = totalGain * stateRate;
-      const totalTax = fedTax + recapTax + niitTax + stateTax;
-
-      if (fed) fed.textContent = '$' + Math.round(fedTax).toLocaleString();
-      if (recap) recap.textContent = '$' + Math.round(recapTax).toLocaleString();
-      if (st) st.textContent = '$' + Math.round(stateTax).toLocaleString();
-      if (niit) niit.textContent = '$' + Math.round(niitTax).toLocaleString();
-      if (straight) straight.textContent = '$' + Math.round(totalTax).toLocaleString();
-      if (deferred) deferred.textContent = '$' + Math.round(totalTax).toLocaleString();
+      form.querySelectorAll('input').forEach((el) => el.addEventListener('input', calc));
+      form.querySelectorAll('[data-preset-field]').forEach((button) => button.addEventListener('click', () => {
+        const id = (button as HTMLElement).dataset.presetField!;
+        const value = (button as HTMLElement).dataset.presetValue!;
+        const input = document.getElementById(id) as HTMLInputElement | null;
+        if (input) { input.value = value; calc(); }
+      }));
+      calc();
     }
 
-    document.querySelectorAll('#x-form input').forEach((el) => el.addEventListener('input', calc));
-    document.querySelectorAll('[data-preset-field]').forEach((b) => b.addEventListener('click', () => {
-      const id = (b as HTMLElement).dataset.presetField!;
-      const v  = (b as HTMLElement).dataset.presetValue!;
-      const el = document.getElementById(id) as HTMLInputElement | null;
-      if (el) { el.value = v; calc(); }
-    }));
-    calc();
+    document.addEventListener('astro:page-load', initExchangeCalculator);
   </script>
 </BaseLayout>

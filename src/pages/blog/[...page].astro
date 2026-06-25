@@ -238,7 +238,7 @@ const schema = [
   </section>
 
   <script define:vars={{ searchIndex }}>
-    (function () {
+    function initBlogSearch() {
       const input = document.getElementById('blog-search');
       const clear = document.getElementById('blog-search-clear');
       const meta  = document.getElementById('blog-search-meta');
@@ -249,6 +249,8 @@ const schema = [
       const featuredSect = document.getElementById('blog-featured-section');
       const gridSect = document.getElementById('blog-grid-section');
       if (!input || !list) return;
+      if (input.dataset.searchBound === '1') return;
+      input.dataset.searchBound = '1';
 
       const escape = (s) => s.replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       const highlight = (s, q) => {
@@ -335,15 +337,28 @@ const schema = [
         input.focus();
       });
 
-      // Slash shortcut
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && input.value) {
+          input.value = '';
+          showSearch(false, '');
+        }
+      });
+    }
+
+    if (!window.__amBlogSlashBound) {
+      window.__amBlogSlashBound = true;
       document.addEventListener('keydown', (e) => {
         if (e.key !== '/') return;
         const target = e.target;
         const isFormField = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
         if (isFormField) return;
+        const input = document.getElementById('blog-search');
+        if (!input) return;
         e.preventDefault();
         input.focus();
       });
-    })();
+    }
+
+    document.addEventListener('astro:page-load', initBlogSearch);
   </script>
 </BaseLayout>

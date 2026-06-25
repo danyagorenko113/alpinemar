@@ -180,67 +180,64 @@ const states = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const income = $('#t-income') as HTMLInputElement | null;
-    const rCur = $('#r-current'), rTgt = $('#r-target');
-    const rSav = $('#r-savings'), rSav5 = $('#r-savings-5y');
-    const rList = $('#r-strategies');
+    function initTaxSavingsCalculator() {
+      const form = document.getElementById('tax-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    const federalEffective = (inc: number, entity: string) => {
-      let base: number;
-      if (inc < 50_000)        base = 12;
-      else if (inc < 110_000)  base = 18;
-      else if (inc < 200_000)  base = 22;
-      else if (inc < 400_000)  base = 28;
-      else if (inc < 750_000)  base = 32;
-      else                     base = 36;
-      if (entity === 'sole' || entity === 'llc') base += 9;
-      if (entity === 'scorp')                    base += 3;
-      if (entity === 'ccorp')                    base += 6;
-      if (entity === 'partner')                  base += 6;
-      if (entity === 'w2')                       base += 7.65;
-      return base;
-    };
+      const income = document.getElementById('t-income') as HTMLInputElement | null;
+      const rCur = document.getElementById('r-current');
+      const rTgt = document.getElementById('r-target');
+      const rSav = document.getElementById('r-savings');
+      const rSav5 = document.getElementById('r-savings-5y');
+      const rList = document.getElementById('r-strategies');
+      const playbook: Record<string, string[]> = {
+        sole: ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
+        llc: ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
+        scorp: ['Reasonable-compensation review', 'SEP / Solo 401(k) layered with profit-sharing', 'Accountable plan reimbursements', 'Augusta rule (§280A) for home rental'],
+        ccorp: ['Salary vs dividend mix to avoid double tax', 'Section 1202 QSBS positioning', 'Accountable plan reimbursements', 'R&D credit (ASC method)'],
+        partner: ['Guaranteed payment vs distribution mix', 'Solo 401(k) / cash-balance plan', 'Section 199A QBI optimisation', 'State PTET election (if available)'],
+        w2: ['Mega-backdoor Roth (if plan allows)', 'HSA layering + investment', 'Donor-advised fund / charitable bunching', 'Real estate professional status (if applicable)'],
+      };
 
-    const playbook: Record<string, string[]> = {
-      sole:    ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
-      llc:     ['S-Corp election to split W-2 vs distribution', 'Solo 401(k) up to $70k', 'Accountable plan for home-office + auto', 'Section 199A QBI optimisation'],
-      scorp:   ['Reasonable-compensation review', 'SEP / Solo 401(k) layered with profit-sharing', 'Accountable plan reimbursements', 'Augusta rule (§280A) for home rental'],
-      ccorp:   ['Salary vs dividend mix to avoid double tax', 'Section 1202 QSBS positioning', 'Accountable plan reimbursements', 'R&D credit (ASC method)'],
-      partner: ['Guaranteed payment vs distribution mix', 'Solo 401(k) / cash-balance plan', 'Section 199A QBI optimisation', 'State PTET election (if available)'],
-      w2:      ['Mega-backdoor Roth (if plan allows)', 'HSA layering + investment', 'Donor-advised fund / charitable bunching', 'Real estate professional status (if applicable)'],
-    };
-
-    function calc() {
-      const inc = Math.max(0, +(income?.value || 0));
-      const entity = (document.querySelector('input[name="entity"]:checked') as HTMLInputElement)?.value || 'scorp';
-      const stateRate = +(document.querySelector('input[name="state"]:checked') as HTMLInputElement)?.dataset.rate! || 0;
-      const fedCurrent = federalEffective(inc, entity);
-      const current = Math.min(45, fedCurrent + stateRate);
-      const headroom = entity === 'w2' ? 3 : entity === 'sole' || entity === 'llc' ? 8.5 : 6.5;
-      const target = Math.max(8, Math.round((current - headroom) * 10) / 10);
-      const savings = Math.round((inc * (current - target)) / 100);
-      const savings5 = savings * 5;
-
-      if (rCur)  rCur.textContent  = current.toFixed(1);
-      if (rTgt)  rTgt.textContent  = target.toFixed(1);
-      if (rSav)  rSav.textContent  = '$' + savings.toLocaleString();
-      if (rSav5) rSav5.textContent = '$' + savings5.toLocaleString();
-
-      if (rList) {
-        const moves = playbook[entity] || playbook.scorp;
-        rList.innerHTML = moves.map((m, i) => `
-          <li class="flex items-start gap-2.5">
-            <span class="mt-1.5 size-1.5 shrink-0 bg-scooter"></span>
-            <span><span class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)] mr-2">${String(i+1).padStart(2,'0')}</span>${m}</span>
-          </li>`).join('');
+      function federalEffective(inc: number, entity: string) {
+        let base = inc < 50_000 ? 12 : inc < 110_000 ? 18 : inc < 200_000 ? 22 : inc < 400_000 ? 28 : inc < 750_000 ? 32 : 36;
+        if (entity === 'sole' || entity === 'llc') base += 9;
+        if (entity === 'scorp') base += 3;
+        if (entity === 'ccorp' || entity === 'partner') base += 6;
+        if (entity === 'w2') base += 7.65;
+        return base;
       }
+
+      function calc() {
+        const inc = Math.max(0, +(income?.value || 0));
+        const entity = (document.querySelector('input[name="entity"]:checked') as HTMLInputElement)?.value || 'scorp';
+        const stateRate = +(document.querySelector('input[name="state"]:checked') as HTMLInputElement)?.dataset.rate! || 0;
+        const current = Math.min(45, federalEffective(inc, entity) + stateRate);
+        const headroom = entity === 'w2' ? 3 : entity === 'sole' || entity === 'llc' ? 8.5 : 6.5;
+        const target = Math.max(8, Math.round((current - headroom) * 10) / 10);
+        const savings = Math.round((inc * (current - target)) / 100);
+
+        if (rCur) rCur.textContent = current.toFixed(1);
+        if (rTgt) rTgt.textContent = target.toFixed(1);
+        if (rSav) rSav.textContent = '$' + savings.toLocaleString();
+        if (rSav5) rSav5.textContent = '$' + (savings * 5).toLocaleString();
+        if (rList) {
+          rList.innerHTML = (playbook[entity] || playbook.scorp).map((move, i) => `
+            <li class="flex items-start gap-2.5">
+              <span class="mt-1.5 size-1.5 shrink-0 bg-scooter"></span>
+              <span><span class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)] mr-2">${String(i + 1).padStart(2, '0')}</span>${move}</span>
+            </li>`).join('');
+        }
+      }
+
+      form.querySelectorAll('input').forEach((el) => el.addEventListener('input', calc));
+      form.querySelectorAll('[data-preset-income]').forEach((button) => button.addEventListener('click', () => {
+        if (income) { income.value = (button as HTMLElement).dataset.presetIncome!; calc(); }
+      }));
+      calc();
     }
 
-    document.querySelectorAll('#tax-form input').forEach((el) => el.addEventListener('input', calc));
-    document.querySelectorAll('[data-preset-income]').forEach((b) => b.addEventListener('click', () => {
-      if (income) { income.value = (b as HTMLElement).dataset.presetIncome!; calc(); }
-    }));
-    calc();
+    document.addEventListener('astro:page-load', initTaxSavingsCalculator);
   </script>
 </BaseLayout>

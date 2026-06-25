@@ -19,7 +19,7 @@ tags: ["Compliance", "M&A", "Payroll", "SaaS"]
 <h3>Step 4: Create a Contingency Fund</h3>
 <p>A contingency fund is a 10 to 20 percent cash safety net set aside for unexpected expenses, like emergency server repairs or legal fees. Keeping this cash separate prevents a small mistake from shutting down your entire operation. It&#8217;s always better to have a buffer you don&#8217;t use than to run out of money mid-crisis.</p>
 <h3>Step 5: Start a Monthly Review</h3>
-<p>A monthly review compares actual spending against your budget to catch leaks early. Meet with your team and your <a href="/industries/startup-cpa-services/,">startup CPA</a> every 30 days to see where you went over or under estimates. This habit stops small overruns from turning into major problems and keeps your financial plan accurate.</p>
+<p>A monthly review compares actual spending against your budget to catch leaks early. Meet with your team and your <a href="/industries/startup-cpa-services/">startup CPA</a> every 30 days to see where you went over or under estimates. This habit stops small overruns from turning into major problems and keeps your financial plan accurate.</p>
 <h2>Core Budgeting Methods</h2>
 <p>The budgeting method you choose should match your funding strategy and your current growth stage.</p>
 <h3>Fixed and Variable Expense Budgeting</h3>

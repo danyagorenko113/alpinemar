@@ -133,62 +133,60 @@ const salaryOpts = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const income = $('#s-income') as HTMLInputElement | null;
-    const slider = $('#s-slider') as HTMLInputElement | null;
-    const llc = $('#r-llc'), scorp = $('#r-scorp'), savings = $('#r-savings');
-    const llcRate = $('#r-llc-rate'), scorpRate = $('#r-scorp-rate'), verdict = $('#r-verdict');
+    function initEntityCalculator() {
+      const form = document.getElementById('s-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    const SS_BASE = 176_100;
-    const SE_RATE = 0.153;
-    const PAYROLL_RATE = 0.153;
-    const FED_BRACKET = (i: number) => {
-      if (i < 50_000) return 0.12;
-      if (i < 110_000) return 0.18;
-      if (i < 200_000) return 0.22;
-      if (i < 400_000) return 0.28;
-      if (i < 750_000) return 0.32;
-      return 0.36;
-    };
+      const income = document.getElementById('s-income') as HTMLInputElement | null;
+      const slider = document.getElementById('s-slider') as HTMLInputElement | null;
+      const llc = document.getElementById('r-llc');
+      const scorp = document.getElementById('r-scorp');
+      const savings = document.getElementById('r-savings');
+      const llcRate = document.getElementById('r-llc-rate');
+      const scorpRate = document.getElementById('r-scorp-rate');
+      const verdict = document.getElementById('r-verdict');
+      const ssBase = 176_100;
 
-    function calc() {
-      const inc = Math.max(20_000, +(income?.value || 0));
-      const salaryRatio = +(document.querySelector('input[name="salary-ratio"]:checked') as HTMLInputElement)?.value / 100 || 0.5;
-      const fed = FED_BRACKET(inc);
+      function fedBracket(i: number) {
+        if (i < 50_000) return 0.12;
+        if (i < 110_000) return 0.18;
+        if (i < 200_000) return 0.22;
+        if (i < 400_000) return 0.28;
+        if (i < 750_000) return 0.32;
+        return 0.36;
+      }
 
-      const llcSE = Math.min(inc * 0.9235, SS_BASE) * SE_RATE + Math.max(0, inc * 0.9235 - SS_BASE) * 0.029;
-      const llcIncomeTax = inc * fed;
-      const llcTotal = llcIncomeTax + llcSE;
-      const llcEff = (llcTotal / inc) * 100;
+      function calc() {
+        const inc = Math.max(20_000, +(income?.value || 0));
+        const salaryRatio = +(document.querySelector('input[name="salary-ratio"]:checked') as HTMLInputElement)?.value / 100 || 0.5;
+        const fed = fedBracket(inc);
+        const llcSE = Math.min(inc * 0.9235, ssBase) * 0.153 + Math.max(0, inc * 0.9235 - ssBase) * 0.029;
+        const llcTotal = inc * fed + llcSE;
+        const salary = inc * salaryRatio;
+        const scorpPayroll = Math.min(salary, ssBase) * 0.153 + Math.max(0, salary - ssBase) * 0.029;
+        const scorpTotal = inc * fed + scorpPayroll;
+        const delta = llcTotal - scorpTotal;
 
-      const salary = inc * salaryRatio;
-      const scorpPayroll = Math.min(salary, SS_BASE) * PAYROLL_RATE + Math.max(0, salary - SS_BASE) * 0.029;
-      const scorpIncomeTax = inc * fed;
-      const scorpTotal = scorpIncomeTax + scorpPayroll;
-      const scorpEff = (scorpTotal / inc) * 100;
+        if (llc) llc.textContent = '$' + Math.round(llcTotal).toLocaleString();
+        if (scorp) scorp.textContent = '$' + Math.round(scorpTotal).toLocaleString();
+        if (savings) savings.textContent = '$' + Math.round(delta).toLocaleString();
+        if (llcRate) llcRate.textContent = ((llcTotal / inc) * 100).toFixed(1) + '%';
+        if (scorpRate) scorpRate.textContent = ((scorpTotal / inc) * 100).toFixed(1) + '%';
 
-      const delta = llcTotal - scorpTotal;
-
-      if (llc) llc.textContent = '$' + Math.round(llcTotal).toLocaleString();
-      if (scorp) scorp.textContent = '$' + Math.round(scorpTotal).toLocaleString();
-      if (savings) savings.textContent = '$' + Math.round(delta).toLocaleString();
-      if (llcRate) llcRate.textContent = llcEff.toFixed(1) + '%';
-      if (scorpRate) scorpRate.textContent = scorpEff.toFixed(1) + '%';
-
-      if (verdict) {
-        if (delta < 1500) {
-          verdict.textContent = `At this income, projected S-Corp savings (~$${Math.round(delta).toLocaleString()}) may not cover the extra payroll + CPA setup costs ($1,500–2,500). Final outcome depends on reasonable-compensation analysis.`;
-        } else if (delta < 4000) {
-          verdict.textContent = `Projected savings (~$${Math.round(delta).toLocaleString()}/yr) start to outweigh the extra compliance cost. The reasonable-compensation study is what determines whether this holds up in practice.`;
-        } else {
-          verdict.textContent = `Projected S-Corp savings on payroll tax are material (~$${Math.round(delta).toLocaleString()}/yr) at this income. The reasonable-compensation analysis determines whether the savings hold up under IRS scrutiny.`;
+        if (verdict) {
+          if (delta < 1500) verdict.textContent = `At this income, projected S-Corp savings (~$${Math.round(delta).toLocaleString()}) may not cover the extra payroll + CPA setup costs ($1,500–2,500). Final outcome depends on reasonable-compensation analysis.`;
+          else if (delta < 4000) verdict.textContent = `Projected savings (~$${Math.round(delta).toLocaleString()}/yr) start to outweigh the extra compliance cost. The reasonable-compensation study is what determines whether this holds up in practice.`;
+          else verdict.textContent = `Projected S-Corp savings on payroll tax are material (~$${Math.round(delta).toLocaleString()}/yr) at this income. The reasonable-compensation analysis determines whether the savings hold up under IRS scrutiny.`;
         }
       }
+
+      income?.addEventListener('input', () => { if (slider) slider.value = income.value; calc(); });
+      slider?.addEventListener('input', () => { if (income) income.value = slider.value; calc(); });
+      form.querySelectorAll('input[name="salary-ratio"]').forEach((el) => el.addEventListener('change', calc));
+      calc();
     }
 
-    income?.addEventListener('input', () => { if (slider) slider.value = income.value; calc(); });
-    slider?.addEventListener('input', () => { if (income) income.value = slider.value; calc(); });
-    document.querySelectorAll('input[name="salary-ratio"]').forEach((el) => el.addEventListener('change', calc));
-    calc();
+    document.addEventListener('astro:page-load', initEntityCalculator);
   </script>
 </BaseLayout>

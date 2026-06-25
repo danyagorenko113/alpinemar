@@ -149,45 +149,55 @@ const growths = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const cash = $('#cash') as HTMLInputElement | null;
-    const burn = $('#burn') as HTMLInputElement | null;
-    const rMonths = $('#r-months'), rDate = $('#r-date'), rAdvice = $('#r-advice'), zoneLabel = $('#zone-label');
+    function initBurnCalculator() {
+      const form = document.getElementById('burn-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    function calc() {
-      const c = Math.max(0, +(cash?.value || 0));
-      const b = Math.max(1, +(burn?.value || 0));
-      const g = +(document.querySelector('input[name="growth"]:checked') as HTMLInputElement)?.value || 0;
-      let cum = 0, k = 0;
-      const factor = 1 + g / 100;
-      while (cum < c && k < 360) {
-        cum += b * Math.pow(factor, k);
-        k++;
+      const cash = document.getElementById('cash') as HTMLInputElement | null;
+      const burn = document.getElementById('burn') as HTMLInputElement | null;
+      const rMonths = document.getElementById('r-months');
+      const rDate = document.getElementById('r-date');
+      const rAdvice = document.getElementById('r-advice');
+      const zoneLabel = document.getElementById('zone-label');
+
+      function calc() {
+        const c = Math.max(0, +(cash?.value || 0));
+        const b = Math.max(1, +(burn?.value || 0));
+        const g = +(document.querySelector('input[name="growth"]:checked') as HTMLInputElement)?.value || 0;
+        let cum = 0, k = 0;
+        const factor = 1 + g / 100;
+        while (cum < c && k < 360) {
+          cum += b * Math.pow(factor, k);
+          k++;
+        }
+        const months = k;
+
+        if (rMonths) rMonths.textContent = months >= 360 ? '∞' : String(months);
+        const out = new Date();
+        out.setMonth(out.getMonth() + months);
+        if (rDate) rDate.textContent = out.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+        let zone = 'Optimise';
+        let advice = 'Sufficient runway to focus on working capital, taxes, and capital-efficient hires rather than fundraising. A fractional CFO can compress the next 12 months.';
+        if (months < 6) {
+          zone = 'Raise or cut';
+          advice = 'Under six months. The choice narrows to: raise capital or reduce burn. A plan should be in place this month.';
+        } else if (months < 18) {
+          zone = 'Plan';
+          advice = 'In the planning window. Time to lock the next four quarters of spend, qualify investors, and tighten unit economics before fundraising.';
+        }
+        if (zoneLabel) zoneLabel.textContent = zone;
+        if (rAdvice) rAdvice.textContent = advice;
       }
-      const months = k;
 
-      if (rMonths) rMonths.textContent = months >= 360 ? '∞' : String(months);
-      const out = new Date();
-      out.setMonth(out.getMonth() + months);
-      if (rDate) rDate.textContent = out.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-      let zone = 'Optimise';
-      let advice = 'Sufficient runway to focus on working capital, taxes, and capital-efficient hires rather than fundraising. A fractional CFO can compress the next 12 months.';
-      if (months < 6) {
-        zone = 'Raise or cut';
-        advice = 'Under six months. The choice narrows to: raise capital or reduce burn. A plan should be in place this month.';
-      } else if (months < 18) {
-        zone = 'Plan';
-        advice = 'In the planning window. Time to lock the next four quarters of spend, qualify investors, and tighten unit economics before fundraising.';
-      }
-      if (zoneLabel) zoneLabel.textContent = zone;
-      if (rAdvice) rAdvice.textContent = advice;
+      form.querySelectorAll('input').forEach((el) => el.addEventListener('input', calc));
+      form.querySelectorAll('[data-preset-cash]').forEach((button) => button.addEventListener('click', () => {
+        if (cash) { cash.value = (button as HTMLElement).dataset.presetCash!; calc(); }
+      }));
+      calc();
     }
 
-    document.querySelectorAll('#burn-form input').forEach((el) => el.addEventListener('input', calc));
-    document.querySelectorAll('[data-preset-cash]').forEach((b) => b.addEventListener('click', () => {
-      if (cash) { cash.value = (b as HTMLElement).dataset.presetCash!; calc(); }
-    }));
-    calc();
+    document.addEventListener('astro:page-load', initBurnCalculator);
   </script>
 </BaseLayout>

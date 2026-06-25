@@ -145,56 +145,60 @@ const states = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const income = $('#q-income') as HTMLInputElement | null;
-    const result = $('#q-result'), annual = $('#q-annual'), dates = $('#q-dates');
+    function initQuarterlyTaxCalculator() {
+      const form = document.getElementById('q-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    const DUE_DATES = [
-      { label: 'Q1', date: 'Apr 15' },
-      { label: 'Q2', date: 'Jun 16' },
-      { label: 'Q3', date: 'Sep 15' },
-      { label: 'Q4', date: 'Jan 15' },
-    ];
+      const income = document.getElementById('q-income') as HTMLInputElement | null;
+      const result = document.getElementById('q-result');
+      const annual = document.getElementById('q-annual');
+      const dates = document.getElementById('q-dates');
+      const dueDates = [
+        { label: 'Q1', date: 'Apr 15' },
+        { label: 'Q2', date: 'Jun 16' },
+        { label: 'Q3', date: 'Sep 15' },
+        { label: 'Q4', date: 'Jan 15' },
+      ];
 
-    function calc() {
-      const inc = Math.max(0, +(income?.value || 0));
-      const entity = (document.querySelector('input[name="q-entity"]:checked') as HTMLInputElement)?.value || 'sole';
-      const stateRate = +(document.querySelector('input[name="q-state"]:checked') as HTMLInputElement)?.value || 0;
+      function calc() {
+        const inc = Math.max(0, +(income?.value || 0));
+        const entity = (document.querySelector('input[name="q-entity"]:checked') as HTMLInputElement)?.value || 'sole';
+        const stateRate = +(document.querySelector('input[name="q-state"]:checked') as HTMLInputElement)?.value || 0;
 
-      let fed = 18;
-      if (inc < 50_000)        fed = 12;
-      else if (inc < 110_000)  fed = 18;
-      else if (inc < 200_000)  fed = 22;
-      else if (inc < 400_000)  fed = 28;
-      else if (inc < 750_000)  fed = 32;
-      else                     fed = 36;
+        let fed = 18;
+        if (inc < 50_000) fed = 12;
+        else if (inc < 110_000) fed = 18;
+        else if (inc < 200_000) fed = 22;
+        else if (inc < 400_000) fed = 28;
+        else if (inc < 750_000) fed = 32;
+        else fed = 36;
 
-      let se = 0;
-      if (entity === 'sole' || entity === 'partner') se = 12;
-      if (entity === 'scorp')                        se = 0;
-      if (entity === 'mixed')                        se = 6;
+        let se = 0;
+        if (entity === 'sole' || entity === 'partner') se = 12;
+        if (entity === 'mixed') se = 6;
 
-      const totalRate = fed + stateRate + se;
-      const annualTax = Math.round((inc * totalRate) / 100);
-      const perQ      = Math.round(annualTax / 4);
+        const annualTax = Math.round((inc * (fed + stateRate + se)) / 100);
+        const perQ = Math.round(annualTax / 4);
+        if (result) result.textContent = '$' + perQ.toLocaleString();
+        if (annual) annual.textContent = '$' + annualTax.toLocaleString() + ' / year';
 
-      if (result) result.textContent = '$' + perQ.toLocaleString();
-      if (annual) annual.textContent = '$' + annualTax.toLocaleString() + ' / year';
-      const now = new Date();
-      const year = now.getFullYear();
-      const nextYear = year + 1;
-      if (dates) {
-        dates.innerHTML = DUE_DATES.map((d) => {
-          const labelYear = d.label === 'Q4' ? nextYear : year;
-          return `<li class="rounded-[4px] bg-white/[0.06] p-3">
-            <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">${d.label} · Due</p>
-            <p class="mt-1 font-display text-[14px] text-white">${d.date}, ${labelYear}</p>
-          </li>`;
-        }).join('');
+        const year = new Date().getFullYear();
+        if (dates) {
+          dates.innerHTML = dueDates.map((d) => {
+            const labelYear = d.label === 'Q4' ? year + 1 : year;
+            return `<li class="rounded-[4px] bg-white/[0.06] p-3">
+              <p class="font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">${d.label} · Due</p>
+              <p class="mt-1 font-display text-[14px] text-white">${d.date}, ${labelYear}</p>
+            </li>`;
+          }).join('');
+        }
       }
+
+      form.querySelectorAll('input').forEach((el) => el.addEventListener('input', calc));
+      calc();
     }
 
-    document.querySelectorAll('#q-form input').forEach((el) => el.addEventListener('input', calc));
-    calc();
+    document.addEventListener('astro:page-load', initQuarterlyTaxCalculator);
   </script>
 </BaseLayout>

@@ -189,11 +189,14 @@ const inputClass =
   </section>
 
   <script>
-    const form = document.getElementById('consult-form') as HTMLFormElement | null;
-    const ok = document.getElementById('consult-success');
-    const select = document.getElementById('svc-select') as HTMLSelectElement | null;
-    const smartFields = document.getElementById('smart-fields') as HTMLDivElement | null;
-    const rewards = document.querySelectorAll<HTMLLIElement>('#form-rewards li');
+    function initContactForm() {
+      const form = document.getElementById('consult-form') as HTMLFormElement | null;
+      if (!form || form.dataset.contactBound === '1') return;
+      form.dataset.contactBound = '1';
+      const ok = document.getElementById('consult-success');
+      const select = document.getElementById('svc-select') as HTMLSelectElement | null;
+      const smartFields = document.getElementById('smart-fields') as HTMLDivElement | null;
+      const rewards = document.querySelectorAll<HTMLLIElement>('#form-rewards li');
 
     const fieldInput = 'w-full border border-line bg-white px-4 py-3 text-navy-900 placeholder:text-navy-300 transition-colors focus:border-teal-500 focus-visible:outline-none';
     const labelClass = 'font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500';
@@ -283,6 +286,7 @@ const inputClass =
       `;
     }
     select?.addEventListener('change', () => renderSmart(select.value));
+    if (prefill && select?.value) renderSmart(select.value);
 
     // ── 3) Micro-rewards — light up as form fills ──────────────────────────
     function updateRewards() {
@@ -316,5 +320,8 @@ const inputClass =
       ok?.classList.remove('hidden');
       form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
     });
+    }
+
+    document.addEventListener('astro:page-load', initContactForm);
   </script>
 </BaseLayout>

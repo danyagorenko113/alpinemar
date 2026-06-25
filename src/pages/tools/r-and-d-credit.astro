@@ -138,23 +138,30 @@ const claimOpts = [
   </section>
 
   <script>
-    const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector(s) as T | null;
-    const wages = $('#wages') as HTMLInputElement | null;
-    const contract = $('#contract') as HTMLInputElement | null;
-    const qre = $('#rd-qre'), credit = $('#rd-credit');
+    function initResearchCreditCalculator() {
+      const form = document.getElementById('rd-form') as HTMLFormElement | null;
+      if (!form || form.dataset.calculatorBound === '1') return;
+      form.dataset.calculatorBound = '1';
 
-    function calc() {
-      const w = Math.max(0, +(wages?.value || 0));
-      const c = Math.max(0, +(contract?.value || 0));
-      const qres = w + c * 0.65;
-      const firstClaim = (document.querySelector('input[name="claim-type"]:checked') as HTMLInputElement)?.value === 'first';
-      const credAmt = firstClaim ? qres * 0.06 : qres * 0.14 * 0.5;
+      const wages = document.getElementById('wages') as HTMLInputElement | null;
+      const contract = document.getElementById('contract') as HTMLInputElement | null;
+      const qre = document.getElementById('rd-qre');
+      const credit = document.getElementById('rd-credit');
 
-      if (qre) qre.textContent = '$' + Math.round(qres).toLocaleString();
-      if (credit) credit.textContent = '$' + Math.round(credAmt).toLocaleString();
+      function calc() {
+        const w = Math.max(0, +(wages?.value || 0));
+        const c = Math.max(0, +(contract?.value || 0));
+        const qres = w + c * 0.65;
+        const firstClaim = (document.querySelector('input[name="claim-type"]:checked') as HTMLInputElement)?.value === 'first';
+        const credAmt = firstClaim ? qres * 0.06 : qres * 0.14 * 0.5;
+        if (qre) qre.textContent = '$' + Math.round(qres).toLocaleString();
+        if (credit) credit.textContent = '$' + Math.round(credAmt).toLocaleString();
+      }
+
+      form.querySelectorAll('input').forEach((el) => el.addEventListener('input', calc));
+      calc();
     }
 
-    document.querySelectorAll('#rd-form input').forEach((el) => el.addEventListener('input', calc));
-    calc();
+    document.addEventListener('astro:page-load', initResearchCreditCalculator);
   </script>
 </BaseLayout>

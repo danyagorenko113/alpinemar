@@ -207,10 +207,16 @@ const schema = [
   </section>
 
   <script>
-    // Reading progress — tracks scroll across the article element
-    const bar = document.getElementById('reading-progress');
-    const article = document.querySelector('article');
-    if (bar && article) {
+    function initReadingProgress() {
+      const previous = (window as any).__amReadingProgressController as AbortController | undefined;
+      previous?.abort();
+
+      const bar = document.getElementById('reading-progress');
+      const article = document.querySelector('article');
+      if (!bar || !article) return;
+
+      const controller = new AbortController();
+      (window as any).__amReadingProgressController = controller;
       const update = () => {
         const rect = article.getBoundingClientRect();
         const total = rect.height - window.innerHeight;
@@ -218,9 +224,11 @@ const schema = [
         const pct = total > 0 ? scrolled / total : 0;
         (bar as HTMLElement).style.transform = `scaleX(${pct})`;
       };
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
+      window.addEventListener('scroll', update, { passive: true, signal: controller.signal });
+      window.addEventListener('resize', update, { signal: controller.signal });
       update();
     }
+
+    document.addEventListener('astro:page-load', initReadingProgress);
   </script>
 </BaseLayout>
