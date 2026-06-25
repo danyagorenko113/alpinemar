@@ -40,7 +40,7 @@ tags: ["Accounting", "Compliance", "Tax"]
 <h3>Leveraging Technology</h3>
 <p>Many outsourcing providers invest in cutting-edge technology, which allows them to deliver efficient services at a lower cost.</p>
 <h3>Focus on Core Business Activities</h3>
-<p>By outsourcing accounting tasks, business owners can focus more on their core business, leading to better allocation of time and resources, improved productivity, and business growth. In fact, “enables focus on core functions” <a href="/wp-content/uploads/2025/09/Deloitte-DOC-Whitepaper-outsourcing-and-shared-services-2019-2023.pdf" rel="noopener">is the number one perceived benefit of outsourcing</a>, according to the 2019-2023 Deloitte Global Outsourcing Survey (page 7 of the linked PDF).</p>
+<p>By outsourcing accounting tasks, business owners can focus more on their core business, leading to better allocation of time and resources, improved productivity, and business growth. In fact, “enables focus on core functions” <a href="https://www.deloitte.com/content/dam/assets-zone3/us/en/docs/services/consulting/2022/us-global-outsourcing-survey-2022.pdf" target="_blank" rel="noopener">is the number one perceived benefit of outsourcing</a>, according to the Deloitte Global Outsourcing Survey.</p>
 <p><strong>Note: </strong>You can learn more about outsourcing in <a href="/blog/outsourcing-accounting-services-pros-cons/">The Pros and Cons of Outsourcing Accounting Services</a>.</p>
 <h2>Strategies for Cost-Effective Outsourcing</h2>
 <p>Implementing cost-effective outsourcing strategies can help businesses maximize value while minimizing expenses.</p>

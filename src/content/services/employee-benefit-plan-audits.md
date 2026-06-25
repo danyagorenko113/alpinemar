@@ -2,6 +2,7 @@
 title: "Employee Benefit Plan Audits"
 path: "/services/audit-attestation-services/employee-benefit-plan-audits/"
 summary: "Employee Benefit Plan Audits from Alpine Mar."
+cover: "/images/services/employee-benefit-plan-audits.jpg"
 industries: ["healthcare-accounting-services", "construction-cpa-services", "law-firm-accounting-services"]
 group: Compliance
 ---<p><p>Employee benefit plans come with complex rules and oversight. We help you stay compliant, reduce risk, and protect the trust your employees place in your plan. Companies today offer benefits ranging from pension plans and defined contribution plans like 401(k)s to employee stock ownership plans and profit sharing. Our team of experienced employee benefit plan auditors knows how to navigate the financial reporting requirements that come with managing other people’s futures.</p>

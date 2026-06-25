@@ -2,6 +2,7 @@
 title: "Financial Statement Audits"
 path: "/services/audit-attestation-services/financial-statement-audits/"
 summary: "Financial Statement Audits from Alpine Mar."
+cover: "/images/services/financial-statement-audits.jpg"
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services"]
 group: Compliance
 ---<p><p>Financial Statement Audits</p>

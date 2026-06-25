@@ -44,6 +44,14 @@ const PROMPT_OVERRIDES = {
   'tax-advisory-and-compliance':
     'A senior CPA in a perfectly tailored navy suit reviewing a wall-mounted projection of tax compliance dashboards, side profile, late-afternoon golden light. Editorial, executive portraiture, high-end commercial.',
 
+  // Spanish-language services for US-based Hispanic small-business owners.
+  'creacion-de-empresas':
+    'A Latin American entrepreneur couple signing incorporation paperwork at a sleek modern Fort Lauderdale office, an articles-of-incorporation cover sheet and a CPA briefing them across a glass desk. Warm, hopeful, professional atmosphere, navy blue and scooter-cyan accents, soft golden-hour light. Editorial commercial photography.',
+  'servicios-contables':
+    'A bilingual Latina CPA in a navy blazer reviewing monthly financial statements with a Hispanic small-business owner at a bright Fort Lauderdale office, ledger and laptop on a clean marble desk, warm professional rapport. Navy and cyan palette, editorial commercial photography, soft natural light.',
+  'servicios-tributarios-en-florida':
+    'Overhead flat-lay of a Spanish-language tax planning workspace: a leather notebook with handwritten quarterly notes in Spanish, calculator showing six-figure totals, printed Form 1040 partially visible, a CPA-stamped folder, navy ceramic coffee cup. Warm directional light, deep navy accent, paper-white background. Editorial commercial photography.',
+
   'outsourced-accounting-services':
     'A modern accounting team in a bright open-plan Florida office, three CPAs collaborating around a long table covered in laptops and dashboards. Crisp natural daylight, navy accents, editorial commercial.',
   'outsourced-bookkeeping-services':
@@ -148,12 +156,10 @@ async function pool(items, fn, n) {
 async function main() {
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
 
-  const SPANISH = new Set(['creacion-de-empresas', 'servicios-contables', 'servicios-tributarios-en-florida']);
   const files = readdirSync(SERVICE_DIR).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
   const items = files
     .map((f) => {
       const slug = basename(f).replace(/\.(md|mdx)$/, '');
-      if (SPANISH.has(slug)) return null;
       const md = readFileSync(join(SERVICE_DIR, f), 'utf8');
       const fm = parseFrontmatter(md);
       return {

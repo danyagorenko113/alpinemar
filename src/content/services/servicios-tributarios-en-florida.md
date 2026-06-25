@@ -2,6 +2,7 @@
 title: "Servicios tributarios en Florida"
 path: "/services/servicios-tributarios-en-florida/"
 summary: "Servicios tributarios en Florida from Alpine Mar."
+cover: "/images/services/tax-planning-services.jpg"
 group: Tax
 ---<p><p>Un manejo minucioso de los impuestos es esencial para el éxito de su negocio. Nosotros entendemos la importancia de una planificación y preparación tributaria precisa y eficiente.</p>
 <p>Nuestro equipo de profesionales experimentados está aquí para ayudarle a navegar el mundo complejo de la renta, asegurando que cumpla con sus obligaciones y optimice su plan financiero. Descubra cómo nuestros servicios tributarios le benefician.</p>
