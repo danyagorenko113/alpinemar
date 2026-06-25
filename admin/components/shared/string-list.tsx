@@ -1,0 +1,68 @@
+'use client'
+
+import { Plus, X, GripVertical } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+
+interface StringListProps {
+  value: string[]
+  onChange: (next: string[]) => void
+  placeholder?: string
+  addLabel?: string
+}
+
+export function StringList({ value, onChange, placeholder, addLabel = 'Add item' }: StringListProps) {
+  function setAt(i: number, v: string) {
+    const next = [...value]
+    next[i] = v
+    onChange(next)
+  }
+  function removeAt(i: number) {
+    onChange(value.filter((_, idx) => idx !== i))
+  }
+  function move(i: number, dir: -1 | 1) {
+    const j = i + dir
+    if (j < 0 || j >= value.length) return
+    const next = [...value]
+    ;[next[i], next[j]] = [next[j], next[i]]
+    onChange(next)
+  }
+
+  return (
+    <div className="space-y-2">
+      {value.length === 0 && (
+        <p className="text-xs text-muted-foreground italic">No items yet.</p>
+      )}
+      {value.map((item, i) => (
+        <div key={i} className="flex items-center gap-1.5 group">
+          <div className="flex flex-col">
+            <button
+              type="button"
+              onClick={() => move(i, -1)}
+              disabled={i === 0}
+              className="text-navy-300 hover:text-navy-700 disabled:opacity-30"
+              title="Move up"
+            >
+              <GripVertical className="h-3.5 w-3.5" />
+            </button>
+          </div>
+          <span className="font-mono text-[10px] text-muted-foreground w-5">{i + 1}.</span>
+          <Input value={item} onChange={(e) => setAt(i, e.target.value)} placeholder={placeholder} />
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => removeAt(i)}
+            className="text-muted-foreground hover:text-destructive"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+      ))}
+      <Button type="button" variant="outline" size="sm" onClick={() => onChange([...value, ''])}>
+        <Plus className="h-4 w-4" />
+        {addLabel}
+      </Button>
+    </div>
+  )
+}
