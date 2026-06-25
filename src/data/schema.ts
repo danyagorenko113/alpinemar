@@ -4,7 +4,6 @@ const ORG_ID = `${site.url}/#organization`;
 const abs = (p: string) => new URL(p, site.url).href;
 
 // Site-wide Organization (AccountingService + LocalBusiness)
-// TODO: add real `sameAs` social profile URLs once provided (placeholders omitted).
 export const orgSchema = {
   '@context': 'https://schema.org',
   '@type': ['AccountingService', 'LocalBusiness'],
@@ -26,6 +25,7 @@ export const orgSchema = {
     addressCountry: 'US',
   },
   areaServed: { '@type': 'State', name: 'Florida' },
+  sameAs: Object.values(site.socials).filter((url): url is string => !!url),
   memberOf: [
     { '@type': 'Organization', name: 'American Institute of Certified Public Accountants', alternateName: 'AICPA' },
     { '@type': 'Organization', name: 'Florida Institute of Certified Public Accountants', alternateName: 'FICPA' },

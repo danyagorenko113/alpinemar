@@ -15,12 +15,10 @@ export const site = {
     zip: '33301',
   },
   socials: {
-    // TODO: replace placeholders with real handles once provided by client.
-    // Empty strings hide the icons in Footer (see Footer.astro filter).
-    facebook: '',
-    instagram: '',
-    linkedin: '',
-    twitter: '',
+    facebook: 'https://www.facebook.com/Alpine-Mar-CPA-Advisors-101176861735141/',
+    instagram: 'https://www.instagram.com/alpinemarhq/',
+    linkedin: 'https://www.linkedin.com/company/alpine-mar-cpa-advisors/',
+    twitter: 'https://twitter.com/alpinemarhq',
   },
   memberships: ['AICPA', 'FICPA'],
   clientPortal: 'https://alpinemar.clientportal.com/#/login',
