@@ -15,7 +15,7 @@ const journeyPhotos = [
   '/images/about/collage-3.jpg',
   '/images/about/collage-4.jpg',
   '/images/about/collage-5.jpg',
-  '/images/about/hero.jpg',
+  '/images/about/alpine-301.jpg',
 ];
 
 // Carousel: members with photos
@@ -45,7 +45,7 @@ const drives = [
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
     <div class="relative h-[460px] w-full md:h-[560px]">
-      <img src="/images/about/hero.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
+      <img src="/images/about/alpine-301.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" />
       <!-- Subtle gradient at bottom to ensure title legibility -->
       <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
@@ -58,13 +58,13 @@ const drives = [
   <section class="relative bg-white pt-10 md:pt-14">
     <Container width="wide">
       <div data-reveal class="relative overflow-hidden">
-        <div class="grid grid-cols-2 gap-0">
+        <div class="grid grid-cols-1 gap-0 sm:grid-cols-2">
           <!-- LEFT: Alpine (mountain) -->
-          <div class="group/etym relative aspect-[16/10] overflow-hidden sm:aspect-[16/8]">
+          <div class="group/etym relative min-h-[280px] cursor-pointer overflow-hidden sm:aspect-[16/8] sm:min-h-0" tabindex="0">
             <img src="/images/about/mountain.jpg" alt="Alpine peaks" class="h-full w-full object-cover transition-transform duration-700 group-hover/etym:scale-[1.04]" loading="lazy" />
             <!-- Etymology overlay -->
-            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/85 px-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
-              <h3 class="font-display text-5xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Alpine</h3>
+            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/88 px-7 py-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 group-focus/etym:opacity-100 group-active/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
+              <h3 class="font-display text-4xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Alpine</h3>
               <p class="font-mono text-[13px] text-white/85">[al-pahyn, -pin]</p>
               <p class="mt-1 font-display italic text-white/65">adjective</p>
               <p class="max-w-md font-display text-[15px] leading-relaxed text-white/85 md:text-[16px]">
@@ -74,10 +74,10 @@ const drives = [
           </div>
 
           <!-- RIGHT: Mar (ocean) -->
-          <div class="group/etym relative aspect-[16/10] overflow-hidden sm:aspect-[16/8]">
+          <div class="group/etym relative min-h-[280px] cursor-pointer overflow-hidden sm:aspect-[16/8] sm:min-h-0" tabindex="0">
             <img src="/images/about/ocean.jpg" alt="Ocean surface" class="h-full w-full object-cover transition-transform duration-700 group-hover/etym:scale-[1.04]" loading="lazy" />
-            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/85 px-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
-              <h3 class="font-display text-5xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Mar</h3>
+            <div class="pointer-events-none absolute inset-0 flex flex-col items-start justify-center gap-3 bg-[#12122d]/88 px-7 py-8 opacity-0 transition-opacity duration-300 group-hover/etym:opacity-100 group-focus/etym:opacity-100 group-active/etym:opacity-100 md:gap-4 md:px-16 lg:px-24">
+              <h3 class="font-display text-4xl font-medium tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">Mar</h3>
               <p class="font-mono text-[13px] text-white/85">[mahr]</p>
               <p class="mt-1 max-w-md font-display text-[15px] leading-relaxed text-white/85 md:text-[16px]">
                 <span class="italic text-white/65">noun</span>: the Spanish word for sea.
@@ -90,12 +90,12 @@ const drives = [
         <!-- Center logo medallion — uses the brand lockup from the header,
              clipped to its left mountain icon via overflow-hidden round container. -->
         <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div class="size-20 overflow-hidden rounded-full bg-white shadow-[0_8px_30px_-8px_rgba(18,18,45,0.55)] md:size-28">
+          <div class="flex size-20 items-center justify-center overflow-hidden rounded-full bg-white p-0 shadow-[0_8px_30px_-8px_rgba(18,18,45,0.55)] md:size-28">
             <img
-              src="/images/brand/logo-web.png"
-              alt="Alpine Mar"
-              class="block h-full max-w-none"
-              style="width: auto; object-fit: contain; object-position: left center;"
+              src="/images/brand/mountain-mark.png"
+              alt=""
+              aria-hidden="true"
+              class="block h-full w-full scale-[1.18] object-contain"
             />
           </div>
         </div>
@@ -127,18 +127,20 @@ const drives = [
 
     </Container>
 
-    <!-- Edge-bleed drag-to-scroll gallery -->
+    <!-- Edge-bleed infinite gallery -->
     <div data-reveal class="mt-14 md:mt-16">
-      <div
-        id="journey-gallery"
-        class="flex select-none gap-4 overflow-x-auto px-[6vw] pb-3 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style="cursor:grab;"
-      >
-        {journeyPhotos.map((src) => (
-          <div class="aspect-[4/5] w-[44%] flex-none overflow-hidden rounded-2xl bg-navy-50 sm:w-[30%] md:w-[22%] lg:w-[19%]">
-            <img src={src} alt="Alpine Mar team" class="pointer-events-none h-full w-full object-cover" loading="lazy" draggable="false" />
+      <div class="relative overflow-hidden px-[6vw] pb-3" style="mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);">
+        <div class="journey-marquee flex w-max">
+          {[0, 1].map((set) => (
+            <div class="journey-marquee-set flex flex-none gap-4 md:gap-6" aria-hidden={set === 1 ? 'true' : undefined}>
+              {journeyPhotos.map((src) => (
+                <div class="aspect-[4/5] w-[44vw] flex-none overflow-hidden rounded-2xl bg-navy-50 sm:w-[30vw] md:w-[22vw] lg:w-[19vw]">
+                  <img src={src} alt="Alpine Mar team" class="pointer-events-none h-full w-full object-cover" loading="lazy" draggable="false" />
+                </div>
+              ))}
+            </div>
+          ))}
           </div>
-        ))}
       </div>
     </div>
   </section>
@@ -195,12 +197,12 @@ const drives = [
 
       <!-- Carousel -->
       <div class="relative mt-16">
-        <div id="team-track" class="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div id="team-track" class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:gap-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
           {teamCards.map((m: any) => {
             const display = m.name.replace(/,\s*CPA$/, '');
             const isCpa = /CPA/.test(m.name);
             return (
-              <article class="group flex w-[78%] flex-none snap-start flex-col overflow-hidden rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-delft hover:bg-[#12122d] hover:text-white sm:w-[44%] lg:w-[calc((100%-3rem)/3)]">
+              <article class="group flex w-[84vw] max-w-[340px] flex-none snap-center flex-col overflow-hidden rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-delft hover:bg-[#12122d] hover:text-white sm:w-[44%] sm:max-w-none sm:snap-start lg:w-[calc((100%-3rem)/3)]">
                 <div class="size-[148px] overflow-hidden rounded-[6px] bg-navy-50">
                   <img src={m.photo} alt={display} class="h-full w-full object-cover" loading="lazy" />
                 </div>
@@ -234,8 +236,8 @@ const drives = [
         </div>
 
         <!-- Dots + arrows -->
-        <div class="mt-10 flex items-center justify-between gap-6">
-          <div id="team-dots" class="flex items-center gap-2">
+        <div class="mt-8 flex flex-col items-center gap-5 sm:mt-10 sm:flex-row sm:justify-between sm:gap-6">
+          <div id="team-dots" class="flex max-w-full flex-wrap items-center justify-center gap-2">
             {Array.from({ length: Math.max(1, teamCards.length - 2) }).map((_, i) => (
               <button
                 type="button"
@@ -245,7 +247,7 @@ const drives = [
               ></button>
             ))}
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex shrink-0 items-center justify-center gap-3">
             <button type="button" id="team-prev" aria-label="Previous" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
             </button>
@@ -266,7 +268,7 @@ const drives = [
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-16 flex items-center gap-3 text-white/85 md:mb-24">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[15px] tracking-[-0.005em]">We can't wait to meet <span class="text-white/55">you</span></span>
+        <span class="font-display text-[15px] tracking-[-0.005em]">We can't wait to meet you</span>
       </div>
 
       <div data-reveal class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
@@ -304,6 +306,40 @@ const drives = [
     #team-track > article:first-child a:hover {
       border-color: var(--color-scooter);
       color: var(--color-scooter);
+    }
+  </style>
+
+  <style>
+    .journey-marquee {
+      animation: journey-marquee 44s linear infinite;
+      will-change: transform;
+    }
+
+    .journey-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    .journey-marquee-set {
+      padding-right: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .journey-marquee-set {
+        padding-right: 1.5rem;
+      }
+    }
+
+    @keyframes journey-marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .journey-marquee {
+        animation: none;
+        flex-wrap: wrap;
+        width: auto;
+      }
     }
   </style>
 
@@ -350,42 +386,5 @@ const drives = [
     initTeamCarousel();
     document.addEventListener('astro:after-swap', initTeamCarousel);
 
-    // Drag-to-scroll for the "Breaking molds" gallery
-    function initJourneyDrag() {
-      const el = document.getElementById('journey-gallery') as HTMLElement | null;
-      if (!el || (el as any).__dragBound) return;
-      (el as any).__dragBound = true;
-
-      let isDown = false;
-      let startX = 0;
-      let scrollLeft = 0;
-      let moved = false;
-
-      el.addEventListener('mousedown', (e) => {
-        isDown = true;
-        moved = false;
-        el.style.cursor = 'grabbing';
-        startX = e.pageX - el.offsetLeft;
-        scrollLeft = el.scrollLeft;
-      });
-      const release = () => {
-        isDown = false;
-        el.style.cursor = 'grab';
-      };
-      el.addEventListener('mouseleave', release);
-      el.addEventListener('mouseup', release);
-      el.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - el.offsetLeft;
-        const walk = (x - startX) * 1.4;
-        if (Math.abs(walk) > 3) moved = true;
-        el.scrollLeft = scrollLeft - walk;
-      });
-      // Prevent accidental child-click after drag
-      el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
-    }
-    initJourneyDrag();
-    document.addEventListener('astro:after-swap', initJourneyDrag);
   </script>
 </BaseLayout>

@@ -15,7 +15,6 @@ const index: Entry[] = [
   // Tools
   { kind: 'Tool', title: 'Tax Savings Estimator', href: '/tools/tax-savings-estimator/', summary: '3 questions, live current vs achievable rate' },
   { kind: 'Tool', title: 'Burn Rate Calculator', href: '/tools/burn-rate-calculator/', summary: 'Cash + monthly burn → runway in months' },
-  { kind: 'Tool', title: 'Quarterly Tax Estimator', href: '/tools/quarterly-tax-estimator/', summary: 'Income + entity → 4 IRS payment dates' },
   { kind: 'Tool', title: 'S-Corp vs LLC', href: '/tools/s-corp-vs-llc/', summary: 'Side-by-side tax delta, break-even slider' },
   { kind: 'Tool', title: '1031 Exchange Savings', href: '/tools/1031-exchange-savings/', summary: 'Deferred capital gains on RE sale' },
   { kind: 'Tool', title: 'R&D Credit Estimator', href: '/tools/r-and-d-credit/', summary: 'Federal R&D credit via ASC method' },
@@ -99,9 +98,18 @@ for (const p of posts) {
     const input    = () => $('#cmdk-input');
     const list     = () => $('#cmdk-list');
 
-    // Reveal launcher after a short delay so it doesn't compete with hero
-    function revealLauncher(delay) { setTimeout(() => launcher()?.classList.remove('hidden'), delay); }
+    // Reveal launcher after a short delay so it doesn't compete with hero.
+    // Keep it desktop-only: on mobile it overlaps content and the native menu is enough.
+    function revealLauncher(delay) {
+      setTimeout(() => {
+        const el = launcher();
+        if (!el) return;
+        const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+        el.classList.toggle('hidden', !isDesktop);
+      }, delay);
+    }
     revealLauncher(1200);
+    window.addEventListener('resize', () => revealLauncher(0), { passive: true });
     document.addEventListener('astro:after-swap', () => revealLauncher(0));
 
     let activeIdx = 0;

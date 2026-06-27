@@ -1,5 +1,5 @@
 ---
-title: "M&#038;A Integration Finance Checklist for Future Success"
+title: "M&A Integration Finance Checklist for Future Success"
 date: 2024-06-11
 author: "The Alpine Mar editorial team"
 excerpt: "Mergers and acquisitions are often motivated by an expectation of revenue synergy and cost savings. However, the desired outcomes will only be achieved if you take a strategic and comprehensive approach to financial planning and execution before and throughout the…"

@@ -1,9 +1,13 @@
----
+﻿---
 title: "CPA Services for Startups"
+heroTitle: "CPA Services for Startups"
 path: "/industries/startup-cpa-services/"
-summary: "CPA Services for Startups from Alpine Mar."
+summary: "Runway, fundraise prep, and modeling for founders. A finance team that scales from pre-seed through Series C."
+seo:
+ title: "CPA Services for Startups | Alpine Mar"
+ description: "Runway, fundraise prep, and modeling for founders. A finance team that scales from pre-seed through Series C."
 services: ["tax-advisory-and-compliance", "corporate-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "fractional-cfo-services", "transaction-advisory-services", "financial-modeling-services", "reviews-compilations", "tax-planning-services"]
----<p>
+---
 <p>CPA services for startups provide essential financial management, strategic planning, and accounting expertise to support new and growing businesses. At Alpine Mar, our startup certified public accountant services are designed to help early-stage and high-growth companies establish solid financial foundations, streamline operations, and prepare for scalable growth.</p>
 <p>Our accounting firm works closely with founders to manage daily accounting tasks and deliver insights for successful capital raises, from seed funding to Series A, B, and C rounds and beyond. With our support, your startup can navigate financial challenges confidently and focus on establishing a solid financial foundation for your startup’s long-term success.</p>
 <img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2024/12/startup-cpa-services.jpg" alt="Startup CPA Services">

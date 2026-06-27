@@ -10,87 +10,100 @@ const insights = (await getCollection('insights'))
   .slice(0, 4);
 
 const services = [
-  { num: '1', name: 'Tax Planning',                  href: '/services/tax-planning-services/',         img: '/images/home/svc-1.png' },
-  { num: '2', name: 'Outsourced Accounting',         href: '/services/outsourced-accounting-services/', img: '/images/home/svc-2.png' },
-  { num: '3', name: 'Private Client Services',       href: '/services/private-client-services/',       img: '/images/home/svc-3.png' },
-  { num: '4', name: 'Transaction Advisory',          href: '/services/transaction-advisory-services/', img: '/images/home/svc-4.png' },
-  { num: '5', name: 'Audit & Attestation Services',  href: '/services/audit-attestation-services/',    img: '/images/home/svc-5.png' },
+  { num: '1', name: 'Tax Planning',                  href: '/services/tax-planning-services/',         img: '/images/home/service-tax-planning.jpg' },
+  { num: '2', name: 'Outsourced Accounting',         href: '/services/outsourced-accounting-services/', img: '/images/home/service-outsourced-accounting.jpg' },
+  { num: '3', name: 'Private Client Services',       href: '/services/private-client-services/',       img: '/images/home/service-private-client-services.jpg' },
+  { num: '4', name: 'Transaction Advisory',          href: '/services/transaction-advisory-services/', img: '/images/home/service-transaction-advisory.jpg' },
+  { num: '5', name: 'Audit & Attestation Services',  href: '/services/audit-attestation-services/',    img: '/images/home/service-audit-attestation.jpg' },
+  { num: '6', name: 'Not sure where to start?',      href: '/find-your-service/',                      img: '/images/about/alpine-301.jpg' },
 ];
 
 const industries = [
   {
     name: 'High Net-Worth Individuals',
     href: '/industries/high-net-worth-accounting-cpa/',
-    img: '/images/home/ind-1.png',
+    img: '/images/industries/high-net-worth.jpg',
     blurb: "We help our high net-worth clients analyze their entity structures and various types of taxable income to strategically minimize the taxable impact.",
   },
   {
     name: 'Healthcare',
     href: '/industries/healthcare-accounting-services/',
-    img: '/images/home/ind-2.png',
+    img: '/images/industries/healthcare.jpg',
     blurb: 'We navigate the tax complexities associated with the industry and minimize their tax expense by using all of the available deductions.',
   },
   {
     name: 'Advertising & Marketing',
     href: '/industries/marketing-agency-accounting-services/',
-    img: '/images/home/ind-3.png',
+    img: '/images/industries/marketing-agencies.jpg',
     blurb: 'Creative service providers trust Alpine Mar to provide a comprehensive suite of services, including financial management and strategic guidance.',
   },
   {
     name: 'Construction',
     href: '/industries/construction-cpa-services/',
-    img: '/images/ind-construction.png',
+    img: '/images/industries/construction.jpg',
     blurb: 'Job-cost accounting, multi-state nexus and contract revenue recognition for builders, GCs, and specialty trades.',
   },
   {
     name: 'Family Office',
     href: '/industries/family-office-accounting-services/',
-    img: '/images/ind-family-office.png',
+    img: '/images/industries/family-office.jpg',
     blurb: 'Consolidated reporting across entities, trusts and investments — purpose-built for multi-generational wealth.',
   },
   {
     name: 'Law Firms',
     href: '/industries/law-firm-accounting-services/',
-    img: '/images/ind-law-firm.png',
+    img: '/images/industries/law-firms.jpg',
     blurb: 'IOLTA discipline, partner comp, and matter-level profitability reporting for plaintiff and defense practices.',
   },
   {
     name: 'Real Estate',
     href: '/industries/real-estate-cpa-services/',
-    img: '/images/ind-real-estate.png',
+    img: '/images/industries/real-estate.jpg',
     blurb: '1031s, cost-segregation, opportunity zones and entity structures — for sponsors, syndicators, and owner-operators.',
   },
   {
-    name: 'Sports Athletes',
+    name: 'Sports & Athletes',
     href: '/industries/sports-accounting-services/',
-    img: '/images/ind-sports.png',
+    img: '/images/industries/sports-athletes.jpg',
     blurb: 'Multi-state residency, NIL income, signing bonuses and post-career planning — handled discreetly end to end.',
   },
   {
     name: 'Startups',
     href: '/industries/startup-cpa-services/',
-    img: '/images/ind-startup.jpg',
+    img: '/images/industries/startups.jpg',
     blurb: 'Cap table, R&D credits, fundraising-ready financials and a finance team that scales from pre-seed through Series C.',
   },
   {
     name: 'SaaS Companies',
     href: '/industries/saas-accounting-services/',
-    img: '/images/ind-saas.jpg',
+    img: '/images/industries/saas.jpg',
     blurb: 'ASC 606 revenue recognition, deferred revenue, ARR tracking and metrics investors actually look at.',
   },
   {
     name: 'Crypto',
     href: '/industries/crypto-cpa-services/',
-    img: '/images/ind-crypto.jpg',
+    img: '/images/industries/crypto.jpg',
     blurb: 'On-chain reconciliation, DeFi and NFT cost basis, and tax-ready reporting for funds, founders, and individuals.',
   },
 ];
 
 const aboutPills = [
-  "Experience from the world's largest organizations",
-  'A fresh perspective to the accounting industry',
-  'Personalized Attention',
-  'Privacy and Trust',
+  {
+    title: 'Big-firm experience.',
+    body: 'Our partners trained at and served some of the largest organizations in the world. You get that depth without the big-firm runaround.',
+  },
+  {
+    title: 'A fresh perspective.',
+    body: 'We question the way accounting has always been done and rebuild it around what actually helps you.',
+  },
+  {
+    title: 'Personalized attention.',
+    body: 'A senior partner on every engagement who knows your situation, not just your file.',
+  },
+  {
+    title: 'Privacy and trust.',
+    body: 'Your information stays protected and your relationship with us stays personal.',
+  },
 ];
 
 const platforms = [
@@ -122,6 +135,7 @@ const dateFmt = (d: string | Date) =>
     <!-- Full-bleed background video -->
     <div class="absolute inset-0">
       <video
+        id="home-hero-video"
         src="/video/hero.mp4"
         autoplay
         muted
@@ -186,7 +200,8 @@ const dateFmt = (d: string | Date) =>
           Discover a full range of services to meet your specific needs.
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-6 md:pt-3">
-          Whatever stage you're at, there's a service built for it. Take a look at what we do and find your fit.
+          Whatever stage you're at. There's a service built for it.<br />
+          Take a look at what we do and find your fit.
         </p>
       </div>
 
@@ -237,26 +252,30 @@ const dateFmt = (d: string | Date) =>
           Built different.<br />On purpose.
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-white/80 md:col-span-5 md:pt-3">
-          We started Alpine Mar because we knew there was a better way to do this. More personal. More proactive. Less of the formal distance that makes most CPA relationships feel transactional. That's still what drives everything we do.
+          We started Alpine Mar because we'd seen what accounting had turned into. Big firms that treated you like a file number. Small firms that couldn't keep up with anything complicated. We wanted the thing in between: the technical depth of a national firm, with a team that knows your name and picks up the phone. That's still what drives every decision we make. More personal, more proactive, and a lot less of the formal distance that makes most CPA relationships feel like a transaction.
         </p>
       </div>
     </Container>
 
     <!-- Full-bleed image with overlay pills -->
     <div data-reveal class="relative">
-      <img src="/images/about/hero.jpg" alt="Alpine Mar team meeting" class="h-[420px] w-full object-cover md:h-[640px] lg:h-[720px]" loading="lazy" />
+      <img src="/images/about/alpine-301.jpg" alt="Alpine Mar team meeting" class="h-[420px] w-full object-cover md:h-[640px] lg:h-[720px]" loading="lazy" />
+      <div class="pointer-events-none absolute inset-0 bg-[#12122d]/55 md:bg-[#12122d]/25"></div>
       <!-- Dark gradient at bottom for legibility -->
-      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#12122d] via-[#12122d]/70 to-transparent"></div>
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#12122d] via-[#12122d]/70 to-transparent"></div>
 
       <!-- 4 feature pills overlay at bottom of image -->
       <Container width="wide" class="absolute inset-x-0 bottom-0">
         <ul data-stagger class="grid grid-cols-1 gap-6 pb-10 sm:grid-cols-2 md:grid-cols-4 md:pb-14">
-          {aboutPills.map((label) => (
+          {aboutPills.map((item) => (
             <li class="flex items-start gap-3">
               <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-scooter"><polyline points="20 6 9 17 4 12"/></svg>
               </span>
-              <span class="font-display text-[14px] font-medium leading-[1.4] text-white">{label}</span>
+              <span class="font-display text-[14px] leading-[1.45] text-white/85">
+                <strong class="block font-medium text-white">{item.title}</strong>
+                {item.body}
+              </span>
             </li>
           ))}
         </ul>
@@ -283,9 +302,9 @@ const dateFmt = (d: string | Date) =>
       </div>
 
       <div class="relative mt-14">
-        <div id="aud-track" class="-mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div id="aud-track" class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:gap-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
           {industries.map((ind) => (
-            <a href={ind.href} class="group flex w-[80%] flex-none snap-start flex-col gap-6 sm:w-[55%] md:w-[44%] lg:w-[calc((100%-3rem)/2.6)]">
+            <a href={ind.href} data-aud-card class="group flex w-[84vw] max-w-[340px] flex-none snap-center flex-col gap-5 sm:w-[55%] sm:max-w-none sm:snap-start sm:gap-6 md:w-[44%] lg:w-[calc((100%-3rem)/2.6)]">
               <div class="aspect-[5/4] w-full overflow-hidden rounded-[4px] bg-navy-50">
                 <img src={ind.img} alt={ind.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
@@ -293,15 +312,16 @@ const dateFmt = (d: string | Date) =>
               <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">{ind.blurb}</p>
             </a>
           ))}
+          <div class="w-full flex-none" aria-hidden="true"></div>
         </div>
 
-        <div class="mt-10 flex items-center justify-between gap-6">
-          <div id="aud-dots" class="flex items-center gap-2">
+        <div class="mt-8 flex flex-col items-center gap-5 sm:mt-10 sm:flex-row sm:justify-between sm:gap-6">
+          <div id="aud-dots" class="flex max-w-full flex-wrap items-center justify-center gap-2">
             {industries.map((_, i) => (
               <button type="button" data-dot={i} aria-label={`Slide ${i + 1}`} class="h-1.5 w-6 rounded-full bg-line transition-all duration-300 data-[active=1]:bg-[#12122d]"></button>
             ))}
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex shrink-0 items-center justify-center gap-3">
             <button type="button" id="aud-prev" aria-label="Previous" class="inline-flex size-11 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-colors hover:border-delft hover:text-delft">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 19-7-7 7-7"/></svg>
             </button>
@@ -333,14 +353,14 @@ const dateFmt = (d: string | Date) =>
 
           <div class="mt-4 flex flex-col gap-5">
             <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-head)]">Our Location</h3>
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-white/85">Our Location</h3>
               <p class="mt-6 font-display text-[15px] leading-[1.6] text-white">
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
               </p>
             </div>
             <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-head)]">Contact Information</h3>
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-white/85">Contact Information</h3>
               <p class="mt-6 font-display text-[15px] leading-[1.7] text-white">
                 <a href={`tel:${site.phoneHref}`} class="block transition-colors hover:text-scooter">{site.phone}</a>
                 <a href={`mailto:${site.email}`} class="block transition-colors hover:text-scooter">{site.email}</a>
@@ -497,36 +517,61 @@ const dateFmt = (d: string | Date) =>
       const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('#aud-dots [data-dot]'));
       const prev = document.getElementById('aud-prev');
       const next = document.getElementById('aud-next');
-      const cards = track.children;
+      const cards = Array.from(track.querySelectorAll<HTMLElement>('[data-aud-card]'));
       const totalCards = cards.length;
+      let active = 0;
+      let lockUntil = 0;
 
-      const setActive = (i: number) =>
-        dots.forEach((d, idx) => { d.dataset.active = idx === i ? '1' : '0'; });
+      const clamp = (i: number) => Math.max(0, Math.min(totalCards - 1, i));
+
+      const setActive = (i: number) => {
+        active = clamp(i);
+        dots.forEach((d, idx) => { d.dataset.active = idx === active ? '1' : '0'; });
+      };
 
       const scrollToIndex = (i: number) => {
-        const card = cards[i] as HTMLElement | undefined;
+        const index = clamp(i);
+        const card = cards[index];
         if (!card) return;
-        track.scrollTo({ left: card.offsetLeft - 24, behavior: 'smooth' });
+        const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+        const targetLeft = Math.min(Math.max(card.offsetLeft - 24, 0), maxScroll);
+        const activeIndex = targetLeft >= maxScroll - 2 ? totalCards - 1 : index;
+        lockUntil = Date.now() + 520;
+        setActive(activeIndex);
+        track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        window.setTimeout(() => {
+          lockUntil = 0;
+        }, 540);
       };
 
       const detectActive = () => {
-        const center = track.scrollLeft + track.clientWidth / 2;
+        const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+        if (track.scrollLeft >= maxScroll - 2) {
+          setActive(totalCards - 1);
+          return totalCards - 1;
+        }
+
+        const targetLeft = track.scrollLeft + 24;
         let best = 0;
         let bestDist = Infinity;
         for (let i = 0; i < totalCards; i++) {
-          const card = cards[i] as HTMLElement;
-          const mid = card.offsetLeft + card.clientWidth / 2;
-          const d = Math.abs(mid - center);
+          const card = cards[i];
+          const d = Math.abs(card.offsetLeft - targetLeft);
           if (d < bestDist) { bestDist = d; best = i; }
         }
         setActive(best);
         return best;
       };
 
-      track.addEventListener('scroll', () => requestAnimationFrame(detectActive));
+      let raf = 0;
+      track.addEventListener('scroll', () => {
+        if (Date.now() < lockUntil) return;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(detectActive);
+      });
       dots.forEach((d, i) => d.addEventListener('click', () => scrollToIndex(i)));
-      prev?.addEventListener('click', () => scrollToIndex(Math.max(0, detectActive() - 1)));
-      next?.addEventListener('click', () => scrollToIndex(Math.min(totalCards - 1, detectActive() + 1)));
+      prev?.addEventListener('click', () => scrollToIndex(active - 1));
+      next?.addEventListener('click', () => scrollToIndex(active + 1));
       setActive(0);
     }
     initAudience();

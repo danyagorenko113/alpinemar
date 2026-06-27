@@ -1,11 +1,16 @@
----
+﻿---
 title: "Employee Benefit Plan Audits"
+heroTitle: "Audits that protect your people and your peace of mind"
 path: "/services/audit-attestation-services/employee-benefit-plan-audits/"
-summary: "Employee Benefit Plan Audits from Alpine Mar."
+summary: "401(k) and benefit plan audits under DOL rules, done by a team that does them all year. A niche audit you don't want a generalist for."
+seo:
+ title: "Employee Benefit Plan Audits | Alpine Mar"
+ description: "Employee Benefit Plan Audit. Audits that protect your people and your peace of mind. Employee benefit plans come with complex rules and oversight. We help you stay compliant, reduce risk, and protect the trust your employees place in your plan. Companies today offer benefits ranging from pension plans and"
 cover: "/images/services/employee-benefit-plan-audits.jpg"
 industries: ["healthcare-accounting-services", "construction-cpa-services", "law-firm-accounting-services"]
 group: Compliance
----<p><p>Employee benefit plans come with complex rules and oversight. We help you stay compliant, reduce risk, and protect the trust your employees place in your plan. Companies today offer benefits ranging from pension plans and defined contribution plans like 401(k)s to employee stock ownership plans and profit sharing. Our team of experienced employee benefit plan auditors knows how to navigate the financial reporting requirements that come with managing other people’s futures.</p>
+---
+<p>Employee benefit plans come with complex rules and oversight. We help you stay compliant, reduce risk, and protect the trust your employees place in your plan. Companies today offer benefits ranging from pension plans and defined contribution plans like 401(k)s to employee stock ownership plans and profit sharing. Our team of experienced employee benefit plan auditors knows how to navigate the financial reporting requirements that come with managing other people’s futures.</p>
 <h3>We help plan sponsors</h3>
 <img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2025/06/DOL.png" alt="employee checking benefit plan">
 <p>Meet DOL and IRS requirements</p>

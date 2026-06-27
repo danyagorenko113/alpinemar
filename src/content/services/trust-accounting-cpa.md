@@ -1,10 +1,15 @@
----
+﻿---
 title: "Trust Accounting CPA"
+heroTitle: "Trust Accounting CPA Services"
 path: "/services/trust-accounting-cpa/"
-summary: "Trust Accounting CPA from Alpine Mar."
+summary: "IOLTA and trust ledgers kept clean, compliant, and audit-ready. The kind of accounting you can't afford to get wrong."
+seo:
+ title: "Trust Accounting Services | Alpine Mar"
+ description: "Trust Accounting CPA Services. Work with an experienced Trust Accounting CPA to ensure accurate fiduciary accounting, compliance, and peace of mind. Alpine Mar supports trustees, estates, and fiduciaries. Clear. Compliant. Confident trust accounting. When you are responsible for managing a trust, accuracy"
 industries: ["law-firm-accounting-services", "real-estate-cpa-services", "family-office-accounting-services"]
 group: Accounting
----<p><p>Work with an experienced Trust Accounting CPA to ensure accurate fiduciary accounting, compliance, and peace of mind. Alpine Mar supports trustees, estates, and fiduciaries.</p>
+---
+<p>Work with an experienced Trust Accounting CPA to ensure accurate fiduciary accounting, compliance, and peace of mind. Alpine Mar supports trustees, estates, and fiduciaries.</p>
 <img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2026/03/Trust-Accounting-CPA-Services.png" alt="Trust Accounting CPA Services">
 <h2>Clear. Compliant. Confident trust accounting.</h2>
 <p>When you are responsible for managing a trust, accuracy and transparency are not optional. As a dedicated Trust Accounting CPA, Alpine Mar helps trustees, fiduciaries, and families navigate the financial and tax complexities of trust administration with clarity and confidence.</p>

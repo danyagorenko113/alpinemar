@@ -1,10 +1,15 @@
----
+﻿---
 title: "Tax Advisory and Compliance"
+heroTitle: "Tax Advisory and Compliance"
 path: "/services/tax-advisory-and-compliance/"
-summary: "Tax Advisory and Compliance from Alpine Mar."
+summary: "Long-term tax positioning for the big decisions, mapped before you make them. We help you see the consequences while you can still change them."
+seo:
+ title: "Tax Advisory Services | Alpine Mar"
+ description: "Tax Advisory and Compliance. Our expert tax advisory services optimize your taxes across the board. Our CPAs provide proven guidance on everything from individual tax optimization to business tax strategy, multistate tax issues, international taxes, and estate and trust tax planning."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "real-estate-cpa-services", "crypto-cpa-services", "startup-cpa-services"]
 group: Tax
----<p><p>Our expert tax advisory services optimize your taxes across the board. Our CPAs provide proven guidance on everything from individual tax optimization to business tax strategy, multistate tax issues, international taxes, and estate and trust tax planning.</p>
+---
+<p>Our expert tax advisory services optimize your taxes across the board. Our CPAs provide proven guidance on everything from individual tax optimization to business tax strategy, multistate tax issues, international taxes, and estate and trust tax planning.</p>
 
 <h3>Tax Planning & Preparation Services</h3>
 <p>Forward-looking strategies, year-round planning, and precise preparation to reduce liabilities and avoid surprises.</p>
@@ -44,8 +49,8 @@ group: Tax
 <p><strong>Choose Alpine Mar for Tax Advisory</strong></p>
 <ul>
 <li><b>National and international expertise.</b> Our CPAs are knowledgeable about single-state, multistate, and international tax complexities, keeping you compliant and your taxes optimized.</li>
-<li><b>Proactive approach. </b>We work with you to identify tax-saving opportunities early to avoid surprises and maximize your financial position.</li>
-<li><b>Adapted to your needs.</b> We adjust our services to your current scale and requirements, whether you are an individual, small business, S-Corp, or multijurisdictional enterprise.<i><br>
+<li><b>Proactive approach. </b>We work with you to identify tax-saving opportunities early to avoid surprises and maximize your financial position.</li>
+<li><b>Adapted to your needs.</b> We adjust our services to your current scale and requirements, whether you are an individual, small business, S-Corp, or multijurisdictional enterprise.<i><br>
 </i></li>
 </ul>
 <p><strong>What you can expect</strong></p>

@@ -9,6 +9,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.codex-dev.*.log
+.codex-preview-server.mjs
+.codex-tunnel.*.log
+.codex-cloudflare-tunnel.*.log
+.codex-cloudflare-tunnel*.log
 # environment variables
 .env
 .env.production
@@ -16,3 +21,5 @@ pnpm-debug.log*
 .DS_Store
 # jetbrains setting folder
 .idea/
+# local client feedback / source materials
+Client Feedback 26.06/

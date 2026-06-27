@@ -1,103 +1,362 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import { allServices } from '@/data/taxonomy';
+import Icon from '@/components/Icon.astro';
+import { industries } from '@/data/taxonomy';
 
-const pathways = [
-  {
-    label: 'I run a business and need year-round support',
-    services: [
-      { title: 'Outsourced Accounting',     href: '/services/outsourced-accounting-services/' },
-      { title: 'Fractional CFO',            href: '/services/fractional-cfo-services/' },
-      { title: 'Business Tax',              href: '/services/business-tax/' },
-      { title: 'Outsourced Bookkeeping',    href: '/services/outsourced-bookkeeping-services/' },
-    ],
-  },
-  {
-    label: "I'm preparing for a transaction (M&A, fundraise, exit)",
-    services: [
-      { title: 'Transaction Advisory',           href: '/services/transaction-advisory-services/' },
-      { title: 'Financial Modeling',             href: '/services/financial-modeling-services/' },
-      { title: 'Financial Statement Audits',     href: '/services/audit-attestation-services/financial-statement-audits/' },
-      { title: 'Fractional CFO',                 href: '/services/fractional-cfo-services/' },
-    ],
-  },
-  {
-    label: "I'm an individual or HNW — I need planning, not just filing",
-    services: [
-      { title: 'Tax Planning',         href: '/services/tax-planning-services/' },
-      { title: 'Private Client',       href: '/services/private-client-services/' },
-      { title: 'Estate &amp; Trust',   href: '/services/estate-trust-tax-planning/' },
-      { title: 'Individual Tax',       href: '/services/individual-tax-services/' },
-    ],
-  },
-  {
-    label: "I'm an S-Corp / multistate / international taxpayer",
-    services: [
-      { title: 'S Corp CPA',           href: '/services/s-corp-cpa-services/' },
-      { title: 'Multistate Tax',       href: '/services/multistate-tax-services/' },
-      { title: 'International Tax',    href: '/services/international-tax-services/' },
-      { title: 'Corporate Tax',        href: '/services/corporate-tax-services/' },
-    ],
-  },
+const services = [
+  { id: 'tax-planning', title: 'Tax Planning', href: '/services/tax-planning-services/', group: 'Tax', summary: 'Year-round tax strategy that lowers what you actually pay.' },
+  { id: 'individual-tax', title: 'Individual Tax', href: '/services/individual-tax-services/', group: 'Tax', summary: 'Personal returns and planning for people with more than a W-2.' },
+  { id: 'private-client', title: 'Private Client Services', href: '/services/private-client-services/', group: 'Tax', summary: 'Integrated planning for complex personal finances.' },
+  { id: 'estate-trust', title: 'Estate & Trust Tax Planning', href: '/services/estate-trust-tax-planning/', group: 'Tax', summary: 'Estate and trust tax planning that protects what you have built.' },
+  { id: 'trust-accounting', title: 'Trust Accounting', href: '/services/trust-accounting-cpa/', group: 'Tax', summary: 'Trust accounting and tax support for fiduciary responsibilities.' },
+  { id: 'business-tax', title: 'Business Tax Services', href: '/services/business-tax/', group: 'Tax', summary: 'Federal, state, and business tax planning in one senior team.' },
+  { id: 'small-business-tax', title: 'Small Business Tax', href: '/services/small-business-tax-services/', group: 'Tax', summary: 'Business taxes for owners who would rather be running the business.' },
+  { id: 's-corp', title: 'S Corp CPA Services', href: '/services/s-corp-cpa-services/', group: 'Tax', summary: 'S corporation planning, compliance, and owner compensation support.' },
+  { id: 'multistate-tax', title: 'Multistate Tax Services', href: '/services/multistate-tax-services/', group: 'Tax', summary: 'State tax exposure, nexus, and filing strategy across jurisdictions.' },
+  { id: 'international-tax', title: 'International Tax Services', href: '/services/international-tax-services/', group: 'Tax', summary: 'Cross-border reporting and planning for people and businesses.' },
+  { id: 'outsourced-accounting', title: 'Outsourced Accounting', href: '/services/outsourced-accounting-services/', group: 'Accounting', summary: 'A full finance back office without the cost of building one.' },
+  { id: 'outsourced-bookkeeping', title: 'Outsourced Bookkeeping', href: '/services/outsourced-bookkeeping-services/', group: 'Accounting', summary: 'Daily books and reconciliations kept clean and current.' },
+  { id: 'business-accounting', title: 'Business Accounting', href: '/services/business-accounting/', group: 'Accounting', summary: 'Everyday accounting handled by a team that knows your business.' },
+  { id: 'financial-statement-preparation', title: 'Financial Statement Preparation', href: '/services/financial-statement-preparation-services/', group: 'Accounting', summary: 'Clean financial statements prepared for owners, lenders, and boards.' },
+  { id: 'accounting-software', title: 'Accounting Software Implementation', href: '/services/accounting-software-implementation/', group: 'Accounting', summary: 'QuickBooks, NetSuite, and Yardi set up around how you actually work.' },
+  { id: 'fractional-cfo', title: 'Fractional CFO', href: '/services/fractional-cfo-services/', group: 'Advisory', summary: 'Senior finance leadership, part-time and on demand.' },
+  { id: 'transaction-advisory', title: 'Transaction Advisory', href: '/services/transaction-advisory-services/', group: 'Advisory', summary: 'Buy-side and sell-side support for high-stakes deals.' },
+  { id: 'financial-modeling', title: 'Financial Modeling', href: '/services/financial-modeling-services/', group: 'Advisory', summary: 'Investor- and board-ready models that actually tell you something.' },
+  { id: 'financial-advisory', title: 'Financial Advisory', href: '/services/financial-advisory/', group: 'Advisory', summary: 'Strategic financial guidance for decisions that do not fit a tax return.' },
+  { id: 'entity-structuring', title: 'Entity Structuring', href: '/services/business-structure-consulting/', group: 'Compliance', summary: 'Pick the right entity from the start and avoid years of cleanup.' },
+  { id: 'boi-reporting', title: 'BOI Reporting', href: '/services/boi-reporting-services/', group: 'Compliance', summary: 'FinCEN beneficial-ownership reporting, filed correctly and on time.' },
+  { id: 'payroll-compliance', title: 'Payroll Compliance', href: '/services/payroll-compliance-services/', group: 'Compliance', summary: 'Payroll tax, filings, and multistate reciprocity handled.' },
+  { id: 'financial-compliance', title: 'Financial Compliance', href: '/services/financial-compliance/', group: 'Compliance', summary: 'Internal controls and audit-readiness before anyone comes asking.' },
+  { id: 'audit-attestation', title: 'Audit & Attestation', href: '/services/audit-attestation-services/', group: 'Audit', summary: 'Independent audit and assurance that makes your numbers credible.' },
+  { id: 'financial-statement-audits', title: 'Financial Statement Audits', href: '/services/audit-attestation-services/financial-statement-audits/', group: 'Audit', summary: 'Full GAAP and IFRS audits, run thoroughly without being painful.' },
+  { id: 'employee-benefit-plan-audits', title: 'Employee Benefit Plan Audits', href: '/services/audit-attestation-services/employee-benefit-plan-audits/', group: 'Audit', summary: 'Benefit plan audit support for compliance and fiduciary confidence.' },
+  { id: 'reviews-compilations', title: 'Reviews & Compilations', href: '/services/audit-attestation-services/reviews-compilations/', group: 'Audit', summary: 'Right-sized credibility when a full audit is more than you need.' },
+];
+
+const industryOptions = [
+  ...industries.map((i) => ({ id: i.href, title: i.title, href: i.href })),
+  { id: 'other', title: 'Other / general business', href: '/industries/' },
+  { id: 'personal', title: 'Just me / personal', href: '/services/private-client-services/' },
 ];
 ---
 
-<BaseLayout rawTitle="Find Your Service — Alpine Mar" description="A quick triage of Alpine Mar services based on what you're actually trying to do.">
-  <!-- ═════════════ HERO ═════════════ -->
+<BaseLayout rawTitle="Find Your Service — Alpine Mar" description="Answer four quick questions and get an Alpine Mar service recommendation.">
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
-      <div class="mx-auto max-w-[64ch] text-center">
-        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">Find your service</h1>
-        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">
-          {allServices.length} services and one obvious question: what are you actually trying to do? Pick the closest match below.
+      <div class="mx-auto max-w-[66ch] text-center">
+        <p class="font-display text-[14px] tracking-[-0.005em] text-white/75">Four-question quiz</p>
+        <h1 class="mt-4 font-display text-[34px] font-medium leading-[1.08] tracking-[-0.02em] text-white sm:text-[44px] md:text-[56px]">Find your service</h1>
+        <p class="mt-5 font-display text-[15px] leading-[1.65] text-white/70 md:text-[17px]">
+          Tell us who you are, what you need, and what world you operate in. We'll suggest a starting service bundle you can refine on the intro call.
         </p>
       </div>
     </Container>
   </section>
 
-  <!-- ═════════════ PATHWAYS ═════════════ -->
   <section class="relative bg-paper py-20 md:py-24">
     <Container width="wide">
-      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {pathways.map((p, i) => (
-          <li class="flex flex-col gap-5 rounded-[6px] border border-line bg-white p-7">
-            <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Pathway {String(i + 1).padStart(2, '0')}</span>
-            <h2 class="font-display text-[20px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]" set:html={p.label}></h2>
-            <ul class="flex flex-col">
-              {p.services.map((s) => (
-                <li>
-                  <a href={s.href} class="group flex items-center justify-between gap-4 border-b border-line py-3.5 last:border-b-0">
-                    <span class="font-display text-[14px] text-[var(--color-text-head)] transition-colors group-hover:text-scooter" set:html={s.title}></span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="text-[var(--color-text-body)] transition-all group-hover:translate-x-1 group-hover:text-scooter"><path d="m9 18 6-6-6-6"/></svg>
-                  </a>
+      <div id="quiz-app" class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+        <aside id="quiz-progress-card" class="lg:col-span-4">
+          <div class="sticky top-28 rounded-[6px] border border-line bg-white p-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Progress</p>
+            <ol class="mt-6 space-y-3" id="quiz-steps">
+              {['Who', 'Need', 'Situation', 'World'].map((label, i) => (
+                <li class="flex items-center gap-3 font-display text-[14px] text-[var(--color-text-body)]" data-step-indicator={i}>
+                  <span class="flex size-7 items-center justify-center rounded-full border border-line font-mono text-[10px]">{String(i + 1).padStart(2, '0')}</span>
+                  {label}
                 </li>
               ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+            </ol>
+            <p class="mt-7 border-t border-line pt-6 font-display text-[13px] leading-[1.6] text-[var(--color-text-body)]">
+              Your answers help us suggest a practical starting point. We'll refine the final scope with you on the intro call.
+            </p>
+          </div>
+        </aside>
 
-      <p class="mt-12 text-center font-display text-[14px] text-[var(--color-text-body)]">
-        Nothing fits exactly? <a href="/contact/" class="font-medium text-[var(--color-text-head)] underline underline-offset-4 transition-colors hover:text-scooter">Talk to a partner</a> — we'll triage on the intro call.
-      </p>
-    </Container>
-  </section>
+        <div class="lg:col-span-8">
+          <form id="service-quiz" class="rounded-[6px] border border-line bg-white p-7 md:p-10">
+            <fieldset class="quiz-step" data-step="0">
+              <legend class="font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Who are we helping?</legend>
+              <div class="mt-8 grid grid-cols-1 gap-4">
+                {[
+                  ['individual', 'An individual or family'],
+                  ['business', 'A business or organization'],
+                  ['both', 'Both — I run a business and need personal help too'],
+                ].map(([value, label]) => (
+                  <label class="quiz-choice">
+                    <input type="radio" name="who" value={value} required />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
 
-  <!-- ═════════════ CTA ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
-    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
-    <Container width="wide" class="relative z-10">
-      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Let's match you to the right CPA, fast.</h2>
-        <div class="md:col-span-4 md:flex md:justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
-            Request a Consultation
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-          </a>
+            <fieldset class="quiz-step hidden" data-step="1">
+              <legend class="font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">What do you need help with?</legend>
+              <p class="mt-3 font-display text-[14px] text-[var(--color-text-body)]">Pick more than one if needed.</p>
+              <div class="mt-8 grid grid-cols-1 gap-4">
+                {[
+                  ['taxes', 'My taxes — planning, prep, filing'],
+                  ['books', 'My books — bookkeeping, monthly close, reporting'],
+                  ['decisions', 'Big financial decisions — a raise, a sale, forecasting, CFO-level help'],
+                  ['compliance', 'Staying compliant — entity setup, payroll, required filings'],
+                  ['audit', 'An audit or verified financials — a lender, investor, or regulator is asking'],
+                  ['unsure', 'Not sure yet'],
+                ].map(([value, label]) => (
+                  <label class="quiz-choice">
+                    <input type="checkbox" name="needs" value={value} />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-step hidden" data-step="2">
+              <legend class="font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">What's the situation?</legend>
+              <div class="mt-8 grid grid-cols-1 gap-4">
+                {[
+                  ['starting', 'Just getting started — new or pre-revenue'],
+                  ['growing', 'Up and running and growing'],
+                  ['steady', 'Established and steady'],
+                  ['big', 'In the middle of something big — a raise, sale, acquisition, or required audit'],
+                ].map(([value, label]) => (
+                  <label class="quiz-choice">
+                    <input type="radio" name="stage" value={value} required />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-step hidden" data-step="3">
+              <legend class="font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">What's your world?</legend>
+              <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {industryOptions.map((industry) => (
+                  <label class="quiz-choice">
+                    <input type="radio" name="industry" value={industry.id} data-href={industry.href} required />
+                    <span>{industry.title}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
+              <button type="button" id="quiz-prev" class="hidden rounded-[6px] border border-line px-5 py-3 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">Back</button>
+              <button type="button" id="quiz-next" class="ml-auto rounded-[6px] bg-[#1F3062] px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">Next</button>
+              <button type="submit" id="quiz-submit" class="ml-auto hidden rounded-[6px] bg-scooter px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-[#12122D]">See recommendations</button>
+            </div>
+          </form>
+
+          <section id="quiz-result" class="mt-8 hidden rounded-[6px] border border-line bg-white p-7 md:p-10" aria-live="polite">
+            <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-scooter">Recommended starting point</p>
+            <h2 class="mt-4 font-display text-[28px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Start here, then refine on the intro call.</h2>
+            <div id="quiz-result-list" class="mt-8 grid grid-cols-1 gap-4"></div>
+            <div id="quiz-industry" class="mt-6 hidden rounded-[6px] bg-paper p-5"></div>
+            <div class="mt-8 flex flex-wrap gap-4 border-t border-line pt-6">
+              <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
+                Request a consultation
+                <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+              <button type="button" id="quiz-reset" class="rounded-[6px] border border-line px-5 py-3 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:border-[#12122D]">Retake quiz</button>
+            </div>
+          </section>
         </div>
       </div>
     </Container>
   </section>
+
+  <style>
+    .quiz-choice {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      border: 1px solid var(--color-line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 1rem 1.125rem;
+      font-family: var(--font-display);
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--color-text-head);
+      cursor: pointer;
+      transition: border-color 160ms ease, background-color 160ms ease;
+    }
+    .quiz-choice:hover,
+    .quiz-choice:has(input:checked) {
+      border-color: #12122D;
+      background: var(--color-paper);
+    }
+    .quiz-choice input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--color-scooter);
+      flex: 0 0 auto;
+    }
+    #quiz-steps [data-active="true"] {
+      color: var(--color-text-head);
+    }
+    #quiz-steps [data-active="true"] span {
+      border-color: var(--color-scooter);
+      background: var(--color-scooter);
+      color: #fff;
+    }
+  </style>
+
+  <script define:vars={{ services, industryOptions }}>
+    function initServiceQuiz() {
+      const form = document.getElementById('service-quiz');
+      if (!form || form.dataset.bound === '1') return;
+      form.dataset.bound = '1';
+
+      const steps = Array.from(form.querySelectorAll('.quiz-step'));
+      const indicators = Array.from(document.querySelectorAll('[data-step-indicator]'));
+      const prev = document.getElementById('quiz-prev');
+      const next = document.getElementById('quiz-next');
+      const submit = document.getElementById('quiz-submit');
+      const result = document.getElementById('quiz-result');
+      const resultList = document.getElementById('quiz-result-list');
+      const industryBox = document.getElementById('quiz-industry');
+      const reset = document.getElementById('quiz-reset');
+      const progressCard = document.getElementById('quiz-progress-card');
+      let step = 0;
+
+      const weights = {
+        individual: { 'individual-tax': 4, 'private-client': 4, 'estate-trust': 2, 'tax-planning': 2 },
+        business: { 'business-tax': 3, 'outsourced-accounting': 2, 'entity-structuring': 2, 'payroll-compliance': 1 },
+        both: { 'tax-planning': 4, 'private-client': 3, 'business-tax': 3, 'outsourced-accounting': 2 },
+        taxes: { 'tax-planning': 5, 'business-tax': 3, 'individual-tax': 3, 'small-business-tax': 2 },
+        books: { 'outsourced-accounting': 5, 'outsourced-bookkeeping': 4, 'business-accounting': 3, 'accounting-software': 1 },
+        decisions: { 'fractional-cfo': 5, 'financial-modeling': 4, 'financial-advisory': 3, 'transaction-advisory': 2 },
+        compliance: { 'entity-structuring': 4, 'boi-reporting': 3, 'payroll-compliance': 3, 'financial-compliance': 3 },
+        audit: { 'audit-attestation': 4, 'financial-statement-audits': 4, 'reviews-compilations': 2, 'financial-compliance': 2 },
+        unsure: { 'tax-planning': 2, 'financial-advisory': 2, 'outsourced-accounting': 1 },
+        starting: { 'entity-structuring': 4, 'accounting-software': 3, 'small-business-tax': 3, 'outsourced-bookkeeping': 2 },
+        growing: { 'outsourced-accounting': 4, 'fractional-cfo': 4, 'financial-modeling': 3, 'business-tax': 2 },
+        steady: { 'tax-planning': 3, 'business-accounting': 3, 'payroll-compliance': 2, 'financial-compliance': 2 },
+        big: { 'transaction-advisory': 5, 'fractional-cfo': 4, 'financial-statement-audits': 3, 'financial-modeling': 3 },
+      };
+
+      const industryWeights = {
+        '/industries/high-net-worth-accounting-cpa/': { 'private-client': 4, 'estate-trust': 3, 'tax-planning': 2 },
+        '/industries/family-office-accounting-services/': { 'private-client': 3, 'trust-accounting': 3, 'financial-advisory': 2 },
+        '/industries/construction-cpa-services/': { 'business-accounting': 3, 'financial-statement-preparation': 2, 'audit-attestation': 2 },
+        '/industries/healthcare-accounting-services/': { 'payroll-compliance': 2, 'business-tax': 2, 'employee-benefit-plan-audits': 2 },
+        '/industries/law-firm-accounting-services/': { 'trust-accounting': 4, 'outsourced-accounting': 2, 'business-tax': 2 },
+        '/industries/marketing-agency-accounting-services/': { 'outsourced-accounting': 3, 's-corp': 2, 'business-tax': 2 },
+        '/industries/real-estate-cpa-services/': { 'tax-planning': 3, 'entity-structuring': 3, 'business-tax': 2 },
+        '/industries/sports-accounting-services/': { 'individual-tax': 3, 'private-client': 2, 'multistate-tax': 3 },
+        '/industries/crypto-cpa-services/': { 'tax-planning': 3, 'international-tax': 2, 'financial-compliance': 2 },
+        '/industries/saas-accounting-services/': { 'fractional-cfo': 3, 'financial-modeling': 3, 'outsourced-accounting': 2 },
+        '/industries/startup-cpa-services/': { 'financial-modeling': 3, 'fractional-cfo': 3, 'entity-structuring': 2 },
+        personal: { 'private-client': 3, 'individual-tax': 3, 'tax-planning': 2 },
+      };
+
+      function setStep(nextStep) {
+        step = Math.max(0, Math.min(steps.length - 1, nextStep));
+        steps.forEach((el, i) => el.classList.toggle('hidden', i !== step));
+        indicators.forEach((el, i) => {
+          el.dataset.active = i === step ? 'true' : 'false';
+        });
+        prev.classList.toggle('hidden', step === 0);
+        next.classList.toggle('hidden', step === steps.length - 1);
+        submit.classList.toggle('hidden', step !== steps.length - 1);
+      }
+
+      function currentStepValid() {
+        if (step === 1) {
+          return form.querySelectorAll('input[name="needs"]:checked').length > 0;
+        }
+        const checked = steps[step].querySelector('input:checked');
+        return !!checked;
+      }
+
+      function addScores(scores, source) {
+        if (!source) return;
+        Object.entries(source).forEach(([id, value]) => {
+          scores[id] = (scores[id] || 0) + value;
+        });
+      }
+
+      function scoreQuiz() {
+        const data = new FormData(form);
+        const scores = {};
+        addScores(scores, weights[data.get('who')]);
+        data.getAll('needs').forEach((need) => addScores(scores, weights[need]));
+        addScores(scores, weights[data.get('stage')]);
+        addScores(scores, industryWeights[data.get('industry')]);
+
+        return services
+          .map((service) => ({ ...service, score: scores[service.id] || 0 }))
+          .sort((a, b) => b.score - a.score)
+          .filter((service) => service.score > 0)
+          .slice(0, 4);
+      }
+
+      function renderResults() {
+        const recommendations = scoreQuiz();
+        const fallback = recommendations.length ? recommendations : services.filter((s) => ['tax-planning', 'financial-advisory', 'outsourced-accounting'].includes(s.id));
+        resultList.innerHTML = fallback.map((service, index) => `
+          <a href="${service.href}" class="group flex flex-col gap-3 rounded-[6px] border border-line bg-paper p-5 transition-colors hover:border-[#12122D] sm:flex-row sm:items-center sm:justify-between">
+            <span>
+              <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">${String(index + 1).padStart(2, '0')} · ${service.group}</span>
+              <span class="mt-2 block font-display text-[19px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">${service.title}</span>
+              <span class="mt-1 block font-display text-[14px] leading-[1.55] text-[var(--color-text-body)]">${service.summary}</span>
+            </span>
+            <span class="inline-flex size-9 shrink-0 items-center justify-center rounded-[4px] bg-white text-[var(--color-text-head)] transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        `).join('');
+
+        const selectedIndustry = dataIndustry();
+        if (selectedIndustry && selectedIndustry.id !== 'other') {
+          industryBox.classList.remove('hidden');
+          industryBox.innerHTML = `
+            <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">Industry context</p>
+            <a href="${selectedIndustry.href}" class="mt-2 inline-flex items-center gap-2 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+              ${selectedIndustry.title}
+              <span aria-hidden="true">→</span>
+            </a>
+          `;
+        } else {
+          industryBox.classList.add('hidden');
+          industryBox.innerHTML = '';
+        }
+        form.classList.add('hidden');
+        indicators.forEach((el) => { el.dataset.active = 'true'; });
+        result.classList.remove('hidden');
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function dataIndustry() {
+        const selected = form.querySelector('input[name="industry"]:checked');
+        const value = selected?.value;
+        return industryOptions.find((industry) => industry.id === value);
+      }
+
+      next.addEventListener('click', () => {
+        if (!currentStepValid()) {
+          steps[step].querySelector('input')?.reportValidity?.();
+          return;
+        }
+        setStep(step + 1);
+      });
+      prev.addEventListener('click', () => setStep(step - 1));
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!currentStepValid()) return;
+        renderResults();
+      });
+      reset.addEventListener('click', () => {
+        form.reset();
+        result.classList.add('hidden');
+        form.classList.remove('hidden');
+        setStep(0);
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      setStep(0);
+    }
+
+    document.addEventListener('astro:page-load', initServiceQuiz);
+  </script>
 </BaseLayout>

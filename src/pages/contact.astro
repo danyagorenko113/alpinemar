@@ -3,9 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import Eyebrow from '@/components/Eyebrow.astro';
 import Icon from '@/components/Icon.astro';
-import Mountains from '@/components/Mountains.astro';
 import { site } from '@/data/site';
-import { featuredServices } from '@/data/taxonomy';
 
 const inputClass =
   'w-full border border-line bg-white px-4 py-3 text-navy-900 placeholder:text-navy-300 transition-colors focus:border-teal-500 focus-visible:outline-none';
@@ -15,16 +13,7 @@ const inputClass =
   rawTitle="Contact Our Tax & Accounting Experts at Alpine Mar"
   description="Contact our CPA experts at Alpine Mar to see how our accounting & tax solutions can help you."
 >
-  <section class="grain-light relative overflow-hidden bg-paper pt-16 lg:pt-24">
-    <div class="absolute inset-0" aria-hidden="true">
-      <div class="grid-pattern-dark absolute inset-0 opacity-60"></div>
-      <div class="float-slow absolute -left-24 -top-24 h-[480px] w-[480px] rounded-full bg-teal-500/12 blur-[150px]"></div>
-    </div>
-    <Mountains tone="light" class="absolute bottom-0 left-0 h-32 w-full opacity-70" />
-    <div class="pointer-events-none absolute -bottom-2 left-2 select-none lg:left-10" aria-hidden="true">
-      <span class="text-outline block text-[8rem] leading-none lg:text-[12rem]">01</span>
-    </div>
-
+  <section class="relative overflow-hidden bg-paper pt-16 lg:pt-24">
     <Container width="xl" class="relative grid gap-14 pb-24 lg:grid-cols-12 lg:gap-x-12 lg:pb-32">
       <!-- left: intro + details -->
       <div class="lg:col-span-5" data-reveal>
@@ -63,21 +52,6 @@ const inputClass =
 
       <!-- right: consultation form -->
       <div class="lg:col-span-7" data-reveal>
-        <!-- Micro-reward strip — flags above the form, filled as user progresses -->
-        <ol id="form-rewards" class="mb-5 grid gap-px border-l border-t border-line bg-line sm:grid-cols-4 text-[0.66rem]" aria-hidden="true">
-          {[
-            'We’ll know your name',
-            'We can reach you',
-            'We’ll match the right partner',
-            'We’ll prep for your situation',
-          ].map((label, i) => (
-            <li class={`flex items-center gap-2 border-b border-r border-line bg-paper px-3 py-2.5 font-mono uppercase tracking-[0.12em] text-navy-400`} data-reward={i}>
-              <span class="flex size-3.5 shrink-0 items-center justify-center border border-line text-[8px] text-navy-300 reward-tick">{String(i + 1).padStart(2, '0')}</span>
-              <span class="reward-label">{label}</span>
-            </li>
-          ))}
-        </ol>
-
         <form id="consult-form" class="border border-line bg-white p-7 lg:p-10" novalidate>
           <p class="font-mono text-xs uppercase tracking-[0.18em] text-teal-700">Request a consultation</p>
           <h2 class="mt-3 text-2xl tracking-[-0.01em] text-navy-900">Let’s get on a first name basis.</h2>
@@ -98,6 +72,10 @@ const inputClass =
             <label class="block">
               <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500">Phone</span>
               <input class={`mt-2 ${inputClass}`} type="tel" name="phone" autocomplete="tel" />
+            </label>
+            <label class="block sm:col-span-2">
+              <span class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500">Business name</span>
+              <input class={`mt-2 ${inputClass}`} type="text" name="business_name" autocomplete="organization" />
             </label>
           </div>
 
@@ -148,7 +126,7 @@ const inputClass =
               <option value="BOI Unlimited Filing Subscription">BOI Unlimited Filing Subscription</option>
               <option value="BOI Enterprise Filing">BOI Enterprise Filing</option>
               <option value="Not sure — recommend">Not sure — recommend</option>
-              <option value="Other">Other</option>
+              <option value="Other/Special Projects">Other/Special Projects</option>
             </select>
           </label>
 
@@ -169,21 +147,6 @@ const inputClass =
             Thank you — we’ve received your request and will be in touch shortly.
           </p>
         </form>
-
-        <style>
-          /* Reward tick animates on activation */
-          #form-rewards li[data-state="done"] { color: var(--color-teal-700); }
-          #form-rewards li[data-state="done"] .reward-tick {
-            background: var(--color-teal-500);
-            border-color: var(--color-teal-500);
-            color: var(--color-navy-950);
-          }
-          #form-rewards li[data-state="done"] .reward-tick::before {
-            content: "✓";
-            font-size: 9px;
-          }
-          #form-rewards li[data-state="done"] .reward-tick > * { display: none; }
-        </style>
       </div>
     </Container>
   </section>
@@ -196,7 +159,6 @@ const inputClass =
       const ok = document.getElementById('consult-success');
       const select = document.getElementById('svc-select') as HTMLSelectElement | null;
       const smartFields = document.getElementById('smart-fields') as HTMLDivElement | null;
-      const rewards = document.querySelectorAll<HTMLLIElement>('#form-rewards li');
 
     const fieldInput = 'w-full border border-line bg-white px-4 py-3 text-navy-900 placeholder:text-navy-300 transition-colors focus:border-teal-500 focus-visible:outline-none';
     const labelClass = 'font-mono text-[0.7rem] uppercase tracking-[0.14em] text-navy-500';
@@ -254,6 +216,9 @@ const inputClass =
         { name: 'monthly_volume', label: 'Approx. monthly transactions', type: 'select', options: ['<100', '100–500', '500–2000', '2000+'] },
         { name: 'software', label: 'Current accounting software', placeholder: 'QuickBooks Online, NetSuite, …' },
       ],
+      'Other/Special Projects': [
+        { name: 'project_type', label: 'Project type', placeholder: 'Tell us what you need help with' },
+      ],
     };
     SMART_MAP['Outsourced Bookkeeping'] = SMART_MAP['Outsourced Accounting'];
     SMART_MAP['Financial Statement Audits'] = SMART_MAP['Audit & Attestation Services'];
@@ -288,32 +253,7 @@ const inputClass =
     select?.addEventListener('change', () => renderSmart(select.value));
     if (prefill && select?.value) renderSmart(select.value);
 
-    // ── 3) Micro-rewards — light up as form fills ──────────────────────────
-    function updateRewards() {
-      const f = form;
-      if (!f) return;
-      const first = (f.elements.namedItem('first_name') as HTMLInputElement)?.value?.trim();
-      const last  = (f.elements.namedItem('last_name')  as HTMLInputElement)?.value?.trim();
-      const email = (f.elements.namedItem('email')      as HTMLInputElement)?.value?.trim();
-      const phone = (f.elements.namedItem('phone')      as HTMLInputElement)?.value?.trim();
-      const svc   = (f.elements.namedItem('service')    as HTMLSelectElement)?.value;
-      const msg   = (f.elements.namedItem('message')    as HTMLTextAreaElement)?.value?.trim();
-
-      const done = [
-        !!(first && last),
-        !!(email || phone),
-        !!(svc),
-        !!(msg && msg.length > 10),
-      ];
-      rewards.forEach((li, i) => {
-        li.dataset.state = done[i] ? 'done' : '';
-      });
-    }
-    form?.addEventListener('input', updateRewards);
-    form?.addEventListener('change', updateRewards);
-    updateRewards();
-
-    // ── 4) Submit (stub) ───────────────────────────────────────────────────
+    // ── 3) Submit (stub) ───────────────────────────────────────────────────
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }

@@ -12,6 +12,7 @@ const services = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/services' }),
   schema: z.object({
     title: z.string(),
+    heroTitle: z.string().optional(),
     path: z.string(),
     summary: z.string(),
     cover: z.string().optional(),
@@ -37,6 +38,7 @@ const industries = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/industries' }),
   schema: z.object({
     title: z.string(),
+    heroTitle: z.string().optional(),
     path: z.string(),
     summary: z.string(),
     cover: z.string().optional(),

@@ -1,10 +1,15 @@
----
+﻿---
 title: "Business Tax Services"
+heroTitle: "Business Tax Services"
 path: "/services/business-tax/"
-summary: "Business Tax Services from Alpine Mar."
+summary: "Whatever your entity, your business tax handled by one senior team. Federal, state, and the planning in between."
+seo:
+ title: "Business Tax Services | Alpine Mar"
+ description: "Business Tax Services. Maximize your business's tax efficiency and minimize risk with Alpine Mar's full suite of Business Tax Services. Whether you're operating in one state or many, growing rapidly or refining your structure, our tax experts are here to keep you compliant, strategic, and ahead."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Tax
----<p><p>Maximize your business’s tax efficiency and minimize risk with Alpine Mar’s full suite of Business Tax Services. Whether you’re operating in one state or many, growing rapidly or refining your structure, our tax experts are here to keep you compliant, strategic, and ahead.</p>
+---
+<p>Maximize your business’s tax efficiency and minimize risk with Alpine Mar’s full suite of Business Tax Services. Whether you’re operating in one state or many, growing rapidly or refining your structure, our tax experts are here to keep you compliant, strategic, and ahead.</p>
 
 <h3>Partnership Tax Services</h3>
 <p>Partnership taxation requires careful coordination between the entity and its partners.</p>

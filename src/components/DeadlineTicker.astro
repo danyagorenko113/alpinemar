@@ -10,19 +10,16 @@
   class="relative z-[60] hidden border-b border-white/10 bg-navy-950 text-paper"
   role="status"
 >
-  <div class="mx-auto flex max-w-[88rem] items-center gap-3 px-6 py-2 md:px-8">
+  <div class="mx-auto flex max-w-[88rem] items-center gap-2 px-4 py-1.5 md:gap-3 md:px-8 md:py-2">
     <span class="flex size-1.5 shrink-0 animate-pulse rounded-full bg-teal-400" aria-hidden="true"></span>
-    <p class="flex flex-1 flex-wrap items-baseline gap-x-3 gap-y-1 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-navy-300">
-      <span class="text-teal-400">Next IRS deadline</span>
-      <span id="dl-label" class="text-white">—</span>
-      <span class="hidden sm:inline text-navy-400">·</span>
-      <span id="dl-date" class="hidden sm:inline text-white">—</span>
+    <p class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.12em] text-navy-300 sm:text-[0.64rem] md:gap-3 md:tracking-[0.14em]">
+      <span class="text-teal-400">IRS deadline</span>
+      <span id="dl-label" class="hidden truncate text-white md:inline">—</span>
+      <span class="hidden text-navy-400 md:inline">·</span>
+      <span id="dl-date" class="shrink-0 text-white">—</span>
       <span class="text-navy-400">·</span>
-      <span id="dl-countdown" class="font-medium text-teal-300">—</span>
+      <span id="dl-countdown" class="shrink-0 font-medium text-teal-300">—</span>
     </p>
-    <a href="/tools/quarterly-tax-estimator/" class="hidden border-l border-white/10 pl-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-teal-300 transition-colors hover:text-teal-200 sm:inline-block">
-      Estimate yours →
-    </a>
     <button
       type="button"
       id="dl-dismiss"

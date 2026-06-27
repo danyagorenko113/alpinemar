@@ -1,5 +1,5 @@
 ---
-title: "R&#038;D Tax Credits for 2026"
+title: "R&D Tax Credits for 2026"
 date: 2026-03-11
 author: "The Alpine Mar editorial team"
 excerpt: "The research and development tax credit is a federal government incentive. It provides a dollar-for-dollar tax reduction for companies developing new or improved products, processes, or software in the United States."

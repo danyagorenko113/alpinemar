@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { breadcrumb, articleSchema } from '@/data/schema';
+import { team } from '@/data/taxonomy';
 
 export async function getStaticPaths() {
   const posts = await getCollection('insights');
@@ -31,6 +32,9 @@ const dateFmt = (d: string | Date) =>
   new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
 const readingMin = Math.max(2, Math.round((post.data.excerpt?.length ?? 400) / 200));
+const authorName = post.data.author ?? 'The Alpine Mar team';
+const authorProfile = team.find((m) => authorName.includes(m.name.replace(/,\s*CPA$/, '')));
+const authorPhoto = authorProfile?.photo ?? '/images/brand/logo-web.png';
 
 const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
 
@@ -65,12 +69,12 @@ const schema = [
     <section class="relative bg-paper">
       <Container width="wide" class="pt-12 pb-10 md:pt-16 md:pb-14">
         <nav aria-label="Breadcrumb" class="mb-8">
-          <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-[var(--color-text-body)]">
+          <ol class="inline-flex max-w-full items-center gap-2 overflow-hidden whitespace-nowrap rounded-full bg-white/85 px-4 py-2 font-display text-[13px] font-medium text-navy-950 shadow-[0_12px_30px_-18px_rgba(18,18,45,0.6)] backdrop-blur-sm">
             <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
             <li aria-hidden="true" class="opacity-55">/</li>
             <li><a href="/blog/" class="transition-colors hover:text-scooter">Insights</a></li>
-            <li aria-hidden="true" class="opacity-55">/</li>
-            <li aria-current="page" class="font-medium text-[var(--color-text-head)] line-clamp-1">{post.data.title}</li>
+            <li aria-hidden="true" class="hidden opacity-55 sm:inline">/</li>
+            <li aria-current="page" class="hidden max-w-[36ch] truncate sm:inline">{post.data.title}</li>
           </ol>
         </nav>
 
@@ -111,8 +115,8 @@ const schema = [
 
       {post.data.cover && (
         <Container width="wide" class="pb-12 md:pb-16">
-          <div class="overflow-hidden rounded-[6px] bg-navy-50">
-            <img src={post.data.cover} alt={post.data.title} class="aspect-[16/8] w-full object-cover" />
+          <div class="overflow-hidden rounded-[6px] bg-white">
+            <img src={post.data.cover} alt={post.data.title} class="aspect-[16/8] w-full object-contain" />
           </div>
         </Container>
       )}
@@ -130,10 +134,17 @@ const schema = [
             <!-- Article footer: byline -->
             <footer class="mt-16 border-t border-line pt-7">
               <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Written by</p>
-              <p class="mt-3 font-display text-[18px] font-medium text-[var(--color-text-head)]">{post.data.author ?? 'The Alpine Mar team'}</p>
-              <p class="mt-2 max-w-[60ch] font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">
-                The Alpine Mar editorial team publishes practical, vetted guidance on tax, accounting, and advisory for owner-operators and growing firms.
-              </p>
+              <div class="mt-4 flex items-start gap-4">
+                <div class="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-white">
+                  <img src={authorPhoto} alt={authorName} class:list={['h-full w-full', authorProfile?.photo ? 'object-cover' : 'object-contain p-3']} loading="lazy" />
+                </div>
+                <div>
+                  <p class="font-display text-[18px] font-medium text-[var(--color-text-head)]">{authorName}</p>
+                  <p class="mt-2 max-w-[60ch] font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">
+                    The Alpine Mar editorial team publishes practical, vetted guidance on tax, accounting, and advisory for owner-operators and growing firms.
+                  </p>
+                </div>
+              </div>
             </footer>
           </div>
 
@@ -189,22 +200,6 @@ const schema = [
       </Container>
     </section>
   </article>
-
-  <!-- ═════════════ CTA ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
-    <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
-    <Container width="wide" class="relative z-10">
-      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">Question on this topic? Ask a partner.</h2>
-        <div class="md:col-span-4 md:flex md:justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
-            Request a Consultation
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-          </a>
-        </div>
-      </div>
-    </Container>
-  </section>
 
   <script>
     function initReadingProgress() {

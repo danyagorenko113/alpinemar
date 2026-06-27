@@ -15,7 +15,7 @@ export const orgSchema = {
   email: site.email,
   foundingDate: '2020',
   image: abs('/og-default.jpg'),
-  logo: abs('/favicon.svg'),
+  logo: abs('/favicon.png'),
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.street,

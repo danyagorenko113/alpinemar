@@ -51,10 +51,10 @@ const process = service.data.process ?? [];
 const benefits = takeaways.length
   ? takeaways.slice(0, 4).map((t) => ({ title: t, body: '' }))
   : [
-      { title: 'Partner-led', body: 'A senior CPA on every engagement — no junior handoff once you sign.' },
+      { title: 'Partner involvement', body: 'A CPA on every engagement. No junior handoff once you sign.' },
       { title: 'Fixed-fee, scoped',  body: "Scope and price agreed before we start. No hourly meter, no surprise invoices." },
       { title: 'Year-round attention', body: 'We work the calendar, not just the deadline. Quarterly check-ins by default.' },
-      { title: 'Modern finance stack', body: 'Cloud books, automation, secure portals — work moves faster without losing rigor.' },
+      { title: 'Modern finance stack', body: 'Cloud books, AI, automation, and secure portals. Work moves faster without losing rigor.' },
     ];
 
 // "Why Alpine Mar" pillars — three reasons we win the engagement
@@ -65,9 +65,9 @@ const pillars = [
 ];
 
 const defaultFaq = [
-  { q: 'How quickly can we start?',                            a: 'We schedule an intro call within 2 business days and can begin scoping the engagement the same week. Active engagements start within 2 weeks of a signed engagement letter — sooner if a deadline is driving the timeline.' },
+  { q: 'How quickly can we start?',                            a: 'We schedule an intro call within a few business days and can begin scoping the same week.' },
   { q: 'How are fees structured?',                             a: `${service.data.title} engagements are quoted as fixed-fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes. For ongoing engagements (e.g. monthly close, fractional CFO), pricing is a flat monthly retainer.` },
-  { q: 'Will I work with the same person, or get passed around?', a: 'Every engagement is partner-led — the senior CPA you meet on the intro is the one running your file. Day-to-day support is handled by a senior associate, but partner sign-off is on every deliverable.' },
+  { q: 'Will I work with the same person, or get passed around?', a: 'Every engagement has partner involvement. The senior CPA you meet on the intro stays close to your file, with day-to-day support from a senior associate and partner sign-off on every deliverable.' },
   { q: 'Are you taking new clients?',                          a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.' },
 ];
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
@@ -96,30 +96,30 @@ const schema = [
 
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
         <nav aria-label="Breadcrumb" class="mb-6">
-          <ol class="flex flex-wrap items-center gap-2 font-display text-[13px] text-[var(--color-text-head)]">
+          <ol class="inline-flex max-w-full items-center gap-2 overflow-hidden whitespace-nowrap rounded-full bg-white/80 px-4 py-2 font-display text-[13px] font-medium text-navy-950 shadow-[0_12px_30px_-18px_rgba(18,18,45,0.6)] backdrop-blur-sm">
             <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
             <li aria-hidden="true" class="opacity-55">/</li>
             <li><a href="/services/" class="transition-colors hover:text-scooter">Services</a></li>
             {group && (<>
               <li aria-hidden="true" class="opacity-55">/</li>
-              <li class="opacity-75">{group}</li>
+              <li><a href="/services/" class="transition-colors hover:text-scooter">{group}</a></li>
             </>)}
-            <li aria-hidden="true" class="opacity-55">/</li>
-            <li aria-current="page" class="font-medium">{service.data.title}</li>
+            <li aria-hidden="true" class="hidden opacity-55 sm:inline">/</li>
+            <li aria-current="page" class="hidden max-w-[36ch] truncate font-medium sm:inline">{service.data.title}</li>
           </ol>
         </nav>
 
         <h1 class="am-hero-display am-gradient-ink max-w-[18ch]">
-          {service.data.title}
+          {service.data.heroTitle ?? service.data.title}
         </h1>
       </Container>
     </div>
   </section>
 
   <!-- ═════════════ SUMMARY + CTA STRIP ═════════════ -->
-  <section class="relative bg-white py-14 md:py-20">
+  <section class="relative bg-white py-8 md:py-20">
     <Container width="wide">
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <p class="font-display text-[18px] leading-[1.55] text-[var(--color-text-head)] md:col-span-8">
           {service.data.summary}
         </p>
@@ -133,38 +133,14 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ STATS BAR ═════════════ -->
-  <section class="relative bg-paper py-10 md:py-12">
-    <Container width="wide">
-      <ul class="grid grid-cols-2 gap-y-8 border-y border-line py-10 md:grid-cols-4">
-        <li class="flex flex-col items-center gap-2 px-4 text-center">
-          <span class="font-display text-[40px] font-medium tracking-[-0.02em] text-[#1F3062] md:text-[48px]" data-counter data-to="6" data-suffix="+">0</span>
-          <span class="font-display text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">Years in business</span>
-        </li>
-        <li class="flex flex-col items-center gap-2 px-4 text-center">
-          <span class="font-display text-[40px] font-medium tracking-[-0.02em] text-[#1F3062] md:text-[48px]" data-counter data-to="31">0</span>
-          <span class="font-display text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">Specialised services</span>
-        </li>
-        <li class="flex flex-col items-center gap-2 px-4 text-center">
-          <span class="font-display text-[40px] font-medium tracking-[-0.02em] text-[#1F3062] md:text-[48px]" data-counter data-to="11">0</span>
-          <span class="font-display text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">Industry verticals</span>
-        </li>
-        <li class="flex flex-col items-center gap-2 px-4 text-center">
-          <span class="font-display text-[40px] font-medium tracking-[-0.02em] text-[#1F3062] md:text-[48px]" data-counter data-to="100" data-suffix="%">0</span>
-          <span class="font-display text-[12px] uppercase tracking-[0.12em] text-[var(--color-text-body)]">Partner-led engagements</span>
-        </li>
-      </ul>
-    </Container>
-  </section>
-
   <!-- ═════════════ WHAT YOU GET (benefits) ═════════════ -->
-  <section class="relative bg-paper py-20 md:py-24">
+  <section class="relative bg-paper py-12 md:py-24">
     <Container width="wide">
-      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">What you get</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
           The engagement, in a nutshell.
         </h2>
@@ -172,9 +148,9 @@ const schema = [
           Every Alpine Mar {service.data.title.toLowerCase()} engagement is built on the same four commitments.
         </p>
       </div>
-      <ul class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
         {benefits.map((b, i) => (
-          <li class="flex flex-col gap-5 rounded-[6px] border border-line bg-white p-7">
+          <li class="flex flex-col gap-5 rounded-[6px] border border-line bg-white p-5 md:p-7">
             <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)]">{b.title}</h3>
             {b.body && (<p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{b.body}</p>)}
@@ -186,21 +162,21 @@ const schema = [
 
   <!-- ═════════════ WHAT'S INCLUDED (dark, optional) ═════════════ -->
   {included.length > 0 && (
-    <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+    <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
       <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
       <Container width="wide" class="relative z-10">
-        <div class="mb-10 flex items-center gap-3 text-white/85">
+        <div class="mb-8 flex items-center gap-3 text-white/85 md:mb-10">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">What's included</span>
         </div>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">A defined scope, not a black box.</h2>
           <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
             Engagements are scoped before they start. Here's what a typical {service.data.title.toLowerCase()} engagement covers.
           </p>
         </div>
-        <ul class="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
           {included.map((item) => (
             <li class="flex items-start gap-3">
               <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
@@ -215,26 +191,26 @@ const schema = [
   )}
 
   <!-- ═════════════ PROCESS ═════════════ -->
-  <section class="relative bg-white py-24 md:py-32">
+  <section class="relative bg-white py-12 md:py-32">
     <Container width="wide">
-      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">How we work</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">From first call to closed loop.</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
           Four predictable steps. No surprise scope creep, no junior handoffs, no hourly meter ticking on routine questions.
         </p>
       </div>
-      <ol class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <ol class="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 lg:grid-cols-4">
         {(process.length ? process : [
           { title: 'Intro call', body: 'An introductory call with the partner who would run the engagement — scope, timing, fit.' },
           { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo + flat fee.' },
           { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence — weekly status by default.' },
           { title: 'Wrap-up',    body: 'Deliverables ship with a written summary. You keep working with the same team next round.' },
         ]).map((p, i) => (
-          <li class="flex flex-col gap-4 rounded-[6px] border border-line bg-paper p-7">
+          <li class="flex flex-col gap-4 rounded-[6px] border border-line bg-paper p-5 md:p-7">
             <span class="font-mono text-[12px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Step {String(i + 1).padStart(2, '0')}</span>
             <h3 class="font-display text-[20px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{p.title}</h3>
             <p class="font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{p.body}</p>
@@ -245,13 +221,13 @@ const schema = [
   </section>
 
   <!-- ═════════════ DEEP DIVE (markdown body, landing-styled) ═════════════ -->
-  <section class="relative bg-paper py-24 md:py-32">
+  <section class="relative bg-paper py-12 md:py-32">
     <Container width="wide">
-      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Deep dive</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
           The detail, if you want it.
         </h2>
@@ -260,14 +236,14 @@ const schema = [
         </p>
       </div>
 
-      <div class="mt-14 grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <div class="rounded-[6px] border border-line bg-white p-8 md:col-span-9 md:p-12">
+      <div class="mt-8 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-12 md:gap-16">
+        <div class="rounded-[6px] border border-line bg-white p-6 md:col-span-9 md:p-12">
           <div class="prose-am">
             <Content />
           </div>
         </div>
         <aside class="md:col-span-3">
-          <div class="sticky top-28 rounded-[6px] bg-[#12122D] p-7 text-white">
+          <div class="sticky top-28 rounded-[6px] bg-[#12122D] p-6 text-white md:p-7">
             <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-head)]">Quick answer</p>
             <p class="mt-5 font-display text-[15px] leading-[1.55] text-white/85">
               Skip the long read? The summary above plus the FAQ below cover 90% of what clients ask before booking the intro call.
@@ -283,18 +259,18 @@ const schema = [
   </section>
 
   <!-- ═════════════ TESTIMONIAL ═════════════ -->
-  <section class="relative bg-white py-20 md:py-24">
+  <section class="relative bg-white py-12 md:py-24">
     <Container width="wide">
-      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Client view</span>
       </div>
-      <figure class="grid grid-cols-1 gap-10 rounded-[6px] border border-line bg-paper p-10 md:grid-cols-12 md:gap-16 md:p-14">
+      <figure class="grid grid-cols-1 gap-6 rounded-[6px] border border-line bg-paper p-6 md:grid-cols-12 md:gap-16 md:p-14">
         <svg width="48" height="40" viewBox="0 0 32 26" fill="currentColor" aria-hidden="true" class="text-line md:col-span-1">
           <path d="M9.6 0C4.3 0 0 4.6 0 10.3v15.7h12.5V10.3H6.4c0-2.8 1.4-5.1 3.2-5.1V0Zm19.6 0c-5.3 0-9.6 4.6-9.6 10.3v15.7H32V10.3h-6.1c0-2.8 1.4-5.1 3.2-5.1V0Z"/>
         </svg>
         <div class="md:col-span-11">
-          <blockquote class="font-display text-[20px] leading-[1.5] tracking-[-0.005em] text-[var(--color-text-head)] md:text-[24px]">
+          <blockquote class="font-display text-[18px] leading-[1.5] tracking-[-0.005em] text-[var(--color-text-head)] md:text-[24px]">
             They worked the calendar, not just the deadline. By Q3 we had a plan, by Q4 we were executing — first year I haven't felt blindsided in April.
           </blockquote>
           <figcaption class="mt-8 flex items-center gap-4 border-t border-line pt-6">
@@ -313,27 +289,31 @@ const schema = [
 
   <!-- ═════════════ WHO IT'S FOR ═════════════ -->
   {linkedIndustries.length > 0 && (
-    <section class="relative bg-paper py-24 md:py-32">
+    <section class="relative bg-paper py-12 md:py-32">
       <Container width="wide">
-        <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">Who it's for</span>
         </div>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
             Industries we run this for.
           </h2>
           <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-            Specialised playbooks for the verticals we know best — benchmarks, deductions, and tax positions that don't need explaining.
+            Specialized playbooks for the verticals we know best — benchmarks, deductions, and tax positions that don't need explaining.
           </p>
         </div>
-        <ul class="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
           {linkedIndustries.map((ind) => (
             <li>
-              <a href={ind.href} class="group flex h-full min-h-[120px] flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
-                <span class="font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{ind.title}</span>
-                <span class="inline-flex size-7 items-center justify-center rounded-[4px] bg-paper text-[var(--color-text-head)] transition-transform group-hover:translate-x-1">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              <a href={ind.href} class="group flex h-full min-h-[150px] flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+                <span>
+                  <span class="block font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{ind.title}</span>
+                  <span class="mt-3 block line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{ind.desc}</span>
+                </span>
+                <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
+                  Learn more
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
               </a>
             </li>
@@ -344,15 +324,15 @@ const schema = [
   )}
 
   <!-- ═════════════ WHY ALPINE MAR (dark) ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+  <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
-      <div class="mb-10 flex items-center gap-3 text-white/85">
+      <div class="mb-8 flex items-center gap-3 text-white/85 md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Why Alpine Mar</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
           A strategy that works<br />as hard as you do.
         </h2>
@@ -360,9 +340,9 @@ const schema = [
           You'll hear from us before tax season, not just during it. Our team stays close to your financials year-round, flagging opportunities and managing compliance.
         </p>
       </div>
-      <ul class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
+      <ul class="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-3">
         {pillars.map((p) => (
-          <li class="flex flex-col gap-6 rounded-[6px] bg-white p-7 text-[var(--color-text-head)]">
+          <li class="flex flex-col gap-5 rounded-[6px] bg-white p-5 text-[var(--color-text-head)] md:gap-6 md:p-7">
             <span class="inline-flex size-12 items-center justify-center rounded-[6px] bg-paper">
               <img src={p.icon} alt="" aria-hidden="true" class="size-6" />
             </span>
@@ -374,59 +354,27 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ TALK TO A PARTNER ═════════════ -->
-  <section class="relative bg-white py-20 md:py-24">
-    <Container width="wide">
-      <div class="grid grid-cols-1 items-center gap-10 rounded-[6px] border border-line bg-paper p-8 md:grid-cols-12 md:gap-16 md:p-12">
-        <div class="md:col-span-3 md:order-1">
-          <div class="aspect-square w-full max-w-[200px] overflow-hidden rounded-[6px] bg-navy-50">
-            <img src="/images/team/Pablo.jpeg" alt="Pablo Martell, CPA" class="h-full w-full object-cover" loading="lazy" />
-          </div>
-        </div>
-        <div class="md:col-span-9 md:order-2">
-          <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-head)]">Talk to a partner</p>
-          <h2 class="mt-4 font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[32px]">
-            Get a partner-level answer on the first call — no sales handoff.
-          </h2>
-          <p class="mt-5 max-w-[58ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-body)]">
-            Pablo Martell, CPA — CEO &amp; Managing Partner — sits on every intro for {service.data.title.toLowerCase()}. You'll know inside 30 minutes whether we're the right fit, and what the engagement actually costs.
-          </p>
-          <div class="mt-7 flex flex-wrap items-center gap-4">
-            <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-[#1F3062] px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
-              Book an intro call
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-            <a href="/about-us/" class="inline-flex items-center gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
-              Meet the team
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
-
   <!-- ═════════════ MORE IN THIS CATEGORY ═════════════ -->
   {related.length > 0 && (
-    <section class="relative bg-paper py-20 md:py-24">
+    <section class="relative bg-paper py-12 md:py-24">
       <Container width="wide">
-        <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">{group ? `More ${group} services` : 'Related services'}</span>
         </div>
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
             Often booked alongside this one.
           </h2>
-          <a href="/services/" class="inline-flex items-start gap-2 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter md:col-span-5 md:justify-self-end md:pt-3">
+          <a href="/services/" class="group inline-flex w-fit items-center gap-2 rounded-[6px] bg-[#1F3062] px-5 py-3 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter md:col-span-5 md:justify-self-end md:bg-transparent md:px-0 md:py-0 md:pt-3 md:text-[var(--color-text-head)] md:hover:bg-transparent md:hover:text-scooter">
             All services
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="mt-0.5"><path d="m9 18 6-6-6-6"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
-        <ul class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <ul class="mt-8 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
           {related.map((s) => (
             <li>
-              <a href={s.href} class="group flex h-full min-h-[160px] flex-col justify-between gap-6 rounded-[6px] border border-line bg-white p-6 transition-colors hover:border-[#12122D]">
+              <a href={s.href} class="group flex h-full min-h-[130px] flex-col justify-between gap-6 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D] md:min-h-[160px] md:p-6">
                 <h3 class="font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{s.title}</h3>
                 <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
                   Learn more
@@ -441,22 +389,22 @@ const schema = [
   )}
 
   <!-- ═════════════ FAQ ═════════════ -->
-  <section id="faq" class="relative bg-white py-24 md:py-32">
+  <section id="faq" class="relative bg-white py-12 md:py-32">
     <Container width="wide">
-      <div class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
         <span class="font-display text-[14px] tracking-[-0.005em]">Common questions</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">Before you book the call.</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
           Quick answers to the things most people ask before signing on for {service.data.title.toLowerCase()}.
         </p>
       </div>
 
-      <div class="mt-12 overflow-hidden rounded-[6px] border border-line bg-white">
+      <div class="mt-8 overflow-hidden rounded-[6px] border border-line bg-white md:mt-12">
         {faq.map((item, i) => (
-          <details class={`group ${i > 0 ? 'border-t border-line' : ''} px-7 py-5`} {...(i === 0 ? { open: true } : {})}>
+          <details class={`group ${i > 0 ? 'border-t border-line' : ''} px-5 py-4 md:px-7 md:py-5`} {...(i === 0 ? { open: true } : {})}>
             <summary class="flex cursor-pointer items-center justify-between gap-6 font-display text-[16px] font-medium text-[var(--color-text-head)] [&::-webkit-details-marker]:hidden">
               {item.q}
               <span class="inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-line text-[var(--color-text-head)] transition-transform group-open:rotate-45">
@@ -471,16 +419,16 @@ const schema = [
   </section>
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
-  <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
+  <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
     <Container width="wide" class="relative z-10">
-      <div class="mb-16 flex items-center gap-3 text-white/85 md:mb-24">
+      <div class="mb-10 flex items-center gap-3 text-white/85 md:mb-24">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[15px] tracking-[-0.005em]">Ready to <span class="text-white/55">start?</span></span>
+        <span class="font-display text-[15px] tracking-[-0.005em]">Ready to start?</span>
       </div>
 
-      <div class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
+      <div class="grid grid-cols-1 items-end gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
           Let's get on a first name basis.
         </h2>

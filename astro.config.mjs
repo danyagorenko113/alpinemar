@@ -10,7 +10,11 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => page !== 'https://alpinemar.com/design-system/',
+      filter: (page) =>
+        ![
+          'https://alpinemar.com/design-system/',
+          'https://alpinemar.com/tools/quarterly-tax-estimator/',
+        ].includes(page),
     }),
   ],
   vite: {

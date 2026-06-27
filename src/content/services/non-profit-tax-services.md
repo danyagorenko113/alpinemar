@@ -1,10 +1,15 @@
----
+﻿---
 title: "Non-Profit Tax Services"
+heroTitle: "Non-Profit Tax Services"
 path: "/services/non-profit-tax-services/"
-summary: "Non-Profit Tax Services from Alpine Mar."
+summary: "Form 990, exemption, and the compliance that keeps your status safe. So you can spend your energy on the mission."
+seo:
+ title: "Non-Profit Tax Services"
+ description: "Non-Profit Tax Services. Supporting mission-driven organizations. Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability. Alpine Mar partners with mission-driven organizations to provide reliable tax guidance that supports transparency and sustainability. We understand the operational and reporting challenges non-profits face and"
 industries: ["healthcare-accounting-services"]
 group: Tax
----<p><img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2026/03/Non-Profit-Tax-Services.jpg" alt="Non-Profit Tax Services">
+---
+<p><img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2026/03/Non-Profit-Tax-Services.jpg" alt="Non-Profit Tax Services">
 <h2>Supporting mission-driven organizations</h2>
 <p>Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability. Alpine Mar partners with mission-driven organizations to provide reliable tax guidance that supports transparency and sustainability.</p>
 <p>We understand the operational and reporting challenges non-profits face and offer practical, proactive solutions.</p>
