@@ -5,7 +5,7 @@ path: "/industries/sports-accounting-services/"
 summary: "Multi-state residency, NIL income, and post-career planning, handled discreetly end to end. The financial team behind the career."
 seo:
  title: "Sports Accountants for Professional Athletes | Alpine Mar"
- description: "Sports accounting services for athletes, coaches, and teams — multi-state residency, NIL income, contract analysis, and post-career planning, end to end."
+ description: "Sports Accounting Services. In the dynamic world of professional sports, financial management and accounting play a pivotal role in ensuring the success and sustainability of sports organizations, teams, coaches and athletes. Alpine Mar's Sports Accounting Services is your dedicated partner in navigating the complex financial landscape of the sports industry. Our"
 services: ["individual-tax-services", "estate-trust-tax-planning", "private-client-services", "tax-planning-services", "business-tax", "outsourced-accounting-services", "outsourced-bookkeeping-services", "business-accounting", "financial-advisory"]
 ---
 <p>In the dynamic world of professional sports, financial management and accounting play a pivotal role in ensuring the success and sustainability of sports organizations, teams, coaches and athletes. Alpine Mar's Sports Accounting Services is your dedicated partner in navigating the complex financial landscape of the sports industry. Our specialized team of sports accountants has the expertise and unwavering commitment to financial excellence needed to cater to the unique needs of professional athletes, sports teams, sports organizations, coaches and related businesses.</p>

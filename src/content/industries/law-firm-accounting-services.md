@@ -5,7 +5,7 @@ path: "/industries/law-firm-accounting-services/"
 summary: "IOLTA discipline and partner allocations for law firms, plaintiff and defense. Trust accounting that survives scrutiny and comp that keeps partners aligned."
 seo:
  title: "Law Firm Accounting Services by Alpine Mar"
- description: "Law firm accounting and tax services — IOLTA trust accounting, partner allocations, and reporting built for plaintiff and defense practices in Florida."
+ description: "Law Firm Accounting Services. When it comes to the legal industry, precise financial management is paramount. Law firms must juggle various financial responsibilities, including client trust accounts to securely hold client funds, income taxes, and preparing financial statements. Alpine Mar's specializes in providing expert accounting services tailored to the unique needs"
 services: ["partnership-tax-services", "s-corp-cpa-services", "small-business-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "trust-accounting-cpa", "fractional-cfo-services", "transaction-advisory-services", "audit-attestation-services"]
 ---
 <p>When it comes to the legal industry, precise financial management is paramount. Law firms must juggle various financial responsibilities, including client trust accounts to securely hold client funds, income taxes, and preparing financial statements. Alpine Mar's specializes in providing expert accounting services tailored to the unique needs of law firms, ensuring their financial health and compliance. With our comprehensive legal accounting services, you can focus on practicing law while leaving your financial management in capable hands.</p>

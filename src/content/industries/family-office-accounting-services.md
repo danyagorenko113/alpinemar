@@ -5,7 +5,7 @@ path: "/industries/family-office-accounting-services/"
 summary: "Consolidated reporting, entity by entity, for families managing real complexity. One clear picture across the businesses, trusts, and investments."
 seo:
  title: "Family Office Accounting & Tax Services"
- description: "Florida CPA team for family offices — consolidated reporting, estate and tax planning, and trust support across the businesses, entities, and investments."
+ description: "Family Office Accounting Services. Alpine Mar understands the unique financial needs of high net worth individuals and closely held businesses, which is why we provide comprehensive family office accounting services tailored to your requirements. Our expert team specializes in a wide array of financial aspects, from tax planning to estate, succession"
 services: ["tax-advisory-and-compliance", "individual-tax-services", "estate-trust-tax-planning", "private-client-services", "international-tax-services", "trust-accounting-cpa", "fractional-cfo-services", "tax-planning-services", "business-tax"]
 ---
 <p>Alpine Mar understands the unique financial needs of high net worth individuals and closely held businesses, which is why we provide comprehensive family office accounting services tailored to your requirements. Our expert team specializes in a wide array of financial aspects, from tax planning to estate, succession planning, property management and investment management. We are dedicated to helping you manage your wealth effectively, ensuring that your family's legacy is preserved for generations to come.</p>
