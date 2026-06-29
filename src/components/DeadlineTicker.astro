@@ -1,54 +1,54 @@
 ---
+import Container from './Container.astro';
+
 // Sticky compact bar above nav — counts days until next IRS deadline.
-// Hardcoded calendar (extended through 2027 for safety) is computed in
-// the browser to pick the next deadline relative to "today".
+// Hardcoded calendar is computed in the browser to pick the next deadline.
 // Dismissable via localStorage; re-appears after 7 days.
 ---
 
 <div
   id="deadline-ticker"
-  class="relative z-[60] hidden border-b border-white/10 bg-navy-950 text-paper"
+  class="relative z-[60] hidden border-b border-line bg-white text-[#12122D]"
   role="status"
 >
-  <div class="mx-auto flex max-w-[88rem] items-center gap-2 px-4 py-1.5 md:gap-3 md:px-8 md:py-2">
-    <span class="flex size-1.5 shrink-0 animate-pulse rounded-full bg-teal-400" aria-hidden="true"></span>
-    <p class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.12em] text-navy-300 sm:text-[0.64rem] md:gap-3 md:tracking-[0.14em]">
-      <span class="text-teal-400">IRS deadline</span>
-      <span id="dl-label" class="hidden truncate text-white md:inline">—</span>
-      <span class="hidden text-navy-400 md:inline">·</span>
-      <span id="dl-date" class="shrink-0 text-white">—</span>
-      <span class="text-navy-400">·</span>
-      <span id="dl-countdown" class="shrink-0 font-medium text-teal-300">—</span>
+  <Container width="wide" class="flex items-center gap-2 py-1.5 md:gap-3 md:py-2">
+    <span class="flex size-1.5 shrink-0 animate-pulse rounded-full bg-scooter" aria-hidden="true"></span>
+    <p class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap font-display text-[12px] font-medium tracking-[-0.005em] text-[#12122D] sm:text-[13px] md:gap-3">
+      <span>IRS deadline</span>
+      <span id="dl-label" class="hidden truncate md:inline">&mdash;</span>
+      <span class="hidden text-[#12122D]/45 md:inline">&middot;</span>
+      <span id="dl-date" class="shrink-0">&mdash;</span>
+      <span class="text-[#12122D]/45">&middot;</span>
+      <span id="dl-countdown" class="shrink-0 font-medium">&mdash;</span>
     </p>
     <button
       type="button"
       id="dl-dismiss"
-      class="ml-2 inline-flex size-6 shrink-0 items-center justify-center text-navy-400 transition-colors hover:text-white"
+      class="-mr-2 ml-2 inline-flex size-6 shrink-0 items-center justify-center text-[#12122D]/55 transition-colors hover:text-[#12122D]"
       aria-label="Dismiss notification"
     >
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
     </button>
-  </div>
+  </Container>
 </div>
 
 <script is:inline>
   function initDeadlineTicker() {
     // IRS deadlines through 2027 — most-relevant ones for owner-operators.
-    // Format: [Mon-DD-YYYY, label]
+    // Format: [Mon-DD, label]
     const cal = [
       ['01-15', 'Q4 estimated tax due'],
       ['01-31', '1099-NEC & W-2 filing'],
       ['03-15', 'S-Corp & partnership returns'],
-      ['04-15', 'Individual + C-Corp returns · Q1 estimates'],
+      ['04-15', 'Individual + C-Corp returns \u00b7 Q1 estimates'],
       ['06-16', 'Q2 estimated tax'],
-      ['09-15', 'Q3 estimates · extended pass-throughs'],
+      ['09-15', 'Q3 estimates \u00b7 extended pass-throughs'],
       ['10-15', 'Extended individual + C-Corp'],
     ];
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
     const year = today.getFullYear();
 
-    // Build full list across this year + next
     const all = [];
     for (const yr of [year, year + 1, year + 2]) {
       for (const [md, label] of cal) {
@@ -68,12 +68,12 @@
 
     label.textContent = next.label;
     date.textContent = next.d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    countdown.textContent = days === 0 ? 'TODAY' : days === 1 ? '1 day' : `${days} days`;
+    countdown.textContent = days === 0 ? 'Today' : days === 1 ? '1 day' : `${days} days`;
 
-    // Dismissal
     const dismissedAt = +localStorage.getItem('dl_dismissed_at') || 0;
-    const SEVEN_DAYS = 7 * 86400000;
-    if (Date.now() - dismissedAt < SEVEN_DAYS) return; // stay hidden
+    const sevenDays = 7 * 86400000;
+    if (Date.now() - dismissedAt < sevenDays) return;
+
     bar.classList.remove('hidden');
     document.getElementById('dl-dismiss')?.addEventListener('click', () => {
       bar.classList.add('hidden');

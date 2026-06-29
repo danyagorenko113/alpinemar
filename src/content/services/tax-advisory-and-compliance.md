@@ -18,7 +18,7 @@ group: Tax
 <p><strong>International Tax Services</strong> — The International tax landscape is constantly evolving, creating challenges and opportunities for businesses and individuals with a global footprint.</p>
 <p><strong>Non-Profit Tax Services</strong> — Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability.</p>
 <p><strong>Multistate Tax Services</strong> — Navigate tax obligations across jurisdictions, managing state &amp; local filings, nexus issues, credits &amp; incentives.</p>
-<p><strong>Business Tax Services</strong> — Maximize your business's tax efficiency and minimize risk with Alpine Mar's full suite of Business Tax Services</p>
+<p><strong>Business Tax Services</strong> — Maximize your business's tax efficiency and minimize risk with Alpine Mar's full suite of Business Tax Services.</p>
 <h2>Choose Alpine Mar for Tax Advisory</h2>
 <p><strong>National and international expertise.</strong> Our CPAs are knowledgeable about single-state, multistate, and international tax complexities, keeping you compliant and your taxes optimized.</p>
 <p><strong>Proactive approach.</strong> We work with you to identify tax-saving opportunities early to avoid surprises and maximize your financial position.</p>
@@ -26,4 +26,4 @@ group: Tax
 <h2>What you can expect</h2>
 <p>Our team communicates regularly, clearly, and right when you need it. Expect deliverables to include strategy sessions, guidance on estimated taxes, multistate compliance, tax return filings, and audit support when required.</p>
 <h2>Ready to reduce your tax burden and operate with confidence?</h2>
-<p>Contact us or Request a consultation to see how our Business Tax Services can make a difference</p>
+<p>Contact us or Request a consultation to see how our Business Tax Services can make a difference.</p>
