@@ -141,14 +141,14 @@ const footer = footerByVariant[variant];
 
     <!-- Variant-typed footer rail -->
     <div class="mx-auto mt-14 max-w-3xl">
-      <p class="mb-4 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-navy-400">↳ {footer.kicker}</p>
+      <p class="mb-4 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[#33BBDC]">↳ {footer.kicker}</p>
       <div class="grid border-l border-t border-white/10 sm:grid-cols-3">
         {footer.cells.map((cell) => {
           const inner = (
             <>
               <span class="flex size-9 shrink-0 items-center justify-center bg-teal-500/15 text-teal-400"><Icon name={cell.icon} class="h-4 w-4" /></span>
               <span class="text-left">
-                <span class="block font-mono text-[0.6rem] uppercase tracking-[0.16em] text-navy-400">{cell.label}</span>
+                <span class="block font-mono text-[0.6rem] uppercase tracking-[0.16em] text-[#33BBDC]">{cell.label}</span>
                 <span class="block text-sm text-white">{cell.value}</span>
               </span>
             </>

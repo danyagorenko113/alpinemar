@@ -21,7 +21,7 @@ construction CPAs; we’re your partners in navigating the complexities of the c
 job
  easier.
 </p>
-<p><b>Key Services for </b><b>Construction Companies</b></p>
+<h2>Key Services for Construction Companies</h2>
 <p>
 Our
 construction CPAs
@@ -77,8 +77,8 @@ construction accounting
  is invaluable in assuring bonding companies of your financial stability.
 </li>
 </ul>
-<p><b>Financial </b><b>Planning</b><b> and Investment: </b>
-We go beyond traditional accounting by offering financial
+<h2>Financial Planning and Investment</h2>
+<p>We go beyond traditional accounting by offering financial
 planning
  and investment services to assist you in making informed decisions about your
 job

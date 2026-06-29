@@ -271,7 +271,7 @@ const schema = [
         <p class="shrink-0 font-display text-[14px] text-[var(--color-text-body)] md:whitespace-nowrap">Partner with nationally recognized CPAs:</p>
         <div class="flex flex-1 flex-wrap items-center justify-around gap-x-12 gap-y-6">
           {partners.map((p) => (
-            <img src={p.src} alt={p.name} class="h-16 w-auto grayscale opacity-80 md:h-20" loading="lazy" />
+            <img src={p.src} alt={p.name} class="h-20 w-auto grayscale opacity-80 md:h-24" loading="lazy" />
           ))}
         </div>
       </div>
@@ -314,31 +314,66 @@ const schema = [
       const prev = document.getElementById('testi-prev');
       const next = document.getElementById('testi-next');
       const cards = Array.from(track.children) as HTMLElement[];
-      const total = cards.length;
       let active = 0;
+      let lockUntil = 0;
+      let snapPoints: number[] = [];
 
-      const clamp = (i: number) => Math.max(0, Math.min(total - 1, i));
+      const clamp = (i: number) => Math.max(0, Math.min(snapPoints.length - 1, i));
 
       const setActive = (i: number) => {
         active = clamp(i);
-        dots.forEach((d, idx) => { d.dataset.active = idx === active ? '1' : '0'; });
+        dots.forEach((d, idx) => {
+          d.dataset.active = idx === active ? '1' : '0';
+        });
+      };
+
+      const getMaxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
+
+      const buildSnapPoints = () => {
+        const maxScroll = getMaxScroll();
+        const points: number[] = [0];
+
+        cards.forEach((card) => {
+          const left = Math.min(Math.max(card.offsetLeft - 24, 0), maxScroll);
+          const duplicate = points.some((p) => Math.abs(p - left) < 6);
+          if (!duplicate && left > 2 && maxScroll - left > 2) points.push(left);
+        });
+
+        if (maxScroll > 2 && !points.some((p) => Math.abs(p - maxScroll) < 6)) {
+          points.push(maxScroll);
+        }
+
+        return points.sort((a, b) => a - b);
+      };
+
+      const syncDots = () => {
+        snapPoints = buildSnapPoints();
+        dots.forEach((dot, idx) => {
+          const visible = idx < snapPoints.length;
+          dot.hidden = !visible;
+          dot.style.display = visible ? '' : 'none';
+          dot.setAttribute('aria-label', `Slide ${idx + 1}`);
+        });
+        setActive(Math.min(active, snapPoints.length - 1));
       };
 
       const scrollToIndex = (i: number) => {
         const index = clamp(i);
-        const card = cards[index];
-        if (!card) return;
+        const targetLeft = snapPoints[index] ?? 0;
         setActive(index);
-        track.scrollTo({ left: card.offsetLeft - 24, behavior: 'smooth' });
+        lockUntil = Date.now() + 520;
+        track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        window.setTimeout(() => {
+          lockUntil = 0;
+          detectActive();
+        }, 540);
       };
 
       const detectActive = () => {
-        const center = track.scrollLeft + track.clientWidth / 2;
         let best = 0;
         let bestDist = Infinity;
-        for (let i = 0; i < total; i++) {
-          const card = cards[i];
-          const d = Math.abs((card.offsetLeft + card.clientWidth / 2) - center);
+        for (let i = 0; i < snapPoints.length; i++) {
+          const d = Math.abs(track.scrollLeft - snapPoints[i]);
           if (d < bestDist) { bestDist = d; best = i; }
         }
         setActive(best);
@@ -347,14 +382,19 @@ const schema = [
 
       let raf = 0;
       track.addEventListener('scroll', () => {
+        if (Date.now() < lockUntil) return;
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(detectActive);
       });
       dots.forEach((d, i) => d.addEventListener('click', () => scrollToIndex(i)));
       prev?.addEventListener('click', () => scrollToIndex(active - 1));
       next?.addEventListener('click', () => scrollToIndex(active + 1));
+      window.addEventListener('resize', () => {
+        syncDots();
+        detectActive();
+      });
+      syncDots();
       setActive(0);
-      detectActive();
     }
     initTestimonials();
     document.addEventListener('astro:after-swap', initTestimonials);

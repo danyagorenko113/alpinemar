@@ -49,13 +49,13 @@ const footerIndustries = [
   <!-- Grid pattern background -->
   <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(18,18,45,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(18,18,45,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-  <Container width="wide" class="relative z-10 pt-20 pb-10">
+  <Container width="wide" class="relative z-10 pt-16 pb-8">
     <!-- 4-col content -->
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
       <!-- Quicklinks -->
       <nav aria-label="Quicklinks">
-        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Quicklinks</h2>
-        <ul class="mt-7 space-y-3.5 text-[14px]">
+        <h2 class="font-display text-[14px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Quicklinks</h2>
+        <ul class="mt-6 space-y-3 text-[13px]">
           {quicklinks.map((i) => (
             <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
           ))}
@@ -64,8 +64,8 @@ const footerIndustries = [
 
       <!-- Services -->
       <nav aria-label="Services">
-        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Services</h2>
-        <ul class="mt-7 space-y-3.5 text-[14px]">
+        <h2 class="font-display text-[14px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Services</h2>
+        <ul class="mt-6 space-y-3 text-[13px]">
           {footerServices.map((i) => (
             <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
           ))}
@@ -74,8 +74,8 @@ const footerIndustries = [
 
       <!-- Industries -->
       <nav aria-label="Industries">
-        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Industries</h2>
-        <ul class="mt-7 space-y-3.5 text-[14px]">
+        <h2 class="font-display text-[14px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Industries</h2>
+        <ul class="mt-6 space-y-3 text-[13px]">
           {footerIndustries.map((i) => (
             <li><a href={i.href} class="font-display text-[var(--color-text-body)] transition-colors hover:text-scooter">{i.name}</a></li>
           ))}
@@ -84,8 +84,8 @@ const footerIndustries = [
 
       <!-- Contact Details -->
       <div>
-        <h2 class="font-display text-[15px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Contact Details</h2>
-        <ul class="mt-7 space-y-5 text-[14px]">
+        <h2 class="font-display text-[14px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">Contact Details</h2>
+        <ul class="mt-6 space-y-4 text-[13px]">
           <li>
             <p class="font-display text-[var(--color-text-body)]">Phone: <a href={`tel:${site.phoneHref}`} class="transition-colors hover:text-scooter">{site.phone}</a></p>
           </li>
@@ -100,18 +100,18 @@ const footerIndustries = [
     </div>
 
     <!-- AICPA / FICPA membership strip -->
-    <div class="mt-14 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
-      <p class="max-w-xl font-display text-[13px] leading-relaxed text-[var(--color-text-body)]">
+    <div class="mt-12 flex flex-col gap-6 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
+      <p class="max-w-xl font-display text-[12px] leading-relaxed text-[var(--color-text-head)]">
         Members of the American Institute of Certified Public Accountants<br class="hidden md:inline" /> and the Florida Institute of Certified Public Accountants.
       </p>
-      <div class="flex items-center gap-8">
-        <img src="/images/brand/ficpa-logo.png" alt="FICPA" width="80" height="80" class="h-16 w-auto opacity-70 grayscale md:h-20" loading="lazy" />
-        <img src="/images/brand/aicpa-logo.png" alt="AICPA" width="160" height="80" class="h-16 w-auto opacity-70 grayscale md:h-20" loading="lazy" />
+      <div class="flex items-center gap-8 md:gap-10">
+        <img src="/images/brand/ficpa-logo.png" alt="FICPA" width="80" height="80" class="h-12 w-auto opacity-70 grayscale md:h-14" loading="lazy" />
+        <img src="/images/brand/aicpa-logo.png" alt="AICPA" width="160" height="80" class="h-12 w-auto opacity-70 grayscale md:h-14" loading="lazy" />
       </div>
     </div>
 
     <!-- Copyright + socials -->
-    <div class="mt-8 flex flex-col gap-4 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-7 flex flex-col gap-4 text-[12px] sm:flex-row sm:items-center sm:justify-between">
       <p class="font-display text-[var(--color-text-body)]">© {year} {site.name}. All rights reserved.</p>
       <div class="flex items-center gap-5">
         {site.socials.facebook && (
@@ -139,7 +139,9 @@ const footerIndustries = [
   </Container>
 
   <!-- Big "Alpine Mar" wordmark banner -->
-  <div class="relative overflow-hidden">
-    <img src="/images/brand/alpine-mar-wordmark.svg" alt="Alpine Mar" class="block w-full" />
-  </div>
+  <Container width="wide" class="relative z-10 pb-8">
+    <div class="relative mt-8 overflow-hidden">
+      <img src="/images/brand/alpine-mar-wordmark.svg" alt="Alpine Mar" class="block w-full" />
+    </div>
+  </Container>
 </footer>

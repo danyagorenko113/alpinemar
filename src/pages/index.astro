@@ -151,12 +151,12 @@ const dateFmt = (d: string | Date) =>
     </div>
 
     <Container width="wide" class="relative">
-      <div class="grid min-h-[88vh] grid-rows-[1fr_auto] gap-12 py-16 md:py-24">
+      <div class="grid min-h-[88vh] grid-rows-[auto_auto] content-center gap-8 py-16 md:gap-10 md:py-24">
         <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
           The Florida CPA<br />firm redefining<br />accounting
         </h1>
 
-        <div data-reveal class="flex max-w-[58ch] flex-col gap-8 self-end">
+        <div data-reveal class="flex max-w-[58ch] flex-col gap-5">
           <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
             Whether you're seeking expert tax planning services, efficient tax preparation services, fractional CFO services for financial guidance, reliable outsourced accounting services, or valuable transaction advisory services, our perfect blend of industry experience, technology, and hands-on care has got you covered.
           </p>
@@ -353,14 +353,14 @@ const dateFmt = (d: string | Date) =>
 
           <div class="mt-4 flex flex-col gap-5">
             <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-white/85">Our Location</h3>
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[#33BBDC]">Our Location</h3>
               <p class="mt-6 font-display text-[15px] leading-[1.6] text-white">
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
               </p>
             </div>
             <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-white/85">Contact Information</h3>
+              <h3 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[#33BBDC]">Contact Information</h3>
               <p class="mt-6 font-display text-[15px] leading-[1.7] text-white">
                 <a href={`tel:${site.phoneHref}`} class="block transition-colors hover:text-scooter">{site.phone}</a>
                 <a href={`mailto:${site.email}`} class="block transition-colors hover:text-scooter">{site.email}</a>
