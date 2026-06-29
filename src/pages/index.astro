@@ -305,7 +305,7 @@ const dateFmt = (d: string | Date) =>
         <div id="aud-track" class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:gap-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
           {industries.map((ind) => (
             <a href={ind.href} data-aud-card class="group flex w-[84vw] max-w-[340px] flex-none snap-center flex-col gap-5 sm:w-[55%] sm:max-w-none sm:snap-start sm:gap-6 md:w-[44%] lg:w-[calc((100%-3rem)/2.6)]">
-              <div class="aspect-[5/4] w-full overflow-hidden rounded-[4px] bg-navy-50">
+              <div class="aspect-[12/5] max-h-[250px] w-full overflow-hidden rounded-[4px] bg-navy-50">
                 <img src={ind.img} alt={ind.name} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
               <h3 class="font-display text-[22px] font-medium tracking-[-0.01em] text-[var(--color-text-head)]">{ind.name}</h3>

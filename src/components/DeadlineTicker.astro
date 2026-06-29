@@ -7,23 +7,23 @@
 
 <div
   id="deadline-ticker"
-  class="relative z-[60] hidden border-b border-white/10 bg-navy-950 text-paper"
+  class="relative z-[60] hidden border-b border-line bg-paper text-[#12122d]"
   role="status"
 >
-  <div class="mx-auto flex max-w-[88rem] items-center gap-2 px-4 py-1.5 md:gap-3 md:px-8 md:py-2">
-    <span class="flex size-1.5 shrink-0 animate-pulse rounded-full bg-teal-400" aria-hidden="true"></span>
-    <p class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap font-mono text-[0.58rem] uppercase tracking-[0.12em] text-navy-300 sm:text-[0.64rem] md:gap-3 md:tracking-[0.14em]">
-      <span class="text-teal-400">IRS deadline</span>
-      <span id="dl-label" class="hidden truncate text-white md:inline">—</span>
-      <span class="hidden text-navy-400 md:inline">·</span>
-      <span id="dl-date" class="shrink-0 text-white">—</span>
-      <span class="text-navy-400">·</span>
-      <span id="dl-countdown" class="shrink-0 font-medium text-teal-300">—</span>
+  <div class="mx-auto flex w-full max-w-7xl items-center gap-2 px-6 py-1.5 md:gap-3 md:px-8 md:py-2">
+    <span class="flex size-1.5 shrink-0 animate-pulse rounded-full bg-scooter" aria-hidden="true"></span>
+    <p class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden whitespace-nowrap font-display text-[12px] tracking-[-0.005em] text-[#12122d] sm:text-[13px] md:gap-3">
+      <span class="font-medium text-[#12122d]">IRS deadline</span>
+      <span id="dl-label" class="hidden truncate text-[#12122d] md:inline">—</span>
+      <span class="hidden text-[#12122d]/40 md:inline">·</span>
+      <span id="dl-date" class="shrink-0 text-[#12122d]">—</span>
+      <span class="text-[#12122d]/40">·</span>
+      <span id="dl-countdown" class="shrink-0 font-medium text-[#12122d]">—</span>
     </p>
     <button
       type="button"
       id="dl-dismiss"
-      class="ml-2 inline-flex size-6 shrink-0 items-center justify-center text-navy-400 transition-colors hover:text-white"
+      class="ml-2 inline-flex size-6 shrink-0 items-center justify-center text-[#12122d]/55 transition-colors hover:text-[#12122d]"
       aria-label="Dismiss notification"
     >
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
