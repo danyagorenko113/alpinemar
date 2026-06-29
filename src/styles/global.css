@@ -5,7 +5,6 @@
 @import "@fontsource/poppins/500.css";
 @import "@fontsource/poppins/600.css";          /* SemiBold — headings */
 @import "@fontsource/poppins/700.css";
-@import "@fontsource-variable/lora";            /* serif — long-form body */
 @import "@fontsource-variable/geist-mono";      /* mono — eyebrows / meta */
 
 /* Satoshi — client's new homepage design system (Figma dhKIjasZE2UVP719jyW4a3).
@@ -88,9 +87,9 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--color-navy-900);
-    font-weight: 600;         /* Lora SemiBold for editorial headings */
+    font-weight: 600;         /* Satoshi SemiBold — brand heading weight */
     line-height: 1.12;
-    letter-spacing: -0.015em; /* Lora has subtle existing tracking; only mild tighten */
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 
@@ -106,8 +105,8 @@
 }
 
 @layer components {
-  /* Readable long-form typography for migrated article/page bodies — uses
-     Lora serif per Style Guide (Lora · Regular, 18 / leading 30). */
+  /* Readable long-form typography for migrated article/page bodies.
+     Uses Satoshi per redesign 2026 — entire app unified to sans-serif. */
   .prose-am { color: var(--color-navy-700); font-family: var(--font-serif); font-size: 1.0625rem; line-height: 1.75; max-width: 72ch; }
   .prose-am > * + * { margin-top: 1.25rem; }
   .prose-am h2 {
