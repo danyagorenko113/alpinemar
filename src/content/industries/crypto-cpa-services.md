@@ -5,7 +5,7 @@ path: "/industries/crypto-cpa-services/"
 summary: "On-chain reconciliation and tax-ready reporting for funds, founders, and individuals. We make sense of the wallets, the trades, and the cost basis."
 seo:
  title: "Cryptocurrency CPA Services | Crypto Accounting & Taxes"
- description: "(No meta description tag present on the live page; page title is \"Cryptocurrency CPA Services | Crypto Accounting & Taxes\")"
+ description: "Crypto CPA services — on-chain reconciliation, capital gains and DeFi reporting, NFT taxes, and IRS-ready filings for funds, founders, and investors."
 services: ["tax-advisory-and-compliance", "international-tax-services", "tax-planning-services", "business-tax", "outsourced-accounting-services", "outsourced-bookkeeping-services", "business-accounting", "financial-advisory", "business-structure-consulting"]
 ---
 <p>Crypto CPA services provide specialized tax and accounting support for individuals and businesses involved in digital assets to help them navigate complex IRS regulations and reporting requirements. At Alpine Mar, our expert crypto CPA team offers guidance on tax planning for cryptocurrency transactions, including non-fungible tokens (NFTs), decentralized finance (DeFi), and initial coin offerings (ICOs).</p>

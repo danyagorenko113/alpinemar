@@ -66,7 +66,7 @@ const liveCount = reports.filter((r) => r.status === 'live').length;
                 <a href={`/reports/${r.slug}/`} class="group flex h-full flex-col gap-5 rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
                   <div class="flex items-center justify-between gap-3">
                     <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">{String(i + 1).padStart(2, '0')} · {r.year}</span>
-                    <span class="rounded-[4px] bg-paper px-2.5 py-1 font-display text-[11px] font-medium text-[#1F3062]">Live</span>
+                    <span class="rounded-[4px] bg-paper px-2.5 py-1 font-display text-[11px] font-medium text-delft">Live</span>
                   </div>
                   <div>
                     <p class="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">{r.industry}</p>

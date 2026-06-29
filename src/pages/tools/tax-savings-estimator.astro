@@ -82,7 +82,7 @@ const states = [
             <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">Drives how the income is taxed and which strategies apply.</p>
             <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {entities.map((opt) => (
-                <label class="group flex cursor-pointer items-start gap-3 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                <label class="group flex cursor-pointer items-start gap-3 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-delft has-[:checked]:bg-[#12122D]">
                   <input type="radio" name="entity" value={opt.id} class="peer mt-1 accent-scooter" checked={opt.id === 'scorp'} />
                   <span>
                     <span class="block font-display text-[14px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
@@ -102,7 +102,7 @@ const states = [
             <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">State tax + reciprocity can move 4–13% of taxable income.</p>
             <div class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               {states.map((opt) => (
-                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-4 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-delft has-[:checked]:bg-[#12122D]">
                   <input type="radio" name="state" value={opt.id} data-rate={opt.rate} class="peer sr-only" checked={opt.id === 'fl'} />
                   <span class="font-display text-[13px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{opt.label}</span>
                   <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-body)] group-has-[:checked]:text-scooter">State rate · {opt.rate}%</span>

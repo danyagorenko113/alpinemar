@@ -5,7 +5,7 @@ path: "/industries/real-estate-cpa-services/"
 summary: "1031 exchanges, cost segregation, and depreciation strategy for owners and operators. We keep more of every deal working for you."
 seo:
  title: "Real Estate CPA & Accounting Services | Alpine Mar"
- description: "Real Estate CPA Services. When it comes to navigating the complex financial landscape of the real estate industry, having the right professionals by your side is paramount. Alpine Mar is your trusted partner for comprehensive real estate CPA services that are tailored to the unique needs of the real estate business."
+ description: "Florida real estate CPA services — 1031 exchanges, cost segregation, depreciation strategy, and tax planning for owners, investors, and operators."
 services: ["tax-advisory-and-compliance", "partnership-tax-services", "multistate-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "trust-accounting-cpa", "transaction-advisory-services", "financial-modeling-services", "audit-attestation-services"]
 ---
 <p>When it comes to navigating the complex financial landscape of the real estate industry, having the right professionals by your side is paramount. Alpine Mar is your trusted partner for comprehensive real estate CPA services that are tailored to the unique needs of the real estate business.</p>

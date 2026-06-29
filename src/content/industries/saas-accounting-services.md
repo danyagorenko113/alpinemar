@@ -5,10 +5,9 @@ path: "/industries/saas-accounting-services/"
 summary: "ASC 606 revenue recognition, deferred revenue, and the metrics investors actually look at. Accounting built for how software companies grow."
 seo:
  title: "Accounting Services for SaaS Companies | Alpine Mar"
- description: "Accounting for SaaS Companies. SaaS accounting refers to the specialized practices of recording, analyzing, and managing the financial operations unique to software-as-a-service companies. At Alpine Mar, our CPAs bring their expertise in SaaS accounting to guide your business through essential areas like revenue recognition, cash flow management, key SaaS metrics, and tax planning"
+ description: "SaaS accounting and CPA services — ASC 606 revenue recognition, deferred revenue, key metrics, and tax planning for software-as-a-service companies."
 services: ["corporate-tax-services", "international-tax-services", "multistate-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "fractional-cfo-services", "transaction-advisory-services", "financial-modeling-services", "audit-attestation-services"]
 ---
-<p>(Note: the live SaaS page intro is SaaS-specific, but the body sections below reuse the startup-services content verbatim — captured as-is from the live site.)</p>
 <p>SaaS accounting refers to the specialized practices of recording, analyzing, and managing the financial operations unique to software-as-a-service companies. At Alpine Mar, our CPAs bring their expertise in SaaS accounting to guide your business through essential areas like revenue recognition, cash flow management, key SaaS metrics, and tax planning and compliance for SaaS businesses.</p>
 <p>Our tailored solutions help SaaS businesses—from early-stage startups to established providers—overcome complex financial challenges and stay compliant. With our support, your company gains clarity, optimizes operations, and scales confidently in a competitive market.</p>
 <h2>Comprehensive Accounting Services for Startups</h2>

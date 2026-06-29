@@ -88,7 +88,7 @@ const growths = [
             <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">How fast burn is climbing month-over-month.</p>
             <div class="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
               {growths.map((g) => (
-                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-3 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-[#1F3062] has-[:checked]:bg-[#12122D]">
+                <label class="group flex cursor-pointer flex-col gap-1 rounded-[4px] border border-line bg-white px-3 py-3 transition-colors hover:border-[#12122D] has-[:checked]:border-delft has-[:checked]:bg-[#12122D]">
                   <input type="radio" name="growth" value={g.v} class="peer sr-only" checked={g.v === 0} />
                   <span class="font-display text-[13px] font-medium leading-tight text-[var(--color-text-head)] group-has-[:checked]:text-white">{g.label}</span>
                 </label>
