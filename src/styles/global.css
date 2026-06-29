@@ -481,6 +481,11 @@
         transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    html.js [data-reveal][data-speed="fast"].is-visible,
+    html.js [data-reveal][data-speed="slow"].is-visible {
+      opacity: 1;
+      transform: none;
+    }
     /* Side-entry reveal — for left-aside pulls */
     html.js [data-reveal][data-from="left"]  { transform: translate(-32px, 0); filter: none; }
     html.js [data-reveal][data-from="right"] { transform: translate(32px, 0);  filter: none; }
