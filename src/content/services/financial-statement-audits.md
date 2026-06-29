@@ -1,5 +1,5 @@
 ---
-title: "Financial Statement Audits"
+title: "Serious scrutiny, minus the headache"
 heroTitle: "Serious scrutiny, minus the headache"
 path: "/services/audit-attestation-services/financial-statement-audits/"
 summary: "Full GAAP and IFRS audits, run by a team that's thorough without being painful. Credibility you can hand to anyone."
@@ -10,14 +10,11 @@ cover: "/images/services/financial-statement-audits.jpg"
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services"]
 group: Compliance
 ---
-<p>Financial Statement Audits</p>
-<p>When transparent financial reporting matters most, an audit is the gold standard. We provide independent financial statement audit services supported by extensive industry knowledge and years of experience. Our audits stand up to scrutiny and instill confidence, whether you’re talking to investors, banks, or your board.</p>
+<p>When transparent financial reporting matters most, an audit is the gold standard. We provide independent financial statement audit services supported by extensive industry knowledge and years of experience. Our audits stand up to scrutiny and instill confidence, whether you're talking to investors, banks, or your board.</p>
 <p>Ensure your financial statements are presented correctly according to generally accepted accounting principles (GAAP) or other accounting standards, as required. Our audits are performed efficiently, communicate clearly, and minimize disruptions so you can keep business running as usual.</p>
-<h3>We help you</h3>
-<ul>
-<li>Meet regulatory and lender requirements</li>
-<li>Improve internal processes and financial controls</li>
-<li>Strengthen trust with stakeholders</li>
-<li>Gain valuable insights into your business operations</li>
-</ul>
+<h2>We help you</h2>
+<p>Meet regulatory and lender requirements</p>
+<p>Improve internal processes and financial controls</p>
+<p>Strengthen trust with stakeholders</p>
+<p>Gain valuable insights into your business operations</p>
 <p>Reliable, responsive, and rooted in experience with Alpine Mar.</p>
