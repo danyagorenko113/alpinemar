@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { allServices, industries as industryList } from '@/data/taxonomy';
 import { serviceSchema, breadcrumb } from '@/data/schema';
+import { googleReviews } from '@/data/googleReviews';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -71,6 +72,7 @@ const defaultFaq = [
   { q: 'Are you taking new clients?',                          a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.' },
 ];
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
+const clientView = googleReviews[0];
 
 const schema = [
   serviceSchema({ name: service.data.title, description: service.data.summary, path: service.data.path }),
@@ -270,16 +272,20 @@ const schema = [
           <path d="M9.6 0C4.3 0 0 4.6 0 10.3v15.7h12.5V10.3H6.4c0-2.8 1.4-5.1 3.2-5.1V0Zm19.6 0c-5.3 0-9.6 4.6-9.6 10.3v15.7H32V10.3h-6.1c0-2.8 1.4-5.1 3.2-5.1V0Z"/>
         </svg>
         <div class="md:col-span-11">
+          <div class="mb-4 flex items-center gap-1 font-display text-[13px] font-medium text-[#12122D]" aria-label="5 star Google review">
+            <span aria-hidden="true">★★★★★</span>
+            <span class="sr-only">5 star Google review</span>
+          </div>
           <blockquote class="font-display text-[18px] leading-[1.5] tracking-[-0.005em] text-[var(--color-text-head)] md:text-[24px]">
-            They worked the calendar, not just the deadline. By Q3 we had a plan, by Q4 we were executing — first year I haven't felt blindsided in April.
+            {clientView.quote}
           </blockquote>
           <figcaption class="mt-8 flex items-center gap-4 border-t border-line pt-6">
-            <div class="size-12 overflow-hidden rounded-full bg-navy-50">
-              <img src="/images/team/Jennifer.jpeg" alt="" class="h-full w-full object-cover" loading="lazy" />
+            <div class="inline-flex size-12 items-center justify-center rounded-full bg-[#12122D] font-display text-[13px] font-medium text-white">
+              {clientView.initials}
             </div>
             <div>
-              <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Dianne Russell</p>
-              <p class="font-display text-[12px] text-[var(--color-text-body)]">Founder · Fairfield, FL</p>
+              <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">{clientView.name}</p>
+              <p class="font-display text-[12px] text-[var(--color-text-body)]">Google review · {clientView.date}</p>
             </div>
           </figcaption>
         </div>

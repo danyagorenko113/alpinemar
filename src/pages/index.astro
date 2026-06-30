@@ -177,9 +177,9 @@ const dateFmt = (d: string | Date) =>
 
         <!-- Mask both ends so logos fade in/out smoothly -->
         <div class="relative w-full overflow-hidden" style="mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);">
-          <div class="marquee items-center gap-12">
-            {[...platforms, ...platforms].map((p) => (
-              <img src={p.src} alt={p.name} class="h-7 w-auto shrink-0 md:h-8" loading="lazy" />
+          <div id="platforms-track" class="platforms-track flex cursor-grab select-none items-center gap-12 overflow-x-auto active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {[...platforms, ...platforms, ...platforms].map((p) => (
+              <img src={p.src} alt={p.name} class="pointer-events-none h-7 w-auto shrink-0 md:h-8" loading="lazy" draggable="false" />
             ))}
           </div>
         </div>
@@ -259,7 +259,7 @@ const dateFmt = (d: string | Date) =>
 
     <!-- Full-bleed image with overlay pills -->
     <div data-reveal class="relative">
-      <img src="/images/about/alpine-301.jpg" alt="Alpine Mar team meeting" class="h-[420px] w-full object-cover md:h-[640px] lg:h-[720px]" loading="lazy" />
+      <img src="/images/home/about-image.png" alt="Alpine Mar partners in a planning conversation" class="h-[420px] w-full object-cover md:h-[640px] lg:h-[720px]" loading="lazy" />
       <div class="pointer-events-none absolute inset-0 bg-[#12122d]/55 md:bg-[#12122d]/25"></div>
       <!-- Dark gradient at bottom for legibility -->
       <div class="pointer-events-none absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#12122d] via-[#12122d]/70 to-transparent"></div>
@@ -510,6 +510,73 @@ const dateFmt = (d: string | Date) =>
   )}
 
   <script>
+    function initPlatformsTrack() {
+      const track = document.getElementById('platforms-track') as HTMLElement | null;
+      if (!track || track.dataset.bound === '1') return;
+      track.dataset.bound = '1';
+
+      let dragging = false;
+      let startX = 0;
+      let startScroll = 0;
+      let pausedUntil = 0;
+      let raf = 0;
+      const speed = 0.75;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const pause = (ms = 1800) => { pausedUntil = Date.now() + ms; };
+      const segmentWidth = () => track.scrollWidth / 3;
+      const moveToMiddle = () => {
+        const segment = segmentWidth();
+        if (segment > 0) track.scrollLeft = segment;
+      };
+      const normalize = () => {
+        const segment = segmentWidth();
+        if (!segment) return;
+        if (track.scrollLeft > segment * 1.75) track.scrollLeft -= segment;
+        else if (track.scrollLeft < segment * 0.75) track.scrollLeft += segment;
+      };
+
+      const tick = () => {
+        if (!reduceMotion && !dragging && Date.now() > pausedUntil && track.scrollWidth > track.clientWidth) {
+          track.scrollLeft += speed;
+          normalize();
+        }
+        raf = window.requestAnimationFrame(tick);
+      };
+
+      track.addEventListener('pointerdown', (event) => {
+        dragging = true;
+        normalize();
+        startX = event.clientX;
+        startScroll = track.scrollLeft;
+        pause(2500);
+        track.setPointerCapture(event.pointerId);
+      });
+      track.addEventListener('pointermove', (event) => {
+        if (!dragging) return;
+        event.preventDefault();
+        track.scrollLeft = startScroll - (event.clientX - startX);
+        normalize();
+      });
+      const stopDrag = () => {
+        if (!dragging) return;
+        dragging = false;
+        pause(2000);
+      };
+      track.addEventListener('pointerup', stopDrag);
+      track.addEventListener('pointercancel', stopDrag);
+      track.addEventListener('wheel', () => {
+        pause(2200);
+        window.requestAnimationFrame(normalize);
+      }, { passive: true });
+
+      window.requestAnimationFrame(() => {
+        moveToMiddle();
+        raf = window.requestAnimationFrame(tick);
+      });
+      document.addEventListener('astro:before-swap', () => window.cancelAnimationFrame(raf), { once: true });
+    }
+
     function initAudience() {
       const track = document.getElementById('aud-track');
       if (!track || (track as any).__audBound) return;
@@ -574,7 +641,14 @@ const dateFmt = (d: string | Date) =>
       next?.addEventListener('click', () => scrollToIndex(active + 1));
       setActive(0);
     }
-    initAudience();
+    const bootHomeInteractions = () => {
+      initPlatformsTrack();
+      initAudience();
+    };
+    bootHomeInteractions();
+    document.addEventListener('DOMContentLoaded', bootHomeInteractions);
+    document.addEventListener('astro:page-load', bootHomeInteractions);
+    document.addEventListener('astro:after-swap', initPlatformsTrack);
     document.addEventListener('astro:after-swap', initAudience);
   </script>
 </BaseLayout>

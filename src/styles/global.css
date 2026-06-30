@@ -265,7 +265,7 @@
     line-height: 1.12;
     letter-spacing: -0.02em;
     padding-bottom: 0.14em;
-    margin-bottom: -0.14em;
+    margin-bottom: 0;
   }
   .am-h2-display {
     font-family: var(--font-display);
@@ -274,7 +274,7 @@
     line-height: 1.12;
     letter-spacing: -0.02em;
     padding-bottom: 0.14em;
-    margin-bottom: -0.14em;
+    margin-bottom: 0;
   }
   .am-hero-display {
     font-family: var(--font-display);
@@ -282,8 +282,8 @@
     font-size: clamp(2.6rem, 6.8vw, 5.25rem); /* 84 px desktop */
     line-height: 1.06;
     letter-spacing: -0.02em;
-    padding-bottom: 0.14em;
-    margin-bottom: -0.14em;
+    padding-bottom: 0.2em;
+    margin-bottom: 0;
   }
   .am-h5-display {
     font-family: var(--font-display);
@@ -299,8 +299,8 @@
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    padding-bottom: 0.14em;
-    margin-bottom: -0.14em;
+    padding-bottom: 0.2em;
+    margin-bottom: 0;
   }
   /* Bright variant for hero on dark imagery. */
   .am-gradient-ink-light {
@@ -309,8 +309,8 @@
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    padding-bottom: 0.14em;
-    margin-bottom: -0.14em;
+    padding-bottom: 0.2em;
+    margin-bottom: 0;
   }
 
   /* ── Depth: film grain on dark sections ── */

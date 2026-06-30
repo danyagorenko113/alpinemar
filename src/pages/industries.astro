@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { industries } from '@/data/taxonomy';
 import { collectionPageSchema, breadcrumb } from '@/data/schema';
+import { googleReviews } from '@/data/googleReviews';
 
 const totalIndustries = industries.length;
 
@@ -24,12 +25,7 @@ const pillars = [
   },
 ];
 
-const testimonials = [
-  { quote: 'They speak our language. Showed up understanding what triple-net leases were and never asked me to explain depreciation again.', name: 'Marcus Bell', city: 'Real Estate · Miami', photo: '/images/team/Jennifer.jpeg' },
-  { quote: "Their healthcare team understood Stark and Anti-Kickback within five minutes. I'd never had to explain that to a CPA before.", name: 'Dr. Patricia Reyes', city: 'Healthcare · Fort Lauderdale', photo: '/images/team/Cristina.jpeg' },
-  { quote: 'They knew our SaaS revenue mechanics cold. ASC 606 conversation took ten minutes, not a quarter.', name: 'Jamal Thompson', city: 'SaaS · Tampa', photo: '/images/team/Brian.jpeg' },
-  { quote: "Family office work needs trust before depth. They earned ours fast — discreet, organised, and consolidated reporting from week one.", name: 'Elena Petrov', city: 'Family Office · Palm Beach', photo: '/images/team/Kevin.jpeg' },
-];
+const testimonials = googleReviews.slice(4, 10);
 
 const partners = [
   { name: 'AICPA',  src: '/images/brand/aicpa-logo.png' },
@@ -152,18 +148,27 @@ const schema = [
       <div class="relative mt-14">
         <div id="testi-track" class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
           {testimonials.map((t) => (
-            <article class="flex w-[84vw] max-w-[340px] flex-none snap-center flex-col gap-6 rounded-[6px] border border-line bg-white p-6 sm:w-[50%] sm:max-w-none sm:snap-start sm:p-7 lg:w-[calc((100%-2.5rem)/3.4)]">
+            <article data-review-card class="flex h-[460px] w-[84vw] max-w-[340px] flex-none snap-center flex-col gap-5 rounded-[6px] border border-line bg-white p-6 sm:w-[50%] sm:max-w-none sm:snap-start sm:p-7 lg:w-[calc((100%-2.5rem)/3.4)]">
               <svg width="32" height="26" viewBox="0 0 32 26" fill="currentColor" aria-hidden="true" class="text-line">
                 <path d="M9.6 0C4.3 0 0 4.6 0 10.3v15.7h12.5V10.3H6.4c0-2.8 1.4-5.1 3.2-5.1V0Zm19.6 0c-5.3 0-9.6 4.6-9.6 10.3v15.7H32V10.3h-6.1c0-2.8 1.4-5.1 3.2-5.1V0Z"/>
               </svg>
-              <p class="font-display text-[14px] leading-[1.7] text-[var(--color-text-body)]">{t.quote}</p>
+              <div class="flex items-center gap-1 font-display text-[13px] font-medium text-[#12122D]" aria-label="5 star Google review">
+                <span aria-hidden="true">★★★★★</span>
+                <span class="sr-only">5 star Google review</span>
+              </div>
+              <div>
+                <p data-review-text class="line-clamp-6 font-display text-[14px] leading-[1.7] text-[var(--color-text-body)]">{t.quote}</p>
+                <button type="button" data-review-toggle aria-expanded="false" class="mt-3 hidden items-center gap-1 font-display text-[13px] font-medium text-[#12122D] underline underline-offset-4 transition-colors hover:text-scooter">
+                  See more
+                </button>
+              </div>
               <div class="mt-auto flex items-center gap-3 border-t border-line pt-5">
-                <div class="size-11 overflow-hidden rounded-full bg-navy-50">
-                  <img src={t.photo} alt={t.name} class="h-full w-full object-cover" loading="lazy" />
+                <div class="inline-flex size-11 items-center justify-center rounded-full bg-[#12122D] font-display text-[13px] font-medium text-white">
+                  {t.initials}
                 </div>
                 <div>
                   <p class="font-display text-[14px] font-medium text-[var(--color-text-head)]">{t.name}</p>
-                  <p class="font-display text-[12px] text-[var(--color-text-body)]">{t.city}</p>
+                  <p class="font-display text-[12px] text-[var(--color-text-body)]">Google review · {t.date}</p>
                 </div>
               </div>
             </article>
@@ -247,6 +252,34 @@ const schema = [
         dots.forEach((d, idx) => { d.dataset.active = idx === active ? '1' : '0'; });
       };
 
+      const bindReviewToggles = () => {
+        track.querySelectorAll<HTMLButtonElement>('[data-review-toggle]').forEach((button) => {
+          if ((button as any).__reviewToggleBound) return;
+          (button as any).__reviewToggleBound = true;
+          const card = button.closest<HTMLElement>('[data-review-card]');
+          const text = card?.querySelector<HTMLElement>('[data-review-text]');
+          const updateVisibility = () => {
+            if (!text) return;
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            text.classList.add('line-clamp-6');
+            const truncated = text.scrollHeight > text.clientHeight + 2;
+            text.classList.toggle('line-clamp-6', !expanded);
+            button.classList.toggle('hidden', !expanded && !truncated);
+            button.classList.toggle('inline-flex', expanded || truncated);
+          };
+          updateVisibility();
+          window.addEventListener('resize', updateVisibility);
+          button.addEventListener('click', () => {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            button.textContent = expanded ? 'See more' : 'Show less';
+            text?.classList.toggle('line-clamp-6', expanded);
+            if (card) card.style.height = expanded ? '' : 'auto';
+            window.setTimeout(syncDots, 0);
+          });
+        });
+      };
+
       const getMaxScroll = () => Math.max(0, track.scrollWidth - track.clientWidth);
 
       const buildSnapPoints = () => {
@@ -276,6 +309,8 @@ const schema = [
         });
         setActive(Math.min(active, snapPoints.length - 1));
       };
+
+      bindReviewToggles();
 
       const scrollToIndex = (i: number) => {
         const index = clamp(i);
