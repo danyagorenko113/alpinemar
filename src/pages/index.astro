@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ContactForm from '@/components/ContactForm.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
 
@@ -370,7 +371,9 @@ const dateFmt = (d: string | Date) =>
         </div>
 
         <!-- Right: Form -->
-        <form data-reveal action="/contact/" method="get" class="rounded-[6px] bg-white p-7 text-[var(--color-text-head)] md:p-9 lg:col-span-7">
+        <div data-reveal class="lg:col-span-7">
+          <ContactForm id="home-consult-form" />
+          <div class="hidden">
           <div class="grid grid-cols-1 gap-5">
             <label class="block">
               <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Full Name</span>
@@ -426,7 +429,8 @@ const dateFmt = (d: string | Date) =>
             Request a Consultation
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </button>
-        </form>
+          </div>
+        </div>
       </div>
     </Container>
   </section>

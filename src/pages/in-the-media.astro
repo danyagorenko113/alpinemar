@@ -3,17 +3,26 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 
 const mentions = [
-  { outlet: 'Bloomberg Tax', date: 'Apr 2026', headline: 'Florida CPA boutique on the rise — Alpine Mar lands second Series-A SaaS engagement', href: '#' },
-  { outlet: 'Accounting Today', date: 'Feb 2026', headline: "Pablo Martell on the future of mid-market CPAs: 'Partner-led or it doesn't work'", href: '#' },
-  { outlet: 'South Florida Business Journal', date: 'Jan 2026', headline: 'Fort Lauderdale firm doubles team in 18 months on family-office demand', href: '#' },
-  { outlet: 'FICPA Magazine', date: 'Nov 2025', headline: 'Inside the modern accounting stack — featuring Alpine Mar', href: '#' },
-  { outlet: 'CPA Practice Advisor', date: 'Aug 2025', headline: 'How a small Florida firm is winning HNW clients from the Big-4', href: '#' },
-  { outlet: 'Tax Notes Today', date: 'Jun 2025', headline: 'Multistate nexus practice spotlight — Alpine Mar opens NYC referrals', href: '#' },
+  { outlet: 'Business Insider', date: '2025', headline: 'Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division', href: 'https://markets.businessinsider.com/news/stocks/alpine-mar-cpa-advisors-expands-globally-with-new-offshore-advisory-division-1034650336' },
+  { outlet: 'International Business Times', date: '2025', headline: 'Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division', href: 'https://www.ibtimes.com/alpine-mar-cpa-advisors-expands-globally-new-offshore-advisory-division-3769874' },
+  { outlet: 'GlobeNewswire', date: '2025', headline: 'Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division', href: 'https://www.globenewswire.com/news-release/2025/04/29/3069915/0/en/Alpine-Mar-CPA-Advisors-Expands-Globally-with-New-Offshore-Advisory-Division.html' },
+  { outlet: 'Bloomberg Tax', date: '2024', headline: 'The Impact of the 2024 Election on Business Tax Landscape', href: 'https://news.bloombergtax.com/tax-insights-and-commentary/the-impact-of-the-2024-election-on-business-tax-landscape' },
+  { outlet: 'Chicago Construction News', date: '2024', headline: 'Accounting and Tax Services for Construction Companies: How Alpine Mar CPAs & Advisors Fuels Growth', href: 'https://chicagoconstructionnews.com/accounting-and-tax-services-for-construction-companies-how-alpine-mar-cpas-advisors-fuels-growth/' },
+  { outlet: 'VCWire.tech', date: '2024', headline: 'Fintech Startup Team Announces Major Expansion', href: 'https://vcwire.tech/2024/07/11/fintech-startup-team-announces-major-expansion/' },
+  { outlet: 'The Real Deal', date: '2024', headline: "What's Trending in New York", href: 'https://therealdeal.com/new-york/2024/03/18/whats-trending-in-new-york/' },
+  { outlet: 'Finsmes', date: '2024', headline: 'Fintech Startup Team Announces Major Expansion', href: 'https://www.finsmes.com/2024/07/fintech-startup-team-announces-major-expansion.html' },
+  { outlet: 'Hypepotamus', date: '2024', headline: 'Fintech Startup Team Announces Major Expansion', href: 'https://hypepotamus.com/startup-news/fintech-startup-team-announces-major-expansion/' },
+  { outlet: 'EstatePlanning.com', date: '2024', headline: 'A Spotlight on Alpine Mar CPAs & Advisors and the Art of Tax-Efficient Wealth Transfer', href: 'https://www.estateplanning.com/a-spotlight-on-alpine-mar-cpas-advisors-and-the-art-of-tax-efficient-wealth-transfer' },
+  { outlet: 'Research & Development Tax Credit', date: '2025', headline: 'Increase of the R&D Tax Credit in 2025', href: 'https://research-development-tax-credit.com/news/insights-increase-of-the-rd-tax-credit-in-2025/' },
+  { outlet: 'Accounting Today', date: '2025', headline: "Trump administration's policies are stressing accounting professionals", href: 'https://www.accountingtoday.com/news/trump-administrations-policies-are-stressing-accounting-professionals' },
+  { outlet: 'Inman', date: '2025', headline: 'What real estate pros should know about the new tax bill', href: 'https://www.inman.com/2025/08/27/what-real-estate-pros-should-know-about-the-new-tax-bill/' },
+  { outlet: 'CPA Practice Advisor', date: '2025', headline: "Key Tax Changes in Trump's Spending Bill for Accounting Professionals", href: 'https://www.cpapracticeadvisor.com/2025/07/02/key-tax-changes-in-trumps-spending-bill-for-accounting-professionals/163279/' },
+  { outlet: 'Accounting Today', date: '2025', headline: 'Finding growth in times of uncertainty', href: 'https://www.accountingtoday.com/opinion/finding-growth-in-times-of-uncertainty' },
+  { outlet: 'Research & Development Tax Credit', date: '2024', headline: 'Going Green with the Federal R&D Tax Credit', href: 'https://research-development-tax-credit.com/going-green-with-the-federal-rd-tax-credit/' },
 ];
 ---
 
 <BaseLayout rawTitle="In the Media — Alpine Mar" description="Press mentions, speaking engagements, and editorial features.">
-  <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">
@@ -24,7 +33,6 @@ const mentions = [
     </Container>
   </section>
 
-  <!-- ═════════════ LIST ═════════════ -->
   <section class="relative bg-paper py-20 md:py-24">
     <Container width="wide">
       <ul class="overflow-hidden rounded-[6px] border border-line bg-white">
@@ -44,7 +52,6 @@ const mentions = [
     </Container>
   </section>
 
-  <!-- ═════════════ CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
     <Container width="wide" class="relative z-10">

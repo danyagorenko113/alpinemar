@@ -4,20 +4,20 @@ import { site } from '@/data/site';
 ---
 
 <!-- Always dark navy strip per Figma (Financial Services / Information Technology division tabs). -->
-<div class="relative z-50 hidden border-b border-white/10 bg-[#0a0a1c] py-3 text-[12.5px] tracking-[-0.005em] text-white/85 md:block">
-  <Container width="wide" class="flex items-center justify-between gap-6">
-    <div class="flex items-center gap-7">
+<div class="relative z-50 border-b border-white/10 bg-[#0a0a1c] py-2 text-[12px] tracking-[-0.005em] text-white/85 md:py-3 md:text-[12.5px]">
+  <Container width="wide" class="flex items-center justify-between gap-5 overflow-x-auto [scrollbar-width:none] md:gap-6 [&::-webkit-scrollbar]:hidden">
+    <div class="flex shrink-0 items-center gap-5 md:gap-7">
       <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current="page">
         <span class="block size-1.5 rounded-full bg-scooter"></span>
-        Financial Services
+        <span class="whitespace-nowrap">Financial Services</span>
       </a>
-      <a href={site.itPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 pb-1 font-medium text-white/70 transition-colors hover:text-white">
-        Information Technology
+      <a href={site.itPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 whitespace-nowrap pb-1 font-medium text-white/70 transition-colors hover:text-white">
+        <span>Information Technology</span>
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
     </div>
 
-    <a href={site.clientPortal} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 font-medium text-white/85 transition-colors hover:text-scooter">
+    <a href={site.clientPortal} target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-1.5 font-medium text-white/85 transition-colors hover:text-scooter">
       Client Portal
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
     </a>

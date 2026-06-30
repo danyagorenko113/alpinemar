@@ -1,0 +1,231 @@
+---
+import Icon from '@/components/Icon.astro';
+
+const inputClass =
+  'w-full rounded-[6px] border border-line bg-paper/60 px-4 py-3.5 font-display text-[15px] text-navy-900 placeholder:text-navy-300 transition-colors focus:border-scooter focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/15';
+const labelClass =
+  'font-display text-[12px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-body)]';
+
+const formId = Astro.props.id ?? 'consult-form';
+const selectId = `${formId}-service`;
+const smartFieldsId = `${formId}-smart-fields`;
+const successId = `${formId}-success`;
+---
+
+<form id={formId} data-contact-form class="rounded-[10px] border border-line bg-white p-7 text-[var(--color-text-head)] shadow-[0_24px_80px_-60px_rgba(18,18,45,0.45)] lg:p-10" novalidate>
+  <p class="font-display text-[13px] font-medium uppercase tracking-[0.1em] text-scooter">Request a consultation</p>
+  <h2 class="mt-3 font-display text-[26px] font-medium tracking-[-0.02em] text-navy-900">Let’s get on a first name basis.</h2>
+
+  <div class="mt-8 grid gap-5 sm:grid-cols-2">
+    <label class="block">
+      <span class={labelClass}>First name</span>
+      <input class={`mt-2 ${inputClass}`} type="text" name="first_name" autocomplete="given-name" required />
+    </label>
+    <label class="block">
+      <span class={labelClass}>Last name</span>
+      <input class={`mt-2 ${inputClass}`} type="text" name="last_name" autocomplete="family-name" required />
+    </label>
+    <label class="block">
+      <span class={labelClass}>Email</span>
+      <input class={`mt-2 ${inputClass}`} type="email" name="email" autocomplete="email" required />
+    </label>
+    <label class="block">
+      <span class={labelClass}>Phone</span>
+      <input class={`mt-2 ${inputClass}`} type="tel" name="phone" autocomplete="tel" />
+    </label>
+    <label class="block sm:col-span-2">
+      <span class={labelClass}>Business name</span>
+      <input class={`mt-2 ${inputClass}`} type="text" name="business_name" autocomplete="organization" />
+    </label>
+  </div>
+
+  <label class="mt-5 block">
+    <span class={labelClass}>How can we help?</span>
+    <select id={selectId} data-service-select class={`mt-2 ${inputClass}`} name="service" required>
+      <option value="">Select a service…</option>
+      <optgroup label="Tax">
+        <option>Tax Planning</option>
+        <option>Tax Strategy</option>
+        <option>Individual Tax</option>
+        <option>Business Tax</option>
+        <option>Corporate Tax</option>
+        <option>Partnership Tax</option>
+        <option>S Corps</option>
+        <option>Estate & Trust Tax Planning</option>
+        <option>Multistate Tax</option>
+        <option>International Tax</option>
+        <option>Small Business Tax</option>
+        <option>Non-Profit Tax</option>
+        <option>Private Client Services</option>
+      </optgroup>
+      <optgroup label="Accounting">
+        <option>Outsourced Accounting</option>
+        <option>Outsourced Bookkeeping</option>
+        <option>Business Accounting</option>
+        <option>Financial Statement Preparation</option>
+        <option>Accounting Software Implementation</option>
+        <option>Trust Accounting</option>
+      </optgroup>
+      <optgroup label="Advisory">
+        <option>Fractional CFO</option>
+        <option>Transaction Advisory</option>
+        <option>Financial Modeling</option>
+        <option>Financial Advisory</option>
+      </optgroup>
+      <optgroup label="Compliance">
+        <option>Entity Structuring</option>
+        <option>BOI Reporting</option>
+        <option>Payroll Compliance</option>
+        <option>Financial Compliance</option>
+      </optgroup>
+      <optgroup label="Audit & Attestation">
+        <option>Audit & Attestation Services</option>
+        <option>Financial Statement Audits</option>
+        <option>Reviews & Compilations</option>
+        <option>Employee Benefit Plan Audits</option>
+      </optgroup>
+      <option value="BOI One-time Filing">BOI One-time Filing</option>
+      <option value="BOI Unlimited Filing Subscription">BOI Unlimited Filing Subscription</option>
+      <option value="BOI Enterprise Filing">BOI Enterprise Filing</option>
+      <option value="Not sure — recommend">Not sure — recommend</option>
+      <option value="Other/Special Projects">Other/Special Projects</option>
+    </select>
+  </label>
+
+  <div id={smartFieldsId} data-smart-fields class="mt-5 hidden space-y-5"></div>
+
+  <label class="mt-5 block">
+    <span class={labelClass}>Message</span>
+    <textarea class={`mt-2 ${inputClass} min-h-32 resize-y`} name="message" rows="4"></textarea>
+  </label>
+
+  <button type="submit" class="group mt-7 inline-flex items-center justify-center gap-2.5 rounded-[6px] bg-delft px-7 py-4 font-display text-[15px] font-medium text-white transition-all duration-200 hover:bg-scooter active:scale-[0.98]">
+    Request a Consultation
+    <Icon name="arrow-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+  </button>
+
+  <p id={successId} data-success-message class="mt-5 hidden border-l-2 border-teal-500 bg-navy-50 px-4 py-3 text-sm text-navy-900">
+    Thank you — we’ve received your request and will be in touch shortly.
+  </p>
+</form>
+
+<script>
+  function initContactForms() {
+    const forms = document.querySelectorAll<HTMLFormElement>('[data-contact-form]');
+
+    const fieldInput = 'w-full rounded-[6px] border border-line bg-paper/60 px-4 py-3.5 font-display text-[15px] text-navy-900 placeholder:text-navy-300 transition-colors focus:border-scooter focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/15';
+    const labelClass = 'font-display text-[12px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-body)]';
+
+    type SmartField = { name: string; label: string; type?: 'text' | 'number' | 'select'; options?: string[]; placeholder?: string };
+    const SMART_MAP: Record<string, SmartField[]> = {
+      'BOI Reporting': [
+        { name: 'entity_type', label: 'Entity type', type: 'select', options: ['LLC', 'C-Corp', 'S-Corp', 'Partnership', 'Holding company', 'Other'] },
+        { name: 'beneficial_owners', label: 'Approx. number of beneficial owners', type: 'number', placeholder: '1' },
+      ],
+      'BOI One-time Filing': [
+        { name: 'entity_type', label: 'Entity type', type: 'select', options: ['LLC', 'C-Corp', 'S-Corp', 'Partnership', 'Holding company', 'Other'] },
+      ],
+      'BOI Unlimited Filing Subscription': [
+        { name: 'num_entities', label: 'Number of entities to file', type: 'number', placeholder: '1' },
+      ],
+      'BOI Enterprise Filing': [
+        { name: 'num_entities', label: 'Estimated entity count', type: 'number', placeholder: '25' },
+      ],
+      'Fractional CFO': [
+        { name: 'company_size', label: 'Company size (FTEs)', type: 'select', options: ['1–5', '6–25', '26–100', '100+'] },
+        { name: 'hours_needed', label: 'Hours per month needed', type: 'select', options: ['Not sure', '10–20', '20–40', '40+'] },
+      ],
+      'Tax Planning': [
+        { name: 'entity_type', label: 'Entity / filing type', type: 'select', options: ['Individual (W-2)', 'Sole prop / 1099', 'LLC', 'S-Corp', 'C-Corp', 'Partnership'] },
+        { name: 'state', label: 'State of residence', placeholder: 'FL' },
+      ],
+      'Tax Strategy': [
+        { name: 'entity_type', label: 'Entity / filing type', type: 'select', options: ['Individual (W-2)', 'Sole prop / 1099', 'LLC', 'S-Corp', 'C-Corp', 'Partnership'] },
+        { name: 'income_range', label: 'Annual income range', type: 'select', options: ['<$250k', '$250k–$1M', '$1M–$5M', '$5M+'] },
+      ],
+      'Transaction Advisory': [
+        { name: 'deal_side', label: 'Buy-side or sell-side?', type: 'select', options: ['Buy-side', 'Sell-side', 'Both'] },
+        { name: 'deal_size', label: 'Approximate deal size', placeholder: '$X million' },
+      ],
+      'Audit & Attestation Services': [
+        { name: 'audit_type', label: 'Type of engagement', type: 'select', options: ['Financial Statement Audit', 'Review', 'Compilation', 'Employee Benefit Plan Audit', 'Not sure'] },
+      ],
+      'Outsourced Accounting': [
+        { name: 'monthly_volume', label: 'Approx. monthly transactions', type: 'select', options: ['<100', '100–500', '500–2000', '2000+'] },
+        { name: 'software', label: 'Current accounting software', placeholder: 'QuickBooks Online, NetSuite, …' },
+      ],
+      'Other/Special Projects': [
+        { name: 'project_type', label: 'Project type', placeholder: 'Tell us what you need help with' },
+      ],
+    };
+    SMART_MAP['Outsourced Bookkeeping'] = SMART_MAP['Outsourced Accounting'];
+    SMART_MAP['Financial Statement Audits'] = SMART_MAP['Audit & Attestation Services'];
+    SMART_MAP['Reviews & Compilations'] = SMART_MAP['Audit & Attestation Services'];
+    SMART_MAP['Employee Benefit Plan Audits'] = SMART_MAP['Audit & Attestation Services'];
+
+    forms.forEach((form) => {
+      if (form.dataset.contactBound === '1') return;
+      form.dataset.contactBound = '1';
+
+      const ok = form.querySelector<HTMLElement>('[data-success-message]');
+      const select = form.querySelector<HTMLSelectElement>('[data-service-select]');
+      const smartFields = form.querySelector<HTMLDivElement>('[data-smart-fields]');
+
+      const params = new URLSearchParams(window.location.search);
+      const prefill = params.get('service');
+      if (prefill && select) {
+        for (const opt of Array.from(select.options)) {
+          if (opt.value === prefill || opt.textContent?.trim() === prefill) {
+            opt.selected = true;
+            break;
+          }
+        }
+      }
+
+      function renderSmart(service: string) {
+        if (!smartFields) return;
+        const fields = SMART_MAP[service];
+        if (!fields) {
+          smartFields.classList.add('hidden');
+          smartFields.innerHTML = '';
+          return;
+        }
+        smartFields.classList.remove('hidden');
+        smartFields.innerHTML = `
+          <div class="border-l-2 border-teal-500 pl-4">
+            <p class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">For ${service}, we also need…</p>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            ${fields.map((f) => `
+              <label class="block">
+                <span class="${labelClass}">${f.label}</span>
+                ${f.type === 'select' ? `
+                  <select name="${f.name}" class="mt-2 ${fieldInput}">
+                    ${(f.options || []).map((o) => `<option>${o}</option>`).join('')}
+                  </select>
+                ` : `
+                  <input type="${f.type || 'text'}" name="${f.name}" placeholder="${f.placeholder || ''}" class="mt-2 ${fieldInput}" />
+                `}
+              </label>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      select?.addEventListener('change', () => renderSmart(select.value));
+      if (select?.value) renderSmart(select.value);
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        ok?.classList.remove('hidden');
+        form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initContactForms);
+</script>
