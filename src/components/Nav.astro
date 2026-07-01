@@ -64,7 +64,7 @@ const popularServices = [
       <a
         href="/contact/"
         class:list={[
-          'hidden h-full items-center gap-2 px-8 font-display text-[15px] font-medium transition-colors sm:inline-flex',
+          'hidden h-[calc(100%+1px)] -mb-px items-center gap-2 px-8 font-display text-[15px] font-medium transition-colors sm:inline-flex',
           onDark ? 'bg-scooter text-white hover:bg-white hover:text-navy-950' : 'bg-delft text-white hover:bg-scooter',
         ]}
       >
@@ -200,11 +200,11 @@ const popularServices = [
   <!-- Mobile menu -->
   <div id="mobile-menu" class="hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line bg-white lg:hidden">
     <Container width="wide" class="flex flex-col py-4">
-      <details class="border-b border-line">
+      <details class="group border-b border-line">
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
           Services
-          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line transition-transform group-open:rotate-45">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="transition-opacity group-open:opacity-0" d="M12 5v14"/><path d="M5 12h14"/></svg>
           </span>
         </summary>
         <div class="pb-5">
@@ -212,12 +212,29 @@ const popularServices = [
             <div class="mt-5 first:mt-3">
               <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
               <ul class="mt-3 space-y-2 border-l border-line pl-4">
-                {group.items.map((it) => (
+                {group.items.slice(0, 5).map((it) => (
                   <li>
                     <a href={it.href} class="block font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.name}</a>
                   </li>
                 ))}
               </ul>
+              {group.items.length > 5 && (
+                <div class="group/list border-l border-line pl-4">
+                  <input id={`mobile-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-services`} type="checkbox" class="mobile-service-toggle sr-only" />
+                  <ul class="mobile-service-extra mt-2 hidden space-y-2">
+                    {group.items.slice(5).map((it) => (
+                      <li>
+                        <a href={it.href} class="block font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                  <label for={`mobile-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-services`} class="mt-3 inline-flex cursor-pointer items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
+                    <span class="mobile-service-more">View all</span>
+                    <span class="mobile-service-less hidden">Show less</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="mobile-service-plus transition-opacity" d="M12 5v14"/><path d="M5 12h14"/></svg>
+                  </label>
+                </div>
+              )}
             </div>
           ))}
           <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
@@ -226,11 +243,11 @@ const popularServices = [
           </a>
         </div>
       </details>
-      <details class="border-b border-line">
+      <details class="group border-b border-line">
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
           Industries
-          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line transition-transform group-open:rotate-45">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="transition-opacity group-open:opacity-0" d="M12 5v14"/><path d="M5 12h14"/></svg>
           </span>
         </summary>
         <div class="grid grid-cols-1 gap-2 pb-5 sm:grid-cols-2">
@@ -275,6 +292,10 @@ const popularServices = [
     height: 16px;
     pointer-events: auto;
   }
+  .mobile-service-toggle:checked ~ .mobile-service-extra { display: block; }
+  .mobile-service-toggle:checked ~ label .mobile-service-more { display: none; }
+  .mobile-service-toggle:checked ~ label .mobile-service-less { display: inline; }
+  .mobile-service-toggle:checked ~ label .mobile-service-plus { opacity: 0; }
 </style>
 
 <script>
