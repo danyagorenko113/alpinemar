@@ -20,7 +20,6 @@ import {
 import { logout } from '@/lib/actions/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 
 interface NavItem {
@@ -68,9 +67,10 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
       {navGroups.map((group, idx) => (
-        <div key={group.label ?? `g-${idx}`} className={idx > 0 ? 'mt-5' : ''}>
+        <div key={group.label ?? `g-${idx}`} className={idx > 0 ? 'mt-6' : ''}>
           {group.label && (
-            <div className="px-3 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+            <div className="flex items-center gap-2 px-3 pb-2 text-[10px] font-medium uppercase tracking-[0.14em] text-scooter">
+              <span className="block size-1.5 bg-scooter" />
               {group.label}
             </div>
           )}
@@ -84,13 +84,13 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
                 onClick={onNavigate}
                 title={item.title}
                 className={cn(
-                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                  'font-display flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-navy-900 text-white'
-                    : 'text-navy-600 hover:bg-navy-50 hover:text-navy-900',
+                    ? 'bg-white/10 text-white'
+                    : 'text-white/70 hover:bg-white/[0.06] hover:text-white',
                 )}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className={cn('h-4 w-4', isActive && 'text-scooter')} />
                 {item.label}
               </Link>
             )
@@ -114,19 +114,19 @@ function FooterLinks() {
         href="https://alpinemar.com"
         target="_blank"
         rel="noopener"
-        className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-navy-500 hover:bg-navy-50 hover:text-navy-900 transition-colors"
+        className="font-display flex items-center gap-3 rounded-md px-3 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
       >
         <ExternalLink className="h-4 w-4" />
         View site
       </a>
-      <Button
-        variant="ghost"
-        className="w-full justify-start gap-3 text-navy-500 hover:text-navy-900"
+      <button
+        type="button"
         onClick={handleSignOut}
+        className="font-display flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
       >
         <LogOut className="h-4 w-4" />
         Sign out
-      </Button>
+      </button>
     </div>
   )
 }
@@ -134,26 +134,26 @@ function FooterLinks() {
 function Brand() {
   return (
     <Link href="/dashboard" className="flex items-center gap-2.5">
-      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-navy-900 text-white text-[11px] font-semibold tracking-tight">
+      <span className="flex h-7 w-7 items-center justify-center bg-white text-navy-900 text-[11px] font-semibold tracking-tight">
         AM
       </span>
-      <span className="text-sm font-semibold tracking-tight text-navy-900">Alpine Mar</span>
+      <span className="font-display text-sm font-medium tracking-tight text-white">Alpine Mar</span>
     </Link>
   )
 }
 
 export function Sidebar() {
   return (
-    <aside className="hidden md:flex h-screen w-60 flex-col border-r bg-sidebar sticky top-0">
-      <div className="flex h-14 items-center px-4">
+    <aside className="hidden md:flex h-screen w-60 flex-col bg-[#12122d] am-grid-pattern sticky top-0 relative">
+      <div className="flex h-14 items-center px-4 relative z-10">
         <Brand />
       </div>
-      <Separator />
-      <nav className="flex-1 overflow-y-auto p-2.5">
+      <div className="h-px bg-white/10 relative z-10" />
+      <nav className="flex-1 overflow-y-auto p-2.5 relative z-10">
         <NavLinks />
       </nav>
-      <Separator />
-      <div className="p-2.5">
+      <div className="h-px bg-white/10 relative z-10" />
+      <div className="p-2.5 relative z-10">
         <FooterLinks />
       </div>
     </aside>
@@ -163,24 +163,24 @@ export function Sidebar() {
 export function MobileHeader() {
   const [open, setOpen] = useState(false)
   return (
-    <header className="flex md:hidden h-14 items-center gap-3 border-b px-4 bg-sidebar sticky top-0 z-30">
+    <header className="flex md:hidden h-14 items-center gap-3 border-b px-4 bg-[#12122d] sticky top-0 z-30">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon-sm">
+          <Button variant="ghost" size="icon-sm" className="text-white hover:bg-white/10 hover:text-white">
             <Menu className="h-5 w-5" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-60 p-0">
+        <SheetContent side="left" className="w-60 p-0 bg-[#12122d] am-grid-pattern border-r-0">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
-          <div className="flex h-14 items-center px-4">
+          <div className="flex h-14 items-center px-4 relative z-10">
             <Brand />
           </div>
-          <Separator />
-          <nav className="flex-1 overflow-y-auto p-2.5">
+          <div className="h-px bg-white/10 relative z-10" />
+          <nav className="flex-1 overflow-y-auto p-2.5 relative z-10">
             <NavLinks onNavigate={() => setOpen(false)} />
           </nav>
-          <Separator />
-          <div className="p-2.5">
+          <div className="h-px bg-white/10 relative z-10" />
+          <div className="p-2.5 relative z-10">
             <FooterLinks />
           </div>
         </SheetContent>

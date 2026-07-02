@@ -48,8 +48,16 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", monospace;
+  /* Typography — Satoshi to match alpinemar.com (Figma 2026 redesign).
+     Loaded via Fontshare in app/layout.tsx. */
+  --font-sans:    "Satoshi", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* Semantic aliases for parity with the site — some form fields use these */
+  --color-delft: #1f3062;
+  --color-text-head: var(--color-navy-900);
+  --color-text-body: var(--color-navy-500);
 }
 
 @layer base {
@@ -62,9 +70,77 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--color-navy-900);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Mirror of the site's display utilities (see src/styles/global.css:258+).
+     Trimmed to only what the admin actually renders. */
+  .font-display { font-family: var(--font-display); }
+  .am-h1-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+  }
+  .am-hero-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+  }
+  .am-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-scooter);
+  }
+  .am-eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-scooter);
+    border-radius: 0;
+    display: inline-block;
+  }
+  .am-gradient-ink {
+    background: linear-gradient(124deg, #12122d 26%, #1e2a57 47%, #334b91 86%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 0.14em;
+  }
+  .am-gradient-ink-light {
+    background: linear-gradient(124deg, #ffffff 0%, #d6e4ff 45%, #7fbfe6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 0.14em;
+  }
+  /* Subtle grid overlay used on dark hero sections of the site. */
+  .am-grid-pattern {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
   }
 }
 
