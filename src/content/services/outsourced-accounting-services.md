@@ -24,6 +24,8 @@ group: Accounting
 <p>Alpine Mar's outsourced accounting solutions are adaptable to your business's changing needs. You can scale up or down easily, depending on your financial requirements and business growth.</p>
 <h2>Is It More Affordable to Outsource Accounting?</h2>
 <p>Outsourcing accounting operations is often more cost-effective than maintaining an in-house accounting department. You'll find that outsourcing offers:</p>
-<p>Lower Labor Costs: No need to worry about salaries, benefits, and training for in-house accountants to handle functions like financial reporting.</p>
-<p>Reduced Overhead: Cut down on office space and infrastructure expenses.</p>
-<p>Access to Advanced Technology: Alpine Mar utilizes cutting-edge accounting software, and you won't need to invest in costly software licenses.</p>
+<ul>
+<li>Lower Labor Costs: No need to worry about salaries, benefits, and training for in-house accountants to handle functions like financial reporting.</li>
+<li>Reduced Overhead: Cut down on office space and infrastructure expenses.</li>
+<li>Access to Advanced Technology: Alpine Mar utilizes cutting-edge accounting software, and you won't need to invest in costly software licenses.</li>
+</ul>

@@ -12,9 +12,11 @@ group: Accounting
 <p>In today's fast-paced business world, efficient financial management is the cornerstone of success. To stay competitive, organizations need to embrace modern technology, and that often means implementing robust accounting software. Alpine Mar is here to guide you through the implementation process, offering expert accounting software implementation services that will revolutionize your financial operations and accounting systems.</p>
 <h2>Types of Accounting Software</h2>
 <p>Accounting software comes in various forms, each catering to different needs. The three primary types are:</p>
-<p>Desktop Accounting Software: Installed on a single computer or a network, desktop accounting software is ideal for small businesses. It's reliable and secure, offering features like invoicing, bookkeeping, and reporting to adhere to regulatory requirements.</p>
-<p>Cloud-Based Accounting Software: Cloud solutions, like QuickBooks Online and Xero, provide flexibility and accessibility. They allow multiple users to collaborate in real time from anywhere, making them suitable for businesses of all sizes.</p>
-<p>Enterprise Resource Planning (ERP) Systems: ERPs are comprehensive solutions that integrate various business functions, including accounting, into a single system. While ERP systems offer advanced features, they are usually chosen by larger organizations.</p>
+<ol>
+<li>Desktop Accounting Software: Installed on a single computer or a network, desktop accounting software is ideal for small businesses. It's reliable and secure, offering features like invoicing, bookkeeping, and reporting to adhere to regulatory requirements..</li>
+<li>Cloud-Based Accounting Software: Cloud solutions, like QuickBooks Online and Xero, provide flexibility and accessibility. They allow multiple users to collaborate in real time from anywhere, making them suitable for businesses of all sizes.</li>
+<li>Enterprise Resource Planning (ERP) Systems: ERPs are comprehensive solutions that integrate various business functions, including accounting, into a single system. While ERP systems offer advanced features, they are usually chosen by larger organizations.</li>
+</ol>
 <h2>Alpine Mar's Accounting System Implementation</h2>
 <p>The process of implementing new accounting software can be complex, but with Alpine Mar's system implementation expertise, it becomes a streamlined and efficient journey. Our team of experienced professionals will work closely with your organization to ensure a smooth transition to the new software. Whether you're adopting a new accounting system or upgrading your existing accounting system, our implementation services cover all the essentials:</p>
 <p><strong>Assessment and Planning:</strong> We begin with a thorough analysis to understand your unique business needs. Our team will assess your existing accounting system, workflows, and financial processes to create a tailored implementation plan.</p>

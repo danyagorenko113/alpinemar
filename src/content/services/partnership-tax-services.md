@@ -13,10 +13,12 @@ group: Tax
 <p>Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth.</p>
 <p>We support partnerships across a wide range of industries, from professional services to real estate and investment entities.</p>
 <h2>Our partnership tax services include:</h2>
-<p>Partnership tax return preparation (Form 1065)</p>
-<p>Partner K-1 reporting</p>
-<p>Allocation and distribution planning</p>
-<p>Basis and capital account tracking</p>
-<p>Multi-entity and tiered partnership structures</p>
-<p>Ongoing tax advisory support</p>
+<ul>
+<li>Partnership tax return preparation (Form 1065)</li>
+<li>Partner K-1 reporting</li>
+<li>Allocation and distribution planning</li>
+<li>Basis and capital account tracking</li>
+<li>Multi-entity and tiered partnership structures</li>
+<li>Ongoing tax advisory support</li>
+</ul>
 <p>We focus on accuracy, transparency, and strategic alignment for both the partnership and its partners.</p>

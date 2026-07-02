@@ -18,7 +18,7 @@ group: Compliance
 <p>Guidance for foreign-owned companies is still expected. We'll update this page as more information becomes available.</p>
 <h2>Have Questions?</h2>
 <p>If you have questions about how this update impacts your business—or if you have BOI-related needs, we're here to help.</p>
-<h2>Pricing tiers (verbatim):</h2>
+<h3>Pricing tiers (verbatim):</h3>
 <p><strong>$99 per entity — One-time Filing.</strong> Best for businesses not anticipating any changes to BOI structure any time soon. Beneficial Ownership Information (BOI) Report filed with FinCEN; Automated, secure beneficial owner data collection; Guided BOI filing experience; Secure storage of information for future filings with Alpine Mar.</p>
 <p><strong>$150 per year, per entity — Unlimited Filing Subscription.</strong> Best for businesses anticipating changes and the need to report BOI updates to FinCEN in the next year. All the one-time filing benefits plus Unlimited Change of Information filings at no extra cost.</p>
 <p><strong>Custom Cost — Enterprise Filing.</strong> Best for high volume needs looking for efficiency and compliance. Work with a dedicated representative for a custom reporting experience to keep your entities in compliance. All the one-time filing benefits; Unlimited Change of Information filings at no extra cost; Work with a dedicated representative.</p>
@@ -29,8 +29,8 @@ group: Compliance
 <p><strong>Custom Solutions for Complex Needs</strong> — If you have more than 5 entity filing requirements or entities with more than 6 beneficial owners, we offer custom solutions tailored to your specific needs. Contact us here for personalized assistance.</p>
 <h2>Understanding BOI Reporting</h2>
 <p>Beneficial Ownership Information (BOI) reporting is a crucial aspect of corporate transparency and anti-money laundering efforts. It requires entities to disclose information about their beneficial owners, including individuals who directly or indirectly control the entity.</p>
-<h2>What is a Beneficial Owner?</h2>
+<h3>What is a Beneficial Owner?</h3>
 <p>A beneficial owner is an individual who either directly or indirectly: (1) exercises substantial control over a reporting company, or (2) owns or controls at least 25 percent of a reporting company's ownership interests. Because beneficial owners must be individuals (i.e., natural persons), trusts, corporations, or other legal entities are not considered beneficial owners. However, in specific circumstances, information about an entity may be reported in lieu of information about a beneficial owner. Read more on the FinCEN website.</p>
-<h2>History of BOI Reporting</h2>
+<h3>History of BOI Reporting</h3>
 <p>BOI reporting regulations were introduced as part of the 2017 Corporate Transparency Act, aimed at combating financial crimes such as money laundering and terrorist financing. The Act mandates entities to provide accurate and up-to-date information about their beneficial owners to government agencies, enhancing transparency and accountability in corporate structures.</p>
-<h2>Want to know if you're an exempt reporting entity? Check here.</h2>
+<p><strong>Want to know if you're an exempt reporting entity? Check here.</strong></p>

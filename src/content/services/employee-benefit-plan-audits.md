@@ -12,8 +12,10 @@ group: Compliance
 ---
 <p>Employee benefit plans come with complex rules and oversight. We help you stay compliant, reduce risk, and protect the trust your employees place in your plan. Companies today offer benefits ranging from pension plans and defined contribution plans like 401(k)s to employee stock ownership plans and profit sharing. Our team of experienced employee benefit plan auditors knows how to navigate the financial reporting requirements that come with managing other people's futures.</p>
 <h2>We help plan sponsors</h2>
-<p>Meet DOL and IRS requirements</p>
-<p>Avoid penalties and compliance issues</p>
-<p>Streamline the audit process</p>
-<p>Keep your plan (and people) in good standing</p>
+<ul>
+<li>Meet DOL and IRS requirements</li>
+<li>Avoid penalties and compliance issues</li>
+<li>Streamline the audit process</li>
+<li>Keep your plan (and people) in good standing</li>
+</ul>
 <p>It's more than a requirement, it's a responsibility. And we take it seriously.</p>

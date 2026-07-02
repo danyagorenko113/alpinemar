@@ -12,10 +12,12 @@ group: Tax
 <h2>Navigating cross-border tax complexity</h2>
 <p>The International tax landscape is constantly evolving, creating challenges and opportunities for businesses and individuals with a global footprint. Our team understands the nuances of international tax reporting and planning in an increasingly connected world. Working alongside local councils in the countries our clients do business, invest or live in. Alpine Mar provides guidance to manage your global tax exposure and help you remain compliant.</p>
 <h2>Our international tax services include:</h2>
-<p>Cross-border tax planning</p>
-<p>Foreign income reporting and compliance</p>
-<p>Transfer pricing considerations</p>
-<p>Inbound and outbound business and investment structuring</p>
-<p>International individual tax compliance</p>
-<p>Coordination with foreign advisors</p>
+<ul>
+<li>Cross-border tax planning</li>
+<li>Foreign income reporting and compliance</li>
+<li>Transfer pricing considerations</li>
+<li>Inbound and outbound business and investment structuring</li>
+<li>International individual tax compliance</li>
+<li>Coordination with foreign advisors</li>
+</ul>
 <p>We help clients move forward confidently in global markets.</p>

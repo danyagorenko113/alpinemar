@@ -13,10 +13,12 @@ group: Tax
 <p>Our Private Client Services are designed for individuals and families with significant assets, multiple income sources, or complex financial structures. We provide integrated tax planning that considers personal, business, estate, and investment factors together.</p>
 <p>This holistic approach allows us to deliver strategies that evolve as your financial picture changes.</p>
 <h2>Our private client services include:</h2>
-<p>Comprehensive tax planning and compliance</p>
-<p>Family office support, including bill pay, accounting and reporting</p>
-<p>Estate, trust, and gift tax coordination</p>
-<p>Private Foundation and other charitable vehicle planning and compliance</p>
-<p>Business ownership and succession planning</p>
-<p>Investment and liquidity event planning</p>
+<ul>
+<li>Comprehensive tax planning and compliance</li>
+<li>Family office support, including bill pay, accounting and reporting</li>
+<li>Estate, trust, and gift tax coordination</li>
+<li>Private Foundation and other charitable vehicle planning and compliance</li>
+<li>Business ownership and succession planning</li>
+<li>Investment and liquidity event planning</li>
+</ul>
 <p>We are your trusted advisor and long-term partner, helping protect and grow your wealth with intention.</p>
