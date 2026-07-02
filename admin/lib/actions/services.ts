@@ -60,14 +60,17 @@ export type ServiceSummary = ServiceFrontmatter & { slug: string; sha?: string }
 export async function listServices(): Promise<ServiceSummary[]> {
   const store = getStore()
   const files = await store.list(COLLECTION_DIR, '.md')
-  const items: ServiceSummary[] = []
-  for (const f of files) {
-    const doc = await store.read(f.path)
-    if (!doc) continue
-    const { data } = parseDoc(doc.content)
-    items.push({ slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) })
-  }
-  return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
+  const items = await Promise.all(
+    files.map(async (f): Promise<ServiceSummary | null> => {
+      const doc = await store.read(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
+  )
+  return items
+    .filter((s): s is ServiceSummary => s !== null)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
 }
 
 export async function getService(slug: string): Promise<Service | null> {

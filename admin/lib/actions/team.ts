@@ -44,14 +44,17 @@ export type TeamSummary = TeamFrontmatter & { slug: string; sha?: string }
 export async function listTeam(): Promise<TeamSummary[]> {
   const store = getStore()
   const files = await store.list(COLLECTION_DIR, '.md')
-  const items: TeamSummary[] = []
-  for (const f of files) {
-    const doc = await store.read(f.path)
-    if (!doc) continue
-    const { data } = parseDoc(doc.content)
-    items.push({ slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) })
-  }
-  return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
+  const items = await Promise.all(
+    files.map(async (f): Promise<TeamSummary | null> => {
+      const doc = await store.read(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
+  )
+  return items
+    .filter((m): m is TeamSummary => m !== null)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
 }
 
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {

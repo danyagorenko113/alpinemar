@@ -53,14 +53,17 @@ function normalize(data: Record<string, unknown>): BlogFrontmatter {
 export async function listBlogPosts(): Promise<BlogSummary[]> {
   const store = getStore()
   const files = await store.list(COLLECTION_DIR, '.md')
-  const posts: BlogSummary[] = []
-  for (const f of files) {
-    const doc = await store.read(f.path)
-    if (!doc) continue
-    const { data } = parseDoc(doc.content)
-    posts.push({ slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) })
-  }
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1))
+  const posts = await Promise.all(
+    files.map(async (f): Promise<BlogSummary | null> => {
+      const doc = await store.read(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
+  )
+  return posts
+    .filter((p): p is BlogSummary => p !== null)
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {

@@ -52,14 +52,17 @@ export type IndustrySummary = IndustryFrontmatter & { slug: string; sha?: string
 export async function listIndustries(): Promise<IndustrySummary[]> {
   const store = getStore()
   const files = await store.list(COLLECTION_DIR, '.md')
-  const items: IndustrySummary[] = []
-  for (const f of files) {
-    const doc = await store.read(f.path)
-    if (!doc) continue
-    const { data } = parseDoc(doc.content)
-    items.push({ slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) })
-  }
-  return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
+  const items = await Promise.all(
+    files.map(async (f): Promise<IndustrySummary | null> => {
+      const doc = await store.read(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
+  )
+  return items
+    .filter((i): i is IndustrySummary => i !== null)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
 }
 
 export async function getIndustry(slug: string): Promise<Industry | null> {
