@@ -1,0 +1,150 @@
+{
+  "generated": "2026-07-03",
+  "source": "WebFetch crawl of https://it.alpinemar.com/ + sitemap.xml",
+  "root": "https://it.alpinemar.com/",
+  "discovered_via": "sitemap",
+  "urls_discovered_total": 60,
+  "pages_documented": 39,
+  "tech_stack": ["WordPress", "Yoast SEO", "Custom theme"],
+  "site_nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Services", "href": "/services/" },
+    { "label": "About Us", "href": "/about/" },
+    { "label": "Media", "href": "/media/" },
+    { "label": "Blog", "href": "/blog/" },
+    { "label": "Contact Us", "href": "/contact/" }
+  ],
+  "contact": {
+    "phone": "(954) 208-4040",
+    "email": "hello@alpinemar.com",
+    "address": "515 E Las Olas Blvd, Suite 120, Fort Lauderdale, FL 33301",
+    "matches_parent_brand": true
+  },
+  "primary_ctas": [
+    "Book a Free IT Assessment",
+    "Request a Consultation",
+    "Explore Our Services",
+    "Contact Us",
+    "Learn More"
+  ],
+  "keep_in_redesign": {
+    "core_pages": ["/", "/services/", "/about/", "/contact/", "/blog/"],
+    "priority_services": [
+      "cybersecurity",
+      "incident-response",
+      "it-consulting",
+      "remote-it-support",
+      "it-compliance",
+      "cloud-management",
+      "data-protection-and-data-security",
+      "email-security",
+      "managed-endpoint-security",
+      "ai-security",
+      "ai-integration",
+      "ai-code-security-audit",
+      "vulnerability-management",
+      "it-risk-management",
+      "managed-cloud-security",
+      "network-security-monitoring",
+      "remote-monitoring-and-management"
+    ],
+    "team_members": [
+      { "slug": "ian-schlakman", "name": "Ian Schlakman", "role": "CEO" },
+      { "slug": "vanessa-holub", "name": "Vanessa Holub", "role": "COO" },
+      { "slug": "tj-johnson", "name": "TJ Johnson", "role": "VP of Technology" },
+      { "slug": "abheek-gulati", "name": "Abheek Gulati", "role": "Head of AI and Development" },
+      { "slug": "imran-farook", "name": "Imran Farook", "role": "IT Service Manager" },
+      { "slug": "kelly-francois", "name": "Kelly Francois", "role": "Lead Service Technician" },
+      { "slug": "devin-christie", "name": "Devin Christie", "role": "Service Technician" }
+    ],
+    "blog_posts": [
+      "risk-formula-cyber-security",
+      "data-security-best-practices",
+      "cloud-application-security-best-practices",
+      "managed-service-provider-pricing",
+      "what-is-cloud-firewall",
+      "cybersecurity-risk-assessment-templates",
+      "managed-service-provider-benefits",
+      "cloud-migration-checklist",
+      "mdr-vs-mssp",
+      "cloud-cost-optimization-strategies",
+      "what-is-remote-it-support",
+      "proactive-vs-reactive-cyber-security",
+      "mssp-vs-soc",
+      "managed-security-service-provider-explained",
+      "managed-security-services-benefits",
+      "cybersecurity-risk-management-smb",
+      "cloud-sprawl-prevention",
+      "cloud-security-vulnerabilities-gaps",
+      "data-loss-prevention-vs-data-leak-prevention"
+    ],
+    "blog_categories": [
+      "cloud-management",
+      "cybersecurity",
+      "data-security",
+      "managed-security-services",
+      "managed-service-providers",
+      "remote-it-support"
+    ]
+  },
+  "drop_or_consolidate": [
+    {
+      "path": "/media/",
+      "reason": "Promises 'Featured In & Written By' content but page is empty. Either kill or populate."
+    },
+    {
+      "path": "/services/smarter-tech-safer/",
+      "reason": "Lorem-Ipsum filler, H1 mismatches URL, feels like a category orphan."
+    },
+    {
+      "path": "/about-us-team/",
+      "reason": "Duplicate of /about/ (WordPress CPT archive rendering the About template)."
+    },
+    {
+      "paths": [
+        "/about-us-team/ian-schlakman/",
+        "/about-us-team/vanessa-holub/",
+        "/about-us-team/tj-johnson/",
+        "/about-us-team/abheek-gulati/",
+        "/about-us-team/imran-farook/",
+        "/about-us-team/kelly-francois/",
+        "/about-us-team/devin-christie/"
+      ],
+      "reason": "None render individual bios — all show the /about hub template. Rebuild as real profile pages OR 301 to /about/."
+    }
+  ],
+  "site_wide_bugs": [
+    "Footer 'AI Code Security Audit' link points to /services/it-risk-management/ instead of /services/ai-code-security-audit/",
+    "Brand casing inconsistent — 'Alpine Mar IT' vs 'alpinemar IT'",
+    "Meta description + og:image missing site-wide (Yoast not fully configured)",
+    "Blog index tags say 'Financial Services, IT' but real categories are cloud-management/cybersecurity/etc — wrong taxonomy binding",
+    "Broken relative link in /services/remote-monitoring-and-management/ → /services/incident-response-services/ (should be /incident-response/)"
+  ],
+  "content_patterns": {
+    "service_page_template": [
+      "H2: What We Do",
+      "H2: Why Alpine Mar IT",
+      "H2: Ready to Secure What's Next?",
+      "H2: Let's get on a first name basis."
+    ],
+    "typical_service_word_count": "350–1200",
+    "thin_services_to_flesh_out": [
+      { "slug": "managed-cloud-security", "words": 280 },
+      { "slug": "cloud-management", "words": 350 },
+      { "slug": "it-risk-management", "words": 420 },
+      { "slug": "it-compliance", "words": 480 },
+      { "slug": "incident-response", "words": 480 },
+      { "slug": "managed-endpoint-security", "words": 480 }
+    ],
+    "blog_pattern": {
+      "author": "Vanessa Holub (single-author)",
+      "typical_word_count": "1200–2200",
+      "date_range": "2026-01 to 2026-06"
+    }
+  },
+  "primary_ctas_ranked": [
+    "Book a Free IT Assessment",
+    "Request a Consultation",
+    "Contact Us"
+  ]
+}

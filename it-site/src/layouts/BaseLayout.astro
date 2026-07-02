@@ -1,0 +1,61 @@
+---
+import '@/styles/global.css';
+import SEO from '@/components/SEO.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title?: string;
+  rawTitle?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+const { title, rawTitle, description, image, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f9fafb" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO {title} {rawTitle} {description} {image} {noindex} />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Nav />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Scroll reveal — matches the main site's [data-reveal] pattern.
+      function initReveals() {
+        const reveals = document.querySelectorAll('[data-reveal], [data-stagger]');
+        if (!reveals.length) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.12 },
+        );
+        reveals.forEach((el) => io.observe(el));
+      }
+      initReveals();
+      document.addEventListener('astro:page-load', initReveals);
+    </script>
+  </body>
+</html>

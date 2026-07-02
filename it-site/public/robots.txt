@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://it.alpinemar.com/sitemap-index.xml

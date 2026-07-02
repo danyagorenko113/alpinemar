@@ -1,0 +1,24 @@
+{
+  "name": "alpinemar-it",
+  "version": "0.1.0",
+  "description": "Alpine Mar IT — it.alpinemar.com",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --port 4322",
+    "build": "astro build",
+    "preview": "astro preview --port 4322",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^10.0.8",
+    "@tailwindcss/vite": "^4.3.1",
+    "astro": "^6.4.6",
+    "tailwindcss": "^4.3.1"
+  },
+  "overrides": {
+    "vite": "^7"
+  }
+}

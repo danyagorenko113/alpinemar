@@ -1,0 +1,63 @@
+---
+import Container from './Container.astro';
+import { site, primaryNav } from '@/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden bg-[#12122d] text-white">
+  <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
+
+  <Container width="wide" class="relative z-10 py-16 md:py-24">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+      {/* Brand + contact */}
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-2.5 font-display text-[15px] font-medium tracking-tight text-white">
+          <span class="flex h-7 w-7 items-center justify-center bg-white text-navy-900 text-[10px] font-semibold tracking-tight">
+            AM
+          </span>
+          <span>Alpine Mar <span class="text-scooter">IT</span></span>
+        </div>
+        <p class="mt-6 max-w-sm font-display text-[14px] leading-[1.65] text-white/70">
+          {site.description}
+        </p>
+        <div class="mt-8 flex flex-col gap-2 font-display text-[14px] text-white/70">
+          <a href={`tel:${site.phoneHref}`} class="hover:text-scooter transition-colors">{site.phone}</a>
+          <a href={`mailto:${site.email}`} class="hover:text-scooter transition-colors">{site.email}</a>
+          <address class="not-italic">
+            {site.address.street}<br />
+            {site.address.city}, {site.address.state} {site.address.zip}
+          </address>
+        </div>
+      </div>
+
+      {/* Nav */}
+      <div class="md:col-span-3">
+        <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Explore</h3>
+        <ul class="mt-6 space-y-3 font-display text-[14px]">
+          {primaryNav.map((item) => (
+            <li>
+              <a href={item.href} class="text-white/70 transition-colors hover:text-white">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Sister site */}
+      <div class="md:col-span-4">
+        <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Alpine Mar CPA</h3>
+        <p class="mt-6 font-display text-[14px] leading-[1.65] text-white/70">
+          Looking for tax, accounting, or advisory services?
+        </p>
+        <a href={site.parentSiteUrl} target="_blank" rel="noopener" class="group mt-4 inline-flex items-center gap-2 font-display text-[14px] font-medium text-white transition-colors hover:text-scooter">
+          Visit alpinemar.com
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
+      <p class="font-display text-[12px] text-white/50">© {year} {site.legalName}. All rights reserved.</p>
+    </div>
+  </Container>
+</footer>

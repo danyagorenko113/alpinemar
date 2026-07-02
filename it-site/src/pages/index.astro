@@ -1,0 +1,72 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { site } from '@/data/site';
+---
+
+<BaseLayout
+  rawTitle="Alpine Mar IT — IT with a human touch"
+  description={site.description}
+>
+  {/* ═════════════ HERO ═════════════ */}
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="wide" class="relative">
+      <div class="grid min-h-[78vh] grid-rows-[auto_auto] content-start gap-0 pt-[18vh] pb-16 md:pt-[20vh] md:pb-24">
+        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Alpine Mar IT</span>
+        </div>
+
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
+          IT by people<br />who get<br /><span class="italic text-scooter">business.</span>
+        </h1>
+
+        <div data-reveal class="mt-8 flex max-w-[58ch] flex-col gap-5 md:mt-10">
+          <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
+            No black boxes or buzzwords. Cybersecurity, cloud, and AI-forward IT
+            services — delivered in plain English by people who take the time to
+            learn how your business actually runs.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href="/contact/"
+              class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
+            >
+              {site.primaryCta}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <a
+              href="/services/"
+              class="group inline-flex w-fit items-center gap-2 border-b border-[#12122d] pb-1.5 font-display text-[16px] font-medium text-[#12122d] transition-colors hover:text-scooter"
+            >
+              Explore our services
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ═════════════ SCAFFOLD NOTICE ═════════════ */}
+  <section class="relative bg-white py-24 md:py-32">
+    <Container width="wide">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Scaffold notice</span>
+      </div>
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
+          Sprint IT-1 — foundation ready.
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
+          The Astro app, design tokens (Satoshi + Alpine navy/scooter),
+          BaseLayout, Nav, and Footer are wired to the same design system as
+          alpinemar.com. Next spring: migrate 19 blog posts, 17 service pages,
+          and 7 team profiles into content collections, then build the /services,
+          /about, /blog, and /contact templates.
+        </p>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
