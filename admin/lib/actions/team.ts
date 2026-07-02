@@ -4,8 +4,13 @@ import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import { parseDoc, serializeDoc } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
+import { cached, invalidatePrefix } from '@/lib/cache'
 
 const COLLECTION_DIR = 'src/content/team'
+const LIST_CACHE_KEY = 'team:list'
+const LIST_TTL_MS = 60_000
+
+export type ContentStatus = 'draft' | 'published'
 
 export interface TeamFrontmatter {
   name: string
@@ -13,6 +18,8 @@ export interface TeamFrontmatter {
   photo?: string
   credentials: string[]
   order: number
+  status: ContentStatus
+  updated?: string
 }
 
 export interface TeamMember extends TeamFrontmatter {
@@ -30,31 +37,43 @@ function pathFromSlug(slug: string): string {
 }
 
 function normalize(data: Record<string, unknown>): TeamFrontmatter {
+  const rawStatus = data.status
+  const status: ContentStatus = rawStatus === 'draft' ? 'draft' : 'published'
+  const rawUpdated = data.updated
+  const updated = rawUpdated instanceof Date
+    ? rawUpdated.toISOString()
+    : typeof rawUpdated === 'string' && rawUpdated
+      ? rawUpdated
+      : undefined
   return {
     name: String(data.name ?? ''),
     role: String(data.role ?? ''),
     photo: data.photo ? String(data.photo) : undefined,
     credentials: Array.isArray(data.credentials) ? (data.credentials as string[]) : [],
     order: typeof data.order === 'number' ? data.order : 0,
+    status,
+    updated,
   }
 }
 
 export type TeamSummary = TeamFrontmatter & { slug: string; sha?: string }
 
 export async function listTeam(): Promise<TeamSummary[]> {
-  const store = getStore()
-  const files = await store.list(COLLECTION_DIR, '.md')
-  const items = await Promise.all(
-    files.map(async (f): Promise<TeamSummary | null> => {
-      const doc = await store.read(f.path)
-      if (!doc) return null
-      const { data } = parseDoc(doc.content)
-      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-    })
-  )
-  return items
-    .filter((m): m is TeamSummary => m !== null)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
+  return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
+    const store = getStore()
+    const files = await store.list(COLLECTION_DIR, '.md')
+    const items = await Promise.all(
+      files.map(async (f): Promise<TeamSummary | null> => {
+        const doc = await store.read(f.path)
+        if (!doc) return null
+        const { data } = parseDoc(doc.content)
+        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+      })
+    )
+    return items
+      .filter((m): m is TeamSummary => m !== null)
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))
+  })
 }
 
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
@@ -86,6 +105,8 @@ export async function saveTeamMember(input: SaveTeamInput): Promise<{ slug: stri
   if (fm.photo) payload.photo = fm.photo
   if (fm.credentials.length) payload.credentials = fm.credentials
   if (typeof fm.order === 'number') payload.order = fm.order
+  if (fm.status === 'draft') payload.status = 'draft'
+  payload.updated = new Date().toISOString()
 
   const path = pathFromSlug(finalSlug)
   const fileContent = serializeDoc(payload, input.body.trim() + '\n')
@@ -93,6 +114,7 @@ export async function saveTeamMember(input: SaveTeamInput): Promise<{ slug: stri
     message: `content(team): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
     sha: input.sha,
   })
+  invalidatePrefix('team:')
   revalidatePath('/team')
   return { slug: finalSlug, sha: res.sha }
 }
@@ -100,5 +122,6 @@ export async function saveTeamMember(input: SaveTeamInput): Promise<{ slug: stri
 export async function deleteTeamMember(slug: string, sha?: string): Promise<void> {
   const store = getStore()
   await store.remove(pathFromSlug(slug), { message: `content(team): delete ${slug}`, sha })
+  invalidatePrefix('team:')
   revalidatePath('/team')
 }

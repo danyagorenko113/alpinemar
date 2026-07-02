@@ -30,6 +30,7 @@ const empty: Industry = {
   summary: '',
   cover: '',
   services: [],
+  status: 'published',
   seo: { title: '', description: '' },
   body: '',
 }
@@ -74,6 +75,7 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
           summary: i.summary,
           cover: i.cover || undefined,
           services: i.services,
+          status: i.status,
           seo: i.seo,
         }
         const res = await saveIndustry({ slug: i.slug, frontmatter: fm, body: i.body, sha: i.sha })
@@ -174,6 +176,20 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <Label htmlFor="status">Status</Label>
+            <select
+              id="status"
+              value={i.status}
+              onChange={(e) => update('status', e.target.value as Industry['status'])}
+              className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+            <p className="text-xs text-muted-foreground">Drafts hidden from the industries hub.</p>
+          </section>
+
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
             <ImageUploader value={i.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/industries" />

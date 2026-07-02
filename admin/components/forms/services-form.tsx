@@ -32,6 +32,7 @@ const empty: Service = {
   cover: '',
   group: undefined,
   industries: [],
+  status: 'published',
   seo: { title: '', description: '' },
   body: '',
 }
@@ -77,6 +78,7 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
           cover: s.cover || undefined,
           group: s.group,
           industries: s.industries,
+          status: s.status,
           seo: s.seo,
         }
         const res = await saveService({ slug: s.slug, frontmatter: fm, body: s.body, sha: s.sha })
@@ -179,6 +181,20 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
         </div>
 
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <Label htmlFor="status">Status</Label>
+            <select
+              id="status"
+              value={s.status}
+              onChange={(e) => update('status', e.target.value as Service['status'])}
+              className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+            <p className="text-xs text-muted-foreground">Drafts hidden from the services hub.</p>
+          </section>
+
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
             <ImageUploader value={s.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/services" />

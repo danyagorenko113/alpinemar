@@ -4,8 +4,13 @@ import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import { parseDoc, serializeDoc } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
+import { cached, invalidatePrefix } from '@/lib/cache'
 
 const COLLECTION_DIR = 'src/content/industries'
+const LIST_CACHE_KEY = 'industries:list'
+const LIST_TTL_MS = 60_000
+
+export type ContentStatus = 'draft' | 'published'
 
 export interface IndustryFrontmatter {
   title: string
@@ -13,6 +18,8 @@ export interface IndustryFrontmatter {
   summary: string
   cover?: string
   services: string[]
+  status: ContentStatus
+  updated?: string
   seo?: { title?: string; description?: string }
 }
 
@@ -31,12 +38,22 @@ function pathFromSlug(slug: string): string {
 }
 
 function normalize(data: Record<string, unknown>): IndustryFrontmatter {
+  const rawStatus = data.status
+  const status: ContentStatus = rawStatus === 'draft' ? 'draft' : 'published'
+  const rawUpdated = data.updated
+  const updated = rawUpdated instanceof Date
+    ? rawUpdated.toISOString()
+    : typeof rawUpdated === 'string' && rawUpdated
+      ? rawUpdated
+      : undefined
   return {
     title: String(data.title ?? ''),
     path: String(data.path ?? ''),
     summary: String(data.summary ?? ''),
     cover: data.cover ? String(data.cover) : undefined,
     services: Array.isArray(data.services) ? (data.services as string[]) : [],
+    status,
+    updated,
     seo: data.seo as IndustryFrontmatter['seo'],
   }
 }
@@ -44,19 +61,21 @@ function normalize(data: Record<string, unknown>): IndustryFrontmatter {
 export type IndustrySummary = IndustryFrontmatter & { slug: string; sha?: string }
 
 export async function listIndustries(): Promise<IndustrySummary[]> {
-  const store = getStore()
-  const files = await store.list(COLLECTION_DIR, '.md')
-  const items = await Promise.all(
-    files.map(async (f): Promise<IndustrySummary | null> => {
-      const doc = await store.read(f.path)
-      if (!doc) return null
-      const { data } = parseDoc(doc.content)
-      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-    })
-  )
-  return items
-    .filter((i): i is IndustrySummary => i !== null)
-    .sort((a, b) => a.title.localeCompare(b.title))
+  return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
+    const store = getStore()
+    const files = await store.list(COLLECTION_DIR, '.md')
+    const items = await Promise.all(
+      files.map(async (f): Promise<IndustrySummary | null> => {
+        const doc = await store.read(f.path)
+        if (!doc) return null
+        const { data } = parseDoc(doc.content)
+        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+      })
+    )
+    return items
+      .filter((i): i is IndustrySummary => i !== null)
+      .sort((a, b) => a.title.localeCompare(b.title))
+  })
 }
 
 export async function getIndustry(slug: string): Promise<Industry | null> {
@@ -88,6 +107,8 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
   }
   if (fm.cover) payload.cover = fm.cover
   if (fm.services.length) payload.services = fm.services
+  if (fm.status === 'draft') payload.status = 'draft'
+  payload.updated = new Date().toISOString()
   if (fm.seo && (fm.seo.title || fm.seo.description)) payload.seo = fm.seo
 
   const path = pathFromSlug(finalSlug)
@@ -96,6 +117,7 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
     message: `content(industries): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
     sha: input.sha,
   })
+  invalidatePrefix('industries:')
   revalidatePath('/industries')
   revalidatePath(`/industries/${finalSlug}`)
   return { slug: finalSlug, sha: res.sha }
@@ -104,5 +126,6 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
 export async function deleteIndustry(slug: string, sha?: string): Promise<void> {
   const store = getStore()
   await store.remove(pathFromSlug(slug), { message: `content(industries): delete ${slug}`, sha })
+  invalidatePrefix('industries:')
   revalidatePath('/industries')
 }

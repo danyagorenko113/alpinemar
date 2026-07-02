@@ -4,10 +4,14 @@ import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import { parseDoc, serializeDoc } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
+import { cached, invalidatePrefix } from '@/lib/cache'
 
 const COLLECTION_DIR = 'src/content/services'
+const LIST_CACHE_KEY = 'services:list'
+const LIST_TTL_MS = 60_000
 
 export type ServiceGroup = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance'
+export type ContentStatus = 'draft' | 'published'
 
 export interface ServiceFrontmatter {
   title: string
@@ -16,6 +20,8 @@ export interface ServiceFrontmatter {
   cover?: string
   group?: ServiceGroup
   industries: string[]
+  status: ContentStatus
+  updated?: string
   seo?: { title?: string; description?: string }
 }
 
@@ -34,6 +40,14 @@ function pathFromSlug(slug: string): string {
 }
 
 function normalize(data: Record<string, unknown>): ServiceFrontmatter {
+  const rawStatus = data.status
+  const status: ContentStatus = rawStatus === 'draft' ? 'draft' : 'published'
+  const rawUpdated = data.updated
+  const updated = rawUpdated instanceof Date
+    ? rawUpdated.toISOString()
+    : typeof rawUpdated === 'string' && rawUpdated
+      ? rawUpdated
+      : undefined
   return {
     title: String(data.title ?? ''),
     path: String(data.path ?? ''),
@@ -41,6 +55,8 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
     cover: data.cover ? String(data.cover) : undefined,
     group: data.group as ServiceGroup | undefined,
     industries: Array.isArray(data.industries) ? (data.industries as string[]) : [],
+    status,
+    updated,
     seo: data.seo as ServiceFrontmatter['seo'],
   }
 }
@@ -48,19 +64,21 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
 export type ServiceSummary = ServiceFrontmatter & { slug: string; sha?: string }
 
 export async function listServices(): Promise<ServiceSummary[]> {
-  const store = getStore()
-  const files = await store.list(COLLECTION_DIR, '.md')
-  const items = await Promise.all(
-    files.map(async (f): Promise<ServiceSummary | null> => {
-      const doc = await store.read(f.path)
-      if (!doc) return null
-      const { data } = parseDoc(doc.content)
-      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-    })
-  )
-  return items
-    .filter((s): s is ServiceSummary => s !== null)
-    .sort((a, b) => a.title.localeCompare(b.title))
+  return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
+    const store = getStore()
+    const files = await store.list(COLLECTION_DIR, '.md')
+    const items = await Promise.all(
+      files.map(async (f): Promise<ServiceSummary | null> => {
+        const doc = await store.read(f.path)
+        if (!doc) return null
+        const { data } = parseDoc(doc.content)
+        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+      })
+    )
+    return items
+      .filter((s): s is ServiceSummary => s !== null)
+      .sort((a, b) => a.title.localeCompare(b.title))
+  })
 }
 
 export async function getService(slug: string): Promise<Service | null> {
@@ -93,6 +111,8 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
   if (fm.cover) payload.cover = fm.cover
   if (fm.group) payload.group = fm.group
   if (fm.industries.length) payload.industries = fm.industries
+  if (fm.status === 'draft') payload.status = 'draft'
+  payload.updated = new Date().toISOString()
   if (fm.seo && (fm.seo.title || fm.seo.description)) payload.seo = fm.seo
 
   const path = pathFromSlug(finalSlug)
@@ -101,6 +121,7 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
     message: `content(services): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
     sha: input.sha,
   })
+  invalidatePrefix('services:')
   revalidatePath('/services')
   revalidatePath(`/services/${finalSlug}`)
   return { slug: finalSlug, sha: res.sha }
@@ -109,5 +130,6 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
 export async function deleteService(slug: string, sha?: string): Promise<void> {
   const store = getStore()
   await store.remove(pathFromSlug(slug), { message: `content(services): delete ${slug}`, sha })
+  invalidatePrefix('services:')
   revalidatePath('/services')
 }

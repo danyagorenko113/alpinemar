@@ -6,13 +6,15 @@ import Container from '@/components/Container.astro';
 const SPANISH = new Set(['creacion-de-empresas', 'servicios-contables', 'servicios-tributarios-en-florida']);
 const services = (await getCollection('services'))
   .filter((s) => !SPANISH.has(s.id))
+  .filter((s) => s.data.status !== 'draft')
   .sort((a, b) => a.data.title.localeCompare(b.data.title))
   .map((s) => ({ title: s.data.title, href: s.data.path }));
 const industries = (await getCollection('industries'))
+  .filter((i) => i.data.status !== 'draft')
   .sort((a, b) => a.data.title.localeCompare(b.data.title))
   .map((s) => ({ title: s.data.title, href: s.data.path }));
 const insights = (await getCollection('insights'))
-  .filter((p) => !p.data.draft)
+  .filter((p) => p.data.status !== 'draft')
   .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
   .slice(0, 24)
   .map((p) => ({ title: p.data.title, href: `/blog/${p.id.replace(/\.md$/, '').split('/').pop()}/` }));

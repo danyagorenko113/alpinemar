@@ -6,6 +6,8 @@ import { listIndustries } from '@/lib/actions/industries'
 import { PageHeader } from '@/components/shared/page-header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { formatRelative } from '@/lib/utils'
 
 interface SP {
   q?: string
@@ -63,8 +65,16 @@ export default async function IndustriesListPage(props: { searchParams: Promise<
               <tr key={i.slug} className="hover:bg-navy-50/50 transition-colors">
                 <td className="px-4 py-3">
                   <Link href={`/industries/${i.slug}`} className="block group">
-                    <div className="font-medium text-navy-900 group-hover:text-scooter-dark line-clamp-1">{i.title}</div>
+                    <div className="font-medium text-navy-900 group-hover:text-scooter-dark line-clamp-1 flex items-center gap-2">
+                      {i.title}
+                      {i.status === 'draft' && (
+                        <Badge variant="muted" className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200">Draft</Badge>
+                      )}
+                    </div>
                     <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{i.summary}</div>
+                    {i.updated && (
+                      <div className="text-[10px] text-muted-foreground/70 mt-0.5">Edited {formatRelative(i.updated)}</div>
+                    )}
                   </Link>
                 </td>
                 <td className="px-4 py-3 hidden sm:table-cell text-xs font-mono text-muted-foreground line-clamp-1">{i.slug}</td>

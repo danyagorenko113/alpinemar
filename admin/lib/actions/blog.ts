@@ -4,8 +4,13 @@ import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import { parseDoc, serializeDoc, toDateString } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
+import { cached, invalidatePrefix } from '@/lib/cache'
 
 const COLLECTION_DIR = 'src/content/insights'
+const LIST_CACHE_KEY = 'blog:list'
+const LIST_TTL_MS = 60_000
+
+export type ContentStatus = 'draft' | 'published'
 
 export interface BlogFrontmatter {
   title: string
@@ -14,6 +19,8 @@ export interface BlogFrontmatter {
   author?: string
   cover?: string
   tags: string[]
+  status: ContentStatus
+  updated?: string // ISO datetime
   seo?: { title?: string; description?: string }
 }
 
@@ -39,6 +46,14 @@ function pathFromSlug(slug: string): string {
 }
 
 function normalize(data: Record<string, unknown>): BlogFrontmatter {
+  const rawStatus = data.status
+  const status: ContentStatus = rawStatus === 'draft' ? 'draft' : 'published'
+  const rawUpdated = data.updated
+  const updated = rawUpdated instanceof Date
+    ? rawUpdated.toISOString()
+    : typeof rawUpdated === 'string' && rawUpdated
+      ? rawUpdated
+      : undefined
   return {
     title: String(data.title ?? ''),
     excerpt: String(data.excerpt ?? ''),
@@ -46,24 +61,28 @@ function normalize(data: Record<string, unknown>): BlogFrontmatter {
     author: data.author ? String(data.author) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
+    status,
+    updated,
     seo: data.seo as BlogFrontmatter['seo'],
   }
 }
 
 export async function listBlogPosts(): Promise<BlogSummary[]> {
-  const store = getStore()
-  const files = await store.list(COLLECTION_DIR, '.md')
-  const posts = await Promise.all(
-    files.map(async (f): Promise<BlogSummary | null> => {
-      const doc = await store.read(f.path)
-      if (!doc) return null
-      const { data } = parseDoc(doc.content)
-      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-    })
-  )
-  return posts
-    .filter((p): p is BlogSummary => p !== null)
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
+  return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
+    const store = getStore()
+    const files = await store.list(COLLECTION_DIR, '.md')
+    const posts = await Promise.all(
+      files.map(async (f): Promise<BlogSummary | null> => {
+        const doc = await store.read(f.path)
+        if (!doc) return null
+        const { data } = parseDoc(doc.content)
+        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+      })
+    )
+    return posts
+      .filter((p): p is BlogSummary => p !== null)
+      .sort((a, b) => (a.date < b.date ? 1 : -1))
+  })
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
@@ -95,6 +114,8 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
   if (input.frontmatter.author) payload.author = input.frontmatter.author
   if (input.frontmatter.cover) payload.cover = input.frontmatter.cover
   if (input.frontmatter.tags?.length) payload.tags = input.frontmatter.tags
+  if (input.frontmatter.status === 'draft') payload.status = 'draft'
+  payload.updated = new Date().toISOString()
   if (input.frontmatter.seo && (input.frontmatter.seo.title || input.frontmatter.seo.description)) {
     payload.seo = {
       ...(input.frontmatter.seo.title ? { title: input.frontmatter.seo.title } : {}),
@@ -108,6 +129,7 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
     message: `content(blog): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
     sha: input.sha,
   })
+  invalidatePrefix('blog:')
   revalidatePath('/blog')
   revalidatePath(`/blog/${finalSlug}`)
   return { slug: finalSlug, sha: res.sha }
@@ -116,6 +138,7 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
 export async function deleteBlogPost(slug: string, sha?: string): Promise<void> {
   const store = getStore()
   await store.remove(pathFromSlug(slug), { message: `content(blog): delete ${slug}`, sha })
+  invalidatePrefix('blog:')
   revalidatePath('/blog')
 }
 

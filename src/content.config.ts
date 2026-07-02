@@ -8,6 +8,12 @@ const seo = z
   })
   .optional();
 
+// Publishing status — admin toggles this per-entry. The site's list pages
+// filter out drafts. Detail pages still render for direct URLs so previews
+// work.
+const status = z.enum(['draft', 'published']).default('published');
+const updated = z.coerce.date().optional();
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/services' }),
   schema: z.object({
@@ -30,6 +36,8 @@ const services = defineCollection({
     /** Optional FAQ entries for the service-detail page. Falls back to a
      *  default 4-Q set covering common CPA-engagement questions. */
     faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+    status,
+    updated,
     seo,
   }),
 });
@@ -49,6 +57,8 @@ const industries = defineCollection({
     kpis: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
     /** Optional cross-link slugs into the services collection. */
     services: z.array(z.string()).default([]),
+    status,
+    updated,
     seo,
   }),
 });
@@ -62,6 +72,8 @@ const insights = defineCollection({
     author: z.string().optional(),
     cover: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    status,
+    updated,
     seo,
   }),
 });
@@ -74,6 +86,8 @@ const team = defineCollection({
     photo: z.string().optional(),
     credentials: z.array(z.string()).default([]),
     order: z.number().default(0),
+    status,
+    updated,
   }),
 });
 

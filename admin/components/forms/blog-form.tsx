@@ -34,6 +34,7 @@ const empty: BlogPost = {
   author: 'The Alpine Mar editorial team',
   cover: '',
   tags: [],
+  status: 'published',
   seo: { title: '', description: '' },
   body: '',
 }
@@ -85,6 +86,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
           author: post.author?.trim() || undefined,
           cover: post.cover?.trim() || undefined,
           tags: post.tags,
+          status: post.status,
           seo: post.seo,
         }
         const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha })
@@ -212,6 +214,22 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
 
         {/* SIDEBAR */}
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <Label htmlFor="status">Status</Label>
+            <select
+              id="status"
+              value={post.status}
+              onChange={(e) => update('status', e.target.value as BlogPost['status'])}
+              className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+            <p className="text-xs text-muted-foreground">
+              Drafts don't appear in blog listings on the live site.
+            </p>
+          </section>
+
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
             <ImageUploader value={post.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/blog" />

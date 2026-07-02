@@ -7,6 +7,7 @@ import { collectionPageSchema, breadcrumb } from '@/data/schema';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const all = (await getCollection('insights'))
+    .filter((p) => p.data.status !== 'draft')
     .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
   return paginate(all, { pageSize: 12 });
 }

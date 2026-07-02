@@ -68,7 +68,12 @@ export default async function TeamListPage(props: { searchParams: Promise<SP> })
               )}
             </div>
             <div className="p-4">
-              <h3 className="font-semibold text-navy-900 group-hover:text-scooter-dark transition-colors">{t.name}</h3>
+              <h3 className="font-semibold text-navy-900 group-hover:text-scooter-dark transition-colors flex items-center gap-2">
+                {t.name}
+                {t.status === 'draft' && (
+                  <Badge variant="muted" className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200">Draft</Badge>
+                )}
+              </h3>
               <p className="text-xs text-muted-foreground mt-0.5">{t.role}</p>
               {t.credentials.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">

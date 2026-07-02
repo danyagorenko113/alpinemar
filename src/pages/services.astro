@@ -14,7 +14,7 @@ const SPANISH = new Set([
   'servicios-tributarios-en-florida',
 ]);
 
-const collection = await getCollection('services');
+const collection = (await getCollection('services')).filter((s) => s.data.status !== 'draft');
 const serviceIcons: Record<string, string> = {
   '/services/tax-planning-services/': 'trending-up',
   '/services/tax-advisory-and-compliance/': 'target',

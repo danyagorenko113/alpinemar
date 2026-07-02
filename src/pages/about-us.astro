@@ -6,6 +6,7 @@ import { personGraph } from '@/data/schema';
 import { site } from '@/data/site';
 
 const teamMembers = (await getCollection('team'))
+  .filter((m) => m.data.status !== 'draft')
   .map((m) => m.data)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 

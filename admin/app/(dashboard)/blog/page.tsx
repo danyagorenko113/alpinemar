@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { formatDate } from '@/lib/utils'
+import { formatDate, formatRelative } from '@/lib/utils'
 
 interface SP {
   q?: string
@@ -86,8 +86,11 @@ export default async function BlogListPage(props: { searchParams: Promise<SP> })
               <tr key={p.slug} className="hover:bg-navy-50/50 transition-colors">
                 <td className="px-4 py-3 align-top">
                   <Link href={`/blog/${p.slug}`} className="block group">
-                    <div className="font-medium text-navy-900 group-hover:text-scooter-dark transition-colors line-clamp-1">
+                    <div className="font-medium text-navy-900 group-hover:text-scooter-dark transition-colors line-clamp-1 flex items-center gap-2">
                       {p.title}
+                      {p.status === 'draft' && (
+                        <Badge variant="muted" className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200">Draft</Badge>
+                      )}
                     </div>
                     <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{p.excerpt}</div>
                   </Link>
@@ -103,7 +106,12 @@ export default async function BlogListPage(props: { searchParams: Promise<SP> })
                   </div>
                 </td>
                 <td className="px-4 py-3 align-top hidden sm:table-cell text-xs text-muted-foreground">
-                  {formatDate(p.date)}
+                  <div>{formatDate(p.date)}</div>
+                  {p.updated && (
+                    <div className="text-[10px] text-muted-foreground/70 mt-0.5" title={new Date(p.updated).toLocaleString()}>
+                      Edited {formatRelative(p.updated)}
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
