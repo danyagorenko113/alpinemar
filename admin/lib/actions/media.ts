@@ -1,11 +1,18 @@
 'use server'
 
 import path from 'path'
+import sharp from 'sharp'
 import { getStore } from '@/lib/store'
 import { slugify } from '@/lib/utils'
 
 const VALID_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/svg+xml'])
 const MAX_BYTES = 8 * 1024 * 1024 // 8 MB
+const MAX_DIMENSION = 2400 // px; resize larger images down for web use
+const WEBP_QUALITY = 82
+
+// Formats we transcode to WebP for smaller footprint. SVG/GIF/AVIF are kept
+// as-is (SVG is XML, GIF may be animated, AVIF is already efficient).
+const TRANSCODE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
 interface UploadResult {
   /** Public URL the Astro site will resolve at build time. */
@@ -25,17 +32,54 @@ export async function uploadImage(form: FormData, opts: { dir?: string } = {}): 
   if (file.size > MAX_BYTES) throw new Error(`File too large (${Math.round(file.size / 1024 / 1024)}MB > 8MB)`)
 
   const dir = opts.dir ?? 'images/blog'
-  const ext = path.extname(file.name) || extFromType(file.type)
-  const baseName = slugify(path.basename(file.name, ext)) || `upload-${Date.now()}`
+  const originalExt = path.extname(file.name) || extFromType(file.type)
+  const baseName = slugify(path.basename(file.name, originalExt)) || `upload-${Date.now()}`
   const year = new Date().getFullYear()
+
+  const inputBuf = Buffer.from(await file.arrayBuffer())
+  const { buffer, ext } = await optimize(inputBuf, file.type, originalExt)
+
   const uniqueName = `${baseName}-${Date.now().toString(36)}${ext}`
   const repoPath = `public/${dir}/${year}/${uniqueName}`
 
   const store = getStore()
-  const buf = Buffer.from(await file.arrayBuffer())
-  await store.write(repoPath, buf, { message: `chore(admin): upload ${uniqueName}` })
+  await store.write(repoPath, buffer, { message: `chore(admin): upload ${uniqueName}` })
 
   return { url: `/${dir}/${year}/${uniqueName}`, path: repoPath }
+}
+
+/**
+ * Downscale large images, transcode JPEG/PNG/WebP → WebP.
+ * SVG, GIF (may be animated), and AVIF pass through unchanged.
+ */
+async function optimize(
+  input: Buffer,
+  mime: string,
+  originalExt: string,
+): Promise<{ buffer: Buffer; ext: string }> {
+  if (!TRANSCODE_TYPES.has(mime)) {
+    return { buffer: input, ext: originalExt }
+  }
+  try {
+    const pipeline = sharp(input, { failOn: 'error' }).rotate() // respect EXIF orientation
+    const meta = await pipeline.metadata()
+    const width = meta.width ?? 0
+    const height = meta.height ?? 0
+    const needsResize = width > MAX_DIMENSION || height > MAX_DIMENSION
+    const out = await (needsResize
+      ? pipeline.resize({ width: MAX_DIMENSION, height: MAX_DIMENSION, fit: 'inside', withoutEnlargement: true })
+      : pipeline
+    )
+      .webp({ quality: WEBP_QUALITY, effort: 4 })
+      .toBuffer()
+    // Only accept the transcode if it actually shrinks the file; otherwise
+    // keep the original (avoid re-compressing already-tiny assets).
+    if (out.length < input.length) return { buffer: out, ext: '.webp' }
+    return { buffer: input, ext: originalExt }
+  } catch {
+    // Sharp choked (corrupt image, unsupported subformat) — fall back to raw.
+    return { buffer: input, ext: originalExt }
+  }
 }
 
 export async function listImages(dir = 'images'): Promise<{ url: string; path: string }[]> {

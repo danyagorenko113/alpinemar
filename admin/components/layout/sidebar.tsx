@@ -10,6 +10,9 @@ import {
   Building2,
   Users,
   ImageIcon,
+  LayoutTemplate,
+  Star,
+  Settings,
   LogOut,
   Menu,
   ExternalLink,
@@ -44,6 +47,14 @@ const navGroups: NavGroup[] = [
       { href: '/services', label: 'Services', icon: Briefcase, title: 'Service pages' },
       { href: '/industries', label: 'Industries', icon: Building2, title: 'Industry pages' },
       { href: '/team', label: 'Team', icon: Users, title: 'Team members' },
+    ],
+  },
+  {
+    label: 'Site',
+    items: [
+      { href: '/homepage', label: 'Homepage', icon: LayoutTemplate, title: 'Pinned cards, logos, value props' },
+      { href: '/reviews', label: 'Reviews', icon: Star, title: 'Google review testimonials' },
+      { href: '/settings', label: 'Settings', icon: Settings, title: 'Contact info, socials, nav' },
     ],
   },
   {

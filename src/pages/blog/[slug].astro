@@ -3,7 +3,6 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { breadcrumb, articleSchema } from '@/data/schema';
-import { team } from '@/data/taxonomy';
 
 export async function getStaticPaths() {
   const posts = await getCollection('insights');
@@ -33,7 +32,8 @@ const dateFmt = (d: string | Date) =>
 
 const readingMin = Math.max(2, Math.round((post.data.excerpt?.length ?? 400) / 200));
 const authorName = post.data.author ?? 'The Alpine Mar team';
-const authorProfile = team.find((m) => authorName.includes(m.name.replace(/,\s*CPA$/, '')));
+const teamMembers = (await getCollection('team')).map((m) => m.data);
+const authorProfile = teamMembers.find((m) => authorName.includes(m.name.replace(/,\s*CPA$/, '')));
 const authorPhoto = authorProfile?.photo ?? '/images/brand/logo-web.png';
 
 const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);

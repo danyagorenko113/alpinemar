@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
@@ -26,6 +26,10 @@ import {
 } from 'lucide-react'
 import { uploadImage } from '@/lib/actions/media'
 import { cn } from '@/lib/utils'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 interface RichTextEditorProps {
   value: string
@@ -69,8 +73,178 @@ function Divider() {
   return <span className="mx-1 h-5 w-px bg-navy-200" />
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Link dialog — replaces window.prompt() with a proper modal.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface LinkDialogProps {
+  open: boolean
+  initialUrl: string
+  initialNewTab: boolean
+  onCancel: () => void
+  onApply: (url: string, newTab: boolean) => void
+  onRemove?: () => void
+}
+
+function LinkDialog({ open, initialUrl, initialNewTab, onCancel, onApply, onRemove }: LinkDialogProps) {
+  const [url, setUrl] = useState(initialUrl)
+  const [newTab, setNewTab] = useState(initialNewTab)
+
+  useEffect(() => {
+    if (open) {
+      setUrl(initialUrl)
+      setNewTab(initialNewTab)
+    }
+  }, [open, initialUrl, initialNewTab])
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => { if (!o) onCancel() }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>{initialUrl ? 'Edit link' : 'Add link'}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="link-url">URL</Label>
+            <Input
+              id="link-url"
+              autoFocus
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://alpinemar.com/…"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') { e.preventDefault(); if (url.trim()) onApply(url.trim(), newTab) }
+              }}
+            />
+          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={newTab} onChange={(e) => setNewTab(e.target.checked)} />
+            Open in new tab
+          </label>
+        </div>
+        <DialogFooter className="gap-2">
+          {onRemove && (
+            <Button type="button" variant="destructive" onClick={onRemove}>
+              Remove link
+            </Button>
+          )}
+          <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button type="button" onClick={() => onApply(url.trim(), newTab)} disabled={!url.trim()}>
+            {initialUrl ? 'Update' : 'Add'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Image alt-text dialog — asks for alt after upload succeeds.
+// Blocks the insert until the user gives a description (or explicitly marks
+// it decorative).
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface AltDialogProps {
+  open: boolean
+  previewUrl: string
+  suggestedAlt: string
+  onCancel: () => void
+  onApply: (alt: string) => void
+}
+
+function AltDialog({ open, previewUrl, suggestedAlt, onCancel, onApply }: AltDialogProps) {
+  const [alt, setAlt] = useState(suggestedAlt)
+  const [decorative, setDecorative] = useState(false)
+
+  useEffect(() => {
+    if (open) {
+      setAlt(suggestedAlt)
+      setDecorative(false)
+    }
+  }, [open, suggestedAlt])
+
+  function apply() {
+    onApply(decorative ? '' : alt.trim())
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => { if (!o) onCancel() }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Describe this image</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-2">
+          {previewUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={previewUrl}
+              alt=""
+              className="max-h-40 w-full rounded-md object-contain border bg-navy-50"
+            />
+          )}
+          <div className="space-y-1.5">
+            <Label htmlFor="alt-text">Alt text</Label>
+            <Input
+              id="alt-text"
+              autoFocus
+              value={alt}
+              onChange={(e) => setAlt(e.target.value)}
+              disabled={decorative}
+              placeholder="Short description for screen readers & SEO"
+              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); apply() } }}
+            />
+            <p className="text-xs text-muted-foreground">
+              Describe what the image shows, not "photo of…". Keep it under ~125 chars.
+            </p>
+          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="checkbox" checked={decorative} onChange={(e) => setDecorative(e.target.checked)} />
+            Decorative — screen readers can skip it
+          </label>
+        </div>
+        <DialogFooter className="gap-2">
+          <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button type="button" onClick={apply} disabled={!decorative && !alt.trim()}>Insert</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Main editor
+// ─────────────────────────────────────────────────────────────────────────────
+
 export function RichTextEditor({ value, onChange, placeholder, uploadDir }: RichTextEditorProps) {
   const [uploading, setUploading] = useState(false)
+  const [linkDialog, setLinkDialog] = useState<{ open: boolean; url: string; newTab: boolean } | null>(null)
+  const [altDialog, setAltDialog] = useState<{ open: boolean; url: string; suggested: string } | null>(null)
+
+  const insertUploadedImage = useCallback((editor: Editor, url: string, suggestedAlt: string) => {
+    setAltDialog({ open: true, url, suggested: suggestedAlt })
+    ;(insertUploadedImage as unknown as { pending?: Editor }).pending = editor
+  }, [])
+
+  const doUpload = useCallback(
+    async (editor: Editor, file: File) => {
+      if (!file.type.startsWith('image/')) return
+      setUploading(true)
+      try {
+        const fd = new FormData()
+        fd.append('file', file)
+        const { url } = await uploadImage(fd, { dir: uploadDir })
+        const base = file.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')
+        insertUploadedImage(editor, url, base)
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Upload failed'
+        const { toast } = await import('sonner')
+        toast.error(msg)
+      } finally {
+        setUploading(false)
+      }
+    },
+    [uploadDir, insertUploadedImage],
+  )
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -92,6 +266,33 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
       attributes: {
         class: 'prose prose-sm max-w-none min-h-[320px] px-5 py-4 focus:outline-none',
       },
+      // Drag-drop image support — table stakes.
+      handleDrop(view, event, _slice, moved) {
+        if (moved) return false
+        const files = event.dataTransfer?.files
+        if (!files || files.length === 0) return false
+        const images = Array.from(files).filter((f) => f.type.startsWith('image/'))
+        if (images.length === 0) return false
+        event.preventDefault()
+        const ed = (view as unknown as { editor?: Editor }).editor
+        if (ed) {
+          for (const f of images) void doUpload(ed, f)
+        }
+        return true
+      },
+      // Paste-image support: pastes from clipboard (screenshots).
+      handlePaste(view, event) {
+        const files = event.clipboardData?.files
+        if (!files || files.length === 0) return false
+        const images = Array.from(files).filter((f) => f.type.startsWith('image/'))
+        if (images.length === 0) return false
+        event.preventDefault()
+        const ed = (view as unknown as { editor?: Editor }).editor
+        if (ed) {
+          for (const f of images) void doUpload(ed, f)
+        }
+        return true
+      },
     },
   })
 
@@ -99,46 +300,51 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
     if (editor && value !== editor.getHTML()) {
       editor.commands.setContent(value, { emitUpdate: false })
     }
-    // sync external changes only
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value === '' && editor?.isEmpty])
 
-  const addLink = useCallback(() => {
+  const openLinkDialog = useCallback(() => {
     if (!editor) return
-    const current = editor.getAttributes('link').href as string | undefined
-    const url = window.prompt('Enter URL (leave empty to remove)', current ?? 'https://')
-    if (url === null) return
-    if (url === '') {
-      editor.chain().focus().unsetLink().run()
-      return
-    }
-    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+    const current = (editor.getAttributes('link').href as string | undefined) ?? ''
+    const currentTarget = (editor.getAttributes('link').target as string | undefined) ?? ''
+    setLinkDialog({ open: true, url: current, newTab: currentTarget === '_blank' })
   }, [editor])
 
-  const addImage = useCallback(() => {
+  const openImagePicker = useCallback(() => {
     if (!editor) return
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/jpeg,image/png,image/webp,image/gif,image/avif'
-    input.onchange = async () => {
+    input.onchange = () => {
       const file = input.files?.[0]
-      if (!file) return
-      setUploading(true)
-      try {
-        const fd = new FormData()
-        fd.append('file', file)
-        const { url } = await uploadImage(fd, { dir: uploadDir })
-        editor.chain().focus().setImage({ src: url, alt: file.name }).run()
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Upload failed'
-        const { toast } = await import('sonner')
-        toast.error(msg)
-      } finally {
-        setUploading(false)
-      }
+      if (file) void doUpload(editor, file)
     }
     input.click()
-  }, [editor, uploadDir])
+  }, [editor, doUpload])
+
+  function applyLink(url: string, newTab: boolean) {
+    if (!editor) return
+    editor.chain().focus().extendMarkRange('link').setLink({
+      href: url,
+      target: newTab ? '_blank' : null,
+      rel: newTab ? 'noopener noreferrer' : 'noopener',
+    }).run()
+    setLinkDialog(null)
+  }
+
+  function removeLink() {
+    if (!editor) return
+    editor.chain().focus().unsetLink().run()
+    setLinkDialog(null)
+  }
+
+  function applyAlt(alt: string) {
+    const pendingEditor = (insertUploadedImage as unknown as { pending?: Editor }).pending
+    if (pendingEditor && altDialog) {
+      pendingEditor.chain().focus().setImage({ src: altDialog.url, alt }).run()
+    }
+    setAltDialog(null)
+  }
 
   if (!editor) return null
 
@@ -186,10 +392,14 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
           <Minus className="h-4 w-4" />
         </ToolbarBtn>
         <Divider />
-        <ToolbarBtn active={editor.isActive('link')} onClick={addLink} title="Link">
+        <ToolbarBtn active={editor.isActive('link')} onClick={openLinkDialog} title="Link (⌘K)">
           <LinkIcon className="h-4 w-4" />
         </ToolbarBtn>
-        <ToolbarBtn disabled={uploading} onClick={addImage} title={uploading ? 'Uploading…' : 'Insert image'}>
+        <ToolbarBtn
+          disabled={uploading}
+          onClick={openImagePicker}
+          title={uploading ? 'Uploading…' : 'Insert image (or drop / paste)'}
+        >
           <ImagePlus className="h-4 w-4" />
         </ToolbarBtn>
         <div className="ml-auto flex items-center gap-0.5">
@@ -202,6 +412,23 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
         </div>
       </div>
       <EditorContent editor={editor} />
+
+      <LinkDialog
+        open={!!linkDialog?.open}
+        initialUrl={linkDialog?.url ?? ''}
+        initialNewTab={linkDialog?.newTab ?? false}
+        onCancel={() => setLinkDialog(null)}
+        onApply={applyLink}
+        onRemove={linkDialog?.url ? removeLink : undefined}
+      />
+
+      <AltDialog
+        open={!!altDialog?.open}
+        previewUrl={altDialog?.url ?? ''}
+        suggestedAlt={altDialog?.suggested ?? ''}
+        onCancel={() => setAltDialog(null)}
+        onApply={applyAlt}
+      />
     </div>
   )
 }

@@ -1,11 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import { team } from '@/data/taxonomy';
 import { personGraph } from '@/data/schema';
 import { site } from '@/data/site';
 
-const schema = personGraph(team);
+const teamMembers = (await getCollection('team'))
+  .map((m) => m.data)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+
+const schema = personGraph(teamMembers);
 
 // Photos for the drag-to-scroll gallery under "Breaking molds. Building relationships."
 // 6 photos — 4 fully visible at a time on desktop, edges cropped per Figma.
@@ -19,7 +23,7 @@ const journeyPhotos = [
 ];
 
 // Carousel: members with photos
-const teamCards = team.filter((m: any) => m.photo);
+const teamCards = teamMembers.filter((m) => m.photo);
 
 // Slugify helper for LinkedIn URLs (placeholder)
 const linkedinFor = (name: string) =>
@@ -198,7 +202,7 @@ const drives = [
       <!-- Carousel -->
       <div class="relative mt-16">
         <div id="team-track" class="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-3 [scrollbar-width:none] sm:-mx-6 sm:gap-6 sm:px-6 [&::-webkit-scrollbar]:hidden">
-          {teamCards.map((m: any) => {
+          {teamCards.map((m) => {
             const display = m.name.replace(/,\s*CPA$/, '');
             const isCpa = /CPA/.test(m.name);
             return (

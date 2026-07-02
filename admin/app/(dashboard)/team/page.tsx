@@ -1,28 +1,57 @@
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
+import { Plus, Search } from 'lucide-react'
 import { listTeam } from '@/lib/actions/team'
 import { PageHeader } from '@/components/shared/page-header'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 
-export default async function TeamListPage() {
-  const items = await listTeam()
+interface SP {
+  q?: string
+}
+
+export default async function TeamListPage(props: { searchParams: Promise<SP> }) {
+  const sp = await props.searchParams
+  const all = await listTeam()
+  const q = (sp.q ?? '').toLowerCase()
+
+  const items = all.filter((t) => {
+    if (q && !`${t.name} ${t.role}`.toLowerCase().includes(q)) return false
+    return true
+  })
+
   return (
     <div>
       <PageHeader
         title="Team"
-        description={`${items.length} members in src/content/team/`}
+        description={`${all.length} members in src/content/team/`}
         actions={
           <Button asChild>
             <Link href="/team/new"><Plus className="h-4 w-4" />New member</Link>
           </Button>
         }
       />
+
+      <form method="GET" className="flex flex-col sm:flex-row gap-2 mb-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input name="q" defaultValue={sp.q ?? ''} placeholder="Search name or role…" className="pl-9" />
+        </div>
+        <Button type="submit" variant="outline">Filter</Button>
+        {q && (
+          <Button type="button" variant="ghost" asChild>
+            <Link href="/team">Clear</Link>
+          </Button>
+        )}
+      </form>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {items.length === 0 && (
-          <p className="text-sm text-muted-foreground col-span-full py-10 text-center">No team members yet.</p>
+          <p className="text-sm text-muted-foreground col-span-full py-10 text-center">
+            {all.length === 0 ? 'No team members yet.' : 'No members match the filter.'}
+          </p>
         )}
         {items.map((t) => (
           <Link
