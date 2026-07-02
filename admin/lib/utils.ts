@@ -16,6 +16,39 @@ export function slugify(input: string): string {
     .replace(/-+/g, '-')
 }
 
+/**
+ * Turns a content-path URL like "/images/team/Pablo.jpeg" into a fully
+ * qualified preview URL against the live site (e.g. https://alpinemar.com).
+ * Necessary because the admin runs on a different origin than the site,
+ * so relative paths would 404 in <img src=…>.
+ *
+ * Left alone: absolute URLs (http…, https…), protocol-relative (//…),
+ * data: URIs, blob: URIs, and empty strings.
+ */
+export function previewSrc(path: string | undefined | null): string {
+  if (!path) return ''
+  if (/^(https?:)?\/\//i.test(path)) return path
+  if (path.startsWith('data:') || path.startsWith('blob:')) return path
+  if (!path.startsWith('/')) return path
+  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com').replace(/\/$/, '')
+  return `${base}${path}`
+}
+
+/**
+ * Rewrites root-relative <img src="/…"> and <a href="/…"> URLs in an
+ * HTML string to absolute site URLs — for preview modals inside the
+ * admin, where the admin runs on a different origin than the live site.
+ */
+export function rewriteRelativeUrls(html: string): string {
+  if (!html) return html
+  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com').replace(/\/$/, '')
+  return html
+    .replace(/(<img\b[^>]*\bsrc=)"(\/[^"/][^"]*)"/gi, (_, pre: string, src: string) => `${pre}"${base}${src}"`)
+    .replace(/(<img\b[^>]*\bsrc=)'(\/[^'/][^']*)'/gi, (_, pre: string, src: string) => `${pre}'${base}${src}'`)
+    .replace(/(<a\b[^>]*\bhref=)"(\/[^"/][^"]*)"/gi, (_, pre: string, href: string) => `${pre}"${base}${href}"`)
+    .replace(/(<a\b[^>]*\bhref=)'(\/[^'/][^']*)'/gi, (_, pre: string, href: string) => `${pre}'${base}${href}'`)
+}
+
 export function formatDate(input: string | Date): string {
   const d = typeof input === 'string' ? new Date(input) : input
   if (Number.isNaN(d.getTime())) return ''

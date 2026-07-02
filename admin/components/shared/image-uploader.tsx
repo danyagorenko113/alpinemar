@@ -6,7 +6,7 @@ import { Upload, X } from 'lucide-react'
 import { uploadImage } from '@/lib/actions/media'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn, previewSrc } from '@/lib/utils'
 
 interface ImageUploaderProps {
   value: string
@@ -41,7 +41,7 @@ export function ImageUploader({ value, onChange, uploadDir, className }: ImageUp
       {value ? (
         <div className="relative inline-block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="" className="max-h-56 rounded-md border bg-navy-50" />
+          <img src={previewSrc(value)} alt="" className="max-h-56 rounded-md border bg-navy-50" />
           <Button
             type="button"
             variant="destructive"

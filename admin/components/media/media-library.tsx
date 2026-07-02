@@ -7,7 +7,7 @@ import { uploadImage, deleteImage } from '@/lib/actions/media'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
-import { cn } from '@/lib/utils'
+import { cn, previewSrc } from '@/lib/utils'
 
 interface MediaItem {
   url: string
@@ -148,7 +148,7 @@ export function MediaLibrary({ initial }: Props) {
               <div key={item.path} className="rounded-lg border bg-card overflow-hidden group">
                 <div className="aspect-square bg-navy-50 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={item.url} alt="" className="w-full h-full object-cover" loading="lazy" />
+                  <img src={previewSrc(item.url)} alt="" className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="p-2.5 space-y-2">
                   <div className="text-[10px] font-mono text-muted-foreground line-clamp-2 break-all" title={item.path}>

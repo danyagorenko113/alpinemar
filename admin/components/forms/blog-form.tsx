@@ -16,7 +16,7 @@ import { TagInput } from '@/components/shared/tag-input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveBlogPost, deleteBlogPost, type BlogPost, type BlogFrontmatter } from '@/lib/actions/blog'
-import { slugify, formatDate } from '@/lib/utils'
+import { slugify, formatDate, previewSrc, rewriteRelativeUrls } from '@/lib/utils'
 import { toDateString } from '@/lib/store/markdown'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
@@ -323,7 +323,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
           </DialogHeader>
           {post.cover && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.cover} alt="" className="w-full max-h-[320px] object-cover" />
+            <img src={previewSrc(post.cover)} alt="" className="w-full max-h-[320px] object-cover" />
           )}
           <div className="px-8 py-8 space-y-5">
             <div>
@@ -338,7 +338,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
                 ))}
               </div>
             )}
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.body || '<p><em>No content yet</em></p>' }} />
+            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: rewriteRelativeUrls(post.body) || '<p><em>No content yet</em></p>' }} />
           </div>
         </DialogContent>
       </Dialog>

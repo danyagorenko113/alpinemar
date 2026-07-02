@@ -7,6 +7,7 @@ import { PageHeader } from '@/components/shared/page-header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
+import { previewSrc } from '@/lib/utils'
 
 interface SP {
   q?: string
@@ -62,7 +63,7 @@ export default async function TeamListPage(props: { searchParams: Promise<SP> })
             <div className="aspect-[4/3] bg-navy-50 overflow-hidden">
               {t.photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={t.photo} alt={t.name} className="w-full h-full object-cover" />
+                <img src={previewSrc(t.photo)} alt={t.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">No photo</div>
               )}

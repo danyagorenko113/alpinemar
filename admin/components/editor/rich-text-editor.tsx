@@ -25,7 +25,7 @@ import {
   Minus,
 } from 'lucide-react'
 import { uploadImage } from '@/lib/actions/media'
-import { cn } from '@/lib/utils'
+import { cn, previewSrc } from '@/lib/utils'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -177,7 +177,7 @@ function AltDialog({ open, previewUrl, suggestedAlt, onCancel, onApply }: AltDia
           {previewUrl && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={previewUrl}
+              src={previewSrc(previewUrl)}
               alt=""
               className="max-h-40 w-full rounded-md object-contain border bg-navy-50"
             />
