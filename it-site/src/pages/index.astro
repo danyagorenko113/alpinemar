@@ -1,7 +1,41 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
-import { site } from '@/data/site';
+import { getCollection } from 'astro:content';
+import { site, serviceGroups } from '@/data/site';
+
+const insights = (await getCollection('insights'))
+  .filter((p) => p.data.status !== 'draft')
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
+  .slice(0, 4);
+
+const services = (await getCollection('services'))
+  .filter((s) => s.data.status !== 'draft')
+  .map((s) => s.data);
+const bySlug = new Map(services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]));
+
+// Pick 6 featured services — one per group, plus flagships.
+const featured = [
+  bySlug.get('cybersecurity'),
+  bySlug.get('incident-response'),
+  bySlug.get('it-consulting'),
+  bySlug.get('cloud-management'),
+  bySlug.get('ai-security'),
+  bySlug.get('remote-it-support'),
+].filter(Boolean);
+
+const values = [
+  { title: 'No black boxes.',       body: 'We explain what we\'re doing, why, and what it costs — in plain English, without buzzwords.' },
+  { title: 'Small team by design.', body: 'You work directly with the people doing the work. No ticket ping-pong, no third-tier hand-offs.' },
+  { title: 'Business-first thinking.', body: 'Technology decisions have to serve the business. We start there and work back to the stack.' },
+  { title: 'Real availability.',    body: 'When things go wrong, you get a person on the phone quickly. That\'s the whole promise.' },
+];
+
+const featured_post = insights[0];
+const more_posts = insights.slice(1);
+const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
+const dateFmt = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
 <BaseLayout
@@ -11,7 +45,7 @@ import { site } from '@/data/site';
   {/* ═════════════ HERO ═════════════ */}
   <section class="relative overflow-hidden bg-paper">
     <Container width="wide" class="relative">
-      <div class="grid min-h-[78vh] grid-rows-[auto_auto] content-start gap-0 pt-[18vh] pb-16 md:pt-[20vh] md:pb-24">
+      <div class="grid min-h-[86vh] grid-rows-[auto_auto] content-start gap-0 pt-[18vh] pb-16 md:pt-[20vh] md:pb-24">
         <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
           <span class="block size-2 bg-scooter"></span>
           <span class="font-display text-[14px] tracking-[-0.005em]">Alpine Mar IT</span>
@@ -37,7 +71,7 @@ import { site } from '@/data/site';
             </a>
             <a
               href="/services/"
-              class="group inline-flex w-fit items-center gap-2 border-b border-[#12122d] pb-1.5 font-display text-[16px] font-medium text-[#12122d] transition-colors hover:text-scooter"
+              class="group inline-flex w-fit items-center gap-2 border-b border-[#12122d] pb-1.5 font-display text-[16px] font-medium text-[#12122d] transition-colors hover:text-scooter-dark"
             >
               Explore our services
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
@@ -48,25 +82,194 @@ import { site } from '@/data/site';
     </Container>
   </section>
 
-  {/* ═════════════ SCAFFOLD NOTICE ═════════════ */}
-  <section class="relative bg-white py-24 md:py-32">
-    <Container width="wide">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+  {/* ═════════════ SERVICES ═════════════ */}
+  {featured.length > 0 && (
+    <section class="relative bg-white py-24 md:py-32">
+      <Container width="wide">
+        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Our Services</span>
+        </div>
+
+        <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+          <h2 class="am-h1-display text-navy-900 md:col-span-7">
+            Smart, secure IT — built<br />around your business.
+          </h2>
+          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
+            Everything we do is grounded in the same principle: technology has
+            to serve the business. Whether it's securing systems, moving to the
+            cloud, or making AI actually useful — we start with your goals.
+          </p>
+        </div>
+
+        <ul class="border-t border-line">
+          {featured.map((s, idx) => s && (
+            <li data-reveal class="group relative border-b border-line">
+              <a href={s.path} class="relative grid grid-cols-3 items-center py-7 md:py-10">
+                <span class="justify-self-start pl-2 font-display text-[24px] font-medium tabular-nums text-navy-900 md:pl-6 md:text-[32px]">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <span class="justify-self-center whitespace-nowrap text-left font-display text-[20px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[26px] md:min-w-[420px] md:text-[32px]">
+                  {s.title}
+                </span>
+                <span class="justify-self-end pr-2 md:pr-6">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="block text-navy-900 group-hover:hidden">
+                    <path d="M7 17 17 7"/><path d="M7 7h10v10"/>
+                  </svg>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="hidden text-scooter group-hover:block">
+                    <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </a>
+            </li>
+          ))}
+          <li class="border-b border-line">
+            <a href="/services/" class="group flex items-center justify-between py-7 pl-2 pr-2 md:pl-6 md:pr-6">
+              <span class="font-display text-[18px] font-medium text-navy-500 transition-colors group-hover:text-scooter-dark">View all services</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-navy-500 transition-colors group-hover:text-scooter-dark">
+                <path d="M5 12h14"/><path d="m13 5 7 7-7 7"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  {/* ═════════════ ABOUT ═════════════ */}
+  <section class="relative overflow-hidden bg-[#12122d] pt-24 text-white md:pt-32">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/85">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Scaffold notice</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Why Alpine Mar IT</span>
       </div>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-          Sprint IT-1 — foundation ready.
+      <div data-reveal class="grid grid-cols-1 gap-10 pb-20 md:grid-cols-12 md:gap-16 md:pb-24">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
+          IT with a<br />human touch.
         </h2>
-        <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          The Astro app, design tokens (Satoshi + Alpine navy/scooter),
-          BaseLayout, Nav, and Footer are wired to the same design system as
-          alpinemar.com. Next spring: migrate 19 blog posts, 17 service pages,
-          and 7 team profiles into content collections, then build the /services,
-          /about, /blog, and /contact templates.
+        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
+          We started Alpine Mar IT because we'd seen what "managed IT" had
+          become. Faceless ticketing systems. Vendors who talked past you.
+          Playbooks written for someone else's company. We wanted the opposite:
+          a small team that picks up the phone, learns your business, and gives
+          you honest answers.
         </p>
       </div>
+
+      <Container width="wide" class="relative pb-20 md:pb-24">
+        <ul data-stagger class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+          {values.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-scooter"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span class="font-display text-[14px] leading-[1.5] text-white/85">
+                <strong class="block font-medium text-white">{item.title}</strong>
+                {item.body}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </Container>
+  </section>
+
+  {/* ═════════════ INSIGHTS ═════════════ */}
+  {insights.length > 0 && (
+    <section class="relative bg-white py-24 md:py-32">
+      <Container width="wide">
+        <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-navy-900">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Latest Insights</span>
+        </div>
+
+        <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
+          <h2 class="am-h1-display text-navy-900 md:col-span-7">
+            At the intersection of<br />tech and business.
+          </h2>
+          <div class="flex flex-col items-start gap-7 md:col-span-5 md:pt-3">
+            <p class="font-display text-[15px] leading-[1.65] text-navy-500">
+              Practical perspectives on cybersecurity, cloud, and AI — written
+              by the people who work in it every day.
+            </p>
+            <a href="/blog/" class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900">
+              View All Insights
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        {featured_post && (
+          <a data-reveal href={`/blog/${slugOf(featured_post.id)}/`} class="group mt-16 grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
+            <div class="flex flex-col gap-6 p-8 md:p-12">
+              <div class="flex items-center justify-between gap-3 font-display text-[12px] text-navy-500">
+                <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                  <span class="block size-1.5 bg-navy-900"></span>
+                  {featured_post.data.category ?? 'Insights'}
+                </span>
+                <span>{dateFmt(featured_post.data.date)}</span>
+              </div>
+              <h3 class="font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-navy-900 md:text-[32px]">{featured_post.data.title}</h3>
+              <p class="font-display text-[14px] leading-[1.65] text-navy-500">{featured_post.data.excerpt}</p>
+              <div class="mt-auto flex items-center justify-between gap-4">
+                <span class="font-display text-[14px] font-medium text-navy-900">Read more</span>
+                <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-navy-900 text-white transition-transform group-hover:translate-x-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                </span>
+              </div>
+            </div>
+            <div class="relative aspect-[5/4] overflow-hidden bg-navy-50 md:aspect-auto md:min-h-[420px]">
+              <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-40"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-[#12122d]/85 via-[#12122d]/70 to-scooter/40"></div>
+              <div class="relative flex h-full items-end p-8 md:p-12">
+                <span class="font-display text-[13px] uppercase tracking-[0.12em] text-scooter">{featured_post.data.category ?? 'Insights'}</span>
+              </div>
+            </div>
+          </a>
+        )}
+
+        {more_posts.length > 0 && (
+          <div data-stagger class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {more_posts.map((p) => (
+              <a href={`/blog/${slugOf(p.id)}/`} class="group flex min-h-[280px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-navy-900">
+                <div class="flex items-center justify-between gap-3 font-display text-[12px] text-navy-500">
+                  <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
+                    <span class="block size-1.5 bg-navy-900"></span>
+                    {p.data.category ?? 'Insights'}
+                  </span>
+                  <span>{dateFmt(p.data.date)}</span>
+                </div>
+                <h4 class="mt-7 font-display text-[19px] font-medium leading-[1.3] tracking-[-0.01em] text-navy-900">{p.data.title}</h4>
+                <div class="mt-auto flex items-center justify-between gap-4 pt-8">
+                  <span class="font-display text-[13px] font-medium text-navy-900">Read more</span>
+                  <span class="inline-flex size-9 items-center justify-center rounded-[4px] bg-navy-900 text-white transition-transform group-hover:translate-x-1">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </Container>
+    </section>
+  )}
+
+  {/* ═════════════ CONTACT ═════════════ */}
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-28">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10 text-center">
+      <div class="am-eyebrow mx-auto justify-center">Let's talk</div>
+      <h2 class="mt-6 am-h1-display am-gradient-ink-light mx-auto max-w-3xl">
+        Start with a free<br />IT assessment.
+      </h2>
+      <p class="mx-auto mt-6 max-w-xl font-display text-[15px] text-white/75">
+        30 minutes. No pitch, no obligation. We listen first, then tell you what we think.
+      </p>
+      <a href="/contact/" class="group mt-10 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white">
+        Book a Free IT Assessment
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
     </Container>
   </section>
 </BaseLayout>

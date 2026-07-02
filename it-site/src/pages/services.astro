@@ -1,0 +1,88 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection } from 'astro:content';
+import { serviceGroups } from '@/data/site';
+
+const services = (await getCollection('services'))
+  .filter((s) => s.data.status !== 'draft')
+  .map((s) => s.data);
+
+const bySlug = new Map(services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]));
+---
+
+<BaseLayout
+  rawTitle="IT Services & Technology Solutions | Alpine Mar IT"
+  description="Cybersecurity, cloud, AI, and IT advisory services for SMBs — built around your business, not template checkboxes."
+>
+  {/* HERO */}
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="wide" class="relative">
+      <div class="grid min-h-[64vh] grid-rows-[auto_auto] content-start gap-0 pt-[16vh] pb-16">
+        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">Services</span>
+        </div>
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
+          IT services that move<br />your business forward.
+        </h1>
+        <p data-reveal class="mt-8 max-w-[58ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
+          We combine technical depth with business-first thinking. Whether it's
+          hardening your security posture, shifting to the cloud, or building
+          real AI into your workflows — we start with your business, not a
+          checklist.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  {/* SERVICE GROUPS */}
+  {serviceGroups.map((group) => {
+    const items = group.services.map((slug) => bySlug.get(slug)).filter(Boolean);
+    if (items.length === 0) return null;
+    return (
+      <section class="relative bg-white py-20 md:py-24 border-t border-line">
+        <Container width="wide">
+          <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+            <span class="block size-2 bg-scooter"></span>
+            <span class="font-display text-[14px] tracking-[-0.005em]">{group.label}</span>
+          </div>
+          <ul data-stagger class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
+            {items.map((s) => s && (
+              <li>
+                <a href={s.path} class="group flex flex-col gap-3 border-b border-line pb-6 transition-colors hover:border-navy-900">
+                  <h3 class="font-display text-[22px] font-medium tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-scooter-dark">
+                    {s.title}
+                  </h3>
+                  <p class="font-display text-[15px] leading-[1.6] text-navy-500">{s.summary}</p>
+                  <span class="mt-2 inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900">
+                    Explore this service
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+    );
+  })}
+
+  {/* CTA */}
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10 text-center">
+      <h2 class="am-h1-display am-gradient-ink-light mx-auto max-w-3xl">
+        Not sure where to start?
+      </h2>
+      <p class="mx-auto mt-5 max-w-xl font-display text-[15px] text-white/75">
+        Book a free 30-minute IT assessment. We'll listen first, then tell you
+        what we think — no pitch, no obligation.
+      </p>
+      <a href="/contact/" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white">
+        Book a Free IT Assessment
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </Container>
+  </section>
+</BaseLayout>

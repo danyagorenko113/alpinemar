@@ -1,0 +1,127 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection } from 'astro:content';
+import { site } from '@/data/site';
+
+const team = (await getCollection('team'))
+  .map((m) => m.data)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+
+const values = [
+  { title: 'Clarity',       body: 'Tech doesn\'t have to be confusing. We explain everything so anyone on your team can follow.' },
+  { title: 'Responsiveness', body: 'You won\'t wait on hold. You\'ll get a real person, quickly, when things matter.' },
+  { title: 'Trust',          body: 'We give honest advice, even when it\'s not what\'s easiest for us.' },
+  { title: 'Proactivity',    body: 'We don\'t just fix things. We prevent problems before they start.' },
+  { title: 'Partnership',    body: 'We work as an extension of your team, not another vendor to manage.' },
+];
+---
+
+<BaseLayout
+  rawTitle="About Alpine Mar IT — IT with a human touch"
+  description="Alpine Mar IT delivers cybersecurity, cloud, and AI-forward IT services — built around people, not tickets."
+>
+  {/* HERO */}
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="wide" class="relative">
+      <div class="grid min-h-[64vh] grid-rows-[auto_auto] content-start gap-0 pt-[16vh] pb-16">
+        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">About Us</span>
+        </div>
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
+          IT with a<br /><span class="italic text-scooter">human</span> touch.
+        </h1>
+        <p data-reveal class="mt-8 max-w-[60ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
+          Alpine Mar IT was built for the businesses that got tired of feeling
+          like ticket numbers. We're the technology arm of a Fort Lauderdale
+          firm that's been serving founders and operators for years — and we
+          bring that same relationship-first mindset to everything technical.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  {/* VALUES */}
+  <section class="relative bg-white py-24 md:py-32 border-t border-line">
+    <Container width="wide">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">What Guides Us</span>
+      </div>
+      <div data-reveal class="grid grid-cols-1 gap-10 pb-10 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-navy-900 md:col-span-7">Simple ideas we take seriously.</h2>
+        <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
+          Values on a wall don't mean much. These are the five we actually use
+          to make daily decisions — from how we return a phone call to how we
+          scope an engagement.
+        </p>
+      </div>
+      <ul data-stagger class="grid grid-cols-1 border-t border-line md:grid-cols-2 lg:grid-cols-5">
+        {values.map((v) => (
+          <li class="border-b border-line px-1 py-7 md:border-r lg:border-b-0">
+            <h3 class="font-display text-[18px] font-medium tracking-[-0.01em] text-navy-900">{v.title}</h3>
+            <p class="mt-3 font-display text-[14px] leading-[1.6] text-navy-500">{v.body}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  {/* TEAM */}
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/85">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Meet the team</span>
+      </div>
+      <div data-reveal class="grid grid-cols-1 gap-10 pb-14 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">The people behind the work.</h2>
+        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
+          A small team by design. Everyone you meet is someone who'll actually
+          be doing the work.
+        </p>
+      </div>
+
+      <ul data-stagger class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+        {team.map((m) => (
+          <li class="flex flex-col gap-3 rounded-[6px] bg-white/[0.04] p-5">
+            <div class="aspect-square overflow-hidden rounded-[4px] bg-white/[0.06]">
+              {m.photo ? (
+                <img src={m.photo} alt={m.name} class="h-full w-full object-cover" loading="lazy" />
+              ) : (
+                <div class="flex h-full items-center justify-center font-display text-[36px] font-medium text-white/25">
+                  {m.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+                </div>
+              )}
+            </div>
+            <div>
+              <h3 class="font-display text-[15px] font-medium text-white">{m.name}</h3>
+              <p class="mt-0.5 font-display text-[12px] text-white/60">{m.role}</p>
+            </div>
+            {m.email && (
+              <a href={`mailto:${m.email}`} class="mt-auto font-display text-[11px] text-scooter transition-colors hover:text-white">
+                {m.email}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  {/* CTA */}
+  <section class="relative bg-white py-20 md:py-24 border-t border-line">
+    <Container width="wide" class="text-center">
+      <h2 class="am-h1-display am-gradient-ink mx-auto max-w-2xl">Let's have a real conversation.</h2>
+      <p class="mx-auto mt-5 max-w-xl font-display text-[15px] text-navy-500">
+        Book a free 30-minute IT assessment and we'll show you what we mean.
+      </p>
+      <a href="/contact/" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900">
+        Book a Free IT Assessment
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </Container>
+  </section>
+</BaseLayout>

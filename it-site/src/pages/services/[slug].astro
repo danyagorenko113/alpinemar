@@ -1,0 +1,76 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('services');
+  return items.map((item) => ({
+    params: { slug: item.id.replace(/\.(md|mdx)$/i, '').split('/').pop() },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const d = item.data;
+---
+
+<BaseLayout
+  title={d.seo?.title ?? d.title}
+  description={d.seo?.description ?? d.summary}
+>
+  {/* HERO */}
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="wide" class="relative">
+      <div class="grid grid-rows-[auto_auto] content-start gap-0 pt-[14vh] pb-16 md:pt-[16vh] md:pb-20">
+        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
+          <span class="block size-2 bg-scooter"></span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">
+            {d.group ?? 'Services'}
+          </span>
+        </div>
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
+          {d.heroTitle ?? d.title}
+        </h1>
+        <p data-reveal class="mt-8 max-w-[58ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
+          {d.summary}
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  {/* BODY */}
+  <section class="relative bg-white py-16 md:py-24">
+    <Container width="reading">
+      <article class="prose prose-lg max-w-none [&_h2]:font-display [&_h2]:text-[28px] [&_h2]:font-medium [&_h2]:tracking-[-0.01em] [&_h2]:text-navy-900 [&_h2]:mt-14 [&_h2]:mb-4 [&_h3]:font-display [&_h3]:text-[20px] [&_h3]:font-medium [&_h3]:text-navy-900 [&_h3]:mt-8 [&_h3]:mb-3 [&_p]:font-display [&_p]:text-[16px] [&_p]:leading-[1.7] [&_p]:text-navy-600 [&_p]:my-4 [&_ul]:font-display [&_ul]:text-[16px] [&_ul]:text-navy-600 [&_ul]:my-4 [&_ul]:pl-6 [&_ul>li]:list-disc [&_ul>li]:my-1.5 [&_ol]:font-display [&_ol]:text-[16px] [&_ol]:text-navy-600 [&_ol]:my-4 [&_ol]:pl-6 [&_ol>li]:list-decimal [&_ol>li]:my-1.5 [&_strong]:text-navy-900 [&_a]:text-scooter-dark [&_a]:underline">
+        <Content />
+      </article>
+    </Container>
+  </section>
+
+  {/* CTA */}
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-28">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10">
+      <div class="grid grid-cols-1 items-center gap-8 md:grid-cols-12">
+        <div class="md:col-span-7">
+          <div class="am-eyebrow text-scooter/90">Ready when you are</div>
+          <h2 class="mt-4 am-h1-display am-gradient-ink-light">
+            Let's get on a<br />first-name basis.
+          </h2>
+          <p class="mt-5 max-w-xl font-display text-[15px] text-white/75">
+            Book a free 30-minute assessment. Plain-English recommendations, no
+            pitch, no obligation.
+          </p>
+        </div>
+        <div class="md:col-span-5 md:justify-self-end">
+          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white">
+            Book a Free IT Assessment
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

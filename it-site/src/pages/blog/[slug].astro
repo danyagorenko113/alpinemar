@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights');
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.(md|mdx)$/i, '').split('/').pop() },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const dateFmt = new Date(d.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+const related = (await getCollection('insights'))
+  .filter((p) => p.data.status !== 'draft' && p.id !== post.id && p.data.category === d.category)
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
+  .slice(0, 3);
+const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
+---
+
+<BaseLayout
+  title={d.seo?.title ?? d.title}
+  description={d.seo?.description ?? d.excerpt}
+>
+  {/* HEADER */}
+  <section class="relative overflow-hidden bg-paper">
+    <Container width="reading" class="relative pt-[14vh] pb-10 md:pt-[16vh] md:pb-14">
+      <div class="flex items-center gap-3 font-display text-[12px] text-navy-500">
+        <a href="/blog/" class="hover:text-navy-900 transition-colors">Insights</a>
+        <span>·</span>
+        <span>{d.category ?? 'Article'}</span>
+        <span>·</span>
+        <time datetime={new Date(d.date).toISOString()}>{dateFmt}</time>
+      </div>
+      <h1 class="mt-6 am-h1-display am-gradient-ink pb-2">{d.title}</h1>
+      <p class="mt-6 max-w-[60ch] font-display text-[17px] leading-[1.6] text-navy-600">{d.excerpt}</p>
+      {d.author && (
+        <p class="mt-6 font-display text-[13px] text-navy-500">By {d.author}</p>
+      )}
+    </Container>
+  </section>
+
+  {/* BODY */}
+  <section class="relative bg-white py-16 md:py-20">
+    <Container width="reading">
+      <article class="prose prose-lg max-w-none [&_h2]:font-display [&_h2]:text-[26px] [&_h2]:font-medium [&_h2]:tracking-[-0.01em] [&_h2]:text-navy-900 [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:font-display [&_h3]:text-[19px] [&_h3]:font-medium [&_h3]:text-navy-900 [&_h3]:mt-8 [&_h3]:mb-3 [&_p]:font-display [&_p]:text-[16px] [&_p]:leading-[1.75] [&_p]:text-navy-700 [&_p]:my-5 [&_ul]:font-display [&_ul]:text-[16px] [&_ul]:text-navy-700 [&_ul]:my-5 [&_ul]:pl-6 [&_ul>li]:list-disc [&_ul>li]:my-2 [&_ol]:font-display [&_ol]:text-[16px] [&_ol]:text-navy-700 [&_ol]:my-5 [&_ol]:pl-6 [&_ol>li]:list-decimal [&_ol>li]:my-2 [&_strong]:text-navy-900 [&_a]:text-scooter-dark [&_a]:underline [&_blockquote]:border-l-2 [&_blockquote]:border-scooter [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-navy-700">
+        <Content />
+      </article>
+    </Container>
+  </section>
+
+  {/* RELATED */}
+  {related.length > 0 && (
+    <section class="relative bg-navy-50 py-16 md:py-20 border-t border-line">
+      <Container width="wide">
+        <div class="am-eyebrow mb-8">Related reading</div>
+        <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {related.map((p) => (
+            <li>
+              <a href={`/blog/${slugOf(p.id)}/`} class="group block rounded-[6px] border border-line bg-white p-6 transition-colors hover:border-navy-900">
+                <span class="font-display text-[11px] text-navy-500">{p.data.category ?? 'Insights'}</span>
+                <h3 class="mt-2 font-display text-[18px] font-medium leading-[1.3] text-navy-900 transition-colors group-hover:text-scooter-dark">{p.data.title}</h3>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  {/* CTA */}
+  <section class="relative overflow-hidden bg-[#12122d] py-20 text-white md:py-24">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <Container width="wide" class="relative z-10 text-center">
+      <h2 class="am-h1-display am-gradient-ink-light mx-auto max-w-2xl">Talk it through with our team.</h2>
+      <a href="/contact/" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white">
+        Book a Free IT Assessment
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </Container>
+  </section>
+</BaseLayout>
