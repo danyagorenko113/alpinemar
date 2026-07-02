@@ -14,13 +14,8 @@ export interface ServiceFrontmatter {
   path: string
   summary: string
   cover?: string
-  order?: number
   group?: ServiceGroup
-  takeaways: string[]
-  included: string[]
-  process: { title: string; body: string }[]
   industries: string[]
-  faq: { q: string; a: string }[]
   seo?: { title?: string; description?: string }
 }
 
@@ -44,13 +39,8 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
     path: String(data.path ?? ''),
     summary: String(data.summary ?? ''),
     cover: data.cover ? String(data.cover) : undefined,
-    order: typeof data.order === 'number' ? data.order : 0,
     group: data.group as ServiceGroup | undefined,
-    takeaways: Array.isArray(data.takeaways) ? (data.takeaways as string[]) : [],
-    included: Array.isArray(data.included) ? (data.included as string[]) : [],
-    process: Array.isArray(data.process) ? (data.process as { title: string; body: string }[]) : [],
     industries: Array.isArray(data.industries) ? (data.industries as string[]) : [],
-    faq: Array.isArray(data.faq) ? (data.faq as { q: string; a: string }[]) : [],
     seo: data.seo as ServiceFrontmatter['seo'],
   }
 }
@@ -70,7 +60,7 @@ export async function listServices(): Promise<ServiceSummary[]> {
   )
   return items
     .filter((s): s is ServiceSummary => s !== null)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
+    .sort((a, b) => a.title.localeCompare(b.title))
 }
 
 export async function getService(slug: string): Promise<Service | null> {
@@ -101,13 +91,8 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
     summary: fm.summary,
   }
   if (fm.cover) payload.cover = fm.cover
-  if (typeof fm.order === 'number') payload.order = fm.order
   if (fm.group) payload.group = fm.group
-  if (fm.takeaways.length) payload.takeaways = fm.takeaways
-  if (fm.included.length) payload.included = fm.included
-  if (fm.process.length) payload.process = fm.process
   if (fm.industries.length) payload.industries = fm.industries
-  if (fm.faq.length) payload.faq = fm.faq
   if (fm.seo && (fm.seo.title || fm.seo.description)) payload.seo = fm.seo
 
   const path = pathFromSlug(finalSlug)

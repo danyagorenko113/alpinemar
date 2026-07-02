@@ -12,9 +12,6 @@ export interface IndustryFrontmatter {
   path: string
   summary: string
   cover?: string
-  order?: number
-  tagline?: string
-  kpis: { value: string; label: string }[]
   services: string[]
   seo?: { title?: string; description?: string }
 }
@@ -39,9 +36,6 @@ function normalize(data: Record<string, unknown>): IndustryFrontmatter {
     path: String(data.path ?? ''),
     summary: String(data.summary ?? ''),
     cover: data.cover ? String(data.cover) : undefined,
-    order: typeof data.order === 'number' ? data.order : 0,
-    tagline: data.tagline ? String(data.tagline) : undefined,
-    kpis: Array.isArray(data.kpis) ? (data.kpis as { value: string; label: string }[]) : [],
     services: Array.isArray(data.services) ? (data.services as string[]) : [],
     seo: data.seo as IndustryFrontmatter['seo'],
   }
@@ -62,7 +56,7 @@ export async function listIndustries(): Promise<IndustrySummary[]> {
   )
   return items
     .filter((i): i is IndustrySummary => i !== null)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.title.localeCompare(b.title))
+    .sort((a, b) => a.title.localeCompare(b.title))
 }
 
 export async function getIndustry(slug: string): Promise<Industry | null> {
@@ -93,9 +87,6 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
     summary: fm.summary,
   }
   if (fm.cover) payload.cover = fm.cover
-  if (typeof fm.order === 'number') payload.order = fm.order
-  if (fm.tagline) payload.tagline = fm.tagline
-  if (fm.kpis.length) payload.kpis = fm.kpis
   if (fm.services.length) payload.services = fm.services
   if (fm.seo && (fm.seo.title || fm.seo.description)) payload.seo = fm.seo
 

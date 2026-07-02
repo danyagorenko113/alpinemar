@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Eye, Save, Trash2 } from 'lucide-react'
+import { ExternalLink, Eye, Save, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -14,9 +14,12 @@ import { RichTextEditor } from '@/components/editor/rich-text-editor'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveBlogPost, deleteBlogPost, type BlogPost, type BlogFrontmatter } from '@/lib/actions/blog'
 import { slugify, formatDate } from '@/lib/utils'
 import { toDateString } from '@/lib/store/markdown'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
 
 interface BlogFormProps {
   initial?: BlogPost
@@ -42,9 +45,13 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [showPreview, setShowPreview] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [dirty, setDirty] = useState(false)
+
+  useUnsavedChanges(dirty)
 
   function update<K extends keyof BlogPost>(key: K, value: BlogPost[K]) {
     setPost((p) => ({ ...p, [key]: value }))
+    setDirty(true)
   }
 
   function updateSeo<K extends keyof NonNullable<BlogFrontmatter['seo']>>(
@@ -52,6 +59,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
     value: NonNullable<BlogFrontmatter['seo']>[K],
   ) {
     setPost((p) => ({ ...p, seo: { ...(p.seo ?? {}), [key]: value } }))
+    setDirty(true)
   }
 
   function handleTitleChange(v: string) {
@@ -81,6 +89,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
         }
         const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha })
         toast.success(initial ? 'Saved' : 'Created')
+        setDirty(false)
         if (!initial || res.slug !== initial.slug) {
           router.push(`/blog/${res.slug}`)
         } else {
@@ -98,6 +107,7 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
       try {
         await deleteBlogPost(initial.slug, initial.sha)
         toast.success('Deleted')
+        setDirty(false)
         router.push('/blog')
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Delete failed')
@@ -261,9 +271,10 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
               <>
                 Editing <span className="font-mono text-navy-700">{initial.slug}</span> · last saved{' '}
                 {formatDate(initial.date)}
+                {dirty && <span className="ml-2 text-amber-600">• Unsaved changes</span>}
               </>
             ) : (
-              'New post'
+              <>New post{dirty && <span className="ml-2 text-amber-600">• Unsaved changes</span>}</>
             )}
           </div>
           <div className="flex items-center gap-2">
@@ -271,6 +282,14 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
               <Eye className="h-4 w-4" />
               Preview
             </Button>
+            {initial && (
+              <Button asChild variant="outline">
+                <a href={`${SITE_URL}/blog/${initial.slug}/`} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                  View on site
+                </a>
+              </Button>
+            )}
             <Button onClick={handleSave} disabled={pending}>
               <Save className="h-4 w-4" />
               {pending ? 'Saving…' : initial ? 'Save changes' : 'Publish'}

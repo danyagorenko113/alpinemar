@@ -26,7 +26,7 @@ export default async function ServicesListPage() {
             <tr>
               <th className="px-4 py-2.5 font-semibold">Title</th>
               <th className="px-4 py-2.5 font-semibold w-32 hidden sm:table-cell">Group</th>
-              <th className="px-4 py-2.5 font-semibold w-20 hidden md:table-cell text-right">Order</th>
+              <th className="px-4 py-2.5 font-semibold w-24 hidden md:table-cell text-right">Industries</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -44,7 +44,7 @@ export default async function ServicesListPage() {
                 <td className="px-4 py-3 hidden sm:table-cell">
                   {s.group && <Badge variant="muted">{s.group}</Badge>}
                 </td>
-                <td className="px-4 py-3 hidden md:table-cell text-right text-xs text-muted-foreground font-mono">{s.order ?? 0}</td>
+                <td className="px-4 py-3 hidden md:table-cell text-right text-xs text-muted-foreground font-mono">{s.industries.length}</td>
               </tr>
             ))}
           </tbody>

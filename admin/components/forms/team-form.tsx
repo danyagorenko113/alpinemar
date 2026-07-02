@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { Save, Trash2 } from 'lucide-react'
+import { ExternalLink, Save, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,12 +11,15 @@ import { RichTextEditor } from '@/components/editor/rich-text-editor'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { StringList } from '@/components/shared/string-list'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveTeamMember, deleteTeamMember, type TeamMember, type TeamFrontmatter } from '@/lib/actions/team'
 import { slugify } from '@/lib/utils'
 
 interface Props {
   initial?: TeamMember
 }
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
 
 const empty: TeamMember = {
   slug: '',
@@ -34,9 +37,13 @@ export function TeamForm({ initial }: Props) {
   const [m, setM] = useState<TeamMember>(initial ?? empty)
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [dirty, setDirty] = useState(false)
+
+  useUnsavedChanges(dirty)
 
   function update<K extends keyof TeamMember>(k: K, v: TeamMember[K]) {
     setM((p) => ({ ...p, [k]: v }))
+    setDirty(true)
   }
 
   function handleNameChange(v: string) {
@@ -60,6 +67,7 @@ export function TeamForm({ initial }: Props) {
         }
         const res = await saveTeamMember({ slug: m.slug, frontmatter: fm, body: m.body, sha: m.sha })
         toast.success(initial ? 'Saved' : 'Created')
+        setDirty(false)
         if (!initial || res.slug !== initial.slug) router.push(`/team/${res.slug}`)
         else router.refresh()
       } catch (err) {
@@ -74,6 +82,7 @@ export function TeamForm({ initial }: Props) {
       try {
         await deleteTeamMember(initial.slug, initial.sha)
         toast.success('Deleted')
+        setDirty(false)
         router.push('/team')
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Delete failed')
@@ -165,12 +174,29 @@ export function TeamForm({ initial }: Props) {
       <div className="fixed bottom-0 left-0 right-0 z-20 border-t bg-background/95 backdrop-blur md:pl-60">
         <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-8">
           <div className="text-xs text-muted-foreground">
-            {initial ? <>Editing <span className="font-mono text-navy-700">{initial.slug}</span></> : 'New team member'}
+            {initial ? (
+              <>
+                Editing <span className="font-mono text-navy-700">{initial.slug}</span>
+                {dirty && <span className="ml-2 text-amber-600">• Unsaved changes</span>}
+              </>
+            ) : (
+              'New team member'
+            )}
           </div>
-          <Button onClick={handleSave} disabled={pending}>
-            <Save className="h-4 w-4" />
-            {pending ? 'Saving…' : initial ? 'Save changes' : 'Create member'}
-          </Button>
+          <div className="flex items-center gap-2">
+            {initial && (
+              <Button asChild variant="outline">
+                <a href={`${SITE_URL}/about-us/`} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4" />
+                  View on site
+                </a>
+              </Button>
+            )}
+            <Button onClick={handleSave} disabled={pending}>
+              <Save className="h-4 w-4" />
+              {pending ? 'Saving…' : initial ? 'Save changes' : 'Create member'}
+            </Button>
+          </div>
         </div>
       </div>
 

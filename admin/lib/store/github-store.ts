@@ -78,18 +78,31 @@ export const githubStore: ContentStore = {
       if (existing?.sha) sha = existing.sha
     }
 
-    const res = await k.repos.createOrUpdateFileContents({
-      owner,
-      repo: r,
-      path: p,
-      message: opts.message,
-      content: base64,
-      branch,
-      sha,
-      committer: author,
-      author,
-    })
-    return { sha: res.data.content?.sha ?? '' }
+    try {
+      const res = await k.repos.createOrUpdateFileContents({
+        owner,
+        repo: r,
+        path: p,
+        message: opts.message,
+        content: base64,
+        branch,
+        sha,
+        committer: author,
+        author,
+      })
+      return { sha: res.data.content?.sha ?? '' }
+    } catch (err: unknown) {
+      const e = err as { status?: number; message?: string }
+      if (e?.status === 409 || e?.status === 422) {
+        throw new Error(
+          'This page was changed by someone else after you started editing. Refresh to load the latest version, then re-apply your changes.',
+        )
+      }
+      if (e?.status === 403) {
+        throw new Error('GitHub rate limit or permission denied. Try again in a minute.')
+      }
+      throw err
+    }
   },
 
   async remove(p: string, opts: { message: string; sha?: string }): Promise<void> {
@@ -103,15 +116,25 @@ export const githubStore: ContentStore = {
     }
     if (!sha) throw new Error(`Cannot delete ${p} — no sha`)
     const author = commitAuthor()
-    await k.repos.deleteFile({
-      owner,
-      repo: r,
-      path: p,
-      message: opts.message,
-      branch,
-      sha,
-      committer: author,
-      author,
-    })
+    try {
+      await k.repos.deleteFile({
+        owner,
+        repo: r,
+        path: p,
+        message: opts.message,
+        branch,
+        sha,
+        committer: author,
+        author,
+      })
+    } catch (err: unknown) {
+      const e = err as { status?: number }
+      if (e?.status === 409 || e?.status === 422) {
+        throw new Error(
+          'This page was changed by someone else. Refresh the list and try again.',
+        )
+      }
+      throw err
+    }
   },
 }

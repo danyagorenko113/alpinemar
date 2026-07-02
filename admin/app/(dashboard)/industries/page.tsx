@@ -24,8 +24,8 @@ export default async function IndustriesListPage() {
           <thead className="bg-navy-50 text-left text-[11px] uppercase tracking-wider text-navy-500">
             <tr>
               <th className="px-4 py-2.5 font-semibold">Title</th>
-              <th className="px-4 py-2.5 font-semibold w-32 hidden sm:table-cell">Tagline</th>
-              <th className="px-4 py-2.5 font-semibold w-20 hidden md:table-cell text-right">Order</th>
+              <th className="px-4 py-2.5 font-semibold w-32 hidden sm:table-cell">Slug</th>
+              <th className="px-4 py-2.5 font-semibold w-24 hidden md:table-cell text-right">Services</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -40,8 +40,8 @@ export default async function IndustriesListPage() {
                     <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{i.summary}</div>
                   </Link>
                 </td>
-                <td className="px-4 py-3 hidden sm:table-cell text-xs text-muted-foreground line-clamp-1">{i.tagline}</td>
-                <td className="px-4 py-3 hidden md:table-cell text-right text-xs text-muted-foreground font-mono">{i.order ?? 0}</td>
+                <td className="px-4 py-3 hidden sm:table-cell text-xs font-mono text-muted-foreground line-clamp-1">{i.slug}</td>
+                <td className="px-4 py-3 hidden md:table-cell text-right text-xs text-muted-foreground font-mono">{i.services.length}</td>
               </tr>
             ))}
           </tbody>

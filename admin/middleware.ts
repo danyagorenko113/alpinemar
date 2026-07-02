@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { SESSION_COOKIE, verifySession } from '@/lib/session'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (
@@ -13,11 +14,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const hasSession = request.cookies.has('alpine_admin_session')
-  if (!hasSession) {
+  const token = request.cookies.get(SESSION_COOKIE)?.value
+  const secret = process.env.SESSION_SECRET
+  const ok = token && secret ? await verifySession(token, secret) : false
+
+  if (!ok) {
     const loginUrl = new URL('/login', request.url)
     loginUrl.searchParams.set('next', pathname)
-    return NextResponse.redirect(loginUrl)
+    const response = NextResponse.redirect(loginUrl)
+    if (token) response.cookies.delete(SESSION_COOKIE)
+    return response
   }
 
   return NextResponse.next()
