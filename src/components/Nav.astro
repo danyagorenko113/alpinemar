@@ -204,7 +204,7 @@ const popularServices = [
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
           Services
           <span class="inline-flex size-6 items-center justify-center rounded-full border border-line">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="transition-opacity group-open:opacity-0" d="M12 5v14"/><path d="M5 12h14"/></svg>
+            <svg class="transition-transform duration-200 group-open:rotate-180" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </span>
         </summary>
         <div class="pb-5">
@@ -231,7 +231,7 @@ const popularServices = [
                   <label for={`mobile-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-services`} class="mt-3 inline-flex cursor-pointer items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
                     <span class="mobile-service-more">View all</span>
                     <span class="mobile-service-less hidden">Show less</span>
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="mobile-service-plus transition-opacity" d="M12 5v14"/><path d="M5 12h14"/></svg>
+                    <svg class="mobile-service-chevron transition-transform duration-200" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                   </label>
                 </div>
               )}
@@ -247,7 +247,7 @@ const popularServices = [
         <summary class="flex cursor-pointer items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)]">
           Industries
           <span class="inline-flex size-6 items-center justify-center rounded-full border border-line">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="transition-opacity group-open:opacity-0" d="M12 5v14"/><path d="M5 12h14"/></svg>
+            <svg class="transition-transform duration-200 group-open:rotate-180" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </span>
         </summary>
         <div class="grid grid-cols-1 gap-2 pb-5 sm:grid-cols-2">
@@ -295,7 +295,7 @@ const popularServices = [
   .mobile-service-toggle:checked ~ .mobile-service-extra { display: block; }
   .mobile-service-toggle:checked ~ label .mobile-service-more { display: none; }
   .mobile-service-toggle:checked ~ label .mobile-service-less { display: inline; }
-  .mobile-service-toggle:checked ~ label .mobile-service-plus { opacity: 0; }
+  .mobile-service-toggle:checked ~ label .mobile-service-chevron { transform: rotate(180deg); }
 </style>
 
 <script>
