@@ -111,7 +111,7 @@ function FooterLinks() {
   return (
     <div className="space-y-1">
       <a
-        href="https://alpinemar.com"
+        href={process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'}
         target="_blank"
         rel="noopener"
         className="font-display flex items-center gap-3 rounded-md px-3 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"

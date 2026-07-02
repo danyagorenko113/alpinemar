@@ -17,7 +17,7 @@ interface Props {
   initial?: GoogleReview
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
 const empty: GoogleReview = {
   name: '',

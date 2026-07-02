@@ -19,7 +19,7 @@ import { saveBlogPost, deleteBlogPost, type BlogPost, type BlogFrontmatter } fro
 import { slugify, formatDate, previewSrc, rewriteRelativeUrls } from '@/lib/utils'
 import { toDateString } from '@/lib/store/markdown'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
 interface BlogFormProps {
   initial?: BlogPost

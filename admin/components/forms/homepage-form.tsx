@@ -26,7 +26,7 @@ interface Props {
   initial: Homepage
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
 const emptyFeaturedService: FeaturedService = {
   title: '',

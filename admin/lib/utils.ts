@@ -30,7 +30,7 @@ export function previewSrc(path: string | undefined | null): string {
   if (/^(https?:)?\/\//i.test(path)) return path
   if (path.startsWith('data:') || path.startsWith('blob:')) return path
   if (!path.startsWith('/')) return path
-  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com').replace(/\/$/, '')
+  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app').replace(/\/$/, '')
   return `${base}${path}`
 }
 
@@ -41,7 +41,7 @@ export function previewSrc(path: string | undefined | null): string {
  */
 export function rewriteRelativeUrls(html: string): string {
   if (!html) return html
-  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.com').replace(/\/$/, '')
+  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app').replace(/\/$/, '')
   return html
     .replace(/(<img\b[^>]*\bsrc=)"(\/[^"/][^"]*)"/gi, (_, pre: string, src: string) => `${pre}"${base}${src}"`)
     .replace(/(<img\b[^>]*\bsrc=)'(\/[^'/][^']*)'/gi, (_, pre: string, src: string) => `${pre}'${base}${src}'`)
