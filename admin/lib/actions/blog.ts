@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
-import { parseDoc, serializeDoc, toDateString } from '@/lib/store/markdown'
+import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc, toDateString } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
 import { cached, invalidatePrefix } from '@/lib/cache'
 
@@ -106,25 +106,33 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
   if (!finalSlug) throw new Error('Slug is required')
   if (!input.frontmatter.title) throw new Error('Title is required')
 
-  const payload: Record<string, unknown> = {
+  const path = pathFromSlug(finalSlug)
+  const original = await readOriginalFrontmatter(store, path, {
+    collectionDir: COLLECTION_DIR,
+    sha: input.sha,
+  })
+
+  const updates: Record<string, unknown> = {
     title: input.frontmatter.title,
     excerpt: input.frontmatter.excerpt,
     date: input.frontmatter.date,
+    author: input.frontmatter.author,
+    cover: input.frontmatter.cover,
+    tags: input.frontmatter.tags,
+    status: input.frontmatter.status === 'draft' ? 'draft' : undefined,
+    updated: new Date().toISOString(),
   }
-  if (input.frontmatter.author) payload.author = input.frontmatter.author
-  if (input.frontmatter.cover) payload.cover = input.frontmatter.cover
-  if (input.frontmatter.tags?.length) payload.tags = input.frontmatter.tags
-  if (input.frontmatter.status === 'draft') payload.status = 'draft'
-  payload.updated = new Date().toISOString()
   if (input.frontmatter.seo && (input.frontmatter.seo.title || input.frontmatter.seo.description)) {
-    payload.seo = {
+    updates.seo = {
       ...(input.frontmatter.seo.title ? { title: input.frontmatter.seo.title } : {}),
       ...(input.frontmatter.seo.description ? { description: input.frontmatter.seo.description } : {}),
     }
+  } else {
+    updates.seo = undefined
   }
 
+  const payload = mergeFrontmatter(original, updates)
   const fileContent = serializeDoc(payload, input.body.trim() + '\n')
-  const path = pathFromSlug(finalSlug)
   const res = await store.write(path, fileContent, {
     message: `content(blog): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
     sha: input.sha,
