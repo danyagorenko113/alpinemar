@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
-import { parseDoc, serializeDoc } from '@/lib/store/markdown'
+import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
 import { cached, invalidatePrefix } from '@/lib/cache'
 
@@ -98,17 +98,23 @@ export async function saveTeamMember(input: SaveTeamInput): Promise<{ slug: stri
   if (!input.frontmatter.name) throw new Error('Name is required')
 
   const fm = input.frontmatter
-  const payload: Record<string, unknown> = {
+  const path = pathFromSlug(finalSlug)
+  const original = await readOriginalFrontmatter(store, path, {
+    collectionDir: COLLECTION_DIR,
+    sha: input.sha,
+  })
+
+  const updates: Record<string, unknown> = {
     name: fm.name,
     role: fm.role,
+    photo: fm.photo,
+    credentials: fm.credentials,
+    order: fm.order,
+    status: fm.status === 'draft' ? 'draft' : undefined,
+    updated: new Date().toISOString(),
   }
-  if (fm.photo) payload.photo = fm.photo
-  if (fm.credentials.length) payload.credentials = fm.credentials
-  if (typeof fm.order === 'number') payload.order = fm.order
-  if (fm.status === 'draft') payload.status = 'draft'
-  payload.updated = new Date().toISOString()
 
-  const path = pathFromSlug(finalSlug)
+  const payload = mergeFrontmatter(original, updates)
   const fileContent = serializeDoc(payload, input.body.trim() + '\n')
   const res = await store.write(path, fileContent, {
     message: `content(team): ${input.sha ? 'update' : 'create'} ${finalSlug}`,

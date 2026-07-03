@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
-import { parseDoc, serializeDoc } from '@/lib/store/markdown'
+import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc } from '@/lib/store/markdown'
 import { slugify } from '@/lib/utils'
 import { cached, invalidatePrefix } from '@/lib/cache'
 
@@ -103,19 +103,25 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
   if (!input.frontmatter.title) throw new Error('Title is required')
 
   const fm = input.frontmatter
-  const payload: Record<string, unknown> = {
+  const path = pathFromSlug(finalSlug)
+  const original = await readOriginalFrontmatter(store, path, {
+    collectionDir: COLLECTION_DIR,
+    sha: input.sha,
+  })
+
+  const updates: Record<string, unknown> = {
     title: fm.title,
     path: fm.path || `/services/${finalSlug}/`,
     summary: fm.summary,
+    cover: fm.cover,
+    group: fm.group,
+    industries: fm.industries,
+    status: fm.status === 'draft' ? 'draft' : undefined,
+    updated: new Date().toISOString(),
+    seo: fm.seo && (fm.seo.title || fm.seo.description) ? fm.seo : undefined,
   }
-  if (fm.cover) payload.cover = fm.cover
-  if (fm.group) payload.group = fm.group
-  if (fm.industries.length) payload.industries = fm.industries
-  if (fm.status === 'draft') payload.status = 'draft'
-  payload.updated = new Date().toISOString()
-  if (fm.seo && (fm.seo.title || fm.seo.description)) payload.seo = fm.seo
 
-  const path = pathFromSlug(finalSlug)
+  const payload = mergeFrontmatter(original, updates)
   const fileContent = serializeDoc(payload, input.body.trim() + '\n')
   const res = await store.write(path, fileContent, {
     message: `content(services): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
