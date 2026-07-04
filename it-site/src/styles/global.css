@@ -1,14 +1,9 @@
 @import "tailwindcss";
 
-/* Fonts — per Alpine Mar Figma Style Guide (node 208:799). Self-hosted. */
-@import "@fontsource/poppins/400.css";          /* body fallback weight */
-@import "@fontsource/poppins/500.css";
-@import "@fontsource/poppins/600.css";          /* SemiBold — headings */
-@import "@fontsource/poppins/700.css";
-@import "@fontsource-variable/geist-mono";      /* mono — eyebrows / meta */
-
-/* Satoshi — client's new homepage design system (Figma dhKIjasZE2UVP719jyW4a3).
-   Self-hosted via Fontshare (link tag injected from BaseLayout). */
+/* Fonts — Satoshi only. Loaded via Fontshare link tag in BaseLayout.astro.
+   Poppins / Geist Mono @fontsource imports from the main site were removed
+   here: they're not shipped as deps in it-site/package.json and it-site
+   never renders them (system-ui is the fallback everywhere). */
 
 @theme {
   /* ── Brand palette — source of truth: Figma Style Guide (node 208:799) ──
