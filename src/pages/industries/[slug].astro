@@ -30,16 +30,16 @@ const linkedServices = (item.data.services ?? [])
 const moreIndustries = industryTaxonomy.filter((i) => i.href !== item.data.path).slice(0, 6);
 
 const benefits = [
-  { title: 'Industry-fluent partners', body: 'A senior CPA who knows your vertical from day one — no ramp-up, no "explain depreciation again" calls.' },
-  { title: 'Vertical-specific reporting', body: 'Beyond GAAP — the KPIs your investors, lenders, and operators actually care about.' },
-  { title: 'Tested playbooks',           body: "We've already solved the questions you're about to ask. Faster engagements, fewer surprises." },
-  { title: 'Network on speed-dial',      body: 'Lawyers, lenders, brokers and insurers who already know the vertical. Your shortlist gets shorter.' },
+  { title: 'Industry-fluent partners',       body: `A CPA who knows your vertical from day one. No ramp-up, no "explain that again" calls.` },
+  { title: 'Reporting that fits your vertical', body: 'Beyond GAAP: the metrics your investors, lenders, and operators actually care about.' },
+  { title: 'Tested playbooks',               body: `We've already solved the questions you're about to ask. Faster engagements, fewer surprises.` },
+  { title: 'A network already in place',     body: 'Lawyers, lenders, brokers, and insurers who already know your space. Your shortlist gets shorter.' },
 ];
 
 const pillars = [
   { title: 'Specialized by vertical',  body: 'Construction, healthcare, SaaS, family office: every industry has its own playbook and we know yours.', icon: '/icons/about/quality.svg' },
-  { title: 'Benchmarks that matter',   body: "We know the industry-specific KPIs investors and lenders look at — and we report on them.",            icon: '/icons/about/innovation.svg' },
-  { title: 'Network already in place', body: 'Lawyers, lenders, brokers and insurers we work with daily — your call list is shorter.',                icon: '/icons/about/collaboration.svg' },
+  { title: 'Benchmarks that matter',   body: 'We know the industry KPIs investors and lenders look at, and we report on them.',                       icon: '/icons/about/innovation.svg' },
+  { title: 'Network already in place', body: 'Lawyers, lenders, brokers, and insurers we work with daily. Your call list is shorter.',                icon: '/icons/about/collaboration.svg' },
 ];
 
 const industryPhrase = item.data.title.toLowerCase().replace(/\bcpa\b/g, 'CPA');

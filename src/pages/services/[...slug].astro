@@ -52,8 +52,8 @@ const process = service.data.process ?? [];
 const benefits = takeaways.length
   ? takeaways.slice(0, 4).map((t) => ({ title: t, body: '' }))
   : [
-      { title: 'Partner involvement', body: 'A CPA on every engagement. No junior handoff once you sign.' },
-      { title: 'Fixed-fee, scoped',  body: "Scope and price agreed before we start. No hourly meter, no surprise invoices." },
+      { title: 'Partner Involvement', body: 'A CPA on every engagement. No junior handoff once you sign.' },
+      { title: 'Fixed-fee, scoped',   body: 'Scope and price agreed before we start. No hourly meter or surprise invoices.' },
       { title: 'Year-round attention', body: 'We work the calendar, not just the deadline. Quarterly check-ins by default.' },
       { title: 'Modern finance stack', body: 'Cloud books, AI, automation, and secure portals. Work moves faster without losing rigor.' },
     ];
@@ -66,10 +66,10 @@ const pillars = [
 ];
 
 const defaultFaq = [
-  { q: 'How quickly can we start?',                            a: 'We schedule an intro call within a few business days and can begin scoping the same week.' },
-  { q: 'How are fees structured?',                             a: `${service.data.title} engagements are quoted as fixed-fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes. For ongoing engagements (e.g. monthly close, fractional CFO), pricing is a flat monthly retainer.` },
-  { q: 'Will I work with the same person, or get passed around?', a: 'Every engagement has partner involvement. The senior CPA you meet on the intro stays close to your file, with day-to-day support from a senior associate and partner sign-off on every deliverable.' },
-  { q: 'Are you taking new clients?',                          a: 'Yes — Alpine Mar is actively onboarding new clients for tax planning, advisory, and ongoing accounting throughout the year. We pace intake so every partner can deliver the service standard the firm is known for.' },
+  { q: 'How quickly can we start?',                              a: 'We schedule an intro call within a few business days and can begin scoping the same week.' },
+  { q: 'How are fees structured?',                               a: `${service.data.title} is quoted as a fixed fee with a clearly scoped deliverable, after the intro call. We don't bill by the hour for known scopes. Ongoing work (like monthly close or fractional CFO) is a flat monthly retainer.` },
+  { q: 'Will I work with the same person, or get passed around?', a: 'Every engagement is partner-led. The senior CPA you meet on the intro is the one running your file. Day-to-day support comes from a senior associate, with partner sign-off on every deliverable.' },
+  { q: 'Are you taking new clients?',                            a: `Yes. We're actively onboarding new clients year-round, and we pace intake so every partner can hold the service standard the firm is known for.` },
 ];
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
 const clientView = googleReviews[0];
@@ -207,9 +207,9 @@ const schema = [
       </div>
       <ol class="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 lg:grid-cols-4">
         {(process.length ? process : [
-          { title: 'Intro call', body: 'An introductory call with the partner who would run the engagement — scope, timing, fit.' },
-          { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo + flat fee.' },
-          { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence — weekly status by default.' },
+          { title: 'Intro call', body: `An introductory call including the partner who'd run your engagement. We cover scope, timing, and fit.` },
+          { title: 'Discovery',  body: 'We look at your books, prior filings, and stack. You get a scoping memo and a flat fee.' },
+          { title: 'Engagement', body: 'Work is delivered by a senior team. You see drafts, not silence, with weekly status by default.' },
           { title: 'Wrap-up',    body: 'Deliverables ship with a written summary. You keep working with the same team next round.' },
         ]).map((p, i) => (
           <li class="flex flex-col gap-4 rounded-[6px] border border-line bg-paper p-5 md:p-7">
