@@ -7,115 +7,343 @@ import { getCollection } from 'astro:content';
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
   .map((s) => s.data);
-const bySlug = new Map(services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]));
+const bySlug = new Map(
+  services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
+);
+
+// What happens next — 3 short steps that de-risk the "form goes into a void" fear.
+const nextSteps = [
+  {
+    num: '01',
+    title: 'You send this form.',
+    body: 'It lands in a real inbox — not a CRM funnel. Same day, we’ll pick it up.',
+  },
+  {
+    num: '02',
+    title: 'We schedule 30 minutes.',
+    body: 'Phone, video, or coffee on Las Olas. We come with questions, not a slide deck.',
+  },
+  {
+    num: '03',
+    title: 'You get a written take.',
+    body: 'A short, plain-English recommendation — yours to keep whether we work together or not.',
+  },
+];
 ---
 
 <BaseLayout
   rawTitle="Contact Alpine Mar IT"
   description="Book a free IT assessment or reach out to our Fort Lauderdale team."
 >
-  <section class="relative overflow-hidden bg-[#12122d] pt-24 pb-24 text-white md:pt-32 md:pb-32">
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+  {/* ══════════════════════ HERO ══════════════════════
+      Dark navy + aurora + grid. Left: location pill, headline, info block.
+      Right: form card with scooter-accented focus states.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden bg-[#12122d] pt-[16vh] pb-24 text-white md:pt-[19vh] md:pb-32">
+    <div class="am-aurora" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
+    <div class="grain pointer-events-none absolute inset-0" aria-hidden="true"></div>
 
     <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-12 flex items-center gap-3 text-white/85">
-        <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Contact Us</span>
+      {/* Status pill */}
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 font-display text-[12.5px] font-medium text-white backdrop-blur">
+          <span class="am-status-dot text-scooter"></span>
+          Alpine Mar IT · Fort Lauderdale, FL
+        </span>
       </div>
 
-      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
-        {/* Left */}
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        {/* ── Left column: headline + info ── */}
         <div data-reveal class="flex flex-col gap-10 lg:col-span-5">
-          <div class="flex flex-col gap-7">
-            <h1 class="am-h1-display am-gradient-ink-light">
-              Let's talk IT.
+          <div class="flex flex-col gap-8">
+            <h1 class="am-hero-display am-gradient-ink-light self-start leading-[1.02]">
+              Let’s talk<br />
+              <span class="italic text-scooter">IT.</span>
             </h1>
-            <p class="font-display text-[15px] leading-[1.65] text-white/75">
-              Start with a free IT assessment. No commitment, no pitch — just a
-              conversation about what you're working on and where you might be
-              exposed.
+            <p class="max-w-[46ch] font-display text-[16px] leading-[1.65] text-white/75 md:text-[17px]">
+              Start with a free IT assessment. No commitment, no pitch — just
+              a conversation about what you’re working on and where you might
+              be exposed.
             </p>
           </div>
 
-          <div class="flex flex-col gap-5">
-            <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h2 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Our Location</h2>
-              <p class="mt-6 font-display text-[15px] leading-[1.6] text-white">
+          <div class="grid grid-cols-1 gap-5">
+            <div class="am-card-dark rounded-[8px] p-6 md:p-7">
+              <h2 class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-scooter">
+                Our Location
+              </h2>
+              <address class="mt-5 block font-display text-[15px] not-italic leading-[1.6] text-white">
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
-              </p>
+              </address>
             </div>
-            <div class="rounded-[6px] bg-white/[0.05] p-7">
-              <h2 class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Contact Information</h2>
-              <p class="mt-6 font-display text-[15px] leading-[1.7] text-white">
-                <a href={`tel:${site.phoneHref}`} class="block transition-colors hover:text-scooter">{site.phone}</a>
-                <a href={`mailto:${site.email}`} class="block transition-colors hover:text-scooter">{site.email}</a>
-              </p>
+            <div class="am-card-dark rounded-[8px] p-6 md:p-7">
+              <h2 class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-scooter">
+                Contact
+              </h2>
+              <div class="mt-5 flex flex-col gap-2 font-display text-[15px] leading-[1.6]">
+                <a
+                  href={`tel:${site.phoneHref}`}
+                  class="inline-flex w-fit items-center gap-2 text-white transition-colors hover:text-scooter"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  {site.phone}
+                </a>
+                <a
+                  href={`mailto:${site.email}`}
+                  class="inline-flex w-fit items-center gap-2 text-white transition-colors hover:text-scooter"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-10 5L2 7" />
+                  </svg>
+                  {site.email}
+                </a>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="am-card-dark rounded-[8px] p-6">
+                <h2 class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-scooter">
+                  Response
+                </h2>
+                <p class="mt-4 font-display text-[15px] font-medium text-white">
+                  Same day
+                </p>
+                <p class="mt-1 font-display text-[12px] text-white/55">
+                  Mon–Fri, before 5pm
+                </p>
+              </div>
+              <div class="am-card-dark rounded-[8px] p-6">
+                <h2 class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-scooter">
+                  Emergencies
+                </h2>
+                <p class="mt-4 font-display text-[15px] font-medium text-white">
+                  24/7 line
+                </p>
+                <p class="mt-1 font-display text-[12px] text-white/55">
+                  For active clients
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Right: form */}
-        <div data-reveal class="lg:col-span-7">
-          <form id="it-contact-form" class="rounded-[10px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm shadow-[0_24px_80px_-40px_rgba(0,0,0,0.6)] lg:p-10" novalidate>
-            <p class="font-display text-[13px] font-medium uppercase tracking-[0.1em] text-scooter">Request a consultation</p>
-            <h2 class="mt-3 font-display text-[26px] font-medium tracking-[-0.02em] text-white">Book a free IT assessment.</h2>
+        {/* ── Right column: form card ── */}
+        <div data-reveal data-speed="slow" class="lg:col-span-7">
+          <form
+            id="it-contact-form"
+            class="relative rounded-[12px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md shadow-[0_24px_80px_-40px_rgba(0,0,0,0.6)] lg:p-10"
+            novalidate
+          >
+            <div class="pointer-events-none absolute inset-0 am-grid-pattern rounded-[12px] opacity-40"></div>
 
-            <div class="mt-8 grid gap-5 sm:grid-cols-2">
-              <label class="block">
-                <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">First name</span>
-                <input class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" type="text" name="first_name" autocomplete="given-name" required />
+            <div class="relative">
+              <span class="am-eyebrow on-dark" style="font-size:11px;">
+                Request a consultation
+              </span>
+              <h2 class="mt-5 font-display text-[26px] font-medium tracking-[-0.01em] text-white md:text-[30px]">
+                Book a free IT assessment.
+              </h2>
+              <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/60">
+                All fields marked required. Anything you share stays with us.
+              </p>
+
+              <div class="mt-8 grid gap-5 sm:grid-cols-2">
+                <label class="block">
+                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                    First name <span class="text-scooter">*</span>
+                  </span>
+                  <input
+                    class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                    type="text"
+                    name="first_name"
+                    autocomplete="given-name"
+                    required
+                  />
+                </label>
+                <label class="block">
+                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                    Last name <span class="text-scooter">*</span>
+                  </span>
+                  <input
+                    class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                    type="text"
+                    name="last_name"
+                    autocomplete="family-name"
+                    required
+                  />
+                </label>
+                <label class="block">
+                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                    Work email <span class="text-scooter">*</span>
+                  </span>
+                  <input
+                    class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                  />
+                </label>
+                <label class="block">
+                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                    Phone
+                  </span>
+                  <input
+                    class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                    type="tel"
+                    name="phone"
+                    autocomplete="tel"
+                  />
+                </label>
+                <label class="block sm:col-span-2">
+                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                    Company
+                  </span>
+                  <input
+                    class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                    type="text"
+                    name="company"
+                    autocomplete="organization"
+                  />
+                </label>
+              </div>
+
+              <label class="mt-5 block">
+                <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                  What can we help with?
+                </span>
+                <select
+                  class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                  name="service"
+                >
+                  <option value="" class="bg-navy-900 text-white">Select a service…</option>
+                  {serviceGroups.map((g) => (
+                    <optgroup label={g.label} class="bg-navy-900 text-white">
+                      {g.services.map((slug) => {
+                        const svc = bySlug.get(slug);
+                        if (!svc) return null;
+                        return <option value={svc.title} class="bg-navy-900 text-white">{svc.title}</option>;
+                      })}
+                    </optgroup>
+                  ))}
+                  <option value="Not sure — recommend" class="bg-navy-900 text-white">
+                    Not sure — recommend
+                  </option>
+                </select>
               </label>
-              <label class="block">
-                <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">Last name</span>
-                <input class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" type="text" name="last_name" autocomplete="family-name" required />
+
+              <label class="mt-5 block">
+                <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
+                  Tell us more <span class="text-white/40">(optional)</span>
+                </span>
+                <textarea
+                  class="mt-2 min-h-32 w-full resize-y rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30"
+                  name="message"
+                  rows="4"
+                  placeholder="A sentence or two about what you’re working on."
+                ></textarea>
               </label>
-              <label class="block">
-                <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">Email</span>
-                <input class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" type="email" name="email" autocomplete="email" required />
-              </label>
-              <label class="block">
-                <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">Phone</span>
-                <input class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" type="tel" name="phone" autocomplete="tel" />
-              </label>
-              <label class="block sm:col-span-2">
-                <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">Company</span>
-                <input class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" type="text" name="company" autocomplete="organization" />
-              </label>
+
+              <div class="mt-8 flex flex-col items-start gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+                <button
+                  type="submit"
+                  class="group inline-flex items-center justify-center gap-2.5 rounded-[6px] bg-scooter px-7 py-4 font-display text-[15px] font-medium text-navy-900 transition-all duration-200 hover:bg-white active:scale-[0.98]"
+                >
+                  {site.primaryCta}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </button>
+                <p class="font-display text-[12px] leading-[1.5] text-white/50">
+                  Or call <a href={`tel:${site.phoneHref}`} class="text-white/80 underline underline-offset-4 hover:text-scooter">{site.phone}</a> — a real person picks up.
+                </p>
+              </div>
+
+              <p
+                id="it-contact-success"
+                class="mt-5 hidden border-l-2 border-scooter bg-white/5 px-4 py-3 font-display text-sm text-white"
+              >
+                Thanks — we’ve received your request and will be in touch shortly.
+              </p>
             </div>
-
-            <label class="mt-5 block">
-              <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">Services Needed</span>
-              <select class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" name="service">
-                <option value="" class="text-navy-900">Select a service…</option>
-                {serviceGroups.map((g) => (
-                  <optgroup label={g.label}>
-                    {g.services.map((slug) => {
-                      const svc = bySlug.get(slug);
-                      if (!svc) return null;
-                      return <option value={svc.title} class="text-navy-900">{svc.title}</option>;
-                    })}
-                  </optgroup>
-                ))}
-                <option value="Not sure — recommend" class="text-navy-900">Not sure — recommend</option>
-              </select>
-            </label>
-
-            <label class="mt-5 block">
-              <span class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-white/70">How can we help?</span>
-              <textarea class="mt-2 w-full rounded-[6px] border border-white/15 bg-white/5 px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 min-h-32 resize-y transition-colors focus:border-scooter focus:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/25" name="message" rows="4"></textarea>
-            </label>
-
-            <button type="submit" class="group mt-7 inline-flex items-center justify-center gap-2.5 rounded-[6px] bg-scooter px-7 py-4 font-display text-[15px] font-medium text-navy-900 transition-all duration-200 hover:bg-white active:scale-[0.98]">
-              {site.primaryCta}
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-
-            <p id="it-contact-success" class="mt-5 hidden border-l-2 border-scooter bg-white/5 px-4 py-3 font-display text-sm text-white">
-              Thanks — we've received your request and will be in touch shortly.
-            </p>
           </form>
         </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ══════════════════════ WHAT HAPPENS NEXT ══════════════════════
+      3-step strip so submitting doesn't feel like a black box.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden bg-paper py-24 md:py-28">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow">What happens next</span>
+      </div>
+
+      <div
+        data-reveal
+        class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
+      >
+        <h2 class="am-h1-display text-navy-900 md:col-span-7">
+          You submit. Then what?
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
+          A form on a website is where the "we’ll be in touch" spiral usually
+          starts. Here’s exactly what happens on our side — every time.
+        </p>
+      </div>
+
+      <div class="relative mt-16">
+        <div
+          class="pointer-events-none absolute left-6 top-[22px] hidden h-px bg-gradient-to-r from-transparent via-navy-200 to-transparent md:block"
+          style="width: calc(100% - 3rem);"
+          aria-hidden="true"
+        ></div>
+
+        <ol data-stagger class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+          {nextSteps.map((step) => (
+            <li class="am-step group relative">
+              <span class="am-step-num">{step.num}</span>
+              <h3 class="mt-6 font-display text-[22px] font-medium tracking-[-0.01em] text-navy-900 md:mt-8">
+                {step.title}
+              </h3>
+              <p class="mt-3 font-display text-[14.5px] leading-[1.6] text-navy-500">
+                {step.body}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div
+        data-reveal
+        class="mt-16 flex flex-col items-start gap-6 rounded-[12px] border border-line bg-white p-8 md:flex-row md:items-center md:justify-between md:p-10"
+      >
+        <div>
+          <span class="am-eyebrow" style="font-size:11px;">
+            Not ready to write?
+          </span>
+          <p class="mt-4 max-w-[52ch] font-display text-[15px] leading-[1.6] text-navy-700">
+            Give us a call directly. It’s the same team, same day, and often
+            the fastest path from question to answer.
+          </p>
+        </div>
+        <a
+          href={`tel:${site.phoneHref}`}
+          class="group inline-flex shrink-0 items-center gap-2 rounded-[6px] border border-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-navy-900 hover:text-white"
+        >
+          Call {site.phone}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </a>
       </div>
     </Container>
   </section>

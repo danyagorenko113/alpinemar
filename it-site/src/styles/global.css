@@ -547,6 +547,229 @@
       );
   }
 
+  /* ═══════════════════════════════════════════════════════════════
+     Alpine Mar IT — homepage-scoped utilities.
+     These extend the shared tokens for the it-site homepage. Keep them
+     namespaced (.am-*) so they can't collide with the main site.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Dark-section 72px grid — the required overlay for navy sections. */
+  .am-grid-pattern {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+  /* Light-section counterpart for subtle structure on paper backgrounds. */
+  .am-grid-pattern-light {
+    background-image:
+      linear-gradient(rgba(18, 18, 45, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(18, 18, 45, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* Eyebrow — scooter dot + micro-label. Small structural component. */
+  .am-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--color-text-head);
+  }
+  .am-eyebrow::before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: var(--color-scooter);
+    flex-shrink: 0;
+  }
+  .am-eyebrow.on-dark { color: rgba(255, 255, 255, 0.85); }
+
+  /* Aurora — signature soft radial glow used behind hero and CTA on dark. */
+  .am-aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .am-aurora::before,
+  .am-aurora::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+  .am-aurora::before {
+    width: 46vmax;
+    height: 46vmax;
+    left: -12vmax;
+    top: -18vmax;
+    background: radial-gradient(closest-side, rgba(51, 187, 220, 0.32), rgba(51, 187, 220, 0) 70%);
+  }
+  .am-aurora::after {
+    width: 40vmax;
+    height: 40vmax;
+    right: -10vmax;
+    bottom: -18vmax;
+    background: radial-gradient(closest-side, rgba(73, 134, 213, 0.28), rgba(73, 134, 213, 0) 70%);
+  }
+  .am-aurora.on-light::before {
+    opacity: 0.35;
+    background: radial-gradient(closest-side, rgba(51, 187, 220, 0.22), rgba(51, 187, 220, 0) 70%);
+  }
+  .am-aurora.on-light::after {
+    opacity: 0.28;
+    background: radial-gradient(closest-side, rgba(73, 134, 213, 0.18), rgba(73, 134, 213, 0) 70%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .am-aurora::before { animation: am-aurora-a 22s ease-in-out infinite; }
+    .am-aurora::after  { animation: am-aurora-b 26s ease-in-out infinite; }
+  }
+  @keyframes am-aurora-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(6vmax, 3vmax) scale(1.08); }
+  }
+  @keyframes am-aurora-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-5vmax, -3vmax) scale(1.06); }
+  }
+
+  /* Scooter status dot with a soft breathing ring — used in Hero status chip. */
+  .am-status-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--color-scooter);
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+  .am-status-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0.4;
+    animation: am-status-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .am-status-dot::after { animation: none; opacity: 0; }
+  }
+  @keyframes am-status-pulse {
+    0%   { transform: scale(0.6); opacity: 0.55; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  /* Circuit-line hero motif — decorative SVG-noise-free abstract lines.
+     Uses conic-gradient trick to draw two crossing "current" lines. */
+  .am-circuit {
+    background-image:
+      linear-gradient(to right, transparent calc(50% - 1px), rgba(18, 18, 45, 0.06) calc(50% - 1px), rgba(18, 18, 45, 0.06) calc(50% + 1px), transparent calc(50% + 1px)),
+      linear-gradient(to bottom, transparent calc(33% - 1px), rgba(51, 187, 220, 0.05) calc(33% - 1px), rgba(51, 187, 220, 0.05) calc(33% + 1px), transparent calc(33% + 1px));
+    background-size: 100% 100%;
+  }
+
+  /* Marquee track — pause on hover, seamless -50% translation.
+     Wrap two identical children in a .am-marquee-viewport with overflow-hidden. */
+  .am-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 3rem;
+    animation: am-marquee 44s linear infinite;
+    will-change: transform;
+  }
+  .am-marquee-viewport:hover .am-marquee-track { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .am-marquee-track { animation: none; flex-wrap: wrap; justify-content: center; }
+  }
+  @keyframes am-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Capability chip used inside the marquee — text pills (not fake logos). */
+  .am-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.15rem;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    color: var(--color-navy-900);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .am-chip::before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: var(--color-scooter);
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+  .am-chip:hover { border-color: var(--color-navy-900); }
+
+  /* Dark card hover — used in Threat Posture and Contact CTA cards. */
+  .am-card-dark {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  }
+  .am-card-dark:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(51, 187, 220, 0.4);
+  }
+
+  /* Numbered step marker used in the How We Work section. */
+  .am-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--color-navy-900);
+    background: var(--color-paper);
+    color: var(--color-navy-900);
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .am-step:hover .am-step-num,
+  .am-step:focus-within .am-step-num {
+    background: var(--color-navy-900);
+    color: var(--color-scooter);
+    border-color: var(--color-navy-900);
+  }
+
+  /* Services-list hover preview panel — appears on the right of the row. */
+  .am-svc-row .am-svc-preview {
+    opacity: 0;
+    transform: translateX(12px);
+    transition:
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .am-svc-row:hover .am-svc-preview {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   /* ── Seasonal hero accent — applied via [data-season] on <html> ── */
   html[data-season="winter"] { --season-accent: #a4d4e6; }
   html[data-season="spring"] { --season-accent: #b7ddc2; }

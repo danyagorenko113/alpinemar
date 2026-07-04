@@ -4,124 +4,355 @@ import Container from '@/components/Container.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
 
+// Team members — all currently `status: draft` in frontmatter, so we include
+// drafts intentionally here. Bios are TBD; roster + role + optional photo.
 const team = (await getCollection('team'))
   .map((m) => m.data)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
+// Values — 4 tight ones (down from 5 for stronger rhythm).
 const values = [
-  { title: 'Clarity',       body: 'Tech doesn\'t have to be confusing. We explain everything so anyone on your team can follow.' },
-  { title: 'Responsiveness', body: 'You won\'t wait on hold. You\'ll get a real person, quickly, when things matter.' },
-  { title: 'Trust',          body: 'We give honest advice, even when it\'s not what\'s easiest for us.' },
-  { title: 'Proactivity',    body: 'We don\'t just fix things. We prevent problems before they start.' },
-  { title: 'Partnership',    body: 'We work as an extension of your team, not another vendor to manage.' },
+  {
+    title: 'Clarity over jargon.',
+    body: 'If we can’t explain a decision in plain English, we haven’t made it yet. That goes for tools, cost, and risk.',
+  },
+  {
+    title: 'Responsiveness by default.',
+    body: 'You’ll get a real person on the line quickly. No ticket queue theater, no third-tier handoff.',
+  },
+  {
+    title: 'Honest advice, always.',
+    body: 'We’ll tell you when a tool isn’t worth it, or when a project can wait. Kickbacks aren’t our business model.',
+  },
+  {
+    title: 'Prevent, don’t patch.',
+    body: 'Reacting to fires is expensive. We spend more time upstream so downstream stays quiet.',
+  },
 ];
+
+// Initials helper for photoless members.
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join('');
 ---
 
 <BaseLayout
   rawTitle="About Alpine Mar IT — IT with a human touch"
   description="Alpine Mar IT delivers cybersecurity, cloud, and AI-forward IT services — built around people, not tickets."
 >
-  {/* HERO */}
+  {/* ══════════════════════ HERO ══════════════════════ */}
   <section class="relative overflow-hidden bg-paper">
+    <div class="am-aurora on-light" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 h-[520px] am-circuit opacity-70"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-paper"
+      aria-hidden="true"
+    ></div>
+
     <Container width="wide" class="relative">
-      <div class="grid min-h-[64vh] grid-rows-[auto_auto] content-start gap-0 pt-[16vh] pb-16">
-        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
-          <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">About Us</span>
+      <div class="grid min-h-[70vh] grid-rows-[auto_1fr_auto] content-start gap-0 pt-[16vh] pb-16 md:pt-[19vh] md:pb-20">
+        <div data-reveal data-speed="fast" class="mb-8 md:mb-10">
+          <span class="am-eyebrow">About Us</span>
         </div>
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
-          IT with a<br /><span class="italic text-scooter">human</span> touch.
+
+        <h1
+          data-reveal
+          data-speed="slow"
+          class="am-hero-display am-gradient-ink self-start leading-[1.02]"
+        >
+          IT with a<br />
+          <span class="italic text-scooter">human</span> touch.
         </h1>
-        <p data-reveal class="mt-8 max-w-[60ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
-          Alpine Mar IT was built for the businesses that got tired of feeling
-          like ticket numbers. We're the technology arm of a Fort Lauderdale
-          firm that's been serving founders and operators for years — and we
-          bring that same relationship-first mindset to everything technical.
-        </p>
+
+        <div
+          data-reveal
+          class="mt-9 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-12 md:gap-16"
+        >
+          <p class="max-w-[58ch] font-display text-[16px] leading-[1.65] text-navy-500 md:col-span-7 md:text-[17px]">
+            Alpine Mar IT was built for the businesses that got tired of feeling
+            like ticket numbers. We’re the technology arm of a Fort Lauderdale
+            firm that’s been serving founders and operators for years — and we
+            bring that same relationship-first mindset to everything technical.
+          </p>
+
+          {/* Quick facts strip */}
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-6 self-end md:col-span-5">
+            <div>
+              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
+                Based in
+              </dt>
+              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
+                Fort Lauderdale, FL
+              </dd>
+            </div>
+            <div>
+              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
+                Sister firm
+              </dt>
+              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
+                Alpine Mar CPAs
+              </dd>
+            </div>
+            <div>
+              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
+                Team
+              </dt>
+              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
+                {team.length} people. On purpose.
+              </dd>
+            </div>
+            <div>
+              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
+                Focus
+              </dt>
+              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
+                SMBs. 10–200 seats.
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </Container>
   </section>
 
-  {/* VALUES */}
-  <section class="relative bg-white py-24 md:py-32 border-t border-line">
-    <Container width="wide">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-        <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">What Guides Us</span>
+  {/* ══════════════════════ VALUES ══════════════════════
+      Big display headline + 4 dark cards with numbered top-labels.
+      Alternates from a hero paper section into white with lots of breathing.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden border-t border-line bg-white py-24 md:py-32">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light opacity-60" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow">What Guides Us</span>
       </div>
-      <div data-reveal class="grid grid-cols-1 gap-10 pb-10 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-navy-900 md:col-span-7">Simple ideas we take seriously.</h2>
+
+      <div
+        data-reveal
+        class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
+      >
+        <h2 class="am-h1-display text-navy-900 md:col-span-7">
+          Simple ideas we<br />
+          take seriously.
+        </h2>
         <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
-          Values on a wall don't mean much. These are the five we actually use
-          to make daily decisions — from how we return a phone call to how we
+          Values on a wall don’t mean much. These are the four we actually use
+          to make daily decisions — from how we answer the phone to how we
           scope an engagement.
         </p>
       </div>
-      <ul data-stagger class="grid grid-cols-1 border-t border-line md:grid-cols-2 lg:grid-cols-5">
-        {values.map((v) => (
-          <li class="border-b border-line px-1 py-7 md:border-r lg:border-b-0">
-            <h3 class="font-display text-[18px] font-medium tracking-[-0.01em] text-navy-900">{v.title}</h3>
-            <p class="mt-3 font-display text-[14px] leading-[1.6] text-navy-500">{v.body}</p>
+
+      <ul
+        data-stagger
+        class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8"
+      >
+        {values.map((v, i) => (
+          <li class="group relative overflow-hidden rounded-[10px] border border-line bg-paper p-8 transition-colors hover:border-navy-900 md:p-10">
+            <div class="flex items-start justify-between">
+              <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-navy-400">
+                Value 0{i + 1}
+              </span>
+              <span class="font-display text-[54px] font-medium leading-[0.9] tracking-[-0.03em] text-navy-100 transition-colors group-hover:text-scooter/40 md:text-[72px]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            </div>
+            <h3 class="mt-8 font-display text-[24px] font-medium tracking-[-0.01em] text-navy-900 md:text-[28px]">
+              {v.title}
+            </h3>
+            <p class="mt-4 max-w-[46ch] font-display text-[15px] leading-[1.65] text-navy-500">
+              {v.body}
+            </p>
           </li>
         ))}
       </ul>
     </Container>
   </section>
 
-  {/* TEAM */}
+  {/* ══════════════════════ TEAM ══════════════════════
+      Dark navy, aurora, roster grid. Monogram fallback for missing photos.
+      3-col at md, 4-col at lg. Emails hidden on card, revealed on hover
+      via a mailto button in the footer of each card.
+  ══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
+    <div class="am-aurora" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
+
     <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-white/85">
-        <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Meet the team</span>
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow on-dark">Meet the team</span>
       </div>
-      <div data-reveal class="grid grid-cols-1 gap-10 pb-14 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">The people behind the work.</h2>
-        <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-          A small team by design. Everyone you meet is someone who'll actually
-          be doing the work.
+
+      <div
+        data-reveal
+        class="grid grid-cols-1 gap-10 border-b border-white/10 pb-14 md:grid-cols-12 md:gap-16"
+      >
+        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
+          The people behind<br />the work.
+        </h2>
+        <p class="font-display text-[16px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
+          A small team by design. Everyone you meet is someone who will
+          actually be doing the work. No account executive layer, no ticket
+          handoff, no third-tier stranger picking up your incident at 2 AM.
         </p>
       </div>
 
-      <ul data-stagger class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <ul
+        data-stagger
+        class="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-7 lg:grid-cols-4"
+      >
         {team.map((m) => (
-          <li class="flex flex-col gap-3 rounded-[6px] bg-white/[0.04] p-5">
-            <div class="aspect-square overflow-hidden rounded-[4px] bg-white/[0.06]">
+          <li class="group flex flex-col overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.03] transition-colors hover:border-scooter/40">
+            {/* Portrait — monogram fallback for photoless members. */}
+            <div class="relative aspect-[4/5] overflow-hidden bg-navy-800">
               {m.photo ? (
-                <img src={m.photo} alt={m.name} class="h-full w-full object-cover" loading="lazy" />
+                <img
+                  src={m.photo}
+                  alt={m.name}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
               ) : (
-                <div class="flex h-full items-center justify-center font-display text-[36px] font-medium text-white/25">
-                  {m.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+                <div class="relative flex h-full items-center justify-center">
+                  <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-50"></div>
+                  <span class="font-display text-[72px] font-medium leading-none tracking-[-0.04em] text-white/15 transition-colors group-hover:text-scooter/40">
+                    {initials(m.name)}
+                  </span>
                 </div>
               )}
+              {/* Bottom gradient scrim for legibility */}
+              <div class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-navy-900/80 to-transparent"></div>
             </div>
-            <div>
-              <h3 class="font-display text-[15px] font-medium text-white">{m.name}</h3>
-              <p class="mt-0.5 font-display text-[12px] text-white/60">{m.role}</p>
+
+            <div class="flex flex-1 flex-col gap-1.5 p-5">
+              <h3 class="font-display text-[16px] font-medium text-white">
+                {m.name}
+              </h3>
+              <p class="font-display text-[13px] leading-[1.4] text-white/60">
+                {m.role}
+              </p>
+              {m.email && (
+                <a
+                  href={`mailto:${m.email}`}
+                  class="mt-3 inline-flex items-center gap-1.5 border-t border-white/10 pt-3 font-display text-[12px] text-scooter transition-colors hover:text-white"
+                >
+                  Email
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                    <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                  </svg>
+                </a>
+              )}
             </div>
-            {m.email && (
-              <a href={`mailto:${m.email}`} class="mt-auto font-display text-[11px] text-scooter transition-colors hover:text-white">
-                {m.email}
-              </a>
-            )}
           </li>
         ))}
       </ul>
     </Container>
   </section>
 
-  {/* CTA */}
-  <section class="relative bg-white py-20 md:py-24 border-t border-line">
-    <Container width="wide" class="text-center">
-      <h2 class="am-h1-display am-gradient-ink mx-auto max-w-2xl">Let's have a real conversation.</h2>
-      <p class="mx-auto mt-5 max-w-xl font-display text-[15px] text-navy-500">
-        Book a free 30-minute IT assessment and we'll show you what we mean.
-      </p>
-      <a href="/contact/" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900">
-        Book a Free IT Assessment
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-      </a>
+  {/* ══════════════════════ SISTER FIRM ══════════════════════
+      Cross-link to alpinemar.com — makes the family relationship explicit.
+      Layout: eyebrow + big display line + right-side lockup card.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden border-t border-line bg-paper py-24 md:py-28">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow">Sister firm</span>
+      </div>
+
+      <div
+        data-reveal
+        class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16"
+      >
+        <div class="md:col-span-7">
+          <h2 class="am-h1-display am-gradient-ink">
+            Part of Alpine Mar.<br />
+            Tax and tech, one family.
+          </h2>
+          <p class="mt-8 max-w-[52ch] font-display text-[16px] leading-[1.65] text-navy-500">
+            Alpine Mar CPAs & Advisors serves the same kind of client we do —
+            operators who want a real relationship, not a ticket number. When
+            your IT question turns into a tax question (or vice versa),
+            there’s no awkward handoff.
+          </p>
+        </div>
+
+        <div class="md:col-span-5">
+          <a
+            href={site.parentSiteUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+            class="group flex h-full flex-col justify-between gap-8 rounded-[10px] border border-line bg-white p-8 transition-colors hover:border-navy-900"
+          >
+            <div>
+              <span class="am-eyebrow" style="font-size:11px;">
+                Visit
+              </span>
+              <div class="mt-6 font-display text-[36px] font-medium leading-[1.05] tracking-[-0.02em] text-navy-900 md:text-[44px]">
+                alpinemar<span class="text-scooter">.com</span>
+              </div>
+              <p class="mt-5 font-display text-[14px] leading-[1.6] text-navy-500">
+                CPAs, advisory, tax planning, and outsourced accounting for
+                growing businesses.
+              </p>
+            </div>
+            <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900">
+              Open in new tab
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ══════════════════════ CTA ══════════════════════
+      Light CTA card — closer, more human than a big dark section.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative bg-white py-24 md:py-28">
+    <Container width="wide">
+      <div
+        data-reveal
+        class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 rounded-[16px] border border-line bg-paper p-10 md:grid-cols-12 md:gap-14 md:p-14"
+      >
+        <div class="md:col-span-7">
+          <span class="am-eyebrow">Let’s talk</span>
+          <h2 class="mt-6 am-h1-display am-gradient-ink">
+            A real conversation<br />
+            beats a sales pitch.
+          </h2>
+          <p class="mt-5 max-w-[48ch] font-display text-[15px] leading-[1.65] text-navy-500">
+            Thirty minutes on the phone or in the office. We listen first — then
+            tell you what we’d do. Whether or not that means working with us.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 md:col-span-5 md:items-end">
+          <a
+            href="/contact/"
+            class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
+          >
+            {site.primaryCta}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </a>
+          <a
+            href={`tel:${site.phoneHref}`}
+            class="font-display text-[14px] text-navy-500 transition-colors hover:text-navy-900"
+          >
+            Or call {site.phone}
+          </a>
+        </div>
+      </div>
     </Container>
   </section>
 </BaseLayout>

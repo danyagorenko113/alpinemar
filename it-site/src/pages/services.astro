@@ -2,62 +2,270 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { getCollection } from 'astro:content';
-import { serviceGroups } from '@/data/site';
+import { site, serviceGroups } from '@/data/site';
 
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
   .map((s) => s.data);
 
-const bySlug = new Map(services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]));
+const bySlug = new Map(
+  services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
+);
+
+// One-line hover blurb per service — kept short, honest, human.
+const preview: Record<string, string> = {
+  'cybersecurity':
+    'Enterprise-grade detection, response, and awareness training — without the enterprise-sized IT department.',
+  'incident-response':
+    'When minutes matter: rapid containment, forensic investigation, and a clear path back to normal.',
+  'vulnerability-management':
+    'Continuous scanning, prioritized remediation, and patch discipline that keeps the attack surface small.',
+  'network-security-monitoring':
+    'Around-the-clock visibility across your network so anomalies get caught before they become incidents.',
+  'email-security':
+    'Phishing, spoofing, and BEC filtered upstream — plus training so your team becomes the last line, not the weak one.',
+  'managed-endpoint-security':
+    'EDR + patching + hardening on every laptop and server. One vendor, one dashboard, one number to call.',
+  'managed-cloud-security':
+    'Microsoft 365, Google Workspace, Azure, and AWS configured well and watched closely — not "set and forget".',
+  'cloud-management':
+    'Identity, tenancy, backup, and cost control for the cloud stack you already run — or the one you should.',
+  'remote-monitoring-and-management':
+    '24/7 monitoring, automated patching, and quiet fixes overnight so mornings start clean.',
+  'data-protection-and-data-security':
+    'Backups you can actually restore from, DLP that blocks the leaks before they happen.',
+  'it-consulting':
+    'Straight answers on tools, vendors, and roadmaps. No vendor kickbacks, no jargon walls.',
+  'it-risk-management':
+    'A written picture of where you stand — assets, threats, controls, gaps — with a plan to close them.',
+  'it-compliance':
+    'HIPAA, PCI, CMMC, SOC 2 — mapped to your controls, evidenced continuously, audited without drama.',
+  'remote-it-support':
+    'A real technician on the line, same session, secure remote access — not a ticket queue that stretches for days.',
+  'ai-security':
+    'Adopt AI without leaking data. Policies, private instances, and monitoring for the tools your team already uses.',
+  'ai-integration':
+    'Practical AI baked into the workflows your team runs every day — measured by hours saved, not hype.',
+  'ai-code-security-audit':
+    'A human review of AI-generated code before it ships — for the security bugs the model quietly missed.',
+};
+
+// Rich data per group — a distinct opening pane for each.
+type GroupCopy = {
+  label: string;
+  eyebrow: string;
+  headline: string;
+  intro: string;
+  outcome: string; // one short outcome line, right-column
+};
+const groupCopy: Record<string, GroupCopy> = {
+  Cybersecurity: {
+    label: 'Cybersecurity',
+    eyebrow: 'Group 01',
+    headline: 'Defense that stops treating your business like an afterthought.',
+    intro:
+      'Attackers changed. Most SMB security stacks did not. We build defenses that fit how your business actually runs — endpoints, email, cloud, identity — and we watch them 24/7.',
+    outcome: '24/7 monitored. Human response. No shared queue.',
+  },
+  'Cloud & Infrastructure': {
+    label: 'Cloud & Infrastructure',
+    eyebrow: 'Group 02',
+    headline: 'Cloud that stays boring — in the best possible way.',
+    intro:
+      'Microsoft 365, Google Workspace, Azure, AWS. Configured well, watched closely, priced honestly. Fewer surprise bills, fewer 3 AM outages, fewer "it worked yesterday" mornings.',
+    outcome: 'Uptime that’s quiet. Costs that are predictable.',
+  },
+  Advisory: {
+    label: 'Advisory',
+    eyebrow: 'Group 03',
+    headline: 'Straight answers when the vendor pitch is loud.',
+    intro:
+      'Whether you’re picking a stack, meeting a compliance deadline, or trying to figure out whether you actually need more tooling — we give you the take we’d give a friend.',
+    outcome: 'Written down. Vendor-neutral. Yours to keep.',
+  },
+  AI: {
+    label: 'AI',
+    eyebrow: 'Group 04',
+    headline: 'AI adoption without the data-leak surprise.',
+    intro:
+      'Your team is already using AI. The question is whether it’s doing so safely, and whether it’s actually saving hours. We help you set the guardrails and integrate the tools that pay back.',
+    outcome: 'Policy first. Integration second. Then measurement.',
+  },
+};
+
+// "How to choose" — a small 3-step guide that sits between groups and the CTA.
+const chooseSteps = [
+  {
+    num: '01',
+    title: 'Start with the pain.',
+    body: 'Outage risk? Compliance deadline? AI creeping into workflows? Name the top pressure and we work back to the service that fits.',
+  },
+  {
+    num: '02',
+    title: 'Small engagement first.',
+    body: 'A single project — posture review, cloud audit, EDR rollout — before you sign anything ongoing. You get to see how we work.',
+  },
+  {
+    num: '03',
+    title: 'Grow into a program.',
+    body: 'Once trust is earned, we move to a managed cadence. Same faces, same numbers, quarterly reviews.',
+  },
+];
 ---
 
 <BaseLayout
   rawTitle="IT Services & Technology Solutions | Alpine Mar IT"
   description="Cybersecurity, cloud, AI, and IT advisory services for SMBs — built around your business, not template checkboxes."
 >
-  {/* HERO */}
+  {/* ══════════════════════ HERO ══════════════════════ */}
   <section class="relative overflow-hidden bg-paper">
+    <div class="am-aurora on-light" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-paper"
+      aria-hidden="true"
+    ></div>
+
     <Container width="wide" class="relative">
-      <div class="grid min-h-[64vh] grid-rows-[auto_auto] content-start gap-0 pt-[16vh] pb-16">
-        <div data-reveal data-speed="fast" class="mb-8 flex items-center gap-3 text-[var(--color-text-head)]">
-          <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">Services</span>
+      <div class="grid min-h-[70vh] grid-rows-[auto_1fr_auto] content-start gap-0 pt-[16vh] pb-16 md:pt-[19vh] md:pb-20">
+        <div data-reveal data-speed="fast" class="mb-8 md:mb-10">
+          <span class="am-eyebrow">Services</span>
         </div>
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink self-start pb-2 leading-[1.02]">
-          IT services that move<br />your business forward.
+
+        <h1
+          data-reveal
+          data-speed="slow"
+          class="am-hero-display am-gradient-ink self-start leading-[1.02]"
+        >
+          Seventeen services.<br />
+          <span class="italic text-scooter">One</span> honest team.
         </h1>
-        <p data-reveal class="mt-8 max-w-[58ch] font-display text-[15px] leading-[1.65] text-[var(--color-text-head)]">
-          We combine technical depth with business-first thinking. Whether it's
-          hardening your security posture, shifting to the cloud, or building
-          real AI into your workflows — we start with your business, not a
-          checklist.
-        </p>
+
+        <div data-reveal class="mt-9 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-12 md:gap-16">
+          <p class="max-w-[58ch] font-display text-[16px] leading-[1.65] text-navy-500 md:col-span-7 md:text-[17px]">
+            Cybersecurity, cloud, advisory, and AI — grouped so you can find
+            what you need fast. Every engagement starts with your business goals.
+            Technology decisions come second, and we’ll always tell you when
+            you don’t need a service.
+          </p>
+
+          {/* 4 group anchors — jump navigation */}
+          <ul class="grid grid-cols-2 gap-2 self-end md:col-span-5 md:grid-cols-2 md:gap-3">
+            {serviceGroups.map((g, i) => (
+              <li>
+                <a
+                  href={`#group-${g.label.toLowerCase().replace(/[^a-z]/g, '-')}`}
+                  class="group flex items-center justify-between rounded-[6px] border border-line bg-white/70 px-4 py-3 backdrop-blur transition-colors hover:border-navy-900 hover:bg-white"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="font-display text-[11px] tabular-nums text-navy-400">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span class="font-display text-[14px] font-medium text-navy-900">
+                      {g.label}
+                    </span>
+                  </span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="text-navy-400 transition-transform group-hover:translate-y-0.5 group-hover:text-navy-900">
+                    <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </Container>
   </section>
 
-  {/* SERVICE GROUPS */}
-  {serviceGroups.map((group) => {
+  {/* ══════════════════════ GROUPS ══════════════════════
+      One section per group — alternating white / paper. Each opens with a
+      distinct pane (group eyebrow + big headline + intro + outcome line),
+      then a numbered list of services with hover preview (same DNA as home).
+  ══════════════════════════════════════════════════════════ */}
+  {serviceGroups.map((group, groupIdx) => {
     const items = group.services.map((slug) => bySlug.get(slug)).filter(Boolean);
     if (items.length === 0) return null;
+    const copy = groupCopy[group.label];
+    const anchor = `group-${group.label.toLowerCase().replace(/[^a-z]/g, '-')}`;
+    const isPaper = groupIdx % 2 === 1;
     return (
-      <section class="relative bg-white py-20 md:py-24 border-t border-line">
+      <section
+        id={anchor}
+        class={`relative scroll-mt-24 border-t border-line py-24 md:py-32 ${isPaper ? 'bg-paper' : 'bg-white'}`}
+      >
         <Container width="wide">
-          <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
-            <span class="block size-2 bg-scooter"></span>
-            <span class="font-display text-[14px] tracking-[-0.005em]">{group.label}</span>
+          {/* Opening pane */}
+          <div class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+            <div data-reveal data-speed="fast" class="md:col-span-7">
+              <div class="mb-8 flex items-center gap-3">
+                <span class="am-eyebrow">{copy.eyebrow}</span>
+                <span class="font-display text-[12px] uppercase tracking-[0.14em] text-navy-400">
+                  {group.label}
+                </span>
+              </div>
+              <h2 class="am-h1-display am-gradient-ink">{copy.headline}</h2>
+            </div>
+            <div data-reveal class="flex flex-col justify-between gap-8 md:col-span-5 md:pt-3">
+              <p class="max-w-[52ch] font-display text-[15px] leading-[1.65] text-navy-500">
+                {copy.intro}
+              </p>
+              <div class="flex items-start gap-3 border-l-2 border-scooter pl-4">
+                <span class="font-display text-[13px] font-medium leading-[1.5] text-navy-900">
+                  {copy.outcome}
+                </span>
+              </div>
+            </div>
           </div>
-          <ul data-stagger class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-            {items.map((s) => s && (
-              <li>
-                <a href={s.path} class="group flex flex-col gap-3 border-b border-line pb-6 transition-colors hover:border-navy-900">
-                  <h3 class="font-display text-[22px] font-medium tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-scooter-dark">
+
+          {/* Numbered service list */}
+          <ul class="border-t border-line">
+            {items.map((s, idx) => s && (
+              <li class="am-svc-row group relative border-b border-line">
+                <a
+                  href={s.path}
+                  data-reveal
+                  data-speed="fast"
+                  class="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 py-6 md:grid-cols-12 md:gap-8 md:py-9"
+                >
+                  <span class="font-display text-[20px] font-medium tabular-nums text-navy-400 md:col-span-1 md:pl-2 md:text-[28px]">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <span class="font-display text-[19px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[22px] md:col-span-6 md:text-[28px]">
                     {s.title}
-                  </h3>
-                  <p class="font-display text-[15px] leading-[1.6] text-navy-500">{s.summary}</p>
-                  <span class="mt-2 inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900">
-                    Explore this service
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
+                  </span>
+
+                  {/* Hover preview */}
+                  <span
+                    class="am-svc-preview pointer-events-none absolute right-[5%] top-1/2 hidden -translate-y-1/2 md:block"
+                    aria-hidden="true"
+                  >
+                    <span class="block w-[300px] rounded-[8px] border border-line bg-white p-5 shadow-[0_20px_50px_-20px_rgba(18,18,45,0.35)]">
+                      <span class="am-eyebrow" style="font-size:11px;">
+                        {group.label}
+                      </span>
+                      <span class="mt-3 block font-display text-[13.5px] leading-[1.55] text-navy-500">
+                        {preview[group.services[idx]] ?? s.summary}
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="md:col-span-5 md:col-start-12 md:justify-self-end md:pr-2">
+                    <svg
+                      width="22" height="22" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                      class="block text-navy-900 group-hover:hidden"
+                    >
+                      <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+                    </svg>
+                    <svg
+                      width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                      class="hidden text-scooter group-hover:block"
+                    >
+                      <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                    </svg>
                   </span>
                 </a>
               </li>
@@ -68,21 +276,128 @@ const bySlug = new Map(services.map((s) => [s.path.replace(/^\/services\//, '').
     );
   })}
 
-  {/* CTA */}
+  {/* ══════════════════════ HOW TO CHOOSE ══════════════════════ */}
+  <section class="relative overflow-hidden border-t border-line bg-white py-24 md:py-32">
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow">How to Choose</span>
+      </div>
+
+      <div
+        data-reveal
+        class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
+      >
+        <h2 class="am-h1-display text-navy-900 md:col-span-7">
+          Not sure which service?<br />
+          Start with the pressure.
+        </h2>
+        <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
+          Nobody buys "IT services" — you buy an answer to a specific
+          pressure. Here’s how we help you match the two.
+        </p>
+      </div>
+
+      <div class="relative mt-16">
+        <div
+          class="pointer-events-none absolute left-6 top-[22px] hidden h-px bg-gradient-to-r from-transparent via-navy-200 to-transparent md:block"
+          style="width: calc(100% - 3rem);"
+          aria-hidden="true"
+        ></div>
+
+        <ol data-stagger class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+          {chooseSteps.map((step) => (
+            <li class="am-step group relative">
+              <span class="am-step-num">{step.num}</span>
+              <h3 class="mt-6 font-display text-[22px] font-medium tracking-[-0.01em] text-navy-900 md:mt-8">
+                {step.title}
+              </h3>
+              <p class="mt-3 font-display text-[14.5px] leading-[1.6] text-navy-500">
+                {step.body}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </Container>
+  </section>
+
+  {/* ══════════════════════ CONTACT CTA ══════════════════════ */}
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern"></div>
-    <Container width="wide" class="relative z-10 text-center">
-      <h2 class="am-h1-display am-gradient-ink-light mx-auto max-w-3xl">
-        Not sure where to start?
-      </h2>
-      <p class="mx-auto mt-5 max-w-xl font-display text-[15px] text-white/75">
-        Book a free 30-minute IT assessment. We'll listen first, then tell you
-        what we think — no pitch, no obligation.
-      </p>
-      <a href="/contact/" class="group mt-8 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white">
-        Book a Free IT Assessment
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
-      </a>
+    <div class="am-aurora" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div data-reveal data-speed="fast" class="mb-10">
+        <span class="am-eyebrow on-dark">Let’s talk IT</span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        <div data-reveal class="flex flex-col gap-8 lg:col-span-6">
+          <h2 class="am-h1-display am-gradient-ink-light">
+            Not sure where<br />
+            to start?
+          </h2>
+          <p class="max-w-md font-display text-[16px] leading-[1.65] text-white/75">
+            Thirty minutes, no pitch. We listen to what’s pressing, then
+            tell you what we’d do — whether that means signing with
+            us or not.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-6">
+            <a
+              href="/contact/"
+              class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white"
+            >
+              {site.primaryCta}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${site.phoneHref}`}
+              class="group inline-flex items-center gap-2 border-b border-white/40 pb-1.5 font-display text-[15px] font-medium text-white transition-colors hover:border-scooter hover:text-scooter"
+            >
+              Or call {site.phone}
+            </a>
+          </div>
+        </div>
+
+        <div data-reveal data-speed="slow" class="lg:col-span-6">
+          <div class="am-card-dark relative overflow-hidden rounded-[12px] p-8 md:p-10">
+            <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-60"></div>
+            <div class="relative">
+              <span class="am-eyebrow on-dark" style="font-size:11px;">
+                17 services · 4 groups
+              </span>
+
+              <ul class="mt-8 grid grid-cols-2 gap-x-6 gap-y-4">
+                {serviceGroups.map((g) => (
+                  <li>
+                    <a
+                      href={`#group-${g.label.toLowerCase().replace(/[^a-z]/g, '-')}`}
+                      class="group flex items-baseline gap-3 border-b border-white/10 pb-3 transition-colors hover:border-scooter"
+                    >
+                      <span class="font-display text-[11px] tabular-nums text-white/40">
+                        {String(g.services.length).padStart(2, '0')}
+                      </span>
+                      <span class="font-display text-[15px] font-medium text-white transition-colors group-hover:text-scooter">
+                        {g.label}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <p class="mt-8 font-display text-[13px] leading-[1.55] text-white/50">
+                Every engagement is scoped in writing. Nothing renews without a
+                conversation. If a service isn’t helping, we say so.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </Container>
   </section>
 </BaseLayout>
