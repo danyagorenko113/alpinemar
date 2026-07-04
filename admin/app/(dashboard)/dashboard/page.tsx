@@ -121,11 +121,16 @@ export default async function DashboardPage() {
     })),
   ]
 
-  // ── SEO gaps — pages without seo.description or (blog) without a cover.
+  // ── SEO gaps — pages where neither seo.description nor its fallback is set.
+  //   • blog:       fallback = excerpt
+  //   • services:   fallback = summary
+  //   • industries: fallback = summary
+  // The public site emits <meta name="description"> from these fallbacks when
+  // seo.description is empty, so counting them as gaps here would be alarmist.
   const seoGaps = {
-    blog: blog.filter((p) => !p.seo?.description).length,
-    services: services.filter((s) => !s.seo?.description).length,
-    industries: industries.filter((i) => !i.seo?.description).length,
+    blog:       blog.filter((p) => !p.seo?.description && !p.excerpt).length,
+    services:   services.filter((s) => !s.seo?.description && !s.summary).length,
+    industries: industries.filter((i) => !i.seo?.description && !i.summary).length,
     coversMissing: blog.filter((p) => !p.cover).length,
   }
   const totalGaps = seoGaps.blog + seoGaps.services + seoGaps.industries + seoGaps.coversMissing
@@ -280,21 +285,21 @@ export default async function DashboardPage() {
             label="Blog"
             count={seoGaps.blog}
             total={blog.length}
-            hint="missing meta description"
+            hint="no description or fallback"
             href="/blog"
           />
           <SeoStat
             label="Services"
             count={seoGaps.services}
             total={services.length}
-            hint="missing meta description"
+            hint="no description or fallback"
             href="/services"
           />
           <SeoStat
             label="Industries"
             count={seoGaps.industries}
             total={industries.length}
-            hint="missing meta description"
+            hint="no description or fallback"
             href="/industries"
           />
           <SeoStat
