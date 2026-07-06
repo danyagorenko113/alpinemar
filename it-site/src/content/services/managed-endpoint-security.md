@@ -1,24 +1,23 @@
 ---
 title: "Managed Endpoint Security Services"
 path: "/services/managed-endpoint-security/"
-summary: "Every laptop, desktop, phone, and tablet connected to your network is a potential entry point for an attacker."
+summary: "Every laptop, desktop, phone, and tablet connected to your network is a potential entry point for an attacker. Endpoint security is about making sure every one of those endpoint devices is protected, monitored, and continuously updated to defend against modern cyber threats."
 group: "Cybersecurity"
 status: "published"
 seo:
  title: "Managed Endpoint Security Services"
- description: "Every laptop, desktop, phone, and tablet connected to your network is a potential entry point for an attacker."
+ description: "Every laptop, desktop, phone, and tablet connected to your network is a potential entry point for an attacker. Endpoint security is about making sure every one of those endpoint devices is protected, monitored, and continuously updated to defend against modern cyber threats."
 ---
-<p>Every laptop, desktop, phone, and tablet connected to your network is a potential entry point for an attacker.</p>
-<p>Alpine Mar IT manages endpoint security across your entire device fleet. The company keeps devices patched, protected, and monitored to prevent security incidents from compromised hardware or outdated software, strengthening overall security posture while reducing threat exposure.</p>
-<h2>What We Do</h2>
-<p>Endpoint security services combine continuous monitoring, endpoint detection, and automated response capabilities without disrupting daily operations.</p>
+<p>Alpine Mar IT manages endpoint security across your entire device fleet. We keep every device patched, protected, and accounted for so that a lost laptop or an outdated piece of software does not become your next security incident. This strengthens your overall security posture while reducing exposure to security threats across all devices.</p>
+<h3>What We Do</h3>
+<p>Our endpoint security services combine continuous monitoring, endpoint detection, and automated response to keep devices secure without disrupting daily work.</p>
 <ul>
-<li>Antivirus and anti-malware protection deployed across all supported devices</li>
-<li>Continuous scanning to verify software currency and patch all known vulnerabilities</li>
-<li>Silent, scheduled update deployment that maintains security without interrupting work</li>
-<li>Device monitoring with real-time threat detection identifying unusual behavior</li>
-<li>Remote device management with quick isolation capability for compromised devices</li>
-<li>Zero-touch provisioning enabling new hires to receive automatically configured hardware</li>
+<li>Antivirus and anti-malware protection, deployed and managed across all supported devices</li>
+<li>Continuous scanning to verify that all software is current and all known vulnerabilities are patched</li>
+<li>Silent, scheduled update deployment that keeps devices secure without interrupting your team’s work</li>
+<li>Device monitoring with real-time threat detection across all systems that looks for unusual behavior and identifies potential threats</li>
+<li>Remote device management, including the ability to isolate a compromised device quickly to contain a potential breach</li>
+<li>Zero-touch provisioning for new devices, so new hires can receive hardware directly and have it configured automatically upon first use</li>
 </ul>
-<h2>Why Alpine Mar IT</h2>
-<p>Endpoint security functions optimally when invisible to users and supported by continuous monitoring, rapid response, and proactive protection against emerging threats. The team manages monitoring, updates, and responses so staff work without friction while all devices maintain security integrity.</p>
+<h3>Why Alpine Mar IT</h3>
+<p>Endpoint security works best when it is invisible to your team and backed by continuous monitoring, rapid response, and proactive protection against emerging threats. We handle the monitoring, the updates, and the response so your team can work without friction while we make sure every device in your environment is doing its part to keep the business secure.</p>

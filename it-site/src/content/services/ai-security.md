@@ -1,17 +1,15 @@
 ---
 title: "AI Security Services"
 path: "/services/ai-security/"
-summary: "As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate."
+summary: "As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate. Employees using personal AI accounts to process work data, sensitive information being submitted to public AI models, and third-party AI integrations with insufficient access controls are all real and growing concerns."
 group: "AI"
 status: "published"
 seo:
  title: "AI Security Services"
- description: "As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate."
+ description: "As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate. Employees using personal AI accounts to process work data, sensitive information being submitted to public AI mo"
 ---
-<p>As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate.</p>
-<p>Employees using personal AI accounts to process work data, sensitive information being submitted to public AI models, and third-party AI integrations with insufficient access controls are all real and growing concerns.</p>
 <p>Alpine Mar IT provides AI security services that allow your organization to leverage artificial intelligence safely while reducing exposure to data risks and security gaps.</p>
-<h2>What We Do</h2>
+<h3>What We Do</h3>
 <p>Our AI security policy combines governance, risk management, and technical controls to protect sensitive data and reduce exposure to emerging threats.</p>
 <ul>
 <li>Assess how AI tools are currently being used across your organization and identify where sensitive data may be at risk</li>
@@ -20,6 +18,6 @@ seo:
 <li>Evaluate third-party AI integrations for security risks before they are connected to your systems</li>
 <li>Monitor for AI-related data exposure and flag potential issues before they become reportable incidents</li>
 </ul>
-<h2>Why Alpine Mar IT</h2>
+<h3>Why Alpine Mar IT</h3>
 <p>AI security is a new frontier. Staying ahead of new threats requires a proactive approach to governance, monitoring, and defense.</p>
 <p>We stay ahead of the developments so you can adopt AI tools confidently, knowing the security guardrails are already in place. Whether you are looking to enable AI responsibly or audit what is already happening in your organization, we help you do it right.</p>

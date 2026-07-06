@@ -1,17 +1,16 @@
 ---
 title: "AI Code Security Audit"
 path: "/services/ai-code-security-audit/"
-summary: "AI-powered development has changed what's possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch."
+summary: "AI-powered development has changed what’s possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch."
 group: "AI"
 status: "published"
 seo:
  title: "AI Code Security Audit"
- description: "AI-powered development has changed what's possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch."
+ description: "AI-powered development has changed what’s possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch."
 ---
-<p>AI-powered development has changed what's possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch.</p>
-<p>When AI generates code at scale, it generates risk at scale too. Security vulnerabilities, dependency issues, exposed secrets, and compliance gaps don't disappear because a machine wrote the code. They just accumulate faster, and most teams don't have a process in place to catch them before something goes wrong.</p>
-<p>A single serious data breach is enough to permanently damage a brand's reputation. Compliance lapses can turn into expensive lawsuits. And the same AI tools used to build applications can be turned against them by attackers who know exactly what patterns and weaknesses AI-generated code tends to produce.</p>
-<p>Alpine Mar IT's AI Code Security Audit exists for exactly this moment. We give development teams and business owners a comprehensive, independent review of their AI-generated codebase so they can build with confidence instead of crossed fingers.</p>
+<p>When AI generates code at scale, it generates risk at scale too. Security vulnerabilities, dependency issues, exposed secrets, and compliance gaps don’t disappear because a machine wrote the code. They just accumulate faster, and most teams don’t have a process in place to catch them before something goes wrong.</p>
+<p>A single serious data breach is enough to permanently damage a brand’s reputation. Compliance lapses can turn into expensive lawsuits. And the same AI tools used to build applications can be turned against them by attackers who know exactly what patterns and weaknesses AI-generated code tends to produce.</p>
+<p>Alpine Mar IT’s AI Code Security Audit exists for exactly this moment. We give development teams and business owners a comprehensive, independent review of their AI-generated codebase so they can build with confidence instead of crossed fingers.</p>
 <h2>What We Do</h2>
 <p>Our audits are comprehensive by design. We cover the full attack surface of your application, from the code itself to the dependencies it relies on to the way it behaves at runtime.</p>
 <h3>Software Composition Analysis (SCA)</h3>
@@ -31,6 +30,6 @@ seo:
 <h3>Fuzzing</h3>
 <p>We send a high volume of unexpected, malformed, and random inputs to your application to uncover crashes, memory leaks, and edge-case vulnerabilities that standard testing approaches don't surface.</p>
 <h2>Why It Matters</h2>
-<p>Vibe-coding is a real and powerful part of modern development. We're not here to slow it down. We're here to make sure the speed of AI-assisted development doesn't come at the expense of the security standards your business and your customers depend on.</p>
+<p>Vibe-coding is a real and powerful part of modern development. We’re not here to slow it down. We’re here to make sure the speed of AI-assisted development doesn’t come at the expense of the security standards your business and your customers depend on.</p>
 <p>Alpine Mar IT brings a methodical, multi-layered approach to code security that goes well beyond a basic scan. We deliver clear, actionable findings that your team can actually work with, prioritized by real risk so you know where to focus first.</p>
 <p>You built something fast. We help make sure it stays standing.</p>
