@@ -1,7 +1,17 @@
 ---
 import Container from './Container.astro';
-import { primaryNav, site } from '@/data/site';
+import { getCollection } from 'astro:content';
+import { primaryNav, site, serviceGroups } from '@/data/site';
+
 const path = Astro.url.pathname;
+
+// Services for the mobile menu accordion — grouped like the hub page.
+const services = (await getCollection('services'))
+  .filter((s) => s.data.status !== 'draft')
+  .map((s) => s.data);
+const bySlug = new Map(
+  services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
+);
 ---
 
 <header class="sticky top-0 z-40 border-b border-line/60 bg-paper/90 backdrop-blur">
@@ -38,12 +48,146 @@ const path = Astro.url.pathname;
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
     </a>
 
-    {/* Mobile menu — minimal for scaffold; will be replaced in Sprint IT-3 */}
-    <a
-      href="/contact/"
-      class="md:hidden font-display text-[13px] font-medium text-navy-900"
+    {/* Mobile burger */}
+    <button
+      type="button"
+      id="am-nav-open"
+      class="md:hidden inline-flex h-10 w-10 items-center justify-center text-navy-900"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="am-mobile-menu"
     >
-      Contact
-    </a>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16" /><path d="M4 12h16" /><path d="M4 17h16" />
+      </svg>
+    </button>
   </Container>
 </header>
+
+{/* ══════════════════ MOBILE MENU OVERLAY ══════════════════ */}
+<div
+  id="am-mobile-menu"
+  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-paper md:hidden"
+>
+  <div class="flex h-16 items-center justify-between px-5">
+    <a href="/" class="flex items-center gap-2.5 font-display text-[15px] font-medium tracking-tight text-navy-900">
+      <span class="flex h-7 w-7 items-center justify-center bg-navy-900 text-white text-[10px] font-semibold tracking-tight">
+        AM
+      </span>
+      <span>Alpine Mar <span class="text-scooter">IT</span></span>
+    </a>
+    <button
+      type="button"
+      id="am-nav-close"
+      class="inline-flex h-10 w-10 items-center justify-center text-navy-900"
+      aria-label="Close menu"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <nav aria-label="Mobile" class="flex flex-1 flex-col gap-1 px-5 pb-10 pt-4">
+    <a
+      href="/"
+      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
+    >
+      Home
+    </a>
+
+    {/* Services accordion */}
+    <details class="group border-b border-line">
+      <summary class="flex cursor-pointer list-none items-center justify-between py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900 [&::-webkit-details-marker]:hidden">
+        Services
+        <svg
+          width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true"
+          class="transition-transform group-open:rotate-180"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </summary>
+      <div class="flex flex-col gap-6 pb-6">
+        <a href="/services/" class="font-display text-[15px] font-medium text-teal-700">
+          Explore all Our Services →
+        </a>
+        {serviceGroups.map((group) => (
+          <div>
+            <p class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-navy-400">
+              {group.label}
+            </p>
+            <ul class="mt-2 flex flex-col">
+              {group.services.map((slug) => {
+                const svc = bySlug.get(slug);
+                if (!svc) return null;
+                return (
+                  <li>
+                    <a
+                      href={svc.path}
+                      class="block py-1.5 font-display text-[15px] text-navy-700 transition-colors hover:text-navy-900"
+                    >
+                      {svc.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </details>
+
+    <a
+      href="/about/"
+      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
+    >
+      About Us
+    </a>
+    <a
+      href="/blog/"
+      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
+    >
+      Blog
+    </a>
+
+    <a
+      href="/contact/"
+      class="mt-8 inline-flex w-fit items-center gap-2 rounded-[6px] bg-navy-900 px-7 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
+    >
+      Contact Us
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+  </nav>
+</div>
+
+<script>
+  function initMobileMenu() {
+    const menu = document.getElementById('am-mobile-menu');
+    const openBtn = document.getElementById('am-nav-open');
+    const closeBtn = document.getElementById('am-nav-close');
+    if (!menu || !openBtn || !closeBtn) return;
+    if (openBtn.dataset.bound === '1') return;
+    openBtn.dataset.bound = '1';
+
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle('hidden', !open);
+      menu.classList.toggle('flex', open);
+      openBtn.setAttribute('aria-expanded', String(open));
+      document.documentElement.classList.toggle('overflow-hidden', open);
+    };
+
+    openBtn.addEventListener('click', () => setOpen(true));
+    closeBtn.addEventListener('click', () => setOpen(false));
+    // Close when a link inside the menu is tapped.
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => setOpen(false)),
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+  initMobileMenu();
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>
