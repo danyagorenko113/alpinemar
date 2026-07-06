@@ -81,67 +81,86 @@ const dateFmt = (d: string | Date) =>
     ></div>
 
     <Container width="wide" class="relative">
-      <div class="grid grid-rows-[auto_1fr_auto] content-start gap-0 pt-14 pb-14 md:min-h-[86vh] md:pt-[19vh] md:pb-20">
-        {/* Status pill — location only. */}
-        <div data-reveal data-speed="fast" class="mb-8 md:mb-10">
-          <span class="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/70 px-3.5 py-1.5 font-display text-[12.5px] font-medium text-navy-900 backdrop-blur">
-            <span class="am-status-dot text-scooter"></span>
-            Fort Lauderdale, FL
-          </span>
+      <div class="grid grid-cols-1 items-center gap-12 pt-12 pb-14 lg:grid-cols-12 lg:gap-16 lg:pt-[12vh] lg:pb-24">
+        {/* ── Left: copy ── */}
+        <div class="flex flex-col items-start lg:col-span-7">
+          {/* Status pill — location only. */}
+          <div data-reveal data-speed="fast" class="mb-8">
+            <span class="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/70 px-3.5 py-1.5 font-display text-[12.5px] font-medium text-navy-900 backdrop-blur">
+              <span class="am-status-dot text-scooter"></span>
+              Fort Lauderdale, FL
+            </span>
+          </div>
+
+          {/* Signature headline — verbatim from the live site. */}
+          <h1
+            data-reveal
+            data-speed="slow"
+            class="am-hero-display am-gradient-ink leading-[1.02]"
+          >
+            IT by people who<br />
+            get <span class="italic text-scooter">business.</span>
+          </h1>
+
+          <div
+            data-reveal
+            class="mt-8 flex max-w-[62ch] flex-col gap-5 md:mt-10"
+          >
+            <p class="font-display text-[17px] font-medium leading-[1.6] text-navy-900 md:text-[19px]">
+              Modern IT services tailored to how you really work, backed by
+              Alpine Mar’s proven approach to trusted guidance and real results.
+            </p>
+            <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+              Alpine Mar IT Services is built for the speed and complexity of
+              today’s business environment. Whether you’re scaling, securing, or
+              simplifying, we bring 1:1 support and deep technical experience to
+              every challenge so your business stays ahead, protected, and agile.
+            </p>
+            <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+              From proactive cybersecurity services and managed IT support to
+              artificial intelligence integration and strategic risk advisory,
+              our IT consultants keep up with change and help you lead it.
+            </p>
+
+            {/* Primary + secondary CTA — labels verbatim from the live site. */}
+            <div class="mt-2 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <a
+                href="/services/"
+                class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
+              >
+                Explore Our Services
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </a>
+              <a
+                href="/contact/"
+                class="group inline-flex items-center gap-2 border-b border-navy-900 pb-1.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-teal-700"
+              >
+                Book a Free IT Assessment
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Signature headline — verbatim from the live site. */}
-        <h1
-          data-reveal
-          data-speed="slow"
-          class="am-hero-display am-gradient-ink self-start leading-[1.02]"
-        >
-          IT by people<br />
-          who get<br />
-          <span class="italic text-scooter">business.</span>
-        </h1>
-
-        <div
-          data-reveal
-          class="mt-9 flex max-w-[62ch] flex-col gap-6 md:mt-12"
-        >
-          <p class="font-display text-[17px] font-medium leading-[1.6] text-navy-900 md:text-[19px]">
-            Modern IT services tailored to how you really work, backed by
-            Alpine Mar’s proven approach to trusted guidance and real results.
-          </p>
-          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
-            Alpine Mar IT Services is built for the speed and complexity of
-            today’s business environment. Whether you’re scaling, securing, or
-            simplifying, we bring 1:1 support and deep technical experience to
-            every challenge so your business stays ahead, protected, and agile.
-          </p>
-          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
-            From proactive cybersecurity services and managed IT support to
-            artificial intelligence integration and strategic risk advisory,
-            our IT consultants keep up with change and help you lead it.
-          </p>
-
-          {/* Primary + secondary CTA — labels verbatim from the live site. */}
-          <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
-            <a
-              href="/services/"
-              class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
-            >
-              Explore Our Services
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </a>
-            <a
-              href="/contact/"
-              class="group inline-flex items-center gap-2 border-b border-navy-900 pb-1.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-teal-700"
-            >
-              Book a Free IT Assessment
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-              </svg>
-            </a>
-          </div>
+        {/* ── Right: team photo collage from the live site ── */}
+        <div data-reveal data-speed="slow" class="relative lg:col-span-5">
+          {/* Soft glow behind the collage ties it to the aurora background. */}
+          <div
+            class="pointer-events-none absolute -inset-8 rounded-full bg-scooter/10 blur-3xl"
+            aria-hidden="true"
+          ></div>
+          <img
+            src="/images/home/hero-team.webp"
+            alt="The Alpine Mar IT team working with clients in the Fort Lauderdale office"
+            width="1654"
+            height="2085"
+            fetchpriority="high"
+            class="relative mx-auto w-full max-w-[440px] lg:max-w-none"
+          />
         </div>
       </div>
     </Container>
