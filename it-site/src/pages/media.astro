@@ -1,0 +1,163 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection } from 'astro:content';
+import { site } from '@/data/site';
+
+// The live site's /media/ page lists the "Media" category, which is
+// currently empty. We mirror that: any insight tagged `category: Media`
+// will appear here automatically.
+const posts = (await getCollection('insights'))
+  .filter((p) => p.data.status !== 'draft' && p.data.category === 'Media')
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+
+const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
+const dateFmt = (d: string | Date) =>
+  new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<BaseLayout
+  rawTitle="Featured In & Written By Alpine Mar IT"
+  description="Fresh thinking on cybersecurity, infrastructure, AI, and IT strategy. Written for real businesses, not just techies."
+>
+  {/* ══════════════════════ HERO ══════════════════════
+      Copy verbatim from it.alpinemar.com/media/.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden bg-paper">
+    <div class="am-aurora on-light" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-paper"
+      aria-hidden="true"
+    ></div>
+
+    <Container width="wide" class="relative">
+      <div class="grid grid-rows-[auto_1fr_auto] content-start gap-0 pt-14 pb-14 md:min-h-[52vh] md:pt-[19vh] md:pb-20">
+        <div data-reveal data-speed="fast" class="mb-8 md:mb-10">
+          <span class="am-eyebrow">Media</span>
+        </div>
+
+        <h1
+          data-reveal
+          data-speed="slow"
+          class="am-h1-display am-gradient-ink max-w-[24ch] self-start"
+        >
+          Featured In &amp; Written By
+          <span class="italic text-scooter">Alpine Mar IT</span>
+        </h1>
+
+        <div data-reveal class="mt-9 md:mt-14">
+          <p class="max-w-[62ch] font-display text-[16px] leading-[1.65] text-navy-500 md:text-[17px]">
+            Fresh thinking on cybersecurity, infrastructure, AI, and IT
+            strategy. Written for real businesses, not just techies.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ══════════════════════ MEDIA LIST ══════════════════════ */}
+  <section class="relative border-t border-line bg-white py-20 md:py-28">
+    <Container width="wide">
+      {posts.length === 0 ? (
+        <p class="py-10 text-center font-display text-[15px] text-navy-500">
+          New features and publications are on the way — check back soon.
+        </p>
+      ) : (
+        <ul data-stagger class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p) => (
+            <li>
+              <a
+                href={`/blog/${slugOf(p.id)}/`}
+                class="group flex h-full flex-col rounded-[10px] border border-line bg-paper p-7 transition-all hover:-translate-y-0.5 hover:border-navy-900"
+              >
+                <div class="flex items-center justify-between gap-3 font-display text-[12px] text-navy-500">
+                  <span class="inline-flex items-center gap-2 rounded-[4px] bg-white px-3 py-1.5">
+                    <span class="block size-1.5 rounded-full bg-scooter"></span>
+                    Media
+                  </span>
+                  <span>{dateFmt(p.data.date)}</span>
+                </div>
+                <h2 class="mt-7 font-display text-[20px] font-medium leading-[1.28] tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">
+                  {p.data.title}
+                </h2>
+                <p class="mt-3 font-display text-[14px] leading-[1.6] text-navy-500 line-clamp-3">
+                  {p.data.excerpt}
+                </p>
+                <span class="mt-auto flex items-center justify-between gap-4 pt-8">
+                  <span class="font-display text-[13px] font-medium text-navy-900">
+                    Learn More
+                  </span>
+                  <span class="inline-flex size-9 items-center justify-center rounded-[6px] bg-navy-900 text-white transition-transform group-hover:translate-x-1">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Container>
+  </section>
+
+  {/* ══════════════════════ CONTACT CTA ══════════════════════
+      Heading and copy verbatim from the live site.
+  ══════════════════════════════════════════════════════════ */}
+  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-28">
+    <div class="am-aurora" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
+
+    <Container width="wide" class="relative z-10">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+        <div data-reveal class="lg:col-span-6">
+          <span class="am-eyebrow on-dark">Contact Us</span>
+          <h2 class="mt-6 am-h1-display am-gradient-ink-light">
+            Let’s get on a<br />
+            first name basis.
+          </h2>
+          <p class="mt-6 max-w-md font-display text-[16px] leading-[1.65] text-white/75">
+            Start with a free IT assessment. No obligations, just insights.
+          </p>
+          <a
+            href="/contact/"
+            class="group mt-9 inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-navy-900 transition-colors hover:bg-white"
+          >
+            Request a Consultation
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </a>
+        </div>
+
+        <div data-reveal data-speed="slow" class="lg:col-span-6">
+          <div class="am-card-dark relative overflow-hidden rounded-[12px] p-8 md:p-10">
+            <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-60"></div>
+            <div class="relative">
+              <span class="am-eyebrow on-dark" style="font-size:11px;">
+                Office
+              </span>
+              <address class="mt-6 block font-display text-[15px] not-italic leading-[1.7] text-white">
+                {site.address.street}<br />
+                {site.address.city}, {site.address.state} {site.address.zip}
+              </address>
+              <div class="mt-6 flex flex-col gap-1.5 font-display text-[15px] leading-[1.6]">
+                <a href={`mailto:${site.email}`} class="text-white transition-colors hover:text-scooter">
+                  {site.email}
+                </a>
+                <a href={`tel:${site.phoneHref}`} class="text-white transition-colors hover:text-scooter">
+                  {site.phone}
+                </a>
+              </div>
+              <p class="mt-8 border-t border-white/10 pt-6 font-display text-[13px] leading-[1.6] text-white/50">
+                Prefer to call? We’re happy to chat. Reach us at {site.phone}.
+                Monday–Friday, 9 AM–5 PM ET.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
