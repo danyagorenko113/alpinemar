@@ -3,7 +3,7 @@ export const site = {
   legalName: 'Alpine Mar IT',
   tagline: 'IT with a human touch.',
   description:
-    'Alpine Mar IT delivers cybersecurity, cloud, and AI-forward IT services with a plain-English, business-first approach.',
+    'Modern IT services tailored to how you really work, backed by Alpine Mar’s proven approach to trusted guidance and real results.',
   url: 'https://it.alpinemar.com',
   email: 'hello@alpinemar.com',
   phone: '(954) 208-4040',
@@ -20,9 +20,9 @@ export const site = {
 
 export const primaryNav = [
   { label: 'Services', href: '/services/' },
-  { label: 'About', href: '/about/' },
-  { label: 'Insights', href: '/blog/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'About Us', href: '/about/' },
+  { label: 'Blog', href: '/blog/' },
+  { label: 'Contact Us', href: '/contact/' },
 ] as const;
 
 export const serviceGroups = [

@@ -14,81 +14,38 @@ const featuredPost =
   insights.find((p) => p.data.category === 'Cybersecurity') ?? insights[0];
 const morePosts = insights.filter((p) => p.id !== featuredPost?.id).slice(0, 3);
 
-const services = (await getCollection('services'))
-  .filter((s) => s.data.status !== 'draft')
-  .map((s) => s.data);
-const bySlug = new Map(
-  services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
-);
-
-// ── Featured services — one hero per group + two flagships ────────────────
-const featuredServices = [
-  { slug: 'cybersecurity',      eyebrow: 'Cybersecurity',        blurb: 'Enterprise-grade detection, response, and awareness training — without the enterprise-sized IT department.' },
-  { slug: 'incident-response',  eyebrow: 'Cybersecurity',        blurb: 'When minutes matter: rapid containment, forensic investigation, and a clear path back to normal.' },
-  { slug: 'cloud-management',   eyebrow: 'Cloud & Infrastructure', blurb: 'Microsoft 365, Google Workspace, Azure and AWS — configured well, watched closely, priced honestly.' },
-  { slug: 'it-consulting',      eyebrow: 'Advisory',             blurb: 'Straight answers on tools, vendors, and roadmaps. No vendor kickbacks, no jargon walls.' },
-  { slug: 'ai-security',        eyebrow: 'AI',                   blurb: 'Adopt AI without leaking data. Policies, private instances, and monitoring for the tools your team already uses.' },
-  { slug: 'remote-it-support',  eyebrow: 'Advisory',             blurb: 'A real technician on the line, same session, secure remote access — not a ticket queue that stretches for days.' },
-]
-  .map((row) => ({ ...row, service: bySlug.get(row.slug) }))
-  .filter((row) => Boolean(row.service));
-
-// ── Capabilities marquee — realistic stack, no fake client logos ─────────
-const stack = [
-  'Microsoft 365',
-  'Google Workspace',
-  'Azure',
-  'AWS',
-  'CrowdStrike',
-  'SentinelOne',
-  'Okta',
-  'Cloudflare',
-  '1Password',
-  'Datto',
-  'Proofpoint',
-  'Duo',
-];
-
-// ── Why us / values ────────────────────────────────────────────────────────
-const values = [
+// ── Home services — copy verbatim from it.alpinemar.com homepage ──────────
+const homeServices = [
   {
-    title: 'No black boxes.',
-    body: 'We explain what we\'re doing, why, and what it costs — in plain English, not vendor-speak.',
+    title: 'Technology & Cybersecurity',
+    href: '/services/',
+    blurb:
+      'Our technology consulting services help businesses modernize systems, implement the right tools, and minimize risk without overwhelming your teams. From cloud migrations to endpoint security, we build resilient, flexible infrastructures designed for growth.',
   },
   {
-    title: 'Small team by design.',
-    body: 'You work directly with the people doing the work. No ticket ping-pong, no third-tier hand-offs.',
+    title: 'Internet & Network Cybersecurity',
+    href: '/services/cybersecurity/',
+    blurb:
+      'Our cybersecurity consulting services are built to outpace today’s threats. We secure your networks, safeguard your data, and keep your operations running with 24/7 visibility and protection.',
   },
   {
-    title: 'Business-first thinking.',
-    body: 'Technology has to serve the business. We start with your goals, then work back to the stack.',
+    title: 'Managed IT Services',
+    href: '/services/remote-monitoring-and-management/',
+    blurb:
+      'With Alpine Mar’s managed IT services, you get ongoing support, system monitoring, and strategic planning from a team that acts like an extension of yours. Scalable, secure, and backed by real people who pick up the phone when you call.',
   },
   {
-    title: 'Real availability.',
-    body: 'When things go wrong, you get a person on the phone quickly. That\'s the whole promise.',
+    title: 'IT Consulting Services',
+    href: '/services/it-consulting/',
+    blurb:
+      'Technology should drive your business forward, not slow it down. Our IT consulting services help align your tech with your goals, so you can make smarter decisions, avoid costly pitfalls, and plan for what’s next.',
   },
-];
-
-// ── Reactive vs Proactive — the signature comparison card ─────────────────
-const reactive = [
-  'You find out about a breach from the news, an insurer, or an angry customer.',
-  'Recovery starts from scratch — no relationship, no context, no baseline.',
-  'IT spend feels like a black hole. You pay more when things break.',
-  'Every incident is a fire drill for a team that has never met yours.',
-];
-const proactive = [
-  '24/7 monitoring flags the anomaly before it becomes an incident.',
-  'We already know your environment. Containment starts in minutes, not days.',
-  'Predictable monthly cost. Fewer emergencies mean lower total spend.',
-  'Same technicians every time. Institutional memory that compounds.',
-];
-
-// ── How we work — 4-step process ──────────────────────────────────────────
-const steps = [
-  { num: '01', title: 'Listen',  body: 'We start with how your business actually runs — not a canned questionnaire. Half an hour, no pitch.' },
-  { num: '02', title: 'Assess',  body: 'A plain-English review of your posture, tooling, and spend. You get the findings whether you sign or not.' },
-  { num: '03', title: 'Deploy',  body: 'We roll out the right controls in the right order — endpoints, identity, cloud, backups — with your team, not around them.' },
-  { num: '04', title: 'Support', body: 'Ongoing monitoring, real availability, and quarterly reviews so the stack keeps up with the business.' },
+  {
+    title: 'Remote IT Support',
+    href: '/services/remote-it-support/',
+    blurb:
+      'Whether you’re remote-first or have satellite offices, our remote IT support team delivers fast, reliable help when and where you need it. We fix issues before they disrupt your business.',
+  },
 ];
 
 // ── Utilities ─────────────────────────────────────────────────────────────
@@ -98,14 +55,13 @@ const dateFmt = (d: string | Date) =>
 ---
 
 <BaseLayout
-  rawTitle="Alpine Mar IT — IT with a human touch"
+  rawTitle="IT By People Who Get Business"
   description={site.description}
 >
   {/* ══════════════════════ HERO ══════════════════════
       Signature moment: light paper canvas + aurora glow + circuit grid.
       Left-aligned massive gradient headline (am-hero-display ~84px desktop).
-      Anchor stat strip at the bottom is a persuasion asset (Verizon 43% —
-      honestly cited from content/insights/cybersecurity-risk-management-smb.md).
+      Copy verbatim from it.alpinemar.com homepage hero.
   ═══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-paper">
     {/* Layered background: aurora glow + subtle grid + faint circuit lines. */}
@@ -126,16 +82,15 @@ const dateFmt = (d: string | Date) =>
 
     <Container width="wide" class="relative">
       <div class="grid min-h-[86vh] grid-rows-[auto_1fr_auto] content-start gap-0 pt-[16vh] pb-14 md:pt-[19vh] md:pb-20">
-        {/* Status pill — establishes credibility without being loud. */}
+        {/* Status pill — location only. */}
         <div data-reveal data-speed="fast" class="mb-8 md:mb-10">
           <span class="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/70 px-3.5 py-1.5 font-display text-[12.5px] font-medium text-navy-900 backdrop-blur">
             <span class="am-status-dot text-scooter"></span>
-            24/7 monitoring · Fort Lauderdale, FL
+            Fort Lauderdale, FL
           </span>
         </div>
 
-        {/* Signature headline — one big statement, italic accent on the last word.
-            Line breaks controlled with <br /> — matches the reference site's craft. */}
+        {/* Signature headline — verbatim from the live site. */}
         <h1
           data-reveal
           data-speed="slow"
@@ -150,212 +105,51 @@ const dateFmt = (d: string | Date) =>
           data-reveal
           class="mt-9 flex max-w-[62ch] flex-col gap-6 md:mt-12"
         >
-          <p class="font-display text-[16px] leading-[1.65] text-navy-500 md:text-[17px]">
-            No black boxes. No jargon walls. Cybersecurity, cloud, and
-            AI-forward IT delivered in plain English by a small team that
-            takes the time to learn how your business actually runs.
+          <p class="font-display text-[17px] font-medium leading-[1.6] text-navy-900 md:text-[19px]">
+            Modern IT services tailored to how you really work, backed by
+            Alpine Mar’s proven approach to trusted guidance and real results.
+          </p>
+          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+            Alpine Mar IT Services is built for the speed and complexity of
+            today’s business environment. Whether you’re scaling, securing, or
+            simplifying, we bring 1:1 support and deep technical experience to
+            every challenge so your business stays ahead, protected, and agile.
+          </p>
+          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+            From proactive cybersecurity services and managed IT support to
+            artificial intelligence integration and strategic risk advisory,
+            our IT consultants keep up with change and help you lead it.
           </p>
 
-          {/* Primary + secondary CTA — hierarchy per REFACTORING_UI (filled vs. underlined). */}
+          {/* Primary + secondary CTA — labels verbatim from the live site. */}
           <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
             <a
-              href="/contact/"
+              href="/services/"
               class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
             >
-              {site.primaryCta}
+              Explore Our Services
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </a>
             <a
-              href="/services/"
+              href="/contact/"
               class="group inline-flex items-center gap-2 border-b border-navy-900 pb-1.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-teal-700"
             >
-              Explore what we do
+              Book a Free IT Assessment
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
                 <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
               </svg>
             </a>
           </div>
         </div>
-
-        {/* Anchor stat strip — honest, cited. Sits at hero bottom, 3-up on md.
-            Each stat de-emphasizes the label per REFACTORING_UI hierarchy #1. */}
-        <div
-          data-reveal
-          data-stagger
-          class="mt-14 grid grid-cols-1 gap-6 border-t border-line pt-8 sm:grid-cols-3 md:mt-20 md:gap-10 md:pt-10"
-        >
-          <div>
-            <div class="font-display text-[36px] font-medium leading-[1] tracking-[-0.02em] text-navy-900 md:text-[44px]">
-              43%
-            </div>
-            <div class="mt-3 font-display text-[13px] leading-[1.55] text-navy-500">
-              of internet security breaches hit SMBs<br />
-              <span class="text-navy-400">Source: Verizon</span>
-            </div>
-          </div>
-          <div>
-            <div class="font-display text-[36px] font-medium leading-[1] tracking-[-0.02em] text-navy-900 md:text-[44px]">
-              24/7
-            </div>
-            <div class="mt-3 font-display text-[13px] leading-[1.55] text-navy-500">
-              managed detection & response<br />
-              <span class="text-navy-400">Not a shared queue</span>
-            </div>
-          </div>
-          <div>
-            <div class="font-display text-[36px] font-medium leading-[1] tracking-[-0.02em] text-navy-900 md:text-[44px]">
-              30 min
-            </div>
-            <div class="mt-3 font-display text-[13px] leading-[1.55] text-navy-500">
-              free IT assessment<br />
-              <span class="text-navy-400">No pitch. No obligation.</span>
-            </div>
-          </div>
-        </div>
       </div>
     </Container>
   </section>
 
-  {/* ═════════════ CAPABILITIES MARQUEE ═════════════
-      Instead of fake client logos we don't have, we surface the stack we
-      actually work with as auto-scrolling text pills. Marquee pauses on hover.
-  ═══════════════════════════════════════════════════════════ */}
-  <section class="relative border-y border-line bg-paper py-10 md:py-14">
-    <Container width="wide" class="overflow-hidden">
-      <div class="flex flex-col items-center gap-6 md:flex-row md:gap-10">
-        <p class="shrink-0 font-display text-[13px] tracking-[0.02em] text-navy-500 md:whitespace-nowrap">
-          The stack we secure & support
-        </p>
-
-        <div
-          class="am-marquee-viewport relative w-full overflow-hidden"
-          style="mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);"
-        >
-          <div class="am-marquee-track">
-            {[...stack, ...stack].map((label) => (
-              <span class="am-chip">{label}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
-
-  {/* ═════════════ SERVICES — numbered list with hover preview ═════════════
-      Same layout DNA as the main site's home services list. Numbers in
-      tabular-nums. Hover: arrow swaps ↗ → →, right-side preview card fades
-      in with eyebrow + one-line blurb. No fake artwork — we use a categoric
-      eyebrow + typographic treatment inside a soft navy card.
-  ═══════════════════════════════════════════════════════════ */}
-  {featuredServices.length > 0 && (
-    <section class="relative bg-white py-24 md:py-32">
-      <Container width="wide">
-        <div data-reveal data-speed="fast" class="mb-10">
-          <span class="am-eyebrow">Our Services</span>
-        </div>
-
-        <div
-          data-reveal
-          class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
-        >
-          <h2 class="am-h1-display text-navy-900 md:col-span-7">
-            Smart, secure IT —<br />
-            built around your business.
-          </h2>
-          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
-            Whether it's locking down endpoints, moving to the cloud, or
-            making AI safe to use — every engagement starts with your goals.
-            Technology decisions come second.
-          </p>
-        </div>
-
-        <ul class="border-t border-line">
-          {featuredServices.map((row, idx) => (
-            <li class="am-svc-row group relative border-b border-line">
-              <a
-                href={row.service!.path}
-                data-reveal
-                data-speed="fast"
-                class="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 py-7 md:grid-cols-12 md:gap-8 md:py-11"
-              >
-                <span class="font-display text-[24px] font-medium tabular-nums text-navy-900 md:col-span-1 md:pl-4 md:text-[34px]">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <span class="font-display text-[20px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[24px] md:col-span-6 md:text-[32px]">
-                  {row.service!.title}
-                </span>
-
-                {/* Hover preview — positioned to the right of the row on desktop */}
-                <span
-                  class="am-svc-preview pointer-events-none absolute right-[6%] top-1/2 hidden -translate-y-1/2 md:block"
-                  aria-hidden="true"
-                >
-                  <span class="block w-[300px] rounded-[8px] border border-line bg-paper p-5 shadow-[0_20px_50px_-20px_rgba(18,18,45,0.35)]">
-                    <span class="am-eyebrow" style="font-size:11px;">
-                      {row.eyebrow}
-                    </span>
-                    <span class="mt-3 block font-display text-[13.5px] leading-[1.55] text-navy-500">
-                      {row.blurb}
-                    </span>
-                  </span>
-                </span>
-
-                <span class="md:col-span-5 md:col-start-12 md:justify-self-end md:pr-4">
-                  {/* Default ↗ arrow */}
-                  <svg
-                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.8"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                    class="block text-navy-900 group-hover:hidden"
-                  >
-                    <path d="M7 17 17 7" /><path d="M7 7h10v10" />
-                  </svg>
-                  {/* Hover → arrow, scooter */}
-                  <svg
-                    width="26" height="26" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                    class="hidden text-scooter group-hover:block"
-                  >
-                    <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-                  </svg>
-                </span>
-              </a>
-            </li>
-          ))}
-
-          {/* Sentinel row — "View all services" */}
-          <li class="border-b border-line">
-            <a
-              href="/services/"
-              class="group flex items-center justify-between py-7 md:py-9 md:pl-4 md:pr-4"
-            >
-              <span class="font-display text-[16px] font-medium tracking-[-0.005em] text-navy-500 transition-colors group-hover:text-navy-900">
-                View all 17 services
-              </span>
-              <svg
-                width="22" height="22" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                class="text-navy-500 transition-colors group-hover:text-navy-900"
-              >
-                <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </Container>
-    </section>
-  )}
-
-  {/* ═════════════ THREAT POSTURE — signature moment ═════════════
-      This is the screenshot-worthy section. Dark navy + grid + aurora, split
-      composition: manifesto headline on the left, "Reactive vs Proactive"
-      comparison card on the right. Colors do the heavy lifting: red-ish
-      warnings for the reactive column, scooter checkmarks for proactive.
-      Copy anchors the honest Verizon stat that's already in our insights.
+  {/* ═════════════ ABOUT — "No black boxes" ═════════════
+      Dark navy + grid + aurora. Copy verbatim from the live homepage
+      section of the same name.
   ═══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
     <div class="am-aurora" aria-hidden="true"></div>
@@ -364,189 +158,53 @@ const dateFmt = (d: string | Date) =>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">The Threat Landscape</span>
+        <span class="am-eyebrow on-dark">About Us</span>
       </div>
 
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-        {/* Left: manifesto text + cited stat */}
-        <div data-reveal class="lg:col-span-5">
+        <div data-reveal class="lg:col-span-6">
           <h2 class="am-h1-display am-gradient-ink-light">
-            Attackers aren't<br />
-            slowing down.<br />
-            Neither are we.
+            No black boxes<br />
+            or buzzwords.<br />
+            Just smart, secure<br />
+            solutions.
           </h2>
+        </div>
 
-          <p class="mt-8 font-display text-[16px] leading-[1.65] text-white/75">
-            Small and mid-sized businesses have become the soft target —
-            not because attackers picked you, but because the defenses
-            were built for someone else's company. We build them for yours.
+        <div data-reveal data-speed="slow" class="flex flex-col gap-6 lg:col-span-6 lg:pt-3">
+          <p class="font-display text-[16px] leading-[1.65] text-white/75">
+            We take a plain-English approach to even the most complex IT
+            challenges. Our team works side-by-side with yours, making sure
+            every recommendation is rooted in your business goals, not tech
+            for tech’s sake.
           </p>
-
-          {/* Cited stat block — the one honest number we surfaced from our insights. */}
+          <p class="font-display text-[16px] leading-[1.65] text-white/75">
+            You’ll never be left guessing what you’re paying for, or why
+            something matters. You’ll know, and you’ll feel the difference
+            in your day-to-day.
+          </p>
           <a
-            href="/blog/cybersecurity-risk-management-smb/"
-            class="group mt-10 block border-l-2 border-scooter pl-6 transition-colors hover:border-white"
+            href="/about/"
+            class="group mt-2 inline-flex w-fit items-center gap-2 border-b border-white/40 pb-1.5 font-display text-[15px] font-medium text-white transition-colors hover:border-scooter hover:text-scooter"
           >
-            <div class="font-display text-[54px] font-medium leading-[1] tracking-[-0.02em] text-white md:text-[64px]">
-              43<span class="text-scooter">%</span>
-            </div>
-            <p class="mt-4 max-w-sm font-display text-[14px] leading-[1.6] text-white/70">
-              of internet security breaches hit small businesses.
-              <span class="mt-2 block text-white/50">Verizon — via our SMB risk management guide</span>
-            </p>
-            <span class="mt-4 inline-flex items-center gap-2 font-display text-[13px] font-medium text-scooter transition-colors group-hover:text-white">
-              Read the guide
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-              </svg>
-            </span>
+            Learn more about us
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+              <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+            </svg>
           </a>
         </div>
-
-        {/* Right: Reactive vs Proactive comparison — the signature diagram */}
-        <div data-reveal data-speed="slow" class="lg:col-span-7">
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-            {/* REACTIVE column — muted, warning-toned */}
-            <div class="am-card-dark relative overflow-hidden rounded-[8px] p-7 md:p-8">
-              <div class="mb-6 flex items-center justify-between">
-                <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/50">
-                  Without us
-                </span>
-                <span class="inline-flex size-6 items-center justify-center rounded-full border border-white/20 text-white/40">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                  </svg>
-                </span>
-              </div>
-              <h3 class="font-display text-[22px] font-medium leading-[1.15] tracking-[-0.01em] text-white/70">
-                Reactive IT
-              </h3>
-              <p class="mt-2 font-display text-[13px] leading-[1.5] text-white/45">
-                What you're doing today
-              </p>
-              <ul class="mt-6 space-y-4">
-                {reactive.map((line) => (
-                  <li class="flex items-start gap-3 font-display text-[13.5px] leading-[1.55] text-white/60">
-                    <span class="mt-1.5 block size-1 flex-shrink-0 rounded-full bg-white/30"></span>
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* PROACTIVE column — scooter-accented, lit */}
-            <div class="relative overflow-hidden rounded-[8px] border border-scooter/50 bg-gradient-to-br from-scooter/10 via-white/[0.04] to-white/[0.02] p-7 md:p-8">
-              <div class="mb-6 flex items-center justify-between">
-                <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-scooter">
-                  With Alpine Mar IT
-                </span>
-                <span class="inline-flex size-6 items-center justify-center rounded-full border border-scooter bg-scooter/10 text-scooter">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-              </div>
-              <h3 class="font-display text-[22px] font-medium leading-[1.15] tracking-[-0.01em] text-white">
-                Proactive IT
-              </h3>
-              <p class="mt-2 font-display text-[13px] leading-[1.5] text-scooter/80">
-                What working with us looks like
-              </p>
-              <ul class="mt-6 space-y-4">
-                {proactive.map((line) => (
-                  <li class="flex items-start gap-3 font-display text-[13.5px] leading-[1.55] text-white/90">
-                    <span class="mt-0.5 inline-flex size-4 flex-shrink-0 items-center justify-center rounded-full bg-scooter/15 text-scooter">
-                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </span>
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <p class="mt-8 font-display text-[13px] leading-[1.55] text-white/45">
-            Not a magic-bullet promise — a shift in operating model. Fewer
-            surprises, faster containment, and one number to call.
-          </p>
-        </div>
       </div>
     </Container>
   </section>
 
-  {/* ═════════════ WHY US — 4 values pill grid ═════════════
-      Continues the dark section with a manifesto headline + 4 checkbox pills.
-      Matches the main site about-section DNA (scooter-ring check + strong
-      title + soft body copy) so both sites read as the same family.
+  {/* ═════════════ SERVICES — numbered list, copy verbatim ═════════════
+      Headline, intro, category titles, and blurbs match the live homepage
+      "IT solutions that move your business forward." section one to one.
   ═══════════════════════════════════════════════════════════ */}
-  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
-
-    <Container width="wide" class="relative z-10">
+  <section class="relative bg-white py-24 md:py-32">
+    <Container width="wide">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">Why Alpine Mar IT</span>
-      </div>
-
-      <div
-        data-reveal
-        class="grid grid-cols-1 gap-10 border-b border-white/10 pb-16 md:grid-cols-12 md:gap-16 md:pb-20"
-      >
-        <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
-          IT with a<br />human touch.
-        </h2>
-        <p class="font-display text-[16px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-          We started Alpine Mar IT because we'd seen what "managed IT"
-          had become. Faceless ticketing. Vendors that talked past you.
-          Playbooks written for someone else's business. We wanted the
-          opposite: a small team that picks up the phone, learns your
-          business, and gives you honest answers.
-        </p>
-      </div>
-
-      <ul
-        data-stagger
-        class="mt-16 grid grid-cols-1 gap-y-10 gap-x-8 sm:grid-cols-2 md:grid-cols-4"
-      >
-        {values.map((item) => (
-          <li class="flex flex-col gap-4">
-            <span class="flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
-              <svg
-                width="14" height="14" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="3"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                class="text-scooter"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </span>
-            <div>
-              <h3 class="font-display text-[18px] font-medium tracking-[-0.01em] text-white">
-                {item.title}
-              </h3>
-              <p class="mt-2 font-display text-[14px] leading-[1.6] text-white/70">
-                {item.body}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </Container>
-  </section>
-
-  {/* ═════════════ HOW WE WORK ═════════════
-      Distinct light-section rhythm break. 4 steps on a horizontal ridge:
-      numbered dots on a thin scooter connecting line, with staggered reveal.
-      Because we don't have the CPA site's carousel, this fills the "process"
-      slot with something native to IT services.
-  ═══════════════════════════════════════════════════════════ */}
-  <section class="relative overflow-hidden bg-paper py-24 md:py-32">
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
-
-    <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow">How We Work</span>
+        <span class="am-eyebrow">Our Services</span>
       </div>
 
       <div
@@ -554,55 +212,95 @@ const dateFmt = (d: string | Date) =>
         class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
       >
         <h2 class="am-h1-display text-navy-900 md:col-span-7">
-          Four honest steps.<br />
-          No surprise scope creep.
+          IT solutions that move<br />
+          your business forward.
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
-          Every engagement — one endpoint or five hundred — follows the
-          same rhythm. You always know where we are, what we're doing
-          next, and what it will cost.
+          We combine technical expertise with business-first thinking to
+          deliver IT solutions that fit your operations, your people, and
+          your growth goals. Explore our offerings below.
         </p>
       </div>
 
-      {/* Ridge line — the thin scooter connector behind the step markers. */}
-      <div class="relative mt-16">
-        <div
-          class="pointer-events-none absolute left-6 top-[22px] hidden h-px bg-gradient-to-r from-transparent via-navy-200 to-transparent md:block"
-          style="width: calc(100% - 3rem);"
-          aria-hidden="true"
-        ></div>
+      <ul class="border-t border-line">
+        {homeServices.map((row, idx) => (
+          <li class="am-svc-row group relative border-b border-line">
+            <a
+              href={row.href}
+              data-reveal
+              data-speed="fast"
+              class="relative grid grid-cols-[auto_1fr_auto] items-start gap-6 py-7 md:grid-cols-12 md:items-center md:gap-8 md:py-11"
+            >
+              <span class="font-display text-[24px] font-medium tabular-nums text-navy-900 md:col-span-1 md:pl-4 md:text-[34px]">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span class="md:col-span-10">
+                <span class="block font-display text-[20px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[24px] md:text-[32px]">
+                  {row.title}
+                </span>
+                <span class="mt-3 block max-w-[86ch] font-display text-[14px] leading-[1.6] text-navy-500 md:text-[15px]">
+                  {row.blurb}
+                </span>
+              </span>
 
-        <ol data-stagger class="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-8">
-          {steps.map((step) => (
-            <li class="am-step group relative">
-              <div class="flex items-center gap-4 md:block">
-                <span class="am-step-num">{step.num}</span>
-              </div>
-              <h3 class="mt-5 font-display text-[22px] font-medium tracking-[-0.01em] text-navy-900 md:mt-8">
-                {step.title}
-              </h3>
-              <p class="mt-3 font-display text-[14.5px] leading-[1.6] text-navy-500">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </div>
+              <span class="md:col-span-1 md:justify-self-end md:pr-4">
+                {/* Default ↗ arrow */}
+                <svg
+                  width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                  class="block text-navy-900 group-hover:hidden"
+                >
+                  <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+                </svg>
+                {/* Hover → arrow, scooter */}
+                <svg
+                  width="26" height="26" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                  class="hidden text-scooter group-hover:block"
+                >
+                  <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))}
+
+        {/* Sentinel row — label verbatim from the live site. */}
+        <li class="border-b border-line">
+          <a
+            href="/services/"
+            class="group flex items-center justify-between py-7 md:py-9 md:pl-4 md:pr-4"
+          >
+            <span class="font-display text-[16px] font-medium tracking-[-0.005em] text-navy-500 transition-colors group-hover:text-navy-900">
+              Explore all Our Services
+            </span>
+            <svg
+              width="22" height="22" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+              class="text-navy-500 transition-colors group-hover:text-navy-900"
+            >
+              <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+            </svg>
+          </a>
+        </li>
+      </ul>
     </Container>
   </section>
 
   {/* ═════════════ LATEST INSIGHTS ═════════════
-      Featured post = full-width card with a big teal-grid brand panel on
-      the right (since we don't have hero art). 3 more posts as text cards.
-      Matches the main-site polish, adapted for our content-only reality.
+      Headline & intro reuse the live blog page copy. Post titles and
+      excerpts come from the migrated (verbatim) content collection.
   ═══════════════════════════════════════════════════════════ */}
   {insights.length > 0 && (
-    <section class="relative overflow-hidden bg-white py-24 md:py-32">
+    <section class="relative overflow-hidden border-t border-line bg-paper py-24 md:py-32">
       <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
 
       <Container width="wide" class="relative z-10">
         <div data-reveal data-speed="fast" class="mb-10">
-          <span class="am-eyebrow">Latest Insights</span>
+          <span class="am-eyebrow">Insights</span>
         </div>
 
         <div
@@ -610,13 +308,13 @@ const dateFmt = (d: string | Date) =>
           class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16"
         >
           <h2 class="am-h1-display text-navy-900 md:col-span-7">
-            At the intersection<br />
+            Insights at the intersection<br />
             of tech and business.
           </h2>
           <div class="flex flex-col items-start gap-7 md:col-span-5 md:pt-3">
             <p class="font-display text-[15px] leading-[1.65] text-navy-500">
-              Practical perspectives on cybersecurity, cloud, and AI —
-              written by the people who work in it every day.
+              Fresh thinking on cybersecurity, infrastructure, AI, and IT
+              strategy. Written for real businesses, not just techies.
             </p>
             <a
               href="/blog/"
@@ -653,7 +351,7 @@ const dateFmt = (d: string | Date) =>
               </p>
               <div class="mt-auto flex items-center justify-between gap-4 pt-4">
                 <span class="font-display text-[14px] font-medium text-navy-900">
-                  Read the guide
+                  Learn More
                 </span>
                 <span class="inline-flex size-10 items-center justify-center rounded-[6px] bg-navy-900 text-white transition-transform group-hover:translate-x-1 group-hover:bg-scooter group-hover:text-navy-900">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
@@ -704,7 +402,7 @@ const dateFmt = (d: string | Date) =>
                 </h4>
                 <div class="mt-auto flex items-center justify-between gap-4 pt-8">
                   <span class="font-display text-[13px] font-medium text-navy-900">
-                    Read more
+                    Learn More
                   </span>
                   <span class="inline-flex size-9 items-center justify-center rounded-[6px] bg-navy-900 text-white transition-transform group-hover:translate-x-1">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
@@ -721,9 +419,8 @@ const dateFmt = (d: string | Date) =>
   )}
 
   {/* ═════════════ CONTACT CTA ═════════════
-      Dark navy + grid + aurora. Split: manifesto headline + 2 info cards on
-      the left, high-emphasis CTA panel on the right (rather than a full form
-      — the full form lives at /contact/, which is more honest to the flow).
+      Dark navy + grid + aurora. Headline and copy verbatim from the live
+      homepage contact section + contact page.
   ═══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
     <div class="am-aurora" aria-hidden="true"></div>
@@ -731,27 +428,21 @@ const dateFmt = (d: string | Date) =>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">Let's talk IT</span>
+        <span class="am-eyebrow on-dark">Contact Us</span>
       </div>
 
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
         {/* Left column — headline + office / contact cards */}
         <div data-reveal class="flex flex-col gap-10 lg:col-span-6">
           <h2 class="am-h1-display am-gradient-ink-light">
-            Start with a free<br />
-            IT assessment.
+            Let’s get on a<br />
+            first name basis.
           </h2>
-
-          <p class="max-w-md font-display text-[16px] leading-[1.65] text-white/75">
-            Thirty minutes on the phone or in the office. We listen first,
-            then tell you what we think — whether that's working with us
-            or not.
-          </p>
 
           <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div class="am-card-dark rounded-[8px] p-6 md:p-7">
               <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
-                Our Location
+                Office
               </h3>
               <address class="mt-5 block font-display text-[14.5px] not-italic leading-[1.6] text-white">
                 {site.address.street}<br />
@@ -760,83 +451,60 @@ const dateFmt = (d: string | Date) =>
             </div>
             <div class="am-card-dark rounded-[8px] p-6 md:p-7">
               <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
-                Contact Information
+                Contact
               </h3>
               <div class="mt-5 flex flex-col gap-1.5 font-display text-[14.5px] leading-[1.6]">
-                <a
-                  href={`tel:${site.phoneHref}`}
-                  class="text-white transition-colors hover:text-scooter"
-                >
-                  {site.phone}
-                </a>
                 <a
                   href={`mailto:${site.email}`}
                   class="text-white transition-colors hover:text-scooter"
                 >
                   {site.email}
                 </a>
+                <a
+                  href={`tel:${site.phoneHref}`}
+                  class="text-white transition-colors hover:text-scooter"
+                >
+                  {site.phone}
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right column — high-emphasis CTA card */}
+        {/* Right column — assessment card, copy verbatim from /contact/ */}
         <div data-reveal data-speed="slow" class="lg:col-span-6">
           <div class="am-card-dark relative overflow-hidden rounded-[12px] p-8 md:p-12">
             <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-60"></div>
             <div class="relative">
-              <span class="am-eyebrow on-dark" style="font-size:11px;">
-                What you get
-              </span>
+              <h3 class="font-display text-[24px] font-medium leading-[1.25] tracking-[-0.01em] text-white md:text-[28px]">
+                Start with a free IT assessment. No obligations, just insights.
+              </h3>
 
-              <ol class="mt-8 space-y-6">
-                <li class="flex items-start gap-4">
-                  <span class="am-step-num" style="border-color: rgba(51,187,220,0.6); background:transparent; color:#33bbdc;">01</span>
-                  <div>
-                    <h4 class="font-display text-[17px] font-medium text-white">
-                      A 30-minute conversation.
-                    </h4>
-                    <p class="mt-1.5 font-display text-[14px] leading-[1.55] text-white/70">
-                      Phone, video, or coffee on Las Olas — your call.
-                    </p>
-                  </div>
-                </li>
-                <li class="flex items-start gap-4">
-                  <span class="am-step-num" style="border-color: rgba(51,187,220,0.6); background:transparent; color:#33bbdc;">02</span>
-                  <div>
-                    <h4 class="font-display text-[17px] font-medium text-white">
-                      An honest posture check.
-                    </h4>
-                    <p class="mt-1.5 font-display text-[14px] leading-[1.55] text-white/70">
-                      What's working, what isn't, and where the real risk sits.
-                    </p>
-                  </div>
-                </li>
-                <li class="flex items-start gap-4">
-                  <span class="am-step-num" style="border-color: rgba(51,187,220,0.6); background:transparent; color:#33bbdc;">03</span>
-                  <div>
-                    <h4 class="font-display text-[17px] font-medium text-white">
-                      A written recommendation.
-                    </h4>
-                    <p class="mt-1.5 font-display text-[14px] leading-[1.55] text-white/70">
-                      Yours to keep. No obligation to work with us.
-                    </p>
-                  </div>
-                </li>
-              </ol>
+              <p class="mt-6 font-display text-[14.5px] leading-[1.65] text-white/70">
+                Whether you’re exploring support options, facing a
+                cybersecurity concern, or just want a second opinion on your
+                current setup, we’re here to help. Our team will review your
+                existing systems, identify quick wins, and offer tailored
+                recommendations to move your business forward.
+              </p>
+              <p class="mt-4 font-display text-[14.5px] leading-[1.65] text-white/70">
+                We’ll keep it simple, clear, and respectful of your time.
+              </p>
 
               <div class="mt-10 border-t border-white/10 pt-8">
                 <a
                   href="/contact/"
                   class="group inline-flex w-full items-center justify-between gap-3 rounded-[8px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-navy-900 transition-colors hover:bg-white sm:w-auto"
                 >
-                  {site.primaryCta}
+                  Request a Consultation
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
                     <path d="m9 18 6-6-6-6" />
                   </svg>
                 </a>
-                <p class="mt-4 font-display text-[13px] text-white/50">
-                  Or call <a href={`tel:${site.phoneHref}`} class="text-white/70 underline underline-offset-4 hover:text-scooter">{site.phone}</a> — a real person picks up.
+                <p class="mt-4 font-display text-[13px] leading-[1.6] text-white/50">
+                  Prefer to call? We’re happy to chat. Reach us at
+                  <a href={`tel:${site.phoneHref}`} class="text-white/70 underline underline-offset-4 hover:text-scooter">{site.phone}</a>.
+                  Monday–Friday, 9 AM–5 PM ET.
                 </p>
               </div>
             </div>

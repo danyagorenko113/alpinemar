@@ -10,23 +10,27 @@ const team = (await getCollection('team'))
   .map((m) => m.data)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
-// Values — 4 tight ones (down from 5 for stronger rhythm).
+// "What Guides Us" — copy verbatim from it.alpinemar.com/about/.
 const values = [
   {
-    title: 'Clarity over jargon.',
-    body: 'If we can’t explain a decision in plain English, we haven’t made it yet. That goes for tools, cost, and risk.',
+    title: 'Clarity',
+    body: 'Tech doesn’t have to be confusing. We explain everything clearly and make smart solutions feel simple.',
   },
   {
-    title: 'Responsiveness by default.',
-    body: 'You’ll get a real person on the line quickly. No ticket queue theater, no third-tier handoff.',
+    title: 'Responsiveness',
+    body: 'You won’t wait on hold. You’ll get a person, quickly.',
   },
   {
-    title: 'Honest advice, always.',
-    body: 'We’ll tell you when a tool isn’t worth it, or when a project can wait. Kickbacks aren’t our business model.',
+    title: 'Trust',
+    body: 'We give honest advice, even if it’s not what’s easiest for us.',
   },
   {
-    title: 'Prevent, don’t patch.',
-    body: 'Reacting to fires is expensive. We spend more time upstream so downstream stays quiet.',
+    title: 'Proactivity',
+    body: 'We don’t just fix things, we prevent problems before they start.',
+  },
+  {
+    title: 'Partnership',
+    body: 'We see ourselves as an extension of your team, not just another vendor.',
   },
 ];
 
@@ -40,10 +44,12 @@ const initials = (name: string) =>
 ---
 
 <BaseLayout
-  rawTitle="About Alpine Mar IT — IT with a human touch"
-  description="Alpine Mar IT delivers cybersecurity, cloud, and AI-forward IT services — built around people, not tickets."
+  rawTitle="IT With a Human Touch"
+  description="At Alpine Mar, we believe IT services should feel like a partnership, not a help desk ticket. Our IT team brings together enterprise-grade expertise and small-firm responsiveness."
 >
-  {/* ══════════════════════ HERO ══════════════════════ */}
+  {/* ══════════════════════ HERO ══════════════════════
+      Copy verbatim from it.alpinemar.com/about/ hero.
+  ══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-paper">
     <div class="am-aurora on-light" aria-hidden="true"></div>
     <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
@@ -73,65 +79,40 @@ const initials = (name: string) =>
 
         <div
           data-reveal
-          class="mt-9 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-12 md:gap-16"
+          class="mt-9 flex max-w-[68ch] flex-col gap-5 md:mt-14"
         >
-          <p class="max-w-[58ch] font-display text-[16px] leading-[1.65] text-navy-500 md:col-span-7 md:text-[17px]">
-            Alpine Mar IT was built for the businesses that got tired of feeling
-            like ticket numbers. We’re the technology arm of a Fort Lauderdale
-            firm that’s been serving founders and operators for years — and we
-            bring that same relationship-first mindset to everything technical.
+          <p class="font-display text-[16px] leading-[1.65] text-navy-900 md:text-[17px]">
+            At Alpine Mar, we believe IT services should feel like a
+            partnership, not a help desk ticket. Our IT team brings together
+            enterprise-grade expertise and small-firm responsiveness. We’re
+            advisors, not order takers, focused on building relationships,
+            solving problems, and staying ahead of whatever comes next.
           </p>
-
-          {/* Quick facts strip */}
-          <dl class="grid grid-cols-2 gap-x-6 gap-y-6 self-end md:col-span-5">
-            <div>
-              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
-                Based in
-              </dt>
-              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
-                Fort Lauderdale, FL
-              </dd>
-            </div>
-            <div>
-              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
-                Sister firm
-              </dt>
-              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
-                Alpine Mar CPAs
-              </dd>
-            </div>
-            <div>
-              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
-                Team
-              </dt>
-              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
-                {team.length} people. On purpose.
-              </dd>
-            </div>
-            <div>
-              <dt class="font-display text-[11px] uppercase tracking-[0.14em] text-navy-400">
-                Focus
-              </dt>
-              <dd class="mt-2 font-display text-[16px] font-medium text-navy-900">
-                SMBs. 10–200 seats.
-              </dd>
-            </div>
-          </dl>
+          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+            We take a plain-English approach to even the most complex IT
+            challenges. Our team works side-by-side with yours, making sure
+            every recommendation is rooted in your business goals, not tech
+            for tech’s sake.
+          </p>
+          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:text-[16px]">
+            You’ll never be left guessing what you’re paying for, or why
+            something matters. You’ll know, and you’ll feel the difference
+            in your day-to-day.
+          </p>
         </div>
       </div>
     </Container>
   </section>
 
-  {/* ══════════════════════ VALUES ══════════════════════
-      Big display headline + 4 dark cards with numbered top-labels.
-      Alternates from a hero paper section into white with lots of breathing.
+  {/* ══════════════════════ WHAT GUIDES US ══════════════════════
+      Heading, intro, and all five principles verbatim from the live site.
   ══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden border-t border-line bg-white py-24 md:py-32">
     <div class="pointer-events-none absolute inset-0 am-grid-pattern-light opacity-60" aria-hidden="true"></div>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow">What Guides Us</span>
+        <span class="am-eyebrow">Our Values</span>
       </div>
 
       <div
@@ -139,13 +120,11 @@ const initials = (name: string) =>
         class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
       >
         <h2 class="am-h1-display text-navy-900 md:col-span-7">
-          Simple ideas we<br />
-          take seriously.
+          What Guides Us
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
-          Values on a wall don’t mean much. These are the four we actually use
-          to make daily decisions — from how we answer the phone to how we
-          scope an engagement.
+          Just like our accounting side, our IT team is guided by a few key
+          principles.
         </p>
       </div>
 
@@ -177,8 +156,7 @@ const initials = (name: string) =>
 
   {/* ══════════════════════ TEAM ══════════════════════
       Dark navy, aurora, roster grid. Monogram fallback for missing photos.
-      3-col at md, 4-col at lg. Emails hidden on card, revealed on hover
-      via a mailto button in the footer of each card.
+      Heading verbatim from the live site.
   ══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
     <div class="am-aurora" aria-hidden="true"></div>
@@ -186,7 +164,7 @@ const initials = (name: string) =>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">Meet the team</span>
+        <span class="am-eyebrow on-dark">Our Team</span>
       </div>
 
       <div
@@ -194,13 +172,8 @@ const initials = (name: string) =>
         class="grid grid-cols-1 gap-10 border-b border-white/10 pb-14 md:grid-cols-12 md:gap-16"
       >
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
-          The people behind<br />the work.
+          Meet the team
         </h2>
-        <p class="font-display text-[16px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-          A small team by design. Everyone you meet is someone who will
-          actually be doing the work. No account executive layer, no ticket
-          handoff, no third-tier stranger picking up your incident at 2 AM.
-        </p>
       </div>
 
       <ul
@@ -255,16 +228,15 @@ const initials = (name: string) =>
     </Container>
   </section>
 
-  {/* ══════════════════════ SISTER FIRM ══════════════════════
-      Cross-link to alpinemar.com — makes the family relationship explicit.
-      Layout: eyebrow + big display line + right-side lockup card.
+  {/* ══════════════════════ WHY BUSINESSES CHOOSE US ══════════════════════
+      Copy verbatim from the live site, with the sister-firm cross-link card.
   ══════════════════════════════════════════════════════════ */}
   <section class="relative overflow-hidden border-t border-line bg-paper py-24 md:py-28">
     <div class="pointer-events-none absolute inset-0 am-grid-pattern-light" aria-hidden="true"></div>
 
     <Container width="wide" class="relative z-10">
       <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow">Sister firm</span>
+        <span class="am-eyebrow">Why Alpine Mar</span>
       </div>
 
       <div
@@ -273,15 +245,26 @@ const initials = (name: string) =>
       >
         <div class="md:col-span-7">
           <h2 class="am-h1-display am-gradient-ink">
-            Part of Alpine Mar.<br />
-            Tax and tech, one family.
+            Why Businesses<br />
+            Choose Us
           </h2>
-          <p class="mt-8 max-w-[52ch] font-display text-[16px] leading-[1.65] text-navy-500">
-            Alpine Mar CPAs & Advisors serves the same kind of client we do —
-            operators who want a real relationship, not a ticket number. When
-            your IT question turns into a tax question (or vice versa),
-            there’s no awkward handoff.
-          </p>
+          <div class="mt-8 flex max-w-[58ch] flex-col gap-5">
+            <p class="font-display text-[16px] leading-[1.65] text-navy-500">
+              We’re not a faceless IT firm or a hard-to-reach help desk.
+              We’re part of Alpine Mar, a trusted advisory firm that’s been
+              helping businesses grow, pivot, and succeed through smarter
+              systems and better strategy.
+            </p>
+            <p class="font-display text-[16px] leading-[1.65] text-navy-500">
+              With our IT services, you get the same high-touch service and
+              sharp thinking that Alpine Mar is known for, now with the
+              technical horsepower to match.
+            </p>
+            <p class="font-display text-[16px] leading-[1.65] text-navy-900">
+              Because you shouldn’t have to choose between great tech and
+              great people.
+            </p>
+          </div>
         </div>
 
         <div class="md:col-span-5">
@@ -299,8 +282,7 @@ const initials = (name: string) =>
                 alpinemar<span class="text-scooter">.com</span>
               </div>
               <p class="mt-5 font-display text-[14px] leading-[1.6] text-navy-500">
-                CPAs, advisory, tax planning, and outsourced accounting for
-                growing businesses.
+                Financial Services by Alpine Mar.
               </p>
             </div>
             <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900">
@@ -316,7 +298,7 @@ const initials = (name: string) =>
   </section>
 
   {/* ══════════════════════ CTA ══════════════════════
-      Light CTA card — closer, more human than a big dark section.
+      Heading verbatim from the live site's contact section.
   ══════════════════════════════════════════════════════════ */}
   <section class="relative bg-white py-24 md:py-28">
     <Container width="wide">
@@ -325,14 +307,13 @@ const initials = (name: string) =>
         class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 rounded-[16px] border border-line bg-paper p-10 md:grid-cols-12 md:gap-14 md:p-14"
       >
         <div class="md:col-span-7">
-          <span class="am-eyebrow">Let’s talk</span>
+          <span class="am-eyebrow">Contact Us</span>
           <h2 class="mt-6 am-h1-display am-gradient-ink">
-            A real conversation<br />
-            beats a sales pitch.
+            Let’s get on a<br />
+            first name basis.
           </h2>
           <p class="mt-5 max-w-[48ch] font-display text-[15px] leading-[1.65] text-navy-500">
-            Thirty minutes on the phone or in the office. We listen first — then
-            tell you what we’d do. Whether or not that means working with us.
+            Start with a free IT assessment. No obligations, just insights.
           </p>
         </div>
         <div class="flex flex-col gap-4 md:col-span-5 md:items-end">
@@ -340,7 +321,7 @@ const initials = (name: string) =>
             href="/contact/"
             class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
           >
-            {site.primaryCta}
+            Request a Consultation
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
               <path d="m9 18 6-6-6-6" />
             </svg>

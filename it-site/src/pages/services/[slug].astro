@@ -24,13 +24,6 @@ const related = allServices
   .filter((s) => d.group && s.data.group === d.group)
   .slice(0, 3);
 
-// "At a glance" bullets — same-shape for every service, short and honest.
-const glance = [
-  '30-min scoping call',
-  'Written plan before signing',
-  'Real technician, same session',
-  'Monthly review cadence',
-];
 ---
 
 <BaseLayout
@@ -83,35 +76,19 @@ const glance = [
         {/* Right column — "At a glance" card */}
         <aside data-reveal data-speed="slow" class="md:col-span-4">
           <div class="sticky top-24 rounded-[10px] border border-line bg-white/80 p-7 backdrop-blur md:p-8">
-            <div class="flex items-center gap-2">
-              <span class="am-status-dot text-scooter"></span>
-              <span class="font-display text-[12px] font-medium uppercase tracking-[0.14em] text-navy-500">
-                24/7 monitored
-              </span>
-            </div>
-
-            <h2 class="mt-5 font-display text-[14px] font-medium uppercase tracking-[0.12em] text-navy-400">
-              At a glance
+            <h2 class="font-display text-[14px] font-medium uppercase tracking-[0.12em] text-navy-400">
+              Get in Touch
             </h2>
 
-            <ul class="mt-4 space-y-2.5">
-              {glance.map((g) => (
-                <li class="flex items-start gap-3 font-display text-[14px] text-navy-700">
-                  <span class="mt-1.5 inline-flex size-4 flex-shrink-0 items-center justify-center rounded-full bg-scooter/15 text-scooter">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  {g}
-                </li>
-              ))}
-            </ul>
+            <p class="mt-4 font-display text-[15px] leading-[1.6] text-navy-700">
+              Start with a free IT assessment. No obligations, just insights.
+            </p>
 
             <a
               href="/contact/"
               class="group mt-7 flex items-center justify-between rounded-[8px] bg-navy-900 px-5 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter hover:text-navy-900"
             >
-              {site.primaryCta}
+              Request a Consultation
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
                 <path d="m9 18 6-6-6-6" />
               </svg>
@@ -119,7 +96,7 @@ const glance = [
 
             <div class="mt-5 border-t border-line pt-5">
               <p class="font-display text-[12px] uppercase tracking-[0.12em] text-navy-400">
-                Talk to a technician
+                Prefer to call?
               </p>
               <a
                 href={`tel:${site.phoneHref}`}
@@ -128,7 +105,7 @@ const glance = [
                 {site.phone}
               </a>
               <p class="mt-1 font-display text-[12px] text-navy-500">
-                Fort Lauderdale, FL · Mon–Fri
+                Monday–Friday, 9 AM–5 PM ET
               </p>
             </div>
           </div>
@@ -194,13 +171,8 @@ const glance = [
           class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
         >
           <h2 class="am-h1-display text-navy-900 md:col-span-7">
-            Often paired<br />with this service.
+            More {d.group}<br />services.
           </h2>
-          <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
-            Nothing on this list is a bundle. But most engagements naturally
-            grow into the next few — because the underlying business goal
-            covers more than one service.
-          </p>
         </div>
 
         <ul data-stagger class="mt-2 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -245,13 +217,12 @@ const glance = [
     <Container width="wide" class="relative z-10">
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
         <div data-reveal class="lg:col-span-7">
-          <span class="am-eyebrow on-dark">Ready when you are</span>
+          <span class="am-eyebrow on-dark">Contact Us</span>
           <h2 class="mt-6 am-h1-display am-gradient-ink-light">
-            Let’s get on a<br />first-name basis.
+            Let’s get on a<br />first name basis.
           </h2>
           <p class="mt-6 max-w-xl font-display text-[16px] leading-[1.65] text-white/75">
-            Book a free 30-minute assessment. Plain-English recommendations,
-            no pitch, no obligation.
+            Start with a free IT assessment. No obligations, just insights.
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-6">
@@ -288,7 +259,7 @@ const glance = [
               href="/services/"
               class="group mt-6 inline-flex items-center gap-2 border-b border-white/40 pb-1.5 font-display text-[13px] font-medium text-white transition-colors hover:border-scooter hover:text-scooter"
             >
-              See all 17 services
+              Explore all Our Services
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
                 <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
               </svg>
