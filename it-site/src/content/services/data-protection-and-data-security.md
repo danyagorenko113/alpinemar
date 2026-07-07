@@ -6,7 +6,7 @@ group: "Cloud & Infrastructure"
 status: "published"
 seo:
  title: "Data Protection and Data Security Services"
- description: "Your business data is one of your most valuable assets and one of your most significant liabilities if it falls into the wrong hands or disappears without warning. Data protection is not just about backups. Rather, comprehensive data protection and data security services keep your data safe, accessi"
+ description: "Our data protection and security services work to prevent data breaches and data losses and help your business recover quickly if they occur."
 ---
 <p>Alpine Mar IT manages data protection end to end, from automated backups and encrypted storage to access auditing and sensitive data monitoring. We make sure your data is protected against loss, unauthorized access, and accidental exposure without adding work to your team’s plate. Our goal is to prevent data breaches, protect customer data, and maintain strong data security across your environment.</p>
 <h3>What We Do</h3>

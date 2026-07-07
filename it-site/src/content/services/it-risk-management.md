@@ -6,7 +6,7 @@ group: "Advisory"
 status: "published"
 seo:
  title: "IT Risk Management Services"
- description: "Every technology decision your business makes carries some level of risk, which is why structured IT risk management services are essential for protecting your operations and long-term stability. The goal is not to eliminate risk entirely. It is to understand it clearly and make sure it is proportio"
+ description: "Our IT risk management services include IT risk assessments, risk prioritization, risk mitigation strategy management, and ongoing monitoring."
 ---
 <p>Alpine Mar IT delivers IT risk management services that help businesses understand their exposure, strengthen their security posture, and make informed decisions about their technology. We assess your current technology environment, identify the risks that pose the greatest threat to your operations and data, and work with you to develop a practical plan for managing them over time. The goal is to balance risk with business objectives while reducing potential impact on daily operations.</p>
 <h3>What We Do</h3>

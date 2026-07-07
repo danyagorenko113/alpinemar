@@ -6,7 +6,7 @@ export const site = {
     'Modern IT services tailored to how you really work, backed by Alpine Mar’s proven approach to trusted guidance and real results.',
   url: 'https://it.alpinemar.com',
   email: 'hello@alpinemar.com',
-  phone: '(954) 208-4040',
+  phone: '(954) 208 4040',
   phoneHref: '+19542084040',
   address: {
     street: '515 E Las Olas Blvd, Suite 120',
@@ -15,7 +15,15 @@ export const site = {
     zip: '33301',
   },
   parentSiteUrl: 'https://alpinemar.com',
+  clientPortal: 'https://alpinemar.clientportal.com/#/login',
+  mapsUrl: 'https://maps.app.goo.gl/usDZwunFQNBLvjCYA',
   primaryCta: 'Book a Free IT Assessment',
+  socials: [
+    { label: 'Facebook', href: 'https://www.facebook.com/people/Alpine-Mar-CPA-Advisors/100065183311201/' },
+    { label: 'X', href: 'https://x.com/alpinemarhq' },
+    { label: 'Instagram', href: 'https://www.instagram.com/alpinemarhq/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/alpine-mar-cpa-advisors/' },
+  ],
 } as const;
 
 export const primaryNav = [

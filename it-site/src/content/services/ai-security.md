@@ -6,7 +6,7 @@ group: "AI"
 status: "published"
 seo:
  title: "AI Security Services"
- description: "As AI tools become more common in the workplace, they introduce new AI security risks that many businesses have not fully accounted for, especially as AI adoption continues to accelerate. Employees using personal AI accounts to process work data, sensitive information being submitted to public AI mo"
+ description: "Our AI security services help your business maximize productivity while preventing sensitive information from being shared with public AI models."
 ---
 <p>Alpine Mar IT provides AI security services that allow your organization to leverage artificial intelligence safely while reducing exposure to data risks and security gaps.</p>
 <h3>What We Do</h3>

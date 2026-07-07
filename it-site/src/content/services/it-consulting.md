@@ -6,7 +6,7 @@ group: "Advisory"
 status: "published"
 seo:
  title: "IT Consulting Services"
- description: "Technology is supposed to make your business easier to run. When it does the opposite, our IT consulting services fix that by aligning your systems with your business goals and long-term growth."
+ description: "Our IT consulting services help your business make confident decisions about software, AI integration, vulnerability management, and IT risk management."
 ---
 <p>Alpine Mar IT partners with small and mid-sized businesses to build technology strategies that actually make sense for where you are right now and where you are headed. We cut through the vendor noise, translate the technical jargon, and help you make confident decisions about the tools and infrastructure your business depends on. Our team of professionals brings real-world industry knowledge to help you reduce costs, streamline operations, and make smarter technology decisions.</p>
 <p>Whether you are trying to modernize aging systems, reduce what you are spending on software, or simply get a clearer picture of your current setup, we come in as a trusted advisor rather than a sales rep. Our goal is to make sure every technology decision you make is aligned with your budget, your team, and your goals.</p>

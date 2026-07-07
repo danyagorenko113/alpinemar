@@ -6,7 +6,7 @@ group: "AI"
 status: "published"
 seo:
  title: "AI Code Security Audit"
- description: "AI-powered development has changed what’s possible. Teams are shipping faster than ever, spinning up applications in hours instead of weeks, and doing it with smaller engineering headcounts than anyone thought feasible a few years ago. That speed is genuinely impressive. It also comes with a catch."
+ description: "A methodical, multi-layered AI code security audit — SCA, SAST, DAST, secrets scanning, penetration testing, and manual review by Alpine Mar IT engineers."
 ---
 <p>When AI generates code at scale, it generates risk at scale too. Security vulnerabilities, dependency issues, exposed secrets, and compliance gaps don’t disappear because a machine wrote the code. They just accumulate faster, and most teams don’t have a process in place to catch them before something goes wrong.</p>
 <p>A single serious data breach is enough to permanently damage a brand’s reputation. Compliance lapses can turn into expensive lawsuits. And the same AI tools used to build applications can be turned against them by attackers who know exactly what patterns and weaknesses AI-generated code tends to produce.</p>

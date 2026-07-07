@@ -39,10 +39,12 @@ const relatedDateFmt = (dt: string | Date) =>
     year: 'numeric',
   });
 
-// Rough reading-time estimate — we don't have the raw body here without extra
-// work, so we approximate from the excerpt length + a floor of 4 min. Better
-// than a fake exact number.
-const readingTime = Math.max(4, Math.round((d.excerpt.length + 3000) / 900));
+// Reading time from the actual article body word count (~220 wpm).
+const bodyWords = (post.body ?? '')
+  .replace(/<[^>]+>/g, ' ')
+  .split(/\s+/)
+  .filter(Boolean).length;
+const readingTime = Math.max(1, Math.round(bodyWords / 220));
 
 // Author card — only Vanessa Holub appears as author across content. Role
 // matches the live site team roster.
@@ -51,7 +53,8 @@ const authorBlurb = author === 'Vanessa Holub' ? 'COO, Alpine Mar' : 'Alpine Mar
 ---
 
 <BaseLayout
-  title={d.seo?.title ?? d.title}
+  rawTitle={d.seo?.title}
+  title={d.seo?.title ? undefined : d.title}
   description={d.seo?.description ?? d.excerpt}
 >
   {/* ══════════════════════ HEADER ══════════════════════

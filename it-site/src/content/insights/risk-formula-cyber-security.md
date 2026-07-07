@@ -6,8 +6,8 @@ author: "Vanessa Holub"
 category: "Cybersecurity"
 status: "published"
 seo:
- title: "Key Risk Formulas in Cybersecurity for SMBs"
- description: "Understand the core cybersecurity risk formulas SMBs can use to assess threats, vulnerabilities, and impact."
+ title: "Cybersecurity Risk Formulas & Their Pros and Cons for SMBs"
+ description: "Common risk formulas in cybersecurity, including core risk formulas, cyber risk of asset value, and the common vulnerability scoring system."
 ---
 <p>Understanding the cybersecurity risk formula is a practical way to reduce your small or medium-sized business’s cyber risk. The core risk formula, asset value, the Factor Analysis of Information Risk, and the Common Vulnerability Scoring System (CVSS) are all part of the risk assessment process.</p>
 <p>Cybersecurity is vital for small and medium-sized businesses (SMBs) because they are often attacked due to their smaller size. The risk of financial loss, operational risk, reputational damage, and even legal trouble from cyber threats is a huge concern for businesses.</p>

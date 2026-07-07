@@ -6,8 +6,8 @@ author: "Vanessa Holub"
 category: "Cybersecurity"
 status: "published"
 seo:
- title: "Cybersecurity Risk Management for SMBs"
- description: "How SMBs can build a proactive cybersecurity risk management program covering assets, controls, response, and continuous monitoring."
+ title: "Cybersecurity Risk Management for Small Businesses"
+ description: "Find what cybersecurity risk management involves and why it’s an aspect of your business’s IT system that you can’t afford to ignore."
 ---
 <p>Cybersecurity risk management is an imperative part of small and medium-sized businesses’ (SMB) IT systems due to an increased rate of overall cyber threats and vulnerabilities. SMBs tend to have weaker defenses overall, which increases their probability of potential risks. Due to these cyber threats, risk management plans should be put in place to safeguard your business before it’s too late.</p>
 <p>The cybersecurity risk management process is proactive protection for your endeavors, instead of reactive panic. Cybersecurity risk management for small and medium-sized businesses involves understanding what cybersecurity risk management is, why it is critical, the risk management strategy, and how to build a cybersecurity risk management plan for your company.</p>

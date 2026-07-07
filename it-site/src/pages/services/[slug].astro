@@ -17,18 +17,22 @@ const { item } = Astro.props;
 const { Content } = await render(item);
 const d = item.data;
 
-// Related — same group, excluding self, cap at 3.
+// Related — same group, excluding self and any service already teased
+// inside this article's body (avoids the same paragraph twice on one page).
 const allServices = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft' && s.id !== item.id);
 
+const bodyRaw = item.body ?? '';
 const related = allServices
   .filter((s) => d.group && s.data.group === d.group)
+  .filter((s) => !bodyRaw.includes(`<h3>${s.data.title}</h3>`))
   .slice(0, 3);
 
 ---
 
 <BaseLayout
-  title={d.seo?.title ?? d.title}
+  rawTitle={d.seo?.title}
+  title={d.seo?.title ? undefined : d.title}
   description={d.seo?.description ?? d.summary}
 >
   {/* ══════════════════════ HERO ══════════════════════

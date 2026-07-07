@@ -6,7 +6,7 @@ group: "Cloud & Infrastructure"
 status: "published"
 seo:
  title: "Remote Monitoring and Management Services"
- description: "The best IT support is the kind you never have to ask for because problems are identified and resolved before they affect your team. Remote monitoring and management is how we make that happen."
+ description: "Our always-on remote monitoring and management services identify and resolve problems proactively to reduce downtime and support consistent performance."
 ---
 <p>Alpine Mar IT deploys lightweight agents across your supported devices and systems that give us continuous visibility into the health and performance of your environment. We monitor proactively, respond automatically where we can, and escalate to our technicians when human judgment is needed.</p>
 <h3>What We Do</h3>

@@ -7,7 +7,7 @@ category: "Cybersecurity"
 status: "published"
 seo:
  title: "7 Cybersecurity Risk Assessment Templates"
- description: "Seven cybersecurity risk assessment templates SMBs can use to identify threats, prioritize remediation, and stay compliant."
+ description: "Our cybersecurity risk assessment templates cover IT infrastructure, information security, external internet threats, CIS, and more."
 ---
 <p>A cybersecurity risk assessment template helps businesses identify risks, evaluate threats, and build a structured approach to protecting their systems and data. This constructed framework is used to compile your risk assessment across your entire IT environment, including data, systems, and infrastructure.</p>
 <p>Small and medium-sized business (SMB) objectives typically include maximizing impact while minimizing loss. Limited resources and rising cyber threats make cybersecurity risk assessment templates a useful and attractive option for SMBs.</p>

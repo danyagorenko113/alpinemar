@@ -1,16 +1,30 @@
 ---
 import Container from './Container.astro';
-import { site, primaryNav } from '@/data/site';
+import { site } from '@/data/site';
 
 const year = new Date().getFullYear();
+
+// Column structure and link labels mirror the live it.alpinemar.com footer.
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services/' },
+  { label: 'About Us', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+const serviceLinks = [
+  { label: 'IT Consulting Services', href: '/services/it-consulting/' },
+  { label: 'Cybersecurity Services', href: '/services/cybersecurity/' },
+  { label: 'Incident Response Services', href: '/services/incident-response/' },
+  { label: 'Remote IT Support Services', href: '/services/remote-it-support/' },
+];
 ---
 
 <footer class="relative overflow-hidden bg-[#12122d] text-white">
   <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
   <Container width="wide" class="relative z-10 py-16 md:py-24">
-    <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
-      {/* Brand + contact */}
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+      {/* Brand + contact details */}
       <div class="md:col-span-5">
         <img
           src="/images/brand/alpine-mar-it-logo-white.png"
@@ -19,24 +33,36 @@ const year = new Date().getFullYear();
           height="103"
           class="h-10 w-auto"
         />
-        <p class="mt-6 max-w-sm font-display text-[14px] leading-[1.65] text-white/70">
-          {site.description}
-        </p>
-        <div class="mt-8 flex flex-col gap-2 font-display text-[14px] text-white/70">
-          <a href={`tel:${site.phoneHref}`} class="hover:text-scooter transition-colors">{site.phone}</a>
-          <a href={`mailto:${site.email}`} class="hover:text-scooter transition-colors">{site.email}</a>
-          <address class="not-italic">
-            {site.address.street}<br />
-            {site.address.city}, {site.address.state} {site.address.zip}
-          </address>
+        <h3 class="mt-8 font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Contact Details</h3>
+        <div class="mt-5 flex flex-col gap-2 font-display text-[14px] text-white/70">
+          <p>Phone: <a href={`tel:${site.phoneHref}`} class="text-white/85 transition-colors hover:text-scooter">{site.phone}</a></p>
+          <p>Email: <a href={`mailto:${site.email}`} class="text-white/85 transition-colors hover:text-scooter">{site.email}</a></p>
+          <p>
+            Address:
+            <a href={site.mapsUrl} target="_blank" rel="noopener" class="text-white/85 transition-colors hover:text-scooter">
+              {site.address.street}, {site.address.city}, {site.address.state} {site.address.zip}
+            </a>
+          </p>
         </div>
       </div>
 
-      {/* Nav */}
-      <div class="md:col-span-3">
+      {/* Quick Links */}
+      <div class="md:col-span-2">
         <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Quick Links</h3>
         <ul class="mt-6 space-y-3 font-display text-[14px]">
-          {primaryNav.map((item) => (
+          {quickLinks.map((item) => (
+            <li>
+              <a href={item.href} class="text-white/70 transition-colors hover:text-white">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Services */}
+      <div class="md:col-span-3">
+        <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Services</h3>
+        <ul class="mt-6 space-y-3 font-display text-[14px]">
+          {serviceLinks.map((item) => (
             <li>
               <a href={item.href} class="text-white/70 transition-colors hover:text-white">{item.label}</a>
             </li>
@@ -45,7 +71,7 @@ const year = new Date().getFullYear();
       </div>
 
       {/* Sister site */}
-      <div class="md:col-span-4">
+      <div class="md:col-span-2">
         <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">Financial Services</h3>
         <p class="mt-6 font-display text-[14px] leading-[1.65] text-white/70">
           Financial Services by Alpine Mar.
@@ -57,8 +83,32 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
-      <p class="font-display text-[12px] text-white/50">© {year} {site.legalName}. All rights reserved.</p>
+    <div class="mt-16 flex flex-col gap-5 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
+      <p class="font-display text-[12px] text-white/60">© {year} Alpine Mar. All Rights Reserved.</p>
+
+      {/* Socials — same profiles as the live footer */}
+      <ul class="flex items-center gap-3">
+        <li>
+          <a href={site.socials[0].href} target="_blank" rel="noopener" aria-label="Facebook" class="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-scooter hover:text-scooter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.2 0-1-.1-1.9-.1-1.9 0-3.3 1.2-3.3 3.4V11H8.5v3h2.7v7h2.3z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href={site.socials[1].href} target="_blank" rel="noopener" aria-label="X (Twitter)" class="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-scooter hover:text-scooter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1.2 2h6.4l4.4 5.9L18.9 2zm-1.1 18.1h1.7L6.7 3.8H4.9l12.9 16.3z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href={site.socials[2].href} target="_blank" rel="noopener" aria-label="Instagram" class="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-scooter hover:text-scooter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href={site.socials[3].href} target="_blank" rel="noopener" aria-label="LinkedIn" class="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-scooter hover:text-scooter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+        </li>
+      </ul>
     </div>
   </Container>
 </footer>

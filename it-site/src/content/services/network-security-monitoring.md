@@ -6,7 +6,7 @@ group: "Cybersecurity"
 status: "published"
 seo:
  title: "Network Security Monitoring Services"
- description: "Your network is the backbone of your business operations. When it is compromised, everything stops. Network security monitoring means having someone constantly watching for signs of intrusion, unusual traffic, unauthorized access, and active cyber threats. We use advanced network security monitoring"
+ description: "Our preemptive network security monitoring services prevent, detect, and neutralize threats before they cause broader damage."
 ---
 <p>Alpine Mar IT provides ongoing network security monitoring services that keep a continuous eye on what is happening across your environment and respond immediately when something looks wrong.</p>
 <h3>What We Do</h3>

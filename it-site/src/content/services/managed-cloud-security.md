@@ -6,7 +6,7 @@ group: "Cybersecurity"
 status: "published"
 seo:
  title: "Managed Cloud Security Services"
- description: "Moving to the cloud creates flexibility and efficiency. It also introduces new risks that require strong cloud security services and ongoing oversight to manage effectively. Misconfigured settings, overly permissive sharing, and unauthorized access are among the most common causes of cloud-related s"
+ description: "Our managed cloud security services reduce risk and prevent incidents with improved data protection, strengthened access control, and gap identification."
 ---
 <p>Alpine Mar IT manages the security of your cloud environments so you get the benefits of platforms like Google Workspace and Microsoft 365 without the risk that comes from leaving security settings to chance. We protect sensitive data and strengthen access controls, identifying gaps before they lead to security incidents.</p>
 <h3>What We Do</h3>

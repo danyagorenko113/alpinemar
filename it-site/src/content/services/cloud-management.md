@@ -6,7 +6,7 @@ group: "Cloud & Infrastructure"
 status: "published"
 seo:
  title: "Cloud Management Services"
- description: "Cloud platforms like Google Workspace and Microsoft 365 are powerful tools, but most businesses only scratch the surface of what they can do and end up overpaying for features they never use or missing capabilities that would make a real difference."
+ description: "Our team offers growth-ready cloud management services, helping businesses get the most out of Google Workspace and Microsoft 365’s features."
 ---
 <p>Alpine Mar IT delivers cloud management services across the complete lifecycle of your cloud environment, from initial setup and cloud migration to ongoing management, security, and cost optimization. We make sure your cloud investment is working as hard as it should be.</p>
 <p>Our team supports modern cloud infrastructure across Google Workspace, Microsoft 365, and other cloud platforms to help companies manage resources efficiently and scale with confidence.</p>
