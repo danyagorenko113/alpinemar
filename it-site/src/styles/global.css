@@ -1,9 +1,31 @@
 @import "tailwindcss";
 
-/* Fonts — Satoshi only. Loaded via Fontshare link tag in BaseLayout.astro.
-   Poppins / Geist Mono @fontsource imports from the main site were removed
-   here: they're not shipped as deps in it-site/package.json and it-site
-   never renders them (system-ui is the fallback everywhere). */
+/* Fonts — Satoshi only, self-hosted (same files Fontshare serves for the
+   main site). Self-hosting removes the third-party CDN from the critical
+   path: with the remote stylesheet, an ad-blocked or slow Fontshare request
+   made the site render in the OS fallback and look different from
+   alpinemar.com. */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   /* ── Brand palette — source of truth: Figma Style Guide (node 208:799) ──
