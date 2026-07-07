@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
 
@@ -437,99 +438,5 @@ const dateFmt = (d: string | Date) =>
     </section>
   )}
 
-  {/* ═════════════ CONTACT CTA ═════════════
-      Dark navy + grid + aurora. Headline and copy verbatim from the live
-      homepage contact section + contact page.
-  ═══════════════════════════════════════════════════════════ */}
-  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <div class="am-aurora" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
-
-    <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">Contact Us</span>
-      </div>
-
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-        {/* Left column — headline + office / contact cards */}
-        <div data-reveal class="flex flex-col gap-10 lg:col-span-6">
-          <h2 class="am-h1-display am-gradient-ink-light">
-            Let’s get on a<br />
-            first name basis.
-          </h2>
-
-          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <div class="am-card-dark rounded-[8px] p-6 md:p-7">
-              <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
-                Office
-              </h3>
-              <address class="mt-5 block font-display text-[14.5px] not-italic leading-[1.6] text-white">
-                {site.address.street}<br />
-                {site.address.city}, {site.address.state} {site.address.zip}
-              </address>
-            </div>
-            <div class="am-card-dark rounded-[8px] p-6 md:p-7">
-              <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
-                Contact
-              </h3>
-              <div class="mt-5 flex flex-col gap-1.5 font-display text-[14.5px] leading-[1.6]">
-                <a
-                  href={`mailto:${site.email}`}
-                  class="text-white transition-colors hover:text-scooter"
-                >
-                  {site.email}
-                </a>
-                <a
-                  href={`tel:${site.phoneHref}`}
-                  class="text-white transition-colors hover:text-scooter"
-                >
-                  {site.phone}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right column — assessment card, copy verbatim from /contact/ */}
-        <div data-reveal data-speed="slow" class="lg:col-span-6">
-          <div class="am-card-dark relative overflow-hidden rounded-[12px] p-8 md:p-12">
-            <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-60"></div>
-            <div class="relative">
-              <h3 class="font-display text-[24px] font-medium leading-[1.25] tracking-[-0.01em] text-white md:text-[28px]">
-                Start with a free IT assessment. No obligations, just insights.
-              </h3>
-
-              <p class="mt-6 font-display text-[14.5px] leading-[1.65] text-white/70">
-                Whether you’re exploring support options, facing a
-                cybersecurity concern, or just want a second opinion on your
-                current setup, we’re here to help. Our team will review your
-                existing systems, identify quick wins, and offer tailored
-                recommendations to move your business forward.
-              </p>
-              <p class="mt-4 font-display text-[14.5px] leading-[1.65] text-white/70">
-                We’ll keep it simple, clear, and respectful of your time.
-              </p>
-
-              <div class="mt-10 border-t border-white/10 pt-8">
-                <a
-                  href="/contact/"
-                  class="group inline-flex w-full items-center justify-between gap-3 rounded-[8px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950 sm:w-auto"
-                >
-                  Request a Consultation
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </a>
-                <p class="mt-4 font-display text-[13px] leading-[1.6] text-white/50">
-                  Prefer to call? We’re happy to chat. Reach us at
-                  <a href={`tel:${site.phoneHref}`} class="text-white/70 underline underline-offset-4 hover:text-scooter">{site.phone}</a>.
-                  Monday–Friday, 9 AM–5 PM ET.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
+  <ContactCta />
 </BaseLayout>

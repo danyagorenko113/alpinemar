@@ -1,0 +1,159 @@
+---
+import Container from './Container.astro';
+import { site } from '@/data/site';
+
+// Shared bottom contact section — mirrors the live site's
+// "Let's get on a first name basis." block with its embedded form.
+// Field labels and select options verbatim from it.alpinemar.com.
+const serviceOptions = [
+  'Technology & Cybersecurity',
+  'Internet & Network Cybersecurity',
+  'Managed IT Services',
+  'IT Consulting Services',
+  'Remote IT Support',
+  'Artificial Intelligence',
+  'Risk Advisory',
+  'Incident Response',
+];
+
+const inputClass =
+  'mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30';
+const labelClass =
+  'font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60';
+---
+
+<section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
+  <div class="am-aurora" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
+
+  <Container width="wide" class="relative z-10">
+    <div data-reveal data-speed="fast" class="mb-10">
+      <span class="am-eyebrow on-dark">Contact Us</span>
+    </div>
+
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+      {/* ── Left: headline + office / contact info ── */}
+      <div data-reveal class="flex flex-col gap-10 lg:col-span-5">
+        <h2 class="am-h1-display am-gradient-ink-light">
+          Let’s get on a<br />
+          first name basis.
+        </h2>
+
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-1">
+          <div class="am-card-dark rounded-[8px] p-6 md:p-7">
+            <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
+              Office
+            </h3>
+            <address class="mt-5 block font-display text-[14.5px] not-italic leading-[1.6] text-white">
+              {site.address.street}<br />
+              {site.address.city}, {site.address.state} {site.address.zip}
+            </address>
+          </div>
+          <div class="am-card-dark rounded-[8px] p-6 md:p-7">
+            <h3 class="font-display text-[12px] font-medium uppercase tracking-[0.12em] text-scooter">
+              Contact
+            </h3>
+            <div class="mt-5 flex flex-col gap-1.5 font-display text-[14.5px] leading-[1.6]">
+              <a href={`mailto:${site.email}`} class="text-white transition-colors hover:text-scooter">
+                {site.email}
+              </a>
+              <a href={`tel:${site.phoneHref}`} class="text-white transition-colors hover:text-scooter">
+                {site.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <p class="max-w-sm font-display text-[13px] leading-[1.6] text-white/50">
+          Prefer to call? We’re happy to chat. Reach us at
+          <a href={`tel:${site.phoneHref}`} class="text-white/70 underline underline-offset-4 hover:text-scooter">{site.phone}</a>.
+          Monday–Friday, 9 AM–5 PM ET.
+        </p>
+      </div>
+
+      {/* ── Right: form — fields verbatim from the live section ── */}
+      <div data-reveal data-speed="slow" class="lg:col-span-7">
+        <form
+          data-am-cta-form
+          class="relative rounded-[12px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md shadow-[0_24px_80px_-40px_rgba(0,0,0,0.6)] lg:p-10"
+          novalidate
+        >
+          <div class="pointer-events-none absolute inset-0 am-grid-pattern rounded-[12px] opacity-40"></div>
+
+          <div class="relative">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <label class="block">
+                <span class={labelClass}>First Name <span class="text-scooter">*</span></span>
+                <input class={inputClass} type="text" name="first_name" autocomplete="given-name" required />
+              </label>
+              <label class="block">
+                <span class={labelClass}>Last Name <span class="text-scooter">*</span></span>
+                <input class={inputClass} type="text" name="last_name" autocomplete="family-name" required />
+              </label>
+              <label class="block sm:col-span-2">
+                <span class={labelClass}>Email Address <span class="text-scooter">*</span></span>
+                <input class={inputClass} type="email" name="email" autocomplete="email" required />
+              </label>
+              <label class="block sm:col-span-2">
+                <span class={labelClass}>Company Name</span>
+                <input class={inputClass} type="text" name="company" autocomplete="organization" />
+              </label>
+            </div>
+
+            <label class="mt-5 block">
+              <span class={labelClass}>Service Interest In <span class="text-scooter">*</span></span>
+              <select class={inputClass} name="service" required>
+                <option value="" class="bg-navy-900 text-white">Select a Service</option>
+                {serviceOptions.map((label) => (
+                  <option value={label} class="bg-navy-900 text-white">{label}</option>
+                ))}
+              </select>
+            </label>
+
+            <label class="mt-5 block">
+              <span class={labelClass}>How can we help?</span>
+              <textarea class={`${inputClass} min-h-28 resize-y`} name="message" rows="4"></textarea>
+            </label>
+
+            <div class="mt-8 border-t border-white/10 pt-8">
+              <button
+                type="submit"
+                class="group inline-flex items-center justify-center gap-2.5 rounded-[6px] bg-scooter px-7 py-4 font-display text-[15px] font-medium text-white transition-all duration-200 hover:bg-white hover:text-navy-950 active:scale-[0.98]"
+              >
+                Request a Consultation
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+
+            <p
+              data-am-cta-success
+              class="mt-5 hidden border-l-2 border-scooter bg-white/5 px-4 py-3 font-display text-sm text-white"
+            >
+              Thanks — we’ve received your request and will be in touch shortly.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  function initCtaForms() {
+    document.querySelectorAll<HTMLFormElement>('form[data-am-cta-form]').forEach((form) => {
+      if (form.dataset.bound === '1') return;
+      form.dataset.bound = '1';
+      const ok = form.querySelector('[data-am-cta-success]');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        ok?.classList.remove('hidden');
+        form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+      });
+    });
+  }
+  initCtaForms();
+  document.addEventListener('astro:page-load', initCtaForms);
+</script>

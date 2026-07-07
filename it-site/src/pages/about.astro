@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
 
@@ -297,43 +298,5 @@ const initials = (name: string) =>
     </Container>
   </section>
 
-  {/* ══════════════════════ CTA ══════════════════════
-      Heading verbatim from the live site's contact section.
-  ══════════════════════════════════════════════════════════ */}
-  <section class="relative bg-white py-24 md:py-28">
-    <Container width="wide">
-      <div
-        data-reveal
-        class="mx-auto grid max-w-5xl grid-cols-1 items-center gap-10 rounded-[16px] border border-line bg-paper p-10 md:grid-cols-12 md:gap-14 md:p-14"
-      >
-        <div class="md:col-span-7">
-          <span class="am-eyebrow">Contact Us</span>
-          <h2 class="mt-6 am-h1-display am-gradient-ink">
-            Let’s get on a<br />
-            first name basis.
-          </h2>
-          <p class="mt-5 max-w-[48ch] font-display text-[15px] leading-[1.65] text-navy-500">
-            Start with a free IT assessment. No obligations, just insights.
-          </p>
-        </div>
-        <div class="flex flex-col gap-4 md:col-span-5 md:items-end">
-          <a
-            href="/contact/"
-            class="group inline-flex items-center gap-2 rounded-[6px] bg-navy-900 px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter"
-          >
-            Request a Consultation
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </a>
-          <a
-            href={`tel:${site.phoneHref}`}
-            class="font-display text-[14px] text-navy-500 transition-colors hover:text-navy-900"
-          >
-            Or call {site.phone}
-          </a>
-        </div>
-      </div>
-    </Container>
-  </section>
+  <ContactCta />
 </BaseLayout>

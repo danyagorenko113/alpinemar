@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
 import { site, serviceGroups } from '@/data/site';
 
@@ -210,74 +211,5 @@ const serviceLines = [
     );
   })}
 
-  {/* ══════════════════════ CONTACT CTA ══════════════════════
-      Heading and assessment copy verbatim from the live site.
-  ══════════════════════════════════════════════════════════ */}
-  <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
-    <div class="am-aurora" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 am-grid-pattern" aria-hidden="true"></div>
-
-    <Container width="wide" class="relative z-10">
-      <div data-reveal data-speed="fast" class="mb-10">
-        <span class="am-eyebrow on-dark">Contact Us</span>
-      </div>
-
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-        <div data-reveal class="flex flex-col gap-8 lg:col-span-6">
-          <h2 class="am-h1-display am-gradient-ink-light">
-            Let’s get on a<br />
-            first name basis.
-          </h2>
-          <p class="max-w-md font-display text-[16px] leading-[1.65] text-white/75">
-            Start with a free IT assessment. No obligations, just insights.
-          </p>
-
-          <div class="flex flex-wrap items-center gap-6">
-            <a
-              href="/contact/"
-              class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950"
-            >
-              Request a Consultation
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </a>
-            <a
-              href={`tel:${site.phoneHref}`}
-              class="group inline-flex items-center gap-2 border-b border-white/40 pb-1.5 font-display text-[15px] font-medium text-white transition-colors hover:border-scooter hover:text-scooter"
-            >
-              Or call {site.phone}
-            </a>
-          </div>
-        </div>
-
-        <div data-reveal data-speed="slow" class="lg:col-span-6">
-          <div class="am-card-dark relative overflow-hidden rounded-[12px] p-8 md:p-10">
-            <div class="pointer-events-none absolute inset-0 am-grid-pattern opacity-60"></div>
-            <div class="relative">
-              <span class="am-eyebrow on-dark" style="font-size:11px;">
-                Office
-              </span>
-              <address class="mt-6 block font-display text-[15px] not-italic leading-[1.7] text-white">
-                {site.address.street}<br />
-                {site.address.city}, {site.address.state} {site.address.zip}
-              </address>
-              <div class="mt-6 flex flex-col gap-1.5 font-display text-[15px] leading-[1.6]">
-                <a href={`mailto:${site.email}`} class="text-white transition-colors hover:text-scooter">
-                  {site.email}
-                </a>
-                <a href={`tel:${site.phoneHref}`} class="text-white transition-colors hover:text-scooter">
-                  {site.phone}
-                </a>
-              </div>
-              <p class="mt-8 border-t border-white/10 pt-6 font-display text-[13px] leading-[1.6] text-white/50">
-                Prefer to call? We’re happy to chat. Reach us at {site.phone}.
-                Monday–Friday, 9 AM–5 PM ET.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </section>
+  <ContactCta />
 </BaseLayout>
