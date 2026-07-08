@@ -4,37 +4,34 @@ import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { site } from '@/data/site';
 
-// ── Home services — copy verbatim from it.alpinemar.com homepage ──────────
+// ── Home services — the four real service lines, titles and blurbs
+// verbatim from it.alpinemar.com/services/. The live homepage lists five
+// marketing categories that don't exist as pages; we link the actual
+// services instead so anchors match their target pages (SEO-correct).
 const homeServices = [
   {
-    title: 'Technology & Cybersecurity',
-    href: '/services/',
+    title: 'Remote IT Support Services',
+    href: '/services/remote-it-support/',
     blurb:
-      'Our technology consulting services help businesses modernize systems, implement the right tools, and minimize risk without overwhelming your teams. From cloud migrations to endpoint security, we build resilient, flexible infrastructures designed for growth.',
+      'Technology problems do not wait for a convenient time. When something breaks, your team needs help fast and they need it from someone who actually knows what they are doing.',
   },
   {
-    title: 'Internet & Network Cybersecurity',
+    title: 'Incident Response Services',
+    href: '/services/incident-response/',
+    blurb:
+      'When a security incident hits, every minute counts. The difference between a manageable disruption and a full-blown crisis often comes down to how fast and how effectively you respond in the first hours.',
+  },
+  {
+    title: 'Cybersecurity Services',
     href: '/services/cybersecurity/',
     blurb:
-      'Our cybersecurity consulting services are built to outpace today’s threats. We secure your networks, safeguard your data, and keep your operations running with 24/7 visibility and protection.',
-  },
-  {
-    title: 'Managed IT Services',
-    href: '/services/remote-monitoring-and-management/',
-    blurb:
-      'With Alpine Mar’s managed IT services, you get ongoing support, system monitoring, and strategic planning from a team that acts like an extension of yours. Scalable, secure, and backed by real people who pick up the phone when you call.',
+      'Cyberthreats are not going away. They are getting more targeted, more sophisticated, and more expensive to recover from.',
   },
   {
     title: 'IT Consulting Services',
     href: '/services/it-consulting/',
     blurb:
-      'Technology should drive your business forward, not slow it down. Our IT consulting services help align your tech with your goals, so you can make smarter decisions, avoid costly pitfalls, and plan for what’s next.',
-  },
-  {
-    title: 'Remote IT Support',
-    href: '/services/remote-it-support/',
-    blurb:
-      'Whether you’re remote-first or have satellite offices, our remote IT support team delivers fast, reliable help when and where you need it. We fix issues before they disrupt your business.',
+      'Technology is supposed to make your business easier to run. We provide tailored solutions and strategic guidance that align with your business goals and improve operational efficiency.',
   },
 ];
 
