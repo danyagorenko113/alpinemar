@@ -161,136 +161,82 @@ const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
       </svg>
     </button>
   </Container>
-</header>
 
-{/* ══════════════════ MOBILE MENU OVERLAY ══════════════════ */}
-<div
-  id="am-mobile-menu"
-  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-paper md:hidden"
->
-  <div class="flex h-16 items-center justify-between px-5">
-    <a href="/" class="flex items-center">
-      <img
-        src="/images/brand/alpine-mar-it-logo-black.png"
-        alt="Alpine Mar — Information Technology"
-        width="231"
-        height="52"
-        class="h-9 w-auto"
-      />
-    </a>
-    <button
-      type="button"
-      id="am-nav-close"
-      class="inline-flex h-10 w-10 items-center justify-center text-navy-900"
-      aria-label="Close menu"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-      </svg>
-    </button>
+  {/* ══════════════════ MOBILE MENU — dropdown panel under the header,
+      same pattern as the main site's Nav (top bars stay visible). ═══════ */}
+  <div
+    id="am-mobile-menu"
+    class="hidden max-h-[calc(100dvh-9rem)] overflow-y-auto border-t border-white/10 bg-white md:hidden"
+  >
+    <Container width="wide" class="flex flex-col py-4">
+      <a href="/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-scooter">Home</a>
+
+      <details class="group border-b border-line">
+        <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 font-display text-[15px] font-medium text-navy-900 [&::-webkit-details-marker]:hidden">
+          Services
+          <span class="inline-flex size-6 items-center justify-center rounded-full border border-line">
+            <svg class="transition-transform duration-200 group-open:rotate-180" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </summary>
+        <div class="pb-5">
+          {/* Primary service lines — as on the live mobile menu */}
+          <ul class="mt-2 space-y-2">
+            {lineItems.map((svc) => (
+              <li>
+                <a href={svc!.path} class="block font-display text-[14px] font-medium text-navy-900 transition-colors hover:text-scooter">{svc!.title}</a>
+              </li>
+            ))}
+          </ul>
+          {/* Remaining services */}
+          <ul class="mt-4 space-y-2 border-l border-line pl-4">
+            {moreItems.map((svc) => (
+              <li>
+                <a href={svc!.path} class="block font-display text-[14px] text-navy-500 transition-colors hover:text-scooter">{svc!.title}</a>
+              </li>
+            ))}
+          </ul>
+          <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900 transition-colors hover:text-scooter">
+            Explore all Our Services
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </a>
+        </div>
+      </details>
+
+      <a href="/about/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-scooter">About Us</a>
+      <a href="/media/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-scooter">Media</a>
+      <a href="/blog/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-scooter">Blog</a>
+      <a href={site.clientPortal} target="_blank" rel="noopener" class="flex items-center justify-between py-3.5 font-display text-[15px] font-medium text-navy-900 transition-colors hover:text-scooter">
+        Client Portal
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="text-navy-500"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+      </a>
+
+      <a
+        href="/contact/"
+        class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[6px] bg-navy-900 px-7 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter"
+      >
+        Contact Us
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </Container>
   </div>
-
-  <nav aria-label="Mobile" class="flex flex-1 flex-col gap-1 px-5 pb-10 pt-4">
-    <a
-      href="/"
-      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
-    >
-      Home
-    </a>
-
-    {/* Services accordion */}
-    <details class="group border-b border-line">
-      <summary class="flex cursor-pointer list-none items-center justify-between py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900 [&::-webkit-details-marker]:hidden">
-        Services
-        <svg
-          width="20" height="20" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
-          aria-hidden="true"
-          class="transition-transform group-open:rotate-180"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </summary>
-      <div class="flex flex-col gap-6 pb-6">
-        <a href="/services/" class="font-display text-[15px] font-medium text-teal-700">
-          Explore all Our Services →
-        </a>
-        {/* Primary service lines — as on the live mobile menu */}
-        <ul class="flex flex-col">
-          {lineItems.map((svc) => (
-            <li>
-              <a
-                href={svc!.path}
-                class="block py-2 font-display text-[16px] font-medium text-navy-900 transition-colors hover:text-teal-700"
-              >
-                {svc!.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-        {/* Remaining services */}
-        <ul class="flex flex-col border-t border-line pt-4">
-          {moreItems.map((svc) => (
-            <li>
-              <a
-                href={svc!.path}
-                class="block py-1.5 font-display text-[15px] text-navy-700 transition-colors hover:text-navy-900"
-              >
-                {svc!.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </details>
-
-    <a
-      href="/about/"
-      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
-    >
-      About Us
-    </a>
-    <a
-      href="/media/"
-      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
-    >
-      Media
-    </a>
-    <a
-      href="/blog/"
-      class="border-b border-line py-4 font-display text-[26px] font-medium tracking-[-0.01em] text-navy-900"
-    >
-      Blog
-    </a>
-
-    <a
-      href="/contact/"
-      class="mt-8 inline-flex w-fit items-center gap-2 rounded-[6px] bg-navy-900 px-7 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter"
-    >
-      Contact Us
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-    </a>
-  </nav>
-</div>
+</header>
 
 <script>
   function initMobileMenu() {
     const menu = document.getElementById('am-mobile-menu');
-    const openBtn = document.getElementById('am-nav-open');
-    const closeBtn = document.getElementById('am-nav-close');
-    if (!menu || !openBtn || !closeBtn) return;
-    if (openBtn.dataset.bound === '1') return;
-    openBtn.dataset.bound = '1';
+    const toggle = document.getElementById('am-nav-open');
+    if (!menu || !toggle) return;
+    if (toggle.dataset.bound === '1') return;
+    toggle.dataset.bound = '1';
 
     const setOpen = (open: boolean) => {
       menu.classList.toggle('hidden', !open);
-      menu.classList.toggle('flex', open);
-      openBtn.setAttribute('aria-expanded', String(open));
-      document.documentElement.classList.toggle('overflow-hidden', open);
+      toggle.setAttribute('aria-expanded', String(open));
     };
 
-    openBtn.addEventListener('click', () => setOpen(true));
-    closeBtn.addEventListener('click', () => setOpen(false));
+    toggle.addEventListener('click', () =>
+      setOpen(menu.classList.contains('hidden')),
+    );
     // Close when a link inside the menu is tapped.
     menu.querySelectorAll('a').forEach((a) =>
       a.addEventListener('click', () => setOpen(false)),
