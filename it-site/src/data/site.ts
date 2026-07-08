@@ -34,42 +34,27 @@ export const primaryNav = [
   { label: 'Contact Us', href: '/contact/' },
 ] as const;
 
-export const serviceGroups = [
-  {
-    label: 'Cybersecurity',
-    services: [
-      'cybersecurity',
-      'incident-response',
-      'vulnerability-management',
-      'network-security-monitoring',
-      'email-security',
-      'managed-endpoint-security',
-      'managed-cloud-security',
-    ],
-  },
-  {
-    label: 'Cloud & Infrastructure',
-    services: [
-      'cloud-management',
-      'remote-monitoring-and-management',
-      'data-protection-and-data-security',
-    ],
-  },
-  {
-    label: 'Advisory',
-    services: [
-      'it-consulting',
-      'it-risk-management',
-      'it-compliance',
-      'remote-it-support',
-    ],
-  },
-  {
-    label: 'AI',
-    services: [
-      'ai-security',
-      'ai-integration',
-      'ai-code-security-audit',
-    ],
-  },
+// Service navigation — order mirrors the live it.alpinemar.com mega menu:
+// four primary service lines first, then the remaining services.
+export const serviceLines = [
+  'remote-it-support',
+  'incident-response',
+  'cybersecurity',
+  'it-consulting',
+] as const;
+
+export const moreServices = [
+  'it-compliance',
+  'cloud-management',
+  'network-security-monitoring',
+  'remote-monitoring-and-management',
+  'data-protection-and-data-security',
+  'email-security',
+  'managed-cloud-security',
+  'managed-endpoint-security',
+  'ai-security',
+  'ai-integration',
+  'vulnerability-management',
+  'it-risk-management',
+  'ai-code-security-audit',
 ] as const;

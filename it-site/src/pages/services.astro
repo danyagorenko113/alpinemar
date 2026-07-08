@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
-import { site, serviceGroups } from '@/data/site';
+import { moreServices } from '@/data/site';
 
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
@@ -12,6 +12,9 @@ const services = (await getCollection('services'))
 const bySlug = new Map(
   services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
 );
+
+// Remaining services — live mega-menu order, after the four service lines.
+const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
 
 // Featured service lines — titles and copy verbatim from
 // it.alpinemar.com/services/.
@@ -128,94 +131,78 @@ const serviceLines = [
   </section>
 
   {/* ══════════════════════ ALL SERVICES ══════════════════════
-      Full catalog grouped by practice area. Hover previews use each
-      service's own lead paragraph (migrated verbatim from the live site).
+      The remaining services in the live mega-menu order — single list,
+      no invented grouping. Summaries are each service's live lead line.
   ══════════════════════════════════════════════════════════ */}
-  {serviceGroups.map((group, groupIdx) => {
-    const items = group.services.map((slug) => bySlug.get(slug)).filter(Boolean);
-    if (items.length === 0) return null;
-    const anchor = `group-${group.label.toLowerCase().replace(/[^a-z]/g, '-')}`;
-    const isPaper = groupIdx % 2 === 1;
-    return (
-      <section
-        id={anchor}
-        class={`relative scroll-mt-24 border-t border-line py-20 md:py-28 ${isPaper ? 'bg-paper' : 'bg-white'}`}
-      >
-        <Container width="wide">
-          {/* Group heading */}
-          <div class="grid grid-cols-1 gap-6 border-b border-line pb-12 md:grid-cols-12 md:gap-16">
-            <div data-reveal data-speed="fast" class="md:col-span-12">
-              <div class="mb-6 flex items-center gap-3">
-                <span class="am-eyebrow">0{groupIdx + 1}</span>
-              </div>
-              <h2 class="am-h1-display am-gradient-ink">{group.label}</h2>
-            </div>
+  <section class="relative border-t border-line bg-paper py-20 md:py-28">
+    <Container width="wide">
+      <div class="grid grid-cols-1 gap-6 border-b border-line pb-12 md:grid-cols-12 md:gap-16">
+        <div data-reveal data-speed="fast" class="md:col-span-12">
+          <div class="mb-6 flex items-center gap-3">
+            <span class="am-eyebrow">Our Services</span>
           </div>
+          <h2 class="am-h1-display am-gradient-ink">Explore all Our Services</h2>
+        </div>
+      </div>
 
-          {/* Numbered service list */}
-          <ul class="border-t border-line">
-            {items.map((s, idx) => s && (
-              <li class="am-svc-row group relative border-b border-line">
-                <a
-                  href={s.path}
-                  data-reveal
-                  data-speed="fast"
-                  class="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 py-6 md:grid-cols-12 md:gap-8 md:py-9"
+      <ul class="border-t border-line">
+        {moreItems.map((s, idx) => s && (
+          <li class="am-svc-row group relative border-b border-line">
+            <a
+              href={s.path}
+              data-reveal
+              data-speed="fast"
+              class="relative grid grid-cols-[auto_1fr_auto] items-center gap-6 py-6 md:grid-cols-12 md:gap-8 md:py-9"
+            >
+              <span class="font-display text-[20px] font-medium tabular-nums text-navy-400 md:col-span-1 md:pl-2 md:text-[28px]">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span class="md:col-span-6">
+                <span class="block font-display text-[19px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[22px] md:text-[28px]">
+                  {s.title}
+                </span>
+                {/* Summary visible on mobile / to screen readers; desktop keeps the hover preview. */}
+                <span class="mt-2 block font-display text-[13.5px] leading-[1.55] text-navy-500 md:sr-only">
+                  {s.summary}
+                </span>
+              </span>
+
+              {/* Hover preview — the service's own lead paragraph */}
+              <span
+                class="am-svc-preview pointer-events-none absolute right-[5%] top-1/2 hidden -translate-y-1/2 md:block"
+                aria-hidden="true"
+              >
+                <span class="block w-[300px] rounded-[8px] border border-line bg-white p-5 shadow-[0_20px_50px_-20px_rgba(18,18,45,0.35)]">
+                  <span class="mt-1 block font-display text-[13.5px] leading-[1.55] text-navy-500">
+                    {s.summary}
+                  </span>
+                </span>
+              </span>
+
+              <span class="md:col-span-5 md:col-start-12 md:justify-self-end md:pr-2">
+                <svg
+                  width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                  class="block text-navy-900 group-hover:hidden"
                 >
-                  <span class="font-display text-[20px] font-medium tabular-nums text-navy-400 md:col-span-1 md:pl-2 md:text-[28px]">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <span class="md:col-span-6">
-                    <span class="block font-display text-[19px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[22px] md:text-[28px]">
-                      {s.title}
-                    </span>
-                    {/* Summary visible on mobile / to screen readers; desktop keeps the hover preview. */}
-                    <span class="mt-2 block font-display text-[13.5px] leading-[1.55] text-navy-500 md:sr-only">
-                      {s.summary}
-                    </span>
-                  </span>
-
-                  {/* Hover preview — the service's own lead paragraph */}
-                  <span
-                    class="am-svc-preview pointer-events-none absolute right-[5%] top-1/2 hidden -translate-y-1/2 md:block"
-                    aria-hidden="true"
-                  >
-                    <span class="block w-[300px] rounded-[8px] border border-line bg-white p-5 shadow-[0_20px_50px_-20px_rgba(18,18,45,0.35)]">
-                      <span class="am-eyebrow" style="font-size:11px;">
-                        {group.label}
-                      </span>
-                      <span class="mt-3 block font-display text-[13.5px] leading-[1.55] text-navy-500">
-                        {s.summary}
-                      </span>
-                    </span>
-                  </span>
-
-                  <span class="md:col-span-5 md:col-start-12 md:justify-self-end md:pr-2">
-                    <svg
-                      width="22" height="22" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.8"
-                      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                      class="block text-navy-900 group-hover:hidden"
-                    >
-                      <path d="M7 17 17 7" /><path d="M7 7h10v10" />
-                    </svg>
-                    <svg
-                      width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                      class="hidden text-scooter group-hover:block"
-                    >
-                      <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-                    </svg>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-    );
-  })}
+                  <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+                </svg>
+                <svg
+                  width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                  class="hidden text-scooter group-hover:block"
+                >
+                  <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
 
   <ContactCta />
 </BaseLayout>
