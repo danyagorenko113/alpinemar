@@ -158,11 +158,28 @@ const spotlight = spotlightPool[Math.floor(Math.random() * spotlightPool.length)
         </p>
       </div>
 
+      {/* Search — filters the grid together with the category chips.
+          Placeholder verbatim from the live site's listing search. */}
+      <div data-reveal class="mt-10">
+        <label class="relative block max-w-md">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            id="insights-search"
+            type="search"
+            placeholder="Search blog..."
+            autocomplete="off"
+            class="w-full rounded-full border border-line bg-white py-3 pl-11 pr-4 font-display text-[14px] text-navy-900 placeholder:text-navy-400 transition-colors focus:border-navy-900 focus-visible:outline-none"
+          />
+        </label>
+      </div>
+
       {/* Category chips — client-side filter */}
       <div
         data-reveal
         data-stagger
-        class="mt-10 flex flex-wrap items-center gap-2 border-b border-line pb-8"
+        class="mt-6 flex flex-wrap items-center gap-2 border-b border-line pb-8"
         id="insights-filter"
       >
         <button
@@ -262,26 +279,36 @@ const spotlight = spotlightPool[Math.floor(Math.random() * spotlightPool.length)
       const chipRoot = document.getElementById('insights-filter');
       const grid = document.getElementById('insights-grid');
       const empty = document.getElementById('insights-empty');
+      const search = document.getElementById('insights-search') as HTMLInputElement | null;
       if (!chipRoot || !grid) return;
       if (chipRoot.dataset.bound === '1') return;
       chipRoot.dataset.bound = '1';
 
       const chips = Array.from(chipRoot.querySelectorAll<HTMLButtonElement>('.am-cat-chip'));
       const items = Array.from(grid.querySelectorAll<HTMLLIElement>('li[data-cat]'));
+      let activeCat = '__all';
+
+      const apply = () => {
+        const q = (search?.value ?? '').trim().toLowerCase();
+        let visible = 0;
+        items.forEach((li) => {
+          const matchCat = activeCat === '__all' || li.dataset.cat === activeCat;
+          const matchQ = !q || (li.textContent ?? '').toLowerCase().includes(q);
+          const match = matchCat && matchQ;
+          li.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+        if (empty) empty.classList.toggle('hidden', visible > 0);
+      };
 
       chips.forEach((chip) => {
         chip.addEventListener('click', () => {
-          const cat = chip.dataset.cat ?? '__all';
+          activeCat = chip.dataset.cat ?? '__all';
           chips.forEach((c) => c.classList.toggle('is-active', c === chip));
-          let visible = 0;
-          items.forEach((li) => {
-            const match = cat === '__all' || li.dataset.cat === cat;
-            li.style.display = match ? '' : 'none';
-            if (match) visible++;
-          });
-          if (empty) empty.classList.toggle('hidden', visible > 0);
+          apply();
         });
       });
+      search?.addEventListener('input', apply);
     }
     initInsightsFilter();
     document.addEventListener('astro:page-load', initInsightsFilter);

@@ -46,11 +46,24 @@ const dateFmt = (d: string | Date) =>
           <span class="italic text-scooter">Alpine Mar IT</span>
         </h1>
 
-        <div data-reveal class="mt-9 md:mt-14">
+        <div data-reveal class="mt-9 flex flex-col gap-8 md:mt-14">
           <p class="max-w-[62ch] font-display text-[16px] leading-[1.65] text-navy-500 md:text-[17px]">
             Fresh thinking on cybersecurity, infrastructure, AI, and IT
             strategy. Written for real businesses, not just techies.
           </p>
+          {/* Search — placeholder verbatim from the live listing search. */}
+          <label class="relative block max-w-md">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+            </svg>
+            <input
+              id="media-search"
+              type="search"
+              placeholder="Search blog..."
+              autocomplete="off"
+              class="w-full rounded-full border border-line bg-white py-3 pl-11 pr-4 font-display text-[14px] text-navy-900 placeholder:text-navy-400 transition-colors focus:border-navy-900 focus-visible:outline-none"
+            />
+          </label>
         </div>
       </div>
     </Container>
@@ -64,7 +77,7 @@ const dateFmt = (d: string | Date) =>
           New features and publications are on the way — check back soon.
         </p>
       ) : (
-        <ul data-stagger class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <ul id="media-grid" data-stagger class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((p) => (
             <li>
               <a
@@ -103,4 +116,22 @@ const dateFmt = (d: string | Date) =>
   </section>
 
   <ContactCta />
+
+  <script>
+    function initMediaSearch() {
+      const search = document.getElementById('media-search') as HTMLInputElement | null;
+      const grid = document.getElementById('media-grid');
+      if (!search || search.dataset.bound === '1') return;
+      search.dataset.bound = '1';
+      search.addEventListener('input', () => {
+        if (!grid) return;
+        const q = search.value.trim().toLowerCase();
+        grid.querySelectorAll('li').forEach((li) => {
+          li.style.display = !q || (li.textContent ?? '').toLowerCase().includes(q) ? '' : 'none';
+        });
+      });
+    }
+    initMediaSearch();
+    document.addEventListener('astro:page-load', initMediaSearch);
+  </script>
 </BaseLayout>
