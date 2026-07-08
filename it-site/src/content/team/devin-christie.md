@@ -2,7 +2,7 @@
 name: "Devin Christie"
 role: "Service Technician"
 photo: "/images/team/Devin.jpeg"
-order: 7
+order: 5
 email: "dchristie@it.alpinemar.com"
 status: "draft"
 ---

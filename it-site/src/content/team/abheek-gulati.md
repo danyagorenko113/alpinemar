@@ -1,7 +1,8 @@
 ---
 name: "Abheek Gulati"
 role: "Head of AI and Development"
-order: 4
+photo: "/images/team/Abheek.png"
+order: 7
 email: "agulati@it.alpinemar.com"
 status: "draft"
 ---

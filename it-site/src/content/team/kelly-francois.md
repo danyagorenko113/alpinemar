@@ -1,7 +1,8 @@
 ---
 name: "Kelly Francois"
 role: "Lead Service Technician"
-order: 6
+photo: "/images/team/Kelly.jpeg"
+order: 4
 email: "kfrancois@it.alpinemar.com"
 status: "draft"
 ---

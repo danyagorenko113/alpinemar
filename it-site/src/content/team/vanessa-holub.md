@@ -2,7 +2,7 @@
 name: "Vanessa Holub"
 role: "COO"
 photo: "/images/team/Vanessa.jpeg"
-order: 2
+order: 1
 email: "vholub@it.alpinemar.com"
 status: "draft"
 ---

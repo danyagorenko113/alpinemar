@@ -1,7 +1,8 @@
 ---
 name: "TJ Johnson"
 role: "VP of Technology"
-order: 3
+photo: "/images/team/TJ.jpeg"
+order: 6
 email: "johnson@it.alpinemar.com"
 status: "draft"
 ---

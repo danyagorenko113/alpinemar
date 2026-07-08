@@ -1,7 +1,8 @@
 ---
 name: "Imran Farook"
 role: "IT Service Manager"
-order: 5
+photo: "/images/team/Imran.jpeg"
+order: 3
 email: "ifarook@it.alpinemar.com"
 status: "draft"
 ---
