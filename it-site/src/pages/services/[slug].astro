@@ -25,7 +25,7 @@ const allServices = (await getCollection('services'))
 const bodyRaw = item.body ?? '';
 const related = allServices
   .filter((s) => d.group && s.data.group === d.group)
-  .filter((s) => !bodyRaw.includes(`<h3>${s.data.title}</h3>`))
+  .filter((s) => !bodyRaw.includes(s.data.title))
   .slice(0, 3);
 
 ---

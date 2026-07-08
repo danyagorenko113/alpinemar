@@ -19,21 +19,32 @@ seo:
 <li>Zero-touch laptop provisioning that lets you ship hardware directly to a new hire and have it auto-configure with your apps and security settings the moment they turn it on</li>
 <li>Proactive issue detection that identifies developing problems before they turn into outages</li>
 </ul>
-<h3>IT Compliance Services</h3>
-<p>Compliance is one of the most time-consuming, high-stakes parts of running a modern business, and one of the easiest to get wrong if technology controls are not properly configured and continuously maintained.</p>
-<h3>Cloud Management Services</h3>
-<p>Cloud platforms like Google Workspace and Microsoft 365 are powerful tools, but most businesses only scratch the surface of what they can do and end up overpaying for features they never use or missing capabilities that would make a real difference.</p>
-<h3>Network Security Monitoring Services</h3>
-<p>Your network is the backbone of your business operations. When it is compromised, everything stops. Our team continuously monitors for security threats, suspicious activity, and network vulnerabilities using advanced network monitoring and security management tools to protect your systems and sensitive data.</p>
-<h3>Remote Monitoring and Management Services</h3>
-<p>The best IT support is the kind you never have to ask for because problems are identified and resolved before they affect your team. Remote monitoring and management is how we make that happen.</p>
+<div class="am-subsvc-grid">
+<a class="am-subsvc-card" href="/services/it-compliance/">
+<span class="am-subsvc-eyebrow">Remote IT Support Services</span>
+<span class="am-subsvc-title">IT Compliance Services</span>
+<span class="am-subsvc-teaser">Compliance is one of the most time-consuming, high-stakes parts of running a modern business, and one of the easiest to get wrong if technology controls are not properly configured and continuously maintained.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+<a class="am-subsvc-card" href="/services/cloud-management/">
+<span class="am-subsvc-eyebrow">Remote IT Support Services</span>
+<span class="am-subsvc-title">Cloud Management Services</span>
+<span class="am-subsvc-teaser">Cloud platforms like Google Workspace and Microsoft 365 are powerful tools, but most businesses only scratch the surface of what they can do and end up overpaying for features they never use or missing capabilities that would make a real difference.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+<a class="am-subsvc-card" href="/services/network-security-monitoring/">
+<span class="am-subsvc-eyebrow">Remote IT Support Services</span>
+<span class="am-subsvc-title">Network Security Monitoring Services</span>
+<span class="am-subsvc-teaser">Your network is the backbone of your business operations. When it is compromised, everything stops. Our team continuously monitors for security threats, suspicious activity, and network vulnerabilities using advanced network monitoring and security management tools to protect your systems and sensitive data.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+<a class="am-subsvc-card" href="/services/remote-monitoring-and-management/">
+<span class="am-subsvc-eyebrow">Remote IT Support Services</span>
+<span class="am-subsvc-title">Remote Monitoring and Management Services</span>
+<span class="am-subsvc-teaser">The best IT support is the kind you never have to ask for because problems are identified and resolved before they affect your team. Remote monitoring and management is how we make that happen.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+</div>
 <h2>Why Alpine Mar IT</h2>
 <p>Our remote support platform is not a consumer screen-sharing tool. It is an enterprise-grade, fully audited system where every session is logged, secured, and automatically terminated when the work is done. Your data stays protected even while we are inside your systems helping you.</p>
 <p>And because we already have remote software installed on your devices, there is no friction when something goes wrong. You reach out, we connect, and we fix it.</p>
-<h3>Explore Our Remote IT Support Services</h3>
-<ul>
-<li>IT Compliance Services</li>
-<li>Cloud Management Services</li>
-<li>Network Security Monitoring Services</li>
-<li>Remote Monitoring and Management Services</li>
-</ul>

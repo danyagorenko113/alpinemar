@@ -883,3 +883,64 @@
   /* Glossary terms — keep the dotted underline so reader knows there was a definition */
   .am-glossary { background: none !important; text-decoration: underline dotted #176a80 !important; }
 }
+
+/* ═══════════════════════════════════════════════════════ */
+/* Sub-service cards — inline card grid inside service article bodies.  */
+/* Mirrors the live site's in-article service cards (eyebrow + title +  */
+/* teaser + Learn More). Used via raw HTML in content/services/*.md.    */
+/* ═══════════════════════════════════════════════════════ */
+.am-subsvc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin: 2.25rem 0 2.75rem;
+}
+@media (min-width: 768px) {
+  .am-subsvc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.am-subsvc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.75rem;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-paper);
+  text-decoration: none !important;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+a.am-subsvc-card:hover {
+  border-color: var(--color-navy-900);
+  transform: translateY(-2px);
+}
+.am-subsvc-eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-teal-600);
+}
+.am-subsvc-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-navy-900);
+}
+.am-subsvc-teaser {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--color-navy-500);
+}
+.am-subsvc-more {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-teal-700);
+}

@@ -19,18 +19,26 @@ seo:
 <li>Manage vendor relationships on your behalf so you are not stuck navigating contracts and support tickets alone</li>
 <li>Translate complex technology recommendations into plain language so you can make informed decisions with confidence</li>
 </ul>
-<h3>AI Integration Services</h3>
-<p>AI is not a future technology anymore. It is here, and the businesses that figure out how to use it well are pulling ahead fast.</p>
-<h3>Vulnerability Management Services</h3>
-<p>Most security breaches do not happen because of some sophisticated attack.</p>
-<h3>IT Risk Management Services</h3>
-<p>Every technology decision your business makes carries some level of risk.</p>
+<div class="am-subsvc-grid">
+<a class="am-subsvc-card" href="/services/ai-integration/">
+<span class="am-subsvc-eyebrow">IT Consulting Services</span>
+<span class="am-subsvc-title">AI Integration Services</span>
+<span class="am-subsvc-teaser">AI is not a future technology anymore. It is here, and the businesses that figure out how to use it well are pulling ahead fast.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+<a class="am-subsvc-card" href="/services/vulnerability-management/">
+<span class="am-subsvc-eyebrow">IT Consulting Services</span>
+<span class="am-subsvc-title">Vulnerability Management Services</span>
+<span class="am-subsvc-teaser">Most security breaches do not happen because of some sophisticated attack.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+<a class="am-subsvc-card" href="/services/it-risk-management/">
+<span class="am-subsvc-eyebrow">IT Consulting Services</span>
+<span class="am-subsvc-title">IT Risk Management Services</span>
+<span class="am-subsvc-teaser">Every technology decision your business makes carries some level of risk.</span>
+<span class="am-subsvc-more">Learn More ↗</span>
+</a>
+</div>
 <h2>Why Alpine Mar IT</h2>
 <p>We have worked with businesses across industries, from medical practices and accounting firms to retail brands and professional services companies. That breadth of experience means we understand that the right technology solution looks different for every organization. We do not come in with a one-size-fits-all pitch. We come in with questions.</p>
 <p>Our IT consulting engagements are designed to give you a real partner, not just a report. We stay involved through implementation, help you hold vendors accountable, and remain available as your business evolves and your needs change.</p>
-<h3>Explore Our IT Consulting Services</h3>
-<ul>
-<li>AI Integration Services</li>
-<li>Vulnerability Management Services</li>
-<li>IT Risk Management Services</li>
-</ul>
