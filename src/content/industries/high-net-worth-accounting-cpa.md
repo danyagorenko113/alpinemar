@@ -9,6 +9,7 @@ seo:
 services: ["tax-advisory-and-compliance", "individual-tax-services", "estate-trust-tax-planning", "private-client-services", "international-tax-services", "fractional-cfo-services", "tax-planning-services", "business-tax", "outsourced-accounting-services"]
 ---
 <h2>Expertise for Your Financial Success</h2>
+<img src="/images/industries/high-net-worth-accounting-cpa.jpg" alt="High Net Worth Accounting CPA Services" loading="lazy" />
 <p>At Alpine Mar, we understand that high net worth individuals require a unique level of financial expertise and personalized service. Our team of dedicated high net worth tax accountants specializes in serving clients with substantial wealth and complex financial situations. With a focus on comprehensive wealth management, advanced tax planning, gift tax planning and more, we are committed to helping you secure and grow your assets while minimizing tax liabilities.</p>
 <h2>High Net Worth CPA Solutions by Alpine Mar</h2>
 <p>Our high net worth tax accountants are equipped to handle the intricate financial needs of high net worth clients. We recognize that your financial landscape is marked by intricate tax issues, estate planning considerations, wealth transfer strategies, gift tax planning and more. That's why our services extend beyond traditional tax preparation and include:</p>

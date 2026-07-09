@@ -10,6 +10,7 @@ services: ["tax-advisory-and-compliance", "corporate-tax-services", "financial-s
 ---
 <p>CPA services for startups provide essential financial management, strategic planning, and accounting expertise to support new and growing businesses. At Alpine Mar, our startup certified public accountant services are designed to help early-stage and high-growth companies establish solid financial foundations, streamline operations, and prepare for scalable growth.</p>
 <p>Our accounting firm works closely with founders to manage daily accounting tasks and deliver insights for successful capital raises, from seed funding to Series A, B, and C rounds and beyond. With our support, your startup can navigate financial challenges confidently and focus on establishing a solid financial foundation for your startup's long-term success.</p>
+<img src="/images/industries/startup-cpa-services.jpg" alt="Startup CPA Services" loading="lazy" />
 <h2>Comprehensive Accounting Services for Startups</h2>
 <p>Running a startup comes with specific accounting and financial needs. Our team understands these unique needs and the financial challenges startups face, from managing tight budgets to preparing for rapid growth. At Alpine Mar, our experienced startup CPAs provide specialized services designed to simplify your startup's financial operations.</p>
 <p>Our accounting services for startups include:</p>

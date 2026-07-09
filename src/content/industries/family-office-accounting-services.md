@@ -9,6 +9,7 @@ seo:
 services: ["tax-advisory-and-compliance", "individual-tax-services", "estate-trust-tax-planning", "private-client-services", "international-tax-services", "trust-accounting-cpa", "fractional-cfo-services", "tax-planning-services", "business-tax"]
 ---
 <p>Alpine Mar understands the unique financial needs of high net worth individuals and closely held businesses, which is why we provide comprehensive family office accounting services tailored to your requirements. Our expert team specializes in a wide array of financial aspects, from tax planning to estate, succession planning, property management and investment management. We are dedicated to helping you manage your wealth effectively, ensuring that your family's legacy is preserved for generations to come.</p>
+<img src="/images/industries/family-office-accounting-services.jpg" alt="Family Office Accounting Services" loading="lazy" />
 <h2>Our Core Family Office Services</h2>
 <p><strong>Family Offices:</strong> We are well-versed in the intricacies of management for family offices. Our services go beyond financial affairs; we offer comprehensive lifestyle management and property management to cater to your family's unique needs.</p>
 <p><strong>Tax Planning:</strong> Alpine Mar takes a proactive approach to tax planning. We help you minimize tax liabilities and optimize your financial strategies to protect and grow your wealth.</p>

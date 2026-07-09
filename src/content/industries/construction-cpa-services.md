@@ -10,6 +10,7 @@ services: ["corporate-tax-services", "s-corp-cpa-services", "small-business-tax-
 ---
 <p>When you're a construction company owner, you understand the unique financial challenges that come with the territory. Accurate financial statements, compliance with tax regulations, managing costs, and ensuring a healthy cash flow are paramount to your success. This is where Alpine Mar, the trusted name in construction accounting, excels at the job.</p>
 <p>Alpine Mar specializes in providing expert CPA services tailored to the construction industry. Our team of seasoned professionals has an in-depth understanding of the construction business and its financial intricacies. We're not just your construction CPAs; we're your partners in navigating the complexities of the construction sector and making your job easier.</p>
+<img src="/images/industries/construction-cpa-services.jpg" alt="Construction CPA Services" loading="lazy" />
 <h2>Key Services for Construction Companies</h2>
 <p>Our construction CPAs offer a comprehensive suite of services covering every aspect of construction accounting. We work closely with general contractors, subcontractors, and specialty trade contractors. Our services include:</p>
 <p><strong>Accurate Financial Statements:</strong> We help you maintain financial transparency, providing you with up-to-date and accurate financial statements to make informed decisions.</p>
