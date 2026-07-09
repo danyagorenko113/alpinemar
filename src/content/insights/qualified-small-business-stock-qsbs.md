@@ -2,6 +2,7 @@
 title: "Qualified Small Business Stock Overview"
 date: 2024-02-19
 author: "The Alpine Mar editorial team"
+category: "Taxes"
 excerpt: "Individuals who hold qualified small business stock (QSBS) may be eligible for significant savings on their capital gains tax liability. This is because they can receive up to a 100% exemption on federal gains taxes up to ten times their initial investment or up to a value of…"
 cover: "/images/blog/qualified-small-business-stock-qsbs.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Payroll"]

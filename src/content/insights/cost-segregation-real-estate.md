@@ -2,6 +2,7 @@
 title: "Cost Segregation Guide for Real Estate Investors"
 date: 2024-07-23
 author: "The Alpine Mar editorial team"
+category: "Real Estate Accounting & Taxes"
 excerpt: "Cost segregation is a powerful tax strategy that allows real estate investors to utilize accelerated depreciation deductions. It results in substantial tax savings, improved cash flow, and enhanced return on investment (ROI) on their real estate investments."
 cover: "/images/blog/cost-segregation-real-estate.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

@@ -3,11 +3,15 @@ title: "Partnership Tax Services"
 heroTitle: "Partnership Tax Services"
 path: "/services/partnership-tax-services/"
 summary: "K-1s, allocations, and the partnership rules most firms get wrong. Done right, on time, and explained in plain English."
-seo:
- title: "Partnership Tax Services"
- description: "Partnership Tax Services. Clarity and compliance for complex ownership structures. Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth. We support partnerships across a wide range of industries, from professional services to real estate and"
 industries: ["real-estate-cpa-services", "law-firm-accounting-services", "marketing-agency-accounting-services"]
 group: Tax
+seo:
+  title: "Partnership Tax Services"
+  description: "Partnership Tax Services   
+Clarity and compliance for complex ownership structures
+Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth.
+
+We support partnerships across a wide range of industries, from professional services to real estate and"
 ---
 <h2>Clarity and compliance for complex ownership structures</h2>
 <p>Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth.</p>

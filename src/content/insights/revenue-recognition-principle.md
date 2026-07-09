@@ -2,6 +2,7 @@
 title: "Revenue Recognition Principle"
 date: 2024-02-29
 author: "The Alpine Mar editorial team"
+category: "Accounting"
 excerpt: "The revenue recognition principle is a guiding principle that helps companies identify when they can recognize and record revenue. When a company makes a sale, the revenue earned must be recorded and correctly reflected on the company’s income statement; the question is when to…"
 cover: "/images/blog/revenue-recognition-principle.jpg"
 tags: ["Audit", "Accounting", "Compliance", "Estate Planning"]

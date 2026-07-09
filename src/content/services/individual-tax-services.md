@@ -3,11 +3,13 @@ title: "Individual Tax Services"
 heroTitle: "Individual Tax Services"
 path: "/services/individual-tax-services/"
 summary: "Personal returns and planning for people with more than a W-2. Investments, equity, multiple states, all handled."
-seo:
- title: "Individual Tax Services"
- description: "Individual Tax Services. Tax planning that looks beyond this year. Individual tax planning is about understanding how today's decisions affect your cash flow, future wealth, and long-term goals. At Alpine Mar, we work with individuals and families to create proactive tax strategies that maximize opportunities, manage risk and support financial"
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "sports-accounting-services"]
 group: Tax
+seo:
+  title: "Individual Tax Services"
+  description: "Individual Tax Services   
+Tax planning that looks beyond this year
+Individual tax planning is about understanding how today’s decisions affect your cash flow, future wealth, and long-term goals. At Alpine Mar, we work with individuals and families to create proactive tax strategies that maximize opportunities, manage risk and support financial"
 ---
 <h2>Tax planning that looks beyond this year</h2>
 <p>Individual tax planning is about understanding how today's decisions affect your cash flow, future wealth, and long-term goals. At Alpine Mar, we work with individuals and families to create proactive tax strategies that maximize opportunities, manage risk and support financial clarity year-round.</p>

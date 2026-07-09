@@ -3,11 +3,11 @@ title: "S Corp CPA & Accounting Services"
 heroTitle: "S Corp CPA & Accounting Services"
 path: "/services/s-corp-cpa-services/"
 summary: "S-Corp election, reasonable comp, and ongoing filing, set up to actually save you money. Not just a box checked."
-seo:
- title: "S Corp CPA - Tax & Accounting Services | Alpine Mar"
- description: "S Corp CPA & Accounting Services. In the intricate realm of S Corporations (S Corps), achieving financial efficiency and tax optimization is an essential endeavor. At Alpine Mar, we specialize in guiding you through this journey with precision and expertise. As your trusted S Corp Certified Public Accountants (CPAs), our accounting"
 industries: ["marketing-agency-accounting-services", "law-firm-accounting-services", "construction-cpa-services"]
 group: Compliance
+seo:
+  title: "S Corp CPA - Tax & Accounting Services | Alpine Mar"
+  description: "Our team of S corp CPA experts helps your corporation to maximize tax incentives and reduce tax burdens while remaining fully compliant."
 ---
 <p>In the intricate realm of S Corporations (S Corps), achieving financial efficiency and tax optimization is an essential endeavor. At Alpine Mar, we specialize in guiding you through this journey with precision and expertise. As your trusted S Corp Certified Public Accountants (CPAs), our accounting firm provides an array of services to enhance your legal entity's financial management. Let us address common questions related to S Corp financial strategies and shareholder capital accounts, all while staying compliant with ever-evolving tax laws.</p>
 <h2>Optimize Your S Corp Accounting with Alpine Mar</h2>

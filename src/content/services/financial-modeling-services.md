@@ -3,11 +3,11 @@ title: "Financial Modeling Services"
 heroTitle: "Financial Modeling Services"
 path: "/services/financial-modeling-services/"
 summary: "Investor- and board-ready models that actually tell you something. Built to forecast, stress-test, and stand up to hard questions."
-seo:
- title: "Expert Financial Modeling Services and Consulting"
- description: "Financial Modeling Services. Financial modeling services involve building detailed models that forecast and analyze financial performance to help businesses make informed strategic decisions. At Alpine Mar, our financial modeling consulting team provides companies with the insights, tools, and accurate projections needed to navigate complex financial situations and make data-backed decisions confidently. We create robust"
 industries: ["saas-accounting-services", "startup-cpa-services", "real-estate-cpa-services", "marketing-agency-accounting-services"]
 group: Advisory
+seo:
+  title: "Expert Financial Modeling Services and Consulting"
+  description: "Our financial modeling services provide data-driven insights to support growth, strategic planning, capital raising, and investment decisions."
 ---
 <p>Financial modeling services involve building detailed models that forecast and analyze financial performance to help businesses make informed strategic decisions. At Alpine Mar, our financial modeling consulting team provides companies with the insights, tools, and accurate projections needed to navigate complex financial situations and make data-backed decisions confidently.</p>
 <p>We create robust financial models tailored to a wide range of needs—from early-stage planning to advanced decision-making for mature companies. With extensive industry experience and proven methodologies, our CPAs bring clarity and reliability to your financial data, helping you establish a strong foundation for growth, stability, and long-term success.</p>

@@ -2,6 +2,7 @@
 title: "Amortizing Startup Costs for VC-Backed Enterprises"
 date: 2026-02-09
 author: "The Alpine Mar editorial team"
+category: "Startup Accounting & Taxes"
 excerpt: "Amortizing startup costs is the process of spreading your initial business expenses over a 15-year period for tax recovery. Most companies deduct up to $5,000 of these costs immediately on their first tax return."
 cover: "/images/blog/amortizing-startup-cost.jpg"
 tags: ["Compliance", "Estate Planning", "Payroll", "Real Estate"]

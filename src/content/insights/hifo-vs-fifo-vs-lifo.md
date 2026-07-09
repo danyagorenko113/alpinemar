@@ -2,6 +2,7 @@
 title: "HIFO vs FIFO vs LIFO for Cryptocurrency Accounting"
 date: 2025-11-17
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "When comparing HIFO, FIFO, and LIFO in crypto accounting, understanding how each cost basis method impacts your taxable gains is essential for smart portfolio management. Each approach determines which coins are considered “sold” first."
 cover: "/images/blog/hifo-vs-fifo-vs-lifo.jpg"
 tags: ["Audit", "Crypto", "Compliance", "M&A"]

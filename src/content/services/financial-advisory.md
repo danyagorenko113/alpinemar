@@ -3,11 +3,11 @@ title: "Financial Advisory Services"
 heroTitle: "Financial Advisory Services"
 path: "/services/financial-advisory/"
 summary: "Strategic financial guidance for the decisions that don't fit a tax return. A senior advisor in your corner when it counts."
-seo:
- title: "Financial Advisory Services | Alpine Mar"
- description: "Financial Advisory Services. When you're making decisions with long-term impact—whether it's growth, capital raising, exit planning or scaling—Alpine Mar's Financial Advisory Services are your strategic partner. We help translate financial data into forward momentum and guide you past complex inflection points."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Advisory
+seo:
+  title: "Financial Advisory Services | Alpine Mar"
+  description: "Our financial advisory experts translate financial data into growth, capital raising, scaling, and exit planning."
 ---
 <p>When you're making decisions with long-term impact—whether it's growth, capital raising, exit planning or scaling—Alpine Mar's Financial Advisory Services are your strategic partner. We help translate financial data into forward momentum and guide you past complex inflection points.</p>
 <p><strong>Transaction Advisory Services</strong> — Due diligence, valuation, deal support, mergers &amp; acquisitions guidance.</p>

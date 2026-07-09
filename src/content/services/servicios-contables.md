@@ -1,8 +1,11 @@
-﻿---
+---
 title: "Servicios contables y teneduría de libros"
 path: "/services/servicios-contables/"
 summary: "Servicios contables y teneduría de libros from Alpine Mar."
 group: Accounting
+seo:
+  title: "Servicios Contables y Teneduría de Libros en Florida"
+  description: "Alpine Mar ofrece servicios contables y teneduría de libros, enfocándose en contabilidad, estrategia de impuestos, tecnología y consultoría de gestión."
 ---
 <p>Una administración adecuada de los registros financieros es esencial para el éxito de las empresas en el acelerado mundo empresarial actual. Alpine Mar está aquí para simplificar sus procesos de contabilidad y teneduría de libros con nuestros contadores subcontratados de primer nivel. Aprenda cómo nosotros le ayudamos a ahorrar tiempo, reducir costos y simplificar sus operaciones financieras.</p>
 <img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2025/02/Servicios-Contables-scaled.jpg" alt="Outsourced Accounting Services">

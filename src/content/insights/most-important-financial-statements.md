@@ -2,6 +2,7 @@
 title: "Top 4 Financial Statements Every Business Needs"
 date: 2023-11-29
 author: "The Alpine Mar editorial team"
+category: "Accounting"
 excerpt: "The four basic financial statements every business needs are the income statement, balance sheet, cash flow statement, and statement of retained earnings. Taken together, these four financial statements provide an accurate representation of the company’s overall financial status."
 cover: "/images/blog/most-important-financial-statements.jpg"
 tags: ["M&A", "Real Estate", "Tax"]

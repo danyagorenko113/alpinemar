@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import absoluteLinks from './integrations/absolute-links.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
           'https://alpinemar.com/tools/quarterly-tax-estimator/',
         ].includes(page),
     }),
+    absoluteLinks(),
   ],
   vite: {
     plugins: [tailwindcss()],

@@ -75,12 +75,13 @@ const schema = [
   rawTitle={item.data.seo?.title ?? `${item.data.title} | Alpine Mar`}
   description={item.data.seo?.description ?? item.data.summary}
   image={item.data.cover}
+  canonical={item.data.seo?.canonical}
   schema={schema}
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
     <div class="relative h-[300px] max-h-[360px] w-full md:aspect-[12/5] md:h-auto lg:max-h-[380px]">
-      <img src={heroImage} alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" onerror="this.src='/images/about/hero.jpg'" />
+      <img src={heroImage} alt={item.data.coverAlt ?? ''} aria-hidden={item.data.coverAlt ? undefined : 'true'} class="absolute inset-0 h-full w-full object-cover object-center" onerror="this.src='/images/about/hero.jpg'" />
       <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
 
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">

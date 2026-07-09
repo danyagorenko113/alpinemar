@@ -2,6 +2,7 @@
 title: "Is Investment in a Startup Tax Deductible?"
 date: 2025-07-03
 author: "The Alpine Mar editorial team"
+category: "Taxes"
 excerpt: "Your investment in a startup is not tax deductible. You can’t write it off like a business expense. But if the investment loses value or becomes worthless, you may be able to claim a loss if it meets certain IRS rules."
 cover: "/images/blog/startup-investment-tax-deduction.jpg"
 tags: ["Estate Planning", "Startups", "Tax"]

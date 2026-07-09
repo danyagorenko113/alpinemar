@@ -3,11 +3,11 @@ title: "Payroll Compliance Services"
 heroTitle: "Payroll Compliance Services"
 path: "/services/payroll-compliance-services/"
 summary: "Payroll tax, filings, and multistate reciprocity handled. So a routine pay run never turns into a notice from the state."
-seo:
- title: "Payroll Compliance Services and Consulting | Alpine Mar"
- description: "Payroll Compliance Services. Managing payroll in today's regulatory environment requires businesses to navigate complex federal, state, and local requirements. At Alpine Mar, our payroll compliance service streamlines this process, ensuring that your payroll tax obligations are met efficiently and accurately. What Is Payroll"
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance
+seo:
+  title: "Payroll Compliance Services and Consulting | Alpine Mar"
+  description: "Our custom-tailored payroll compliance services ensure compliance with payroll regulations, the Davis-Bacon Act, and prevailing wages."
 ---
 <p>Managing payroll in today's regulatory environment requires businesses to navigate complex federal, state, and local requirements. At Alpine Mar, our payroll compliance service streamlines this process, ensuring that your payroll tax obligations are met efficiently and accurately.</p>
 <h2>What Is Payroll Compliance?</h2>

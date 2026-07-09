@@ -2,6 +2,7 @@
 title: "Best Business Structure for Ecommerce"
 date: 2024-09-05
 author: "The Alpine Mar editorial team"
+category: "Entity Structuring"
 excerpt: "The best business structure for online business ventures, such as ecommerce businesses, is one that optimizes tax savings, provides liability protection, and supports future growth."
 cover: "/images/blog/best-business-structure-for-ecommerce.jpg"
 tags: ["Compliance", "Payroll", "Tax"]

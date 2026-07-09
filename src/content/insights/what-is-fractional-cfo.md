@@ -2,6 +2,7 @@
 title: "What Is a Fractional CFO?"
 date: 2023-11-21
 author: "The Alpine Mar editorial team"
+category: "Outsourced Services"
 excerpt: "In today’s dynamic business landscape, small and large companies seek innovative ways to optimize their financial strategies while maintaining flexibility and cost-effectiveness. This has led to the rise of fractional Chief Financial Officer (CFO) as a service."
 cover: "/images/blog/what-is-fractional-cfo.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

@@ -3,11 +3,11 @@ title: "Outsourced Bookkeeping Services"
 heroTitle: "Outsourced Bookkeeping Services"
 path: "/services/outsourced-bookkeeping-services/"
 summary: "Daily books and reconciliations kept clean and current. The foundation everything else is built on, done right."
-seo:
- title: "Outsourced Bookkeeping Services | Alpine Mar"
- description: "Outsourced Bookkeeping Services. Alpine Mar offers a tailored suite of outsourced bookkeeping services designed to simplify your financial operations and provide you with more time to focus on growing your business. Let's explore how an outsourced bookkeeping team can benefit your organization."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting
+seo:
+  title: "Outsourced Bookkeeping Services | Alpine Mar"
+  description: "Our outsourced bookkeeping services include financial transaction records, bank reconciliations, reporting, tax preparation, and much more."
 ---
 <p>Alpine Mar offers a tailored suite of outsourced bookkeeping services designed to simplify your financial operations and provide you with more time to focus on growing your business. Let's explore how an outsourced bookkeeping team can benefit your organization.</p>
 <h2>What can Alpine Mar's Bookkeeping Services do for Your Business?</h2>

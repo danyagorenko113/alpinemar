@@ -2,6 +2,7 @@
 title: "IRS Safe Harbors for Landlords"
 date: 2024-10-31
 author: "The Alpine Mar editorial team"
+category: "Real Estate Accounting & Taxes"
 excerpt: "Navigating tax regulations can be particularly challenging for landlords due to the unique complexities involved in managing property-related expenses."
 cover: "/images/blog/safe-harbor-for-landlords.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

@@ -2,6 +2,7 @@
 title: "Tax-Free Reorganization Guide for 2026"
 date: 2025-09-11
 author: "The Alpine Mar editorial team"
+category: "Mergers & Acquisitions"
 excerpt: "A tax-free reorganization allows companies to merge, restructure, or even acquire other companies without taking on immediate tax liability. This type of transaction permits companies and shareholders to defer, transfer, or minimize tax liability if they meet the IRC §368’s…"
 cover: "/images/blog/tax-free-reorganization.jpg"
 tags: ["Advisory", "Compliance", "M&A", "Tax"]

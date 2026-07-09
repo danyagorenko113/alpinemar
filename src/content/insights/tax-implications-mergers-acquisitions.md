@@ -2,6 +2,7 @@
 title: "Tax Implications of Mergers and Acquisitions Explained"
 date: 2025-01-07
 author: "The Alpine Mar editorial team"
+category: "Mergers & Acquisitions"
 excerpt: "Mergers and acquisitions (M&A) involve complex tax considerations that can significantly impact the financial outcomes for both buyers and sellers."
 cover: "/images/blog/tax-implications-mergers-acquisitions.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "M&A"]

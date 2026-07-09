@@ -2,6 +2,7 @@
 title: "Pre-Seed Valuations for Startups"
 date: 2026-02-25
 author: "The Alpine Mar editorial team"
+category: "Resources"
 excerpt: "Pre-seed valuations are the estimated value of a startup before it has a full product or steady revenue. At this stage, your worth is based on your team’s skills and the problem you are solving, instead of sales."
 cover: "/images/blog/startup-pre-seed-valuations.jpg"
 tags: ["Audit", "Startups", "Tax"]

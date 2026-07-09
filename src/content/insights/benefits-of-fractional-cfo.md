@@ -2,6 +2,7 @@
 title: "12 Benefits of Having a Fractional CFO"
 date: 2023-12-11
 author: "The Alpine Mar editorial team"
+category: "Outsourced Services"
 excerpt: "A fractional CFO (chief financial officer) offers many benefits to small to mid-sized businesses, including improved financial health and streamlined cash-flow management."
 cover: "/images/blog/benefits-of-fractional-cfo.jpg"
 tags: ["Accounting", "Advisory", "Compliance", "M&A"]

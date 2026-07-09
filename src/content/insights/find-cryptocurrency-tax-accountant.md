@@ -2,6 +2,7 @@
 title: "How to Find a Cryptocurrency Tax Accountant"
 date: 2025-11-06
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Finding a reliable crypto tax accountant near you is crucial when taking on the unique challenges cryptocurrency taxes present. Crypto transactions, including trades, staking, and NFTs, trigger different taxable events that require specialized knowledge and reporting to navigate."
 cover: "/images/blog/find-cryptocurrency-tax-accountant.jpg"
 tags: ["Audit", "Crypto", "Compliance", "M&A"]

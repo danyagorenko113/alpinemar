@@ -74,6 +74,23 @@ const defaultFaq = [
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
 const clientView = googleReviews[0];
 
+// ── Section visibility & order (CMS-controlled) ───────────────────────────
+// `sections` frontmatter lists the client-controllable blocks to show, in
+// order. Fixed blocks (deep dive, industries, pillars, related) keep their
+// slots; the controllable blocks fill the remaining slots in the given order.
+const CONTROLLABLE = ['benefits', 'included', 'process', 'reviews', 'faq'] as const;
+const MASTER_ORDER = ['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq'] as const;
+type SectionKey = (typeof MASTER_ORDER)[number];
+const customSections = service.data.sections as SectionKey[] | undefined;
+const renderOrder: SectionKey[] = customSections
+  ? (() => {
+      const queue = [...customSections];
+      return MASTER_ORDER
+        .map((k) => ((CONTROLLABLE as readonly string[]).includes(k) ? queue.shift() ?? null : k))
+        .filter((k): k is SectionKey => k !== null);
+    })()
+  : [...MASTER_ORDER];
+
 const schema = [
   serviceSchema({ name: service.data.title, description: service.data.summary, path: service.data.path }),
   breadcrumb([
@@ -88,12 +105,13 @@ const schema = [
   rawTitle={service.data.seo?.title ?? `${service.data.title} | Alpine Mar`}
   description={service.data.seo?.description ?? service.data.summary}
   image={service.data.cover}
+  canonical={service.data.seo?.canonical}
   schema={schema}
 >
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative isolate overflow-hidden bg-paper">
     <div class="relative h-[340px] max-h-[380px] w-full md:aspect-[12/5] md:h-auto lg:max-h-[420px]">
-      <img src={coverSrc} alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover object-center" onerror="this.src='/images/about/hero.jpg'" />
+      <img src={coverSrc} alt={service.data.coverAlt ?? ''} aria-hidden={service.data.coverAlt ? undefined : 'true'} class="absolute inset-0 h-full w-full object-cover object-center" onerror="this.src='/images/about/hero.jpg'" />
       <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
 
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
@@ -135,7 +153,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ WHAT YOU GET (benefits) ═════════════ -->
+    {renderOrder.map((sectionKey) => (
+    <Fragment>
+      {sectionKey === 'benefits' && (
   <section class="relative bg-paper py-12 md:py-24">
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -162,8 +182,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ WHAT'S INCLUDED (dark, optional) ═════════════ -->
-  {included.length > 0 && (
+  
+      )}
+      {sectionKey === 'included' && included.length > 0 && (
     <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
       <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
@@ -191,8 +212,7 @@ const schema = [
       </Container>
     </section>
   )}
-
-  <!-- ═════════════ PROCESS ═════════════ -->
+      {sectionKey === 'process' && (
   <section class="relative bg-white py-12 md:py-32">
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -222,7 +242,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ DEEP DIVE (markdown body, landing-styled) ═════════════ -->
+  
+      )}
+      {sectionKey === 'deepdive' && (
   <section class="relative bg-paper py-12 md:py-32">
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -260,7 +282,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ TESTIMONIAL ═════════════ -->
+  
+      )}
+      {sectionKey === 'reviews' && (
   <section class="relative bg-white py-12 md:py-24">
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -293,8 +317,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ WHO IT'S FOR ═════════════ -->
-  {linkedIndustries.length > 0 && (
+  
+      )}
+      {sectionKey === 'industries' && linkedIndustries.length > 0 && (
     <section class="relative bg-paper py-12 md:py-32">
       <Container width="wide">
         <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -312,24 +337,23 @@ const schema = [
         <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
           {linkedIndustries.map((ind) => (
             <li>
-              <a href={ind.href} class="group flex h-full min-h-[150px] flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+              <div class="group relative flex h-full min-h-[150px] flex-col justify-between gap-4 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
                 <span>
-                  <span class="block font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{ind.title}</span>
+                  <a href={ind.href} class="block font-display text-[15px] font-medium leading-[1.3] text-[var(--color-text-head)] transition-colors after:absolute after:inset-0 group-hover:text-scooter">{ind.title}</a>
                   <span class="mt-3 block line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{ind.desc}</span>
                 </span>
                 <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
                   Learn more
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
       </Container>
     </section>
   )}
-
-  <!-- ═════════════ WHY ALPINE MAR (dark) ═════════════ -->
+      {sectionKey === 'pillars' && (
   <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
@@ -360,8 +384,9 @@ const schema = [
     </Container>
   </section>
 
-  <!-- ═════════════ MORE IN THIS CATEGORY ═════════════ -->
-  {related.length > 0 && (
+  
+      )}
+      {sectionKey === 'related' && related.length > 0 && (
     <section class="relative bg-paper py-12 md:py-24">
       <Container width="wide">
         <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -380,21 +405,22 @@ const schema = [
         <ul class="mt-8 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
           {related.map((s) => (
             <li>
-              <a href={s.href} class="group flex h-full min-h-[130px] flex-col justify-between gap-6 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D] md:min-h-[160px] md:p-6">
-                <h3 class="font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">{s.title}</h3>
+              <div class="group relative flex h-full min-h-[130px] flex-col justify-between gap-6 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D] md:min-h-[160px] md:p-6">
+                <h3 class="font-display text-[18px] font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
+                  <a href={s.href} class="after:absolute after:inset-0">{s.title}</a>
+                </h3>
                 <span class="inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
                   Learn more
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
       </Container>
     </section>
   )}
-
-  <!-- ═════════════ FAQ ═════════════ -->
+      {sectionKey === 'faq' && (
   <section id="faq" class="relative bg-white py-12 md:py-32">
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
@@ -423,6 +449,11 @@ const schema = [
       </div>
     </Container>
   </section>
+
+  
+      )}
+    </Fragment>
+  ))}
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">

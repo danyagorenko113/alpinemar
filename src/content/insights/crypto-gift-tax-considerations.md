@@ -2,6 +2,7 @@
 title: "Crypto Gift Tax Considerations"
 date: 2025-04-17
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A cryptocurrency gift is any transfer of digital assets from one person to another without receiving something of equal value in return. This includes sending Bitcoin, Ethereum, stablecoins, or NFTs to a friend, family member, or anyone else—no strings attached."
 cover: "/images/blog/crypto-gift-tax-considerations.jpg"
 tags: ["Audit", "Crypto", "Compliance", "Estate Planning"]

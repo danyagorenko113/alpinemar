@@ -3,12 +3,14 @@ title: "Reviews & Compilations"
 heroTitle: "Reviews & Compilations"
 path: "/services/audit-attestation-services/reviews-compilations/"
 summary: "Limited-assurance reviews and agreed-upon procedures, when a full audit is more than you need. Right-sized credibility."
-seo:
- title: "Reviews & Compilations"
- description: "Reviews & Compilations. Lighter lift, solid support. Not every business needs a full audit. Reviews and compilations offer a streamlined alternative that still delivers credibility and insight. Whether you're satisfying third-party requirements or preparing for your next phase of growth, we tailor our approach to meet your needs without"
 cover: "/images/services/reviews-compilations.jpg"
 industries: ["saas-accounting-services", "marketing-agency-accounting-services", "law-firm-accounting-services", "startup-cpa-services"]
 group: Compliance
+seo:
+  title: "Reviews & Compilations"
+  description: "Reviews & Compilations 
+Lighter lift, solid support. 
+Not every business needs a full audit. Reviews and compilations offer a streamlined alternative that still delivers credibility and insight. Whether you’re satisfying third-party requirements or preparing for your next phase of growth, we tailor our approach to meet your needs without"
 ---
 <h2>Lighter lift, solid support.</h2>
 <p>Not every business needs a full audit. Reviews and compilations offer a streamlined alternative that still delivers credibility and insight. Whether you're satisfying third-party requirements or preparing for your next phase of growth, we tailor our approach to meet your needs without overcomplicating the process.</p>

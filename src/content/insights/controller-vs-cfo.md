@@ -2,6 +2,7 @@
 title: "Controller vs CFO – Which One Do You Need?"
 date: 2024-07-09
 author: "The Alpine Mar editorial team"
+category: "Resources"
 excerpt: "Choosing between a controller and a CFO is crucial for any business, especially as it grows and its financial needs become more complex. The main difference between a controller and a chief financial officer (CFO) is that controllers focus on detailed financial reporting and…"
 cover: "/images/blog/controller-vs-cfo.jpg"
 tags: ["Audit", "Advisory", "Compliance", "M&A"]

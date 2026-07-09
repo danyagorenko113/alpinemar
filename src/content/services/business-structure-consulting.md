@@ -3,11 +3,11 @@ title: "Business Structure Consulting"
 heroTitle: "Business Structure Consulting"
 path: "/services/business-structure-consulting/"
 summary: "Pick the right entity from the start and save yourself years of cleanup. LLC, S-Corp, C-Corp, or something more layered, structured for where you're going."
-seo:
- title: "Business Structure Consultants for Entity Structuring"
- description: "Business Structure Consulting. As seasoned business structure consultants, we understand that the foundation of your business is as crucial as the services you offer. Our legal entity Structuring Services are designed to optimize your legal and financial standing, providing a framework that aligns with your unique business goals."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance
+seo:
+  title: "Business Structure Consultants for Entity Structuring"
+  description: "Our expert business structure consultants help founders set up the best structure for your company (partnership, LLC, C or S corp)."
 ---
 <p>As seasoned business structure consultants, we understand that the foundation of your business is as crucial as the services you offer. Our legal entity Structuring Services are designed to optimize your legal and financial standing, providing a framework that aligns with your unique business goals.</p>
 <h2>Navigating the Complexities of Business Structure</h2>

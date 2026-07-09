@@ -2,6 +2,7 @@
 title: "Crypto Staking Taxes Overview"
 date: 2025-03-17
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Crypto staking involves locking up cryptocurrency in a blockchain network to validate transactions and enhance security. In return, participants earn rewards, typically through proof-of-stake (PoS) or similar consensus mechanisms."
 cover: "/images/blog/crypto-staking-taxes.jpg"
 tags: ["Advisory", "Crypto", "Compliance", "Payroll"]

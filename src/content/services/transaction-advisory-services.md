@@ -3,11 +3,11 @@ title: "Transaction Advisory Services"
 heroTitle: "Transaction Advisory Services"
 path: "/services/transaction-advisory-services/"
 summary: "Buy-side and sell-side support for the deals that change everything. Diligence, modeling, and a steady hand from LOI to close."
-seo:
- title: "Transaction Advisory Services by Financial Experts | Alpine Mar"
- description: "Transaction Advisory Services. Are you considering mergers and acquisitions, or restructuring your business to attract financial investors? Alpine Mar offers expert transaction advisory services to help you navigate complex financial transactions and maximize your growth potential. Learn how our specialized deal advisory services can be your strategic advantage."
 industries: ["real-estate-cpa-services", "saas-accounting-services", "startup-cpa-services", "law-firm-accounting-services"]
 group: Advisory
+seo:
+  title: "Transaction Advisory Services by Financial Experts | Alpine Mar"
+  description: "Our professional transaction advisory services include financial analysis, deal structuring, risk assessment, and integration planning."
 ---
 <p>Are you considering mergers and acquisitions, or restructuring your business to attract financial investors? Alpine Mar offers expert transaction advisory services to help you navigate complex financial transactions and maximize your growth potential. Learn how our specialized deal advisory services can be your strategic advantage.</p>
 <h2>Transaction Advisory Services Overview</h2>

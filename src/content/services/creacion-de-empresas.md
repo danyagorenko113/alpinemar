@@ -1,8 +1,11 @@
-﻿---
+---
 title: "Creación de Empresas"
 path: "/services/creacion-de-empresas/"
 summary: "Creación de Empresas from Alpine Mar."
 group: Compliance
+seo:
+  title: "Estructuración y Creación de Empresas en Florida"
+  description: "Nuestros consultores expertos en estructura empresarial le ayudan a elegir la mejor estructura para la creación de su nueva compañía (LLC, corp C o corp S)."
 ---
 <p>Nuestro servicio de estructuración de empresas está diseñado para optimizar la base legal y financiera de las empresas, así creando un marco que se alinea con sus objetivos comerciales. Nosotros somos consultores de negocios con mucha experiencia y entendemos que la base de su negocio es tan crucial como los servicios que ofrece.</p>
 <img loading="lazy" src="https://alpinemar.com/wp-content/uploads/2025/02/Creacion-de-Empresas-scaled.jpg" alt="Tax Planning Services">

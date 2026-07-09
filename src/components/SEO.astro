@@ -7,6 +7,8 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  /** Canonical override (CMS seo.canonical). Defaults to the page's own URL. */
+  canonical?: string;
 }
 const {
   title,
@@ -14,6 +16,7 @@ const {
   description = site.description,
   image = '/og-default.jpg',
   noindex = false,
+  canonical: canonicalOverride,
 } = Astro.props;
 
 const pageTitle = rawTitle
@@ -21,7 +24,11 @@ const pageTitle = rawTitle
   : title
     ? `${title} | ${site.name}`
     : `${site.name} — ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, site.url).href;
+// Self-referencing by default; the CMS field wins when set. A relative
+// override is resolved against the site origin.
+const canonical = canonicalOverride
+  ? new URL(canonicalOverride, site.url).href
+  : new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL(image, site.url).href;
 ---
 

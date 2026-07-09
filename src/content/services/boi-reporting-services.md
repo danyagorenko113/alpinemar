@@ -3,11 +3,11 @@ title: "BOI Reporting Services"
 heroTitle: "BOI Reporting Services"
 path: "/services/boi-reporting-services/"
 summary: "FinCEN beneficial-ownership reporting, filed correctly and on time. A small form with big penalties if it's missed."
-seo:
- title: "BOI Reporting Services | Alpine Mar"
- description: "BOI Reporting Services. File your BOI Report quickly and effortlessly with our industry experts who ensure accuracy, security, and compliance. Trust our licensed CPAs to provide unparalleled support and tailor-made solutions for your reporting needs. Important Update: Good"
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance
+seo:
+  title: "BOI Reporting Services | Alpine Mar"
+  description: "Our tax planning and preparation services ensure that you meet your obligations while optimizing your unique financial portfolio."
 ---
 <p>File your BOI Report quickly and effortlessly with our industry experts who ensure accuracy, security, and compliance. Trust our licensed CPAs to provide unparalleled support and tailor-made solutions for your reporting needs.</p>
 <h2>Important Update:</h2>

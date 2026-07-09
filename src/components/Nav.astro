@@ -177,9 +177,10 @@ const popularServices = [
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {industryMenu.map((ind, i) => (
-          <a href={ind.href} class="group/ind flex h-full flex-col gap-2.5 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+          <div class="group/ind relative flex h-full flex-col gap-2.5 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
             <div class="flex items-center justify-between gap-3">
-              <span class="font-display text-[15px] font-medium leading-tight tracking-[-0.005em] text-[var(--color-text-head)] transition-colors group-hover/ind:text-scooter">{ind.name}</span>
+              {/* Anchor text = industry name only; ::after keeps the whole card clickable. */}
+              <a href={ind.href} class="font-display text-[15px] font-medium leading-tight tracking-[-0.005em] text-[var(--color-text-head)] transition-colors after:absolute after:inset-0 group-hover/ind:text-scooter">{ind.name}</a>
               <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <p class="line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{ind.desc}</p>
@@ -187,7 +188,7 @@ const popularServices = [
               Learn more
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover/ind:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
             </span>
-          </a>
+          </div>
         ))}
         <a href="/industries/" class="group/ind flex items-center justify-center gap-2 rounded-[6px] bg-[#12122D] p-5 text-white transition-colors hover:bg-scooter">
           <span class="font-display text-[14px] font-medium">View all 11 industries</span>

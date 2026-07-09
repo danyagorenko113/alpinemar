@@ -3,11 +3,11 @@ title: "Tax Services for Small Business"
 heroTitle: "Tax Services for Small Business"
 path: "/services/small-business-tax-services/"
 summary: "Business taxes for owners who'd rather be running the business. Filed right, planned ahead, and explained without the jargon."
-seo:
- title: "Tax Services for Small Business in Fort Lauderdale, Florida"
- description: "Tax Services for Small Business. At Alpine Mar, we bring over three decades of unwavering commitment to excellence in tax preparation services. Our team of experienced tax preparers is dedicated to delivering meticulous and comprehensive solutions tailored to meet the unique needs of small businesses in Fort Lauderdale, Florida."
 industries: ["marketing-agency-accounting-services", "law-firm-accounting-services", "construction-cpa-services"]
 group: Tax
+seo:
+  title: "Tax Services for Small Business in Fort Lauderdale, Florida"
+  description: "Professional tax services for small businesses in Fort Lauderdale that ensure optimal tax solutions for your unique company needs."
 ---
 <p>At Alpine Mar, we bring over three decades of unwavering commitment to excellence in tax preparation services. Our team of experienced tax preparers is dedicated to delivering meticulous and comprehensive solutions tailored to meet the unique needs of small businesses in Fort Lauderdale, Florida.</p>
 <h2>Unparalleled Small Business Tax Services in Fort Lauderdale</h2>

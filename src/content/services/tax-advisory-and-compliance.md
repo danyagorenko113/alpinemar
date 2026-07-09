@@ -3,11 +3,11 @@ title: "Tax Advisory and Compliance"
 heroTitle: "Tax Advisory and Compliance"
 path: "/services/tax-advisory-and-compliance/"
 summary: "Long-term tax positioning for the big decisions, mapped before you make them. We help you see the consequences while you can still change them."
-seo:
- title: "Tax Advisory Services | Alpine Mar"
- description: "Tax Advisory and Compliance. Our expert tax advisory services optimize your taxes across the board. Our CPAs provide proven guidance on everything from individual tax optimization to business tax strategy, multistate tax issues, international taxes, and estate and trust tax planning."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "real-estate-cpa-services", "crypto-cpa-services", "startup-cpa-services"]
 group: Tax
+seo:
+  title: "Tax Advisory Services | Alpine Mar"
+  description: "Full-service professional tax advisory services to lower tax liability through compliant custom strategies."
 ---
 <p>Our expert tax advisory services optimize your taxes across the board. Our CPAs provide proven guidance on everything from individual tax optimization to business tax strategy, multistate tax issues, international taxes, and estate and trust tax planning.</p>
 <p><strong>Tax Planning &amp; Preparation Services</strong> — Forward-looking strategies, year-round planning, and precise preparation to reduce liabilities and avoid surprises.</p>

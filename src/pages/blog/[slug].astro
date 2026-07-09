@@ -16,13 +16,15 @@ const { post, all } = Astro.props;
 const { Content, headings } = await render(post);
 
 const tags = post.data.tags ?? [];
+const category = post.data.category;
 
-// Related — same first tag, fallback to recent
-const tagPool = tags[0];
-const related = all
-  .filter((p) => p.id !== post.id && (tagPool ? p.data.tags?.includes(tagPool) : true))
-  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
-  .slice(0, 4);
+// Related ("Read next") — same category first, then first tag, then recent.
+const byDate = (a: typeof all[number], b: typeof all[number]) =>
+  +new Date(b.data.date) - +new Date(a.data.date);
+const pool = all.filter((p) => p.id !== post.id && p.data.status !== 'draft');
+const sameCategory = category ? pool.filter((p) => p.data.category === category) : [];
+const sameTag = tags[0] ? pool.filter((p) => p.data.tags?.includes(tags[0])) : [];
+const related = [...new Set([...sameCategory.sort(byDate), ...sameTag.sort(byDate), ...pool.sort(byDate)])].slice(0, 4);
 
 const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 const slugifyTag = (t: string) =>
@@ -32,9 +34,17 @@ const dateFmt = (d: string | Date) =>
 
 const readingMin = Math.max(2, Math.round((post.data.excerpt?.length ?? 400) / 200));
 const authorName = post.data.author ?? 'The Alpine Mar team';
+
+// Author profile — authors collection first (CMS-managed bios), team fallback.
+const authorEntries = await getCollection('authors');
+const authorEntry = authorEntries.find(
+  (a) => a.data.status !== 'draft' && (authorName.includes(a.data.name) || a.data.name.includes(authorName)),
+);
+const AuthorBio = authorEntry ? (await render(authorEntry)).Content : null;
 const teamMembers = (await getCollection('team')).map((m) => m.data);
 const authorProfile = teamMembers.find((m) => authorName.includes(m.name.replace(/,\s*CPA$/, '')));
-const authorPhoto = authorProfile?.photo ?? '/images/brand/logo-web.png';
+const authorPhoto = authorEntry?.data.photo ?? authorProfile?.photo ?? '/images/brand/logo-web.png';
+const authorTitle = authorEntry?.data.title;
 
 const toc = headings.filter((h) => h.depth === 2 && h.text && h.text.trim().length > 1).slice(0, 8);
 
@@ -59,15 +69,30 @@ const schema = [
   rawTitle={post.data.seo?.title ?? `${post.data.title} | Alpine Mar`}
   description={post.data.seo?.description ?? post.data.excerpt}
   image={post.data.cover}
+  canonical={post.data.seo?.canonical}
   schema={schema}
 >
   <!-- Reading progress bar — scaleX based on article scroll -->
   <div id="reading-progress" class="fixed inset-x-0 z-[55] h-[3px] origin-left scale-x-0 bg-scooter transition-transform duration-150 ease-out" style="top: 88px" aria-hidden="true"></div>
 
   <article>
-    <!-- ═════════════ HERO ═════════════ -->
+    <!-- ═════════════ BANNER + HEADER ═════════════
+         Banner image first, H1 directly under it (CMS audit item). -->
+    {post.data.cover && (
+      <section class="relative bg-paper">
+        <div class="relative h-[260px] w-full md:h-[380px] lg:h-[420px]">
+          <img
+            src={post.data.cover}
+            alt={post.data.coverAlt ?? post.data.title}
+            class="absolute inset-0 h-full w-full object-cover object-center"
+          />
+          <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/40 to-paper"></div>
+        </div>
+      </section>
+    )}
+
     <section class="relative bg-paper">
-      <Container width="wide" class="pt-12 pb-10 md:pt-16 md:pb-14">
+      <Container width="wide" class={`${post.data.cover ? 'pt-8' : 'pt-12 md:pt-16'} pb-10 md:pb-14`}>
         <nav aria-label="Breadcrumb" class="mb-8">
           <ol class="inline-flex max-w-full items-center gap-2 overflow-hidden whitespace-nowrap rounded-full bg-white/85 px-4 py-2 font-display text-[13px] font-medium text-navy-950 shadow-[0_12px_30px_-18px_rgba(18,18,45,0.6)] backdrop-blur-sm">
             <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
@@ -80,14 +105,18 @@ const schema = [
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
           <div class="md:col-span-9">
-            <div class="flex flex-wrap items-center gap-3 font-display text-[12px] text-[var(--color-text-body)]">
-              {tags.slice(0, 2).map((t) => (
-                <a href={`/blog/topic/${slugifyTag(t)}/`} class="inline-flex items-center gap-2 rounded-[4px] bg-white px-3 py-1.5 transition-colors hover:text-scooter">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 font-display text-[12px] text-[var(--color-text-body)]">
+              {category && (
+                <span class="inline-flex items-center gap-2 rounded-[4px] bg-white px-3 py-1.5">
                   <span class="block size-1.5 bg-[#12122D]"></span>
-                  {t}
-                </a>
-              ))}
-              <span class="font-mono uppercase tracking-[0.12em] text-[var(--color-text-body)]">{dateFmt(post.data.date)}</span>
+                  {category}
+                </span>
+              )}
+              <span class="font-mono uppercase tracking-[0.12em]">Publish Date: {dateFmt(post.data.date)}</span>
+              {post.data.updated && (<>
+                <span class="opacity-55">·</span>
+                <span class="font-mono uppercase tracking-[0.12em]">Updated On: {dateFmt(post.data.updated)}</span>
+              </>)}
               <span class="opacity-55">·</span>
               <span class="font-mono uppercase tracking-[0.12em]">{readingMin} min read</span>
               {post.data.author && <>
@@ -97,29 +126,9 @@ const schema = [
             </div>
 
             <h1 class="mt-7 font-display text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-text-head)] sm:text-[44px] md:text-[52px]">{post.data.title}</h1>
-
-            {post.data.excerpt && (
-              <p class="mt-6 max-w-[60ch] font-display text-[18px] leading-[1.55] text-[var(--color-text-body)]">{post.data.excerpt}</p>
-            )}
-
-            {tags.length > 2 && (
-              <div class="mt-7 flex flex-wrap gap-1.5">
-                {tags.slice(2, 8).map((t) => (
-                  <a href={`/blog/topic/${slugifyTag(t)}/`} class="rounded-[4px] border border-line bg-white px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)] transition-colors hover:border-[#12122D] hover:text-scooter">{t}</a>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </Container>
-
-      {post.data.cover && (
-        <Container width="wide" class="pb-12 md:pb-16">
-          <div class="overflow-hidden rounded-[6px] bg-white">
-            <img src={post.data.cover} alt={post.data.title} class="aspect-[16/8] w-full object-contain" />
-          </div>
-        </Container>
-      )}
     </section>
 
     <!-- ═════════════ BODY + SIDEBAR ═════════════ -->
@@ -131,8 +140,19 @@ const schema = [
               <Content />
             </div>
 
+            {tags.length > 0 && (
+              <div class="mt-12 border-t border-line pt-6">
+                <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Tags</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  {tags.map((t) => (
+                    <a href={`/blog/topic/${slugifyTag(t)}/`} class="rounded-[4px] border border-line bg-white px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-text-body)] transition-colors hover:border-[#12122D] hover:text-scooter">{t}</a>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <!-- Article footer: byline -->
-            <footer class="mt-16 border-t border-line pt-7">
+            <footer class="mt-10 border-t border-line pt-7">
               <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-text-body)]">Written by</p>
               <div class="mt-4 flex items-start gap-4">
                 <div class="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-white">
@@ -140,9 +160,18 @@ const schema = [
                 </div>
                 <div>
                   <p class="font-display text-[18px] font-medium text-[var(--color-text-head)]">{authorName}</p>
-                  <p class="mt-2 max-w-[60ch] font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">
-                    The Alpine Mar editorial team publishes practical, vetted guidance on tax, accounting, and advisory for owner-operators and growing firms.
-                  </p>
+                  {authorTitle && (
+                    <p class="mt-1 font-display text-[13px] text-[var(--color-text-body)]">{authorTitle}</p>
+                  )}
+                  {AuthorBio ? (
+                    <div class="mt-2 max-w-[60ch] font-display text-[14px] leading-[1.65] text-[var(--color-text-body)] [&_p]:mt-2 first:[&_p]:mt-0">
+                      <AuthorBio />
+                    </div>
+                  ) : (
+                    <p class="mt-2 max-w-[60ch] font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">
+                      The Alpine Mar editorial team publishes practical, vetted guidance on tax, accounting, and advisory for owner-operators and growing firms.
+                    </p>
+                  )}
                 </div>
               </div>
             </footer>

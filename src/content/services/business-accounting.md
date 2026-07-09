@@ -3,11 +3,11 @@ title: "Business Accounting Services"
 heroTitle: "Business Accounting Services"
 path: "/services/business-accounting/"
 summary: "Everyday accounting handled by a team that knows your business. The numbers stay clean while you stay focused on the work."
-seo:
- title: "Business Accounting Services | Alpine Mar"
- description: "Business Accounting Services. Strong accounting systems are the backbone of healthy businesses. Alpine Mar's Business Accounting Services combine accuracy, technology, and clarity to give you real-time financial visibility, operational efficiency, and a foundation for growth. Outsourced Accounting Services Let us manage end-to-end accounting functions"
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting
+seo:
+  title: "Business Accounting Services | Alpine Mar"
+  description: "Professional business accounting services providing real-time financial visibility, operational efficiency, and a foundation for growth."
 ---
 <p>Strong accounting systems are the backbone of healthy businesses. Alpine Mar's Business Accounting Services combine accuracy, technology, and clarity to give you real-time financial visibility, operational efficiency, and a foundation for growth.</p>
 <p>This page presents a grid of linked sub-services, each with a one-line description:</p>

@@ -2,6 +2,7 @@
 title: "Florida Short-Term Capital Gains Tax Explained"
 date: 2024-01-23
 author: "The Alpine Mar editorial team"
+category: "Florida Accounting & Taxes"
 excerpt: "People who own capital assets in Florida short-term—for less than a year—and sell them at a higher price won’t pay any Florida capital gains tax on the profit. However, they will need to pay capital gains tax to the Internal Revenue Service (IRS)."
 cover: "/images/blog/florida-capital-gains-tax-overview.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]

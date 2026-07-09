@@ -2,6 +2,7 @@
 title: "Crypto-Friendly States in 2025"
 date: 2025-05-15
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Choosing the right state is critical for crypto investors and businesses. State tax rates, regulations, and crypto-specific laws directly affect your bottom line and long-term success."
 cover: "/images/blog/crypto-friendly-states.jpg"
 tags: ["Audit", "Crypto", "Compliance", "Startups"]

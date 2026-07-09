@@ -2,6 +2,7 @@
 title: "How to Create a Budget for Your Tech Startup"
 date: 2026-05-07
 author: "The Alpine Mar editorial team"
+category: "Startup Accounting & Taxes"
 excerpt: "Create a tech startup budget by identifying your core growth milestones and calculating your monthly burn rate to ensure you have 18 to 24 months of runway."
 cover: "/images/blog/tech-startup-budget-example.jpg"
 tags: ["Compliance", "M&A", "Payroll", "SaaS"]

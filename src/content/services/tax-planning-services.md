@@ -3,11 +3,11 @@ title: "Tax Planning & Preparation Services"
 heroTitle: "Tax Planning & Preparation Services"
 path: "/services/tax-planning-services/"
 summary: "Year-round tax strategy that lowers what you actually pay. We plan ahead so April is a formality, not a surprise."
-seo:
- title: "Tax Planning & Preparation Services in Florida | Alpine Mar"
- description: "Tax Planning & Preparation Services. When it comes to financial planning, there's no room for errors. We understand the importance of accurate and efficient income tax planning and preparation. Our team of experienced tax professionals are here to help you navigate the complex world of income taxes,"
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Tax
+seo:
+  title: "Tax Planning & Preparation Services in Florida | Alpine Mar"
+  description: "Our tax planning and preparation services ensure that you meet your obligations while optimizing your unique financial portfolio."
 ---
 <p>When it comes to financial planning, there's no room for errors. We understand the importance of accurate and efficient income tax planning and preparation. Our team of experienced tax professionals are here to help you navigate the complex world of income taxes, ensuring that you meet your obligations while optimizing your financial plan. Discover how our top-notch tax preparation services can benefit you.</p>
 <h2>Professional Tax Planning Services</h2>

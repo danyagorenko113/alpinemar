@@ -2,6 +2,7 @@
 title: "Understanding the Passive Activity Loss Rule for Real Estate"
 date: 2023-10-31
 author: "The Alpine Mar editorial team"
+category: "Real Estate Accounting & Taxes"
 excerpt: "One key tax rule that every real estate investor should be familiar with is the passive activity loss rule. This rule has become particularly pertinent due to the growing prevalence of Florida-based short-term rentals on platforms like Airbnb and Vrbo®."
 cover: "/images/blog/passive-activity-loss-rule.jpg"
 tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]

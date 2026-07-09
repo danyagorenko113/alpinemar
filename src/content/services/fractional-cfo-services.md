@@ -3,11 +3,11 @@ title: "Fractional CFO Services"
 heroTitle: "Fractional CFO Services"
 path: "/services/fractional-cfo-services/"
 summary: "Senior finance leadership, part-time and on demand. The strategic horsepower of a CFO without the full-time salary."
-seo:
- title: "Fractional CFO Services - Outsourced Part-Time CFO for Hire"
- description: "Fractional CFO Services. A fractional Chief Financial Officer is an expert offering a slice of their time to businesses. Our part-time CFOs offer strategic, high-level financial expertise without the full-time CFO commitment, thereby providing small and medium-sized businesses access to skills typically reserved for larger corporations."
 industries: ["saas-accounting-services", "startup-cpa-services", "marketing-agency-accounting-services", "law-firm-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "family-office-accounting-services"]
 group: Advisory
+seo:
+  title: "Fractional CFO Services - Outsourced Part-Time CFO for Hire"
+  description: "Our fractional CFO services offer high-level financial expertise reserved for larger corporations without the full-time CFO commitment."
 ---
 <p>A fractional Chief Financial Officer is an expert offering a slice of their time to businesses. Our part-time CFOs offer strategic, high-level financial expertise without the full-time CFO commitment, thereby providing small and medium-sized businesses access to skills typically reserved for larger corporations.</p>
 <p>Our Fractional CFO or Interim CFO services prove their worth by enabling businesses to navigate financial complexities, strategic planning, and growth management without incurring the cost of a full-time CFO. Our flexible pricing is another significant advantage. Instead of the hefty singular wage of a full-time CFO, businesses pay for only the hours or days they need, which can be scaled up or down as required.</p>

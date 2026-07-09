@@ -3,11 +3,11 @@ title: "Outsourced Accounting Services"
 heroTitle: "Outsourced Accounting Services"
 path: "/services/outsourced-accounting-services/"
 summary: "A full finance back office without the cost of building one. Books, close, and reporting handled, so you get clean numbers every month."
-seo:
- title: "Outsourced Accounting Services in Florida | Alpine Mar"
- description: "Outsourced Accounting Services. In today's fast-paced business world, managing financial matters efficiently is essential for success. Alpine Mar is here to simplify your accounting functions with our top-tier outsourced accountants. Learn how we can help you save time, reduce costs, and streamline your financial operations."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting
+seo:
+  title: "Outsourced Accounting Services in Florida | Alpine Mar"
+  description: "Alpine Mar offers outsourced accounting services, with a focus on accounting, tax strategy, technology, and management consulting."
 ---
 <p>In today's fast-paced business world, managing financial matters efficiently is essential for success. Alpine Mar is here to simplify your accounting functions with our top-tier outsourced accountants. Learn how we can help you save time, reduce costs, and streamline your financial operations.</p>
 <h2>What Are Outsourced Accounting Services?</h2>

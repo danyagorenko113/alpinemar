@@ -2,6 +2,7 @@
 title: "DAO Taxes"
 date: 2025-10-27
 author: "The Alpine Mar editorial team"
+category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Decentralized autonomous organization (DAO) taxes are a growing concern as these groups continue to blur the lines between tax code and corporate structure. The lack of a centralized authority means tax responsibility often falls directly on individual contributors."
 cover: "/images/blog/dao-taxes.jpg"
 tags: ["Audit", "Advisory", "Crypto", "Compliance"]

@@ -3,11 +3,11 @@ title: "For when \"pretty sure\" isn't good enough."
 heroTitle: "For when \"pretty sure\" isn't good enough."
 path: "/services/audit-attestation-services/"
 summary: "Independent audit and assurance that makes your numbers credible. The verification investors, lenders, and regulators trust."
-seo:
- title: "Professional Audit & Attestation Services | Alpine Mar"
- description: "For when \"pretty sure\" isn't good enough. Alpine Mar's Audit & Attestation Services are designed to give you and your stakeholders clear, accurate, and timely financial insights that support smart decision-making and long-term growth. Whether you're preparing for an acquisition, putting together financial data to meet lender requirements, or looking to elevate"
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services", "law-firm-accounting-services"]
 group: Compliance
+seo:
+  title: "Professional Audit & Attestation Services | Alpine Mar"
+  description: "Our attestation services provide a professional audit of financial statements and internal controls, and validate compliance."
 ---
 <p>Alpine Mar's Audit &amp; Attestation Services are designed to give you and your stakeholders clear, accurate, and timely financial insights that support smart decision-making and long-term growth. Whether you're preparing for an acquisition, putting together financial data to meet lender requirements, or looking to elevate your financial reporting, we bring the rigor, responsiveness, and real-world business sense that keeps your numbers (and your reputation) in good standing.</p>
 <p>In today's fast-changing regulatory environment, stakeholders demand transparency, accountability, and precision. At Alpine Mar, our Audit &amp; Attestation Services are designed to provide the independent verification your organization needs to enhance financial credibility and stakeholder confidence.</p>
