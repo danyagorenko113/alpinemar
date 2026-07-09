@@ -3,11 +3,10 @@ export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { Plus, Search } from 'lucide-react'
 import { listBlogPosts, listAllTags } from '@/lib/actions/blog'
+import { BlogTable } from '@/components/blog/blog-table'
 import { PageHeader } from '@/components/shared/page-header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { formatDate, formatRelative } from '@/lib/utils'
 
 interface SP {
   q?: string
@@ -65,59 +64,7 @@ export default async function BlogListPage(props: { searchParams: Promise<SP> })
         )}
       </form>
 
-      <div className="rounded-lg border bg-card overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-navy-50 text-left text-[11px] uppercase tracking-wider text-navy-500">
-            <tr>
-              <th className="px-4 py-2.5 font-semibold">Title</th>
-              <th className="px-4 py-2.5 font-semibold hidden md:table-cell">Tags</th>
-              <th className="px-4 py-2.5 font-semibold w-32 hidden sm:table-cell">Date</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {filtered.length === 0 && (
-              <tr>
-                <td colSpan={3} className="px-4 py-10 text-center text-sm text-muted-foreground">
-                  No posts match the filter.
-                </td>
-              </tr>
-            )}
-            {filtered.map((p) => (
-              <tr key={p.slug} className="hover:bg-navy-50/50 transition-colors">
-                <td className="px-4 py-3 align-top">
-                  <Link href={`/blog/${p.slug}`} className="block group">
-                    <div className="font-medium text-navy-900 group-hover:text-scooter-dark transition-colors line-clamp-1 flex items-center gap-2">
-                      {p.title}
-                      {p.status === 'draft' && (
-                        <Badge variant="muted" className="text-[9px] bg-amber-100 text-amber-800 border border-amber-200">Draft</Badge>
-                      )}
-                    </div>
-                    <div className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{p.excerpt}</div>
-                  </Link>
-                </td>
-                <td className="px-4 py-3 align-top hidden md:table-cell">
-                  <div className="flex flex-wrap gap-1">
-                    {p.tags.slice(0, 3).map((t) => (
-                      <Badge key={t} variant="muted" className="text-[10px]">{t}</Badge>
-                    ))}
-                    {p.tags.length > 3 && (
-                      <span className="text-[10px] text-muted-foreground self-center">+{p.tags.length - 3}</span>
-                    )}
-                  </div>
-                </td>
-                <td className="px-4 py-3 align-top hidden sm:table-cell text-xs text-muted-foreground">
-                  <div>{formatDate(p.date)}</div>
-                  {p.updated && (
-                    <div className="text-[10px] text-muted-foreground/70 mt-0.5" title={new Date(p.updated).toLocaleString()}>
-                      Edited {formatRelative(p.updated)}
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <BlogTable posts={filtered} />
     </div>
   )
 }

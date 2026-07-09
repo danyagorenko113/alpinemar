@@ -9,6 +9,7 @@ import {
   Briefcase,
   Building2,
   Users,
+  PenLine,
   ImageIcon,
   LayoutTemplate,
   Star,
@@ -46,6 +47,7 @@ const navGroups: NavGroup[] = [
       { href: '/services', label: 'Services', icon: Briefcase, title: 'Service pages' },
       { href: '/industries', label: 'Industries', icon: Building2, title: 'Industry pages' },
       { href: '/team', label: 'Team', icon: Users, title: 'Team members' },
+      { href: '/authors', label: 'Authors', icon: PenLine, title: 'Blog authors & bios' },
     ],
   },
   {

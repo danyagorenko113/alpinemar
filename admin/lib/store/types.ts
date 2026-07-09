@@ -37,6 +37,11 @@ export interface ContentStore {
   list(dir: string, ext?: string): Promise<ListResult[]>
   /** Returns null when the file does not exist. */
   read(path: string): Promise<RepoFile | null>
+  /**
+   * Binary-safe read (images etc.). Pass the blob sha when known (github
+   * backend uses the blobs API which supports files > 1MB).
+   */
+  readRaw(path: string, sha?: string): Promise<{ content: Buffer; sha?: string } | null>
   /** Create or overwrite. Pass a string for text files (UTF-8) or a Buffer for binary (images). */
   write(path: string, content: string | Buffer, opts: WriteOptions): Promise<{ sha: string }>
   /** Delete a file. Idempotent. */

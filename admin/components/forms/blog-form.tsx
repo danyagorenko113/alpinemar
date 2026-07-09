@@ -21,9 +21,15 @@ import { toDateString } from '@/lib/store/markdown'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
+const NEW_CATEGORY = '__new__'
+const CUSTOM_AUTHOR = '__custom__'
+
 interface BlogFormProps {
   initial?: BlogPost
   tagSuggestions: string[]
+  categorySuggestions: string[]
+  /** Names from the authors collection. Empty → free-text author input. */
+  authorOptions: string[]
 }
 
 const empty: BlogPost = {
@@ -33,13 +39,15 @@ const empty: BlogPost = {
   date: toDateString(new Date()),
   author: 'The Alpine Mar editorial team',
   cover: '',
+  coverAlt: '',
+  category: '',
   tags: [],
   status: 'published',
-  seo: { title: '', description: '' },
+  seo: { title: '', description: '', canonical: '' },
   body: '',
 }
 
-export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
+export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorOptions }: BlogFormProps) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [post, setPost] = useState<BlogPost>(initial ?? empty)
@@ -47,6 +55,12 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [dirty, setDirty] = useState(false)
+  // Explicit `updated` override (YYYY-MM-DD). Empty = stamped on save.
+  const [updatedOverride, setUpdatedOverride] = useState('')
+  const [newCategory, setNewCategory] = useState(false)
+  const [customAuthor, setCustomAuthor] = useState(
+    () => !!initial?.author && authorOptions.length > 0 && !authorOptions.includes(initial.author),
+  )
 
   useUnsavedChanges(dirty)
 
@@ -85,8 +99,12 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
           date: post.date || toDateString(new Date()),
           author: post.author?.trim() || undefined,
           cover: post.cover?.trim() || undefined,
+          coverAlt: post.coverAlt?.trim() || undefined,
+          category: post.category?.trim() || undefined,
           tags: post.tags,
           status: post.status,
+          // Only sent when explicitly overridden; server stamps otherwise.
+          updated: updatedOverride ? new Date(`${updatedOverride}T12:00:00`).toISOString() : undefined,
           seo: post.seo,
         }
         const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha })
@@ -116,6 +134,13 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
       }
     })
   }
+
+  // Current category may predate the suggestions list — keep it selectable.
+  const categoryChoices = [...categorySuggestions]
+  if (post.category && !categoryChoices.includes(post.category)) categoryChoices.push(post.category)
+  categoryChoices.sort()
+
+  const canonicalPlaceholder = `${SITE_URL}/blog/${post.slug || '…'}/`
 
   return (
     <>
@@ -209,6 +234,18 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
                 placeholder="Falls back to excerpt"
               />
             </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="seo-canonical">Canonical URL</Label>
+              <Input
+                id="seo-canonical"
+                value={post.seo?.canonical ?? ''}
+                onChange={(e) => updateSeo('canonical', e.target.value)}
+                placeholder={canonicalPlaceholder}
+              />
+              <p className="text-xs text-muted-foreground">
+                Leave blank for the self-referencing default shown above.
+              </p>
+            </div>
           </section>
         </div>
 
@@ -232,7 +269,49 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
-            <ImageUploader value={post.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/blog" />
+            <ImageUploader
+              value={post.cover ?? ''}
+              onChange={(url) => update('cover', url)}
+              uploadDir="images/blog"
+              alt={post.coverAlt ?? ''}
+              onAltChange={(v) => update('coverAlt', v)}
+              altLabel="Cover alt text"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <Label htmlFor="category">Category</Label>
+            <select
+              id="category"
+              value={newCategory ? NEW_CATEGORY : (post.category ?? '')}
+              onChange={(e) => {
+                if (e.target.value === NEW_CATEGORY) {
+                  setNewCategory(true)
+                  update('category', '')
+                } else {
+                  setNewCategory(false)
+                  update('category', e.target.value)
+                }
+              }}
+              className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="">— None —</option>
+              {categoryChoices.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+              <option value={NEW_CATEGORY}>+ New category…</option>
+            </select>
+            {newCategory && (
+              <Input
+                value={post.category ?? ''}
+                onChange={(e) => update('category', e.target.value)}
+                placeholder="New category name"
+                autoFocus
+              />
+            )}
+            <p className="text-xs text-muted-foreground">
+              One category per post — mirrors the original site's convention.
+            </p>
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
@@ -251,12 +330,67 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="space-y-1.5">
               <Label htmlFor="author">Author</Label>
+              {authorOptions.length > 0 ? (
+                <>
+                  <select
+                    id="author"
+                    value={customAuthor ? CUSTOM_AUTHOR : (post.author ?? '')}
+                    onChange={(e) => {
+                      if (e.target.value === CUSTOM_AUTHOR) {
+                        setCustomAuthor(true)
+                        update('author', '')
+                      } else {
+                        setCustomAuthor(false)
+                        update('author', e.target.value)
+                      }
+                    }}
+                    className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                  >
+                    <option value="">— None —</option>
+                    {authorOptions.map((a) => (
+                      <option key={a} value={a}>{a}</option>
+                    ))}
+                    <option value={CUSTOM_AUTHOR}>Custom…</option>
+                  </select>
+                  {customAuthor && (
+                    <Input
+                      value={post.author ?? ''}
+                      onChange={(e) => update('author', e.target.value)}
+                      placeholder="Custom byline"
+                      autoFocus
+                    />
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    Names come from the Authors collection.
+                  </p>
+                </>
+              ) : (
+                <Input
+                  id="author"
+                  value={post.author ?? ''}
+                  onChange={(e) => update('author', e.target.value)}
+                  placeholder="The Alpine Mar editorial team"
+                />
+              )}
+            </div>
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="updated-override">Updated date</Label>
               <Input
-                id="author"
-                value={post.author ?? ''}
-                onChange={(e) => update('author', e.target.value)}
-                placeholder="The Alpine Mar editorial team"
+                id="updated-override"
+                type="date"
+                value={updatedOverride}
+                onChange={(e) => {
+                  setUpdatedOverride(e.target.value)
+                  setDirty(true)
+                }}
               />
+              <p className="text-xs text-muted-foreground">
+                Leave empty to stamp the save time automatically.
+                {initial?.updated && <> Currently {formatDate(initial.updated)}.</>}
+              </p>
             </div>
           </section>
 
@@ -323,11 +457,14 @@ export function BlogForm({ initial, tagSuggestions }: BlogFormProps) {
           </DialogHeader>
           {post.cover && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={previewSrc(post.cover)} alt="" className="w-full max-h-[320px] object-cover" />
+            <img src={previewSrc(post.cover)} alt={post.coverAlt ?? ''} className="w-full max-h-[320px] object-cover" />
           )}
           <div className="px-8 py-8 space-y-5">
             <div>
-              <p className="text-xs uppercase tracking-widest text-scooter-dark mb-2">{formatDate(post.date)}</p>
+              <p className="text-xs uppercase tracking-widest text-scooter-dark mb-2">
+                {formatDate(post.date)}
+                {post.category && <> · {post.category}</>}
+              </p>
               <h1 className="text-3xl font-semibold tracking-tight leading-tight">{post.title || 'Untitled'}</h1>
               {post.excerpt && <p className="mt-3 text-base text-navy-500">{post.excerpt}</p>}
             </div>

@@ -12,15 +12,24 @@ const LIST_TTL_MS = 60_000
 
 export type ContentStatus = 'draft' | 'published'
 
+export interface IndustrySeo {
+  title?: string
+  description?: string
+  /** Canonical URL override — defaults to the page's own URL on the site. */
+  canonical?: string
+}
+
 export interface IndustryFrontmatter {
   title: string
   path: string
   summary: string
   cover?: string
+  /** Alt text for the cover/banner image. */
+  coverAlt?: string
   services: string[]
   status: ContentStatus
   updated?: string
-  seo?: { title?: string; description?: string }
+  seo?: IndustrySeo
 }
 
 export interface Industry extends IndustryFrontmatter {
@@ -51,6 +60,7 @@ function normalize(data: Record<string, unknown>): IndustryFrontmatter {
     path: String(data.path ?? ''),
     summary: String(data.summary ?? ''),
     cover: data.cover ? String(data.cover) : undefined,
+    coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     services: Array.isArray(data.services) ? (data.services as string[]) : [],
     status,
     updated,
@@ -111,10 +121,18 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
     path: fm.path || `/industries/${finalSlug}/`,
     summary: fm.summary,
     cover: fm.cover,
+    coverAlt: fm.coverAlt,
     services: fm.services,
     status: fm.status === 'draft' ? 'draft' : undefined,
     updated: new Date().toISOString(),
-    seo: fm.seo && (fm.seo.title || fm.seo.description) ? fm.seo : undefined,
+    seo:
+      fm.seo && (fm.seo.title || fm.seo.description || fm.seo.canonical)
+        ? {
+            ...(fm.seo.title ? { title: fm.seo.title } : {}),
+            ...(fm.seo.description ? { description: fm.seo.description } : {}),
+            ...(fm.seo.canonical ? { canonical: fm.seo.canonical } : {}),
+          }
+        : undefined,
   }
 
   const payload = mergeFrontmatter(original, updates)

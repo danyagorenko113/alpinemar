@@ -11,9 +11,19 @@ import { Label } from '@/components/ui/label'
 import { RichTextEditor } from '@/components/editor/rich-text-editor'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
+import { StringList } from '@/components/shared/string-list'
+import { StructList } from '@/components/shared/struct-list'
+import { SectionOrder, type SectionDef } from '@/components/shared/section-order'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
-import { saveService, deleteService, type Service, type ServiceFrontmatter, type ServiceGroup } from '@/lib/actions/services'
+import {
+  saveService,
+  deleteService,
+  type Service,
+  type ServiceFrontmatter,
+  type ServiceGroup,
+  type ServiceSectionKey,
+} from '@/lib/actions/services'
 import { slugify } from '@/lib/utils'
 
 interface Props {
@@ -24,16 +34,31 @@ interface Props {
 const GROUPS: ServiceGroup[] = ['Tax', 'Accounting', 'Advisory', 'Compliance']
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
+/** Detail-page sections in the site's default render order. */
+const SECTION_DEFS: SectionDef<ServiceSectionKey>[] = [
+  { key: 'benefits', label: 'What you get', hint: '(takeaways)' },
+  { key: 'included', label: "What's included" },
+  { key: 'process', label: 'How we work' },
+  { key: 'reviews', label: 'Reviews' },
+  { key: 'faq', label: 'FAQ' },
+]
+
 const empty: Service = {
   slug: '',
   title: '',
   path: '',
   summary: '',
   cover: '',
+  coverAlt: '',
   group: undefined,
+  sections: undefined,
+  takeaways: [],
+  included: [],
+  process: [],
+  faq: [],
   industries: [],
   status: 'published',
-  seo: { title: '', description: '' },
+  seo: { title: '', description: '', canonical: '' },
   body: '',
 }
 
@@ -76,7 +101,13 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
           path: s.path || `/services/${s.slug}/`,
           summary: s.summary,
           cover: s.cover || undefined,
+          coverAlt: s.coverAlt?.trim() || undefined,
           group: s.group,
+          sections: s.sections,
+          takeaways: s.takeaways,
+          included: s.included,
+          process: s.process,
+          faq: s.faq,
           industries: s.industries,
           status: s.status,
           seo: s.seo,
@@ -107,6 +138,7 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
   }
 
   const livePath = initial ? initial.path || `/services/${initial.slug}/` : ''
+  const canonicalPlaceholder = `${SITE_URL}${s.path || `/services/${s.slug || '…'}/`}`
 
   return (
     <>
@@ -167,6 +199,66 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
             />
           </section>
 
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">Key takeaways</h2>
+              <span className="text-xs text-muted-foreground">"What you get" — 3–5 bullets above the body</span>
+            </div>
+            <StringList
+              value={s.takeaways}
+              onChange={(v) => update('takeaways', v)}
+              placeholder="e.g. Audit-ready financials every quarter"
+              addLabel="Add takeaway"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">What's included</h2>
+              <span className="text-xs text-muted-foreground">Deliverables list</span>
+            </div>
+            <StringList
+              value={s.included}
+              onChange={(v) => update('included', v)}
+              placeholder="e.g. Monthly close & reconciliations"
+              addLabel="Add deliverable"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">Process</h2>
+              <span className="text-xs text-muted-foreground">"How we work" — numbered steps</span>
+            </div>
+            <StructList
+              value={s.process}
+              onChange={(v) => update('process', v)}
+              fields={[
+                { key: 'title', label: 'Step title', placeholder: 'e.g. Discovery & scoping' },
+                { key: 'body', label: 'Step description', textarea: true, placeholder: 'What happens in this step…' },
+              ]}
+              defaultItem={{ title: '', body: '' }}
+              addLabel="Add step"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">FAQ</h2>
+              <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
+            </div>
+            <StructList
+              value={s.faq}
+              onChange={(v) => update('faq', v)}
+              fields={[
+                { key: 'q', label: 'Question', placeholder: 'e.g. How long does an audit take?' },
+                { key: 'a', label: 'Answer', textarea: true, placeholder: 'Answer…' },
+              ]}
+              defaultItem={{ q: '', a: '' }}
+              addLabel="Add question"
+            />
+          </section>
+
           <section className="rounded-lg border bg-card p-5 space-y-4">
             <h2 className="text-base font-semibold">SEO</h2>
             <div className="space-y-1.5">
@@ -176,6 +268,15 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
             <div className="space-y-1.5">
               <Label>Meta description</Label>
               <Textarea value={s.seo?.description ?? ''} onChange={(e) => updateSeo('description', e.target.value)} rows={2} />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Canonical URL</Label>
+              <Input
+                value={s.seo?.canonical ?? ''}
+                onChange={(e) => updateSeo('canonical', e.target.value)}
+                placeholder={canonicalPlaceholder}
+              />
+              <p className="text-xs text-muted-foreground">Leave blank for the self-referencing default shown above.</p>
             </div>
           </section>
         </div>
@@ -197,7 +298,14 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
-            <ImageUploader value={s.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/services" />
+            <ImageUploader
+              value={s.cover ?? ''}
+              onChange={(url) => update('cover', url)}
+              uploadDir="images/services"
+              alt={s.coverAlt ?? ''}
+              onAltChange={(v) => update('coverAlt', v)}
+              altLabel="Cover alt text"
+            />
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
@@ -216,6 +324,18 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
               </select>
               <p className="text-xs text-muted-foreground">Categorizes the service on the hub.</p>
             </div>
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <Label>Page sections</Label>
+            <SectionOrder<ServiceSectionKey>
+              defs={SECTION_DEFS}
+              value={s.sections}
+              onChange={(v) => update('sections', v)}
+            />
+            <p className="text-xs text-muted-foreground">
+              Uncheck to hide a section; reorder with the arrows. Default arrangement keeps the frontmatter clean.
+            </p>
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">

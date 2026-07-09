@@ -12,16 +12,27 @@ const LIST_TTL_MS = 60_000
 
 export type ContentStatus = 'draft' | 'published'
 
+export interface BlogSeo {
+  title?: string
+  description?: string
+  /** Canonical URL override — defaults to the post's own URL on the site. */
+  canonical?: string
+}
+
 export interface BlogFrontmatter {
   title: string
   excerpt: string
   date: string // YYYY-MM-DD
   author?: string
   cover?: string
+  /** Alt text for the cover image. */
+  coverAlt?: string
+  /** Single category (original-site convention); tags stay separate. */
+  category?: string
   tags: string[]
   status: ContentStatus
   updated?: string // ISO datetime
-  seo?: { title?: string; description?: string }
+  seo?: BlogSeo
 }
 
 export interface BlogPost extends BlogFrontmatter {
@@ -60,6 +71,8 @@ function normalize(data: Record<string, unknown>): BlogFrontmatter {
     date: toDateString(data.date as string | Date | undefined),
     author: data.author ? String(data.author) : undefined,
     cover: data.cover ? String(data.cover) : undefined,
+    coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
+    category: data.category ? String(data.category) : undefined,
     tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
     status,
     updated,
@@ -118,14 +131,19 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
     date: input.frontmatter.date,
     author: input.frontmatter.author,
     cover: input.frontmatter.cover,
+    coverAlt: input.frontmatter.coverAlt,
+    category: input.frontmatter.category,
     tags: input.frontmatter.tags,
     status: input.frontmatter.status === 'draft' ? 'draft' : undefined,
-    updated: new Date().toISOString(),
+    // Explicit override wins; otherwise the CMS stamps the save time.
+    updated: input.frontmatter.updated || new Date().toISOString(),
   }
-  if (input.frontmatter.seo && (input.frontmatter.seo.title || input.frontmatter.seo.description)) {
+  const seo = input.frontmatter.seo
+  if (seo && (seo.title || seo.description || seo.canonical)) {
     updates.seo = {
-      ...(input.frontmatter.seo.title ? { title: input.frontmatter.seo.title } : {}),
-      ...(input.frontmatter.seo.description ? { description: input.frontmatter.seo.description } : {}),
+      ...(seo.title ? { title: seo.title } : {}),
+      ...(seo.description ? { description: seo.description } : {}),
+      ...(seo.canonical ? { canonical: seo.canonical } : {}),
     }
   } else {
     updates.seo = undefined
@@ -155,4 +173,13 @@ export async function listAllTags(): Promise<string[]> {
   const tags = new Set<string>()
   posts.forEach((p) => p.tags.forEach((t) => tags.add(t)))
   return [...tags].sort()
+}
+
+export async function listAllCategories(): Promise<string[]> {
+  const posts = await listBlogPosts()
+  const categories = new Set<string>()
+  posts.forEach((p) => {
+    if (p.category) categories.add(p.category)
+  })
+  return [...categories].sort()
 }

@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Upload, X } from 'lucide-react'
-import { uploadImage } from '@/lib/actions/media'
+import { uploadImage, getImageMetaByUrl } from '@/lib/actions/media'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { cn, previewSrc } from '@/lib/utils'
 
@@ -13,9 +14,18 @@ interface ImageUploaderProps {
   onChange: (url: string) => void
   uploadDir?: string
   className?: string
+  /** Current ALT text. Rendered as an input when `onAltChange` is provided. */
+  alt?: string
+  /**
+   * When provided, an ALT text input renders below the uploader. Uploads save
+   * the alt into the media manifest, and pasting a library URL that already
+   * has a manifest alt pre-fills it.
+   */
+  onAltChange?: (alt: string) => void
+  altLabel?: string
 }
 
-export function ImageUploader({ value, onChange, uploadDir, className }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, uploadDir, className, alt, onAltChange, altLabel = 'Alt text' }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
 
@@ -26,7 +36,7 @@ export function ImageUploader({ value, onChange, uploadDir, className }: ImageUp
     try {
       const fd = new FormData()
       fd.append('file', file)
-      const { url } = await uploadImage(fd, { dir: uploadDir })
+      const { url } = await uploadImage(fd, { dir: uploadDir, alt: alt?.trim() || undefined })
       onChange(url)
       toast.success('Image uploaded')
     } catch (err) {
@@ -36,12 +46,23 @@ export function ImageUploader({ value, onChange, uploadDir, className }: ImageUp
     }
   }
 
+  /** Pasted a library URL? Pull its manifest alt if we don't have one yet. */
+  async function handleUrlBlur() {
+    if (!onAltChange || !value || alt?.trim()) return
+    try {
+      const meta = await getImageMetaByUrl(value)
+      if (meta?.alt) onAltChange(meta.alt)
+    } catch {
+      // Lookup is best-effort; ignore failures.
+    }
+  }
+
   return (
     <div className={cn('space-y-3', className)}>
       {value ? (
         <div className="relative inline-block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={previewSrc(value)} alt="" className="max-h-56 rounded-md border bg-navy-50" />
+          <img src={previewSrc(value)} alt={alt ?? ''} className="max-h-56 rounded-md border bg-navy-50" />
           <Button
             type="button"
             variant="destructive"
@@ -89,10 +110,22 @@ export function ImageUploader({ value, onChange, uploadDir, className }: ImageUp
         <Input
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onBlur={handleUrlBlur}
           placeholder="Or paste an image URL (e.g. /images/blog/foo.jpg)"
           className="text-xs"
         />
       </div>
+      {onAltChange && (
+        <div className="space-y-1.5">
+          <Label className="text-xs">{altLabel}</Label>
+          <Input
+            value={alt ?? ''}
+            onChange={(e) => onAltChange(e.target.value)}
+            placeholder="Describe the image for screen readers & SEO"
+            className="text-xs"
+          />
+        </div>
+      )}
     </div>
   )
 }

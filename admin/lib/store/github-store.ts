@@ -61,6 +61,26 @@ export const githubStore: ContentStore = {
     }
   },
 
+  async readRaw(p: string, sha?: string): Promise<{ content: Buffer; sha?: string } | null> {
+    const k = octo()
+    const { owner, repo: r, branch } = repo()
+    try {
+      if (sha) {
+        // Blobs API supports files up to 100MB (contents API caps at 1MB).
+        const res = await k.git.getBlob({ owner, repo: r, file_sha: sha })
+        return { content: Buffer.from(res.data.content, 'base64'), sha }
+      }
+      const res = await k.repos.getContent({ owner, repo: r, path: p, ref: branch })
+      const data = res.data
+      if (Array.isArray(data) || data.type !== 'file') return null
+      return { content: Buffer.from(data.content, data.encoding as BufferEncoding), sha: data.sha }
+    } catch (err: unknown) {
+      const e = err as { status?: number }
+      if (e?.status === 404) return null
+      throw err
+    }
+  },
+
   async write(p: string, content: string | Buffer, opts: WriteOptions): Promise<{ sha: string }> {
     const k = octo()
     const { owner, repo: r, branch } = repo()

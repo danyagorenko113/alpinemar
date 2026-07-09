@@ -13,16 +13,43 @@ const LIST_TTL_MS = 60_000
 export type ServiceGroup = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance'
 export type ContentStatus = 'draft' | 'published'
 
+/** Detail-page sections, in the site's default render order. */
+export type ServiceSectionKey = 'benefits' | 'included' | 'process' | 'reviews' | 'faq'
+
+// Type aliases (not interfaces) so they satisfy StructList's
+// Record<string, string> constraint via implicit index signatures.
+export type ServiceProcessStep = { title: string; body: string }
+export type ServiceFaqItem = { q: string; a: string }
+
+export interface ServiceSeo {
+  title?: string
+  description?: string
+  /** Canonical URL override — defaults to the page's own URL on the site. */
+  canonical?: string
+}
+
 export interface ServiceFrontmatter {
   title: string
   path: string
   summary: string
   cover?: string
+  /** Alt text for the cover/banner image. */
+  coverAlt?: string
   group?: ServiceGroup
+  /** Section order + visibility; undefined = default full layout. */
+  sections?: ServiceSectionKey[]
+  /** "What you get" bullets surfaced above the body. */
+  takeaways: string[]
+  /** "What's included" deliverables list. */
+  included: string[]
+  /** Ordered engagement steps (numbered process strip). */
+  process: ServiceProcessStep[]
+  /** FAQ entries for the detail page. */
+  faq: ServiceFaqItem[]
   industries: string[]
   status: ContentStatus
   updated?: string
-  seo?: { title?: string; description?: string }
+  seo?: ServiceSeo
 }
 
 export interface Service extends ServiceFrontmatter {
@@ -48,12 +75,32 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
     : typeof rawUpdated === 'string' && rawUpdated
       ? rawUpdated
       : undefined
+  const validSections: ServiceSectionKey[] = ['benefits', 'included', 'process', 'reviews', 'faq']
+  const sections = Array.isArray(data.sections)
+    ? (data.sections.filter((s): s is ServiceSectionKey => validSections.includes(s as ServiceSectionKey)))
+    : undefined
   return {
     title: String(data.title ?? ''),
     path: String(data.path ?? ''),
     summary: String(data.summary ?? ''),
     cover: data.cover ? String(data.cover) : undefined,
+    coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     group: data.group as ServiceGroup | undefined,
+    sections: sections && sections.length > 0 ? sections : undefined,
+    takeaways: Array.isArray(data.takeaways) ? (data.takeaways as string[]).map(String) : [],
+    included: Array.isArray(data.included) ? (data.included as string[]).map(String) : [],
+    process: Array.isArray(data.process)
+      ? (data.process as Array<Record<string, unknown>>).map((p) => ({
+          title: String(p?.title ?? ''),
+          body: String(p?.body ?? ''),
+        }))
+      : [],
+    faq: Array.isArray(data.faq)
+      ? (data.faq as Array<Record<string, unknown>>).map((f) => ({
+          q: String(f?.q ?? ''),
+          a: String(f?.a ?? ''),
+        }))
+      : [],
     industries: Array.isArray(data.industries) ? (data.industries as string[]) : [],
     status,
     updated,
@@ -114,11 +161,25 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
     path: fm.path || `/services/${finalSlug}/`,
     summary: fm.summary,
     cover: fm.cover,
+    coverAlt: fm.coverAlt,
     group: fm.group,
+    // undefined = default full layout → key is dropped from frontmatter.
+    sections: fm.sections,
+    takeaways: fm.takeaways.map((t) => t.trim()).filter(Boolean),
+    included: fm.included.map((t) => t.trim()).filter(Boolean),
+    process: fm.process.filter((p) => p.title.trim() || p.body.trim()),
+    faq: fm.faq.filter((f) => f.q.trim() || f.a.trim()),
     industries: fm.industries,
     status: fm.status === 'draft' ? 'draft' : undefined,
     updated: new Date().toISOString(),
-    seo: fm.seo && (fm.seo.title || fm.seo.description) ? fm.seo : undefined,
+    seo:
+      fm.seo && (fm.seo.title || fm.seo.description || fm.seo.canonical)
+        ? {
+            ...(fm.seo.title ? { title: fm.seo.title } : {}),
+            ...(fm.seo.description ? { description: fm.seo.description } : {}),
+            ...(fm.seo.canonical ? { canonical: fm.seo.canonical } : {}),
+          }
+        : undefined,
   }
 
   const payload = mergeFrontmatter(original, updates)

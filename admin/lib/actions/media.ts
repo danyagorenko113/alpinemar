@@ -2,7 +2,9 @@
 
 import path from 'path'
 import sharp from 'sharp'
+import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
+import type { ContentStore } from '@/lib/store/types'
 import { slugify } from '@/lib/utils'
 
 const VALID_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/svg+xml'])
@@ -14,18 +16,69 @@ const WEBP_QUALITY = 82
 // as-is (SVG is XML, GIF may be animated, AVIF is already efficient).
 const TRANSCODE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
-interface UploadResult {
-  /** Public URL the Astro site will resolve at build time. */
+/** Repo path of the media metadata manifest (alt text + upload dates). */
+const META_PATH = 'src/data/media-meta.json'
+
+export interface MediaMetaEntry {
+  alt?: string
+  /** ISO datetime the file was uploaded through the admin. */
+  uploadedAt?: string
+}
+
+/** image repo path (public/…) → metadata */
+export type MediaMeta = Record<string, MediaMetaEntry>
+
+export interface MediaItem {
+  /** Public URL the Astro site serves, e.g. /images/blog/2026/foo.webp */
   url: string
-  /** Repo path, e.g. public/images/blog/2026/foo.jpg */
+  /** Repo path, e.g. public/images/blog/2026/foo.webp */
+  path: string
+  alt?: string
+  uploadedAt?: string
+}
+
+interface UploadResult {
+  url: string
   path: string
 }
+
+// ---------------------------------------------------------------------------
+// Manifest helpers
+// ---------------------------------------------------------------------------
+
+async function readMeta(store: ContentStore): Promise<{ meta: MediaMeta; sha?: string }> {
+  const doc = await store.read(META_PATH)
+  if (!doc) return { meta: {} }
+  try {
+    const parsed = JSON.parse(doc.content) as MediaMeta
+    return { meta: parsed && typeof parsed === 'object' ? parsed : {}, sha: doc.sha }
+  } catch {
+    return { meta: {}, sha: doc.sha }
+  }
+}
+
+async function writeMeta(store: ContentStore, meta: MediaMeta, sha: string | undefined, message: string): Promise<void> {
+  const sorted: MediaMeta = {}
+  for (const key of Object.keys(meta).sort()) sorted[key] = meta[key]
+  await store.write(META_PATH, JSON.stringify(sorted, null, 2) + '\n', { message, sha })
+}
+
+/** Apply `mutate` to the manifest and persist it. Best-effort — media files are the source of truth. */
+async function updateMeta(store: ContentStore, message: string, mutate: (meta: MediaMeta) => void): Promise<void> {
+  const { meta, sha } = await readMeta(store)
+  mutate(meta)
+  await writeMeta(store, meta, sha, message)
+}
+
+// ---------------------------------------------------------------------------
+// Uploads
+// ---------------------------------------------------------------------------
 
 /**
  * Upload an image. We store under `public/<dir>/<year>/<slug>.<ext>` so the
  * Astro site serves it at `/<dir>/<year>/<slug>.<ext>` after the next build.
  */
-export async function uploadImage(form: FormData, opts: { dir?: string } = {}): Promise<UploadResult> {
+export async function uploadImage(form: FormData, opts: { dir?: string; alt?: string } = {}): Promise<UploadResult> {
   const file = form.get('file') as File | null
   if (!file) throw new Error('No file provided')
   if (!VALID_TYPES.has(file.type)) throw new Error(`Unsupported file type: ${file.type}`)
@@ -45,6 +98,19 @@ export async function uploadImage(form: FormData, opts: { dir?: string } = {}): 
   const store = getStore()
   await store.write(repoPath, buffer, { message: `chore(admin): upload ${uniqueName}` })
 
+  // Record upload metadata (best-effort — the image itself is already saved).
+  try {
+    await updateMeta(store, `chore(admin): media meta for ${uniqueName}`, (meta) => {
+      meta[repoPath] = {
+        ...(opts.alt?.trim() ? { alt: opts.alt.trim() } : {}),
+        uploadedAt: new Date().toISOString(),
+      }
+    })
+  } catch {
+    // Ignore manifest write races; alt can be set later from the media library.
+  }
+
+  revalidatePath('/media')
   return { url: `/${dir}/${year}/${uniqueName}`, path: repoPath }
 }
 
@@ -82,22 +148,160 @@ async function optimize(
   }
 }
 
-export async function listImages(dir = 'images'): Promise<{ url: string; path: string }[]> {
+// ---------------------------------------------------------------------------
+// Listing & metadata
+// ---------------------------------------------------------------------------
+
+export async function listImages(dir = 'images'): Promise<MediaItem[]> {
   const store = getStore()
-  const files = await store.list(`public/${dir}`)
+  const [files, { meta }] = await Promise.all([store.list(`public/${dir}`), readMeta(store)])
   return files
     .filter((f) => /\.(jpe?g|png|webp|gif|avif|svg)$/i.test(f.path))
     .map((f) => ({
       path: f.path,
       url: f.path.replace(/^public/, ''),
+      alt: meta[f.path]?.alt,
+      uploadedAt: meta[f.path]?.uploadedAt,
     }))
     .sort((a, b) => b.path.localeCompare(a.path))
 }
+
+/**
+ * Top-level folders under public/images/ — includes empty folders held open
+ * by a .gitkeep, which the image listing filters out.
+ */
+export async function listImageFolders(): Promise<string[]> {
+  const store = getStore()
+  const files = await store.list('public/images')
+  const set = new Set<string>()
+  for (const f of files) {
+    const rel = f.path.replace(/^public\/images\//, '')
+    const seg = rel.split('/')[0]
+    if (seg && !seg.includes('.')) set.add(seg)
+  }
+  return [...set].sort()
+}
+
+/** Set (or clear, when empty) the ALT text stored for an image. */
+export async function setImageAlt(repoPath: string, alt: string): Promise<void> {
+  if (!repoPath.startsWith('public/')) throw new Error('Invalid image path')
+  const store = getStore()
+  await updateMeta(store, `chore(admin): alt text for ${path.basename(repoPath)}`, (meta) => {
+    const entry = { ...(meta[repoPath] ?? {}) }
+    if (alt.trim()) entry.alt = alt.trim()
+    else delete entry.alt
+    if (Object.keys(entry).length === 0) delete meta[repoPath]
+    else meta[repoPath] = entry
+  })
+  revalidatePath('/media')
+}
+
+/** Look up manifest metadata by public URL (e.g. /images/blog/2026/foo.webp). */
+export async function getImageMetaByUrl(url: string): Promise<MediaMetaEntry | null> {
+  if (!url.startsWith('/')) return null
+  const store = getStore()
+  const { meta } = await readMeta(store)
+  return meta[`public${url}`] ?? null
+}
+
+// ---------------------------------------------------------------------------
+// Deletion & folder management
+// ---------------------------------------------------------------------------
 
 export async function deleteImage(repoPath: string): Promise<void> {
   if (!repoPath.startsWith('public/')) throw new Error('Refusing to delete outside public/')
   const store = getStore()
   await store.remove(repoPath, { message: `chore(admin): delete ${path.basename(repoPath)}` })
+  try {
+    await updateMeta(store, `chore(admin): drop media meta for ${path.basename(repoPath)}`, (meta) => {
+      delete meta[repoPath]
+    })
+  } catch {
+    // Stale manifest entries are harmless.
+  }
+  revalidatePath('/media')
+}
+
+function validFolderName(name: string): string {
+  const clean = slugify(name)
+  if (!clean) throw new Error('Folder name is required')
+  return clean
+}
+
+/** Create an empty folder under public/images/ (held open by a .gitkeep). */
+export async function createFolder(name: string): Promise<string> {
+  const clean = validFolderName(name)
+  const store = getStore()
+  await store.write(`public/images/${clean}/.gitkeep`, '', {
+    message: `chore(admin): create media folder images/${clean}`,
+  })
+  revalidatePath('/media')
+  return clean
+}
+
+/**
+ * Rename a top-level folder under public/images/. GitHub's Contents API has
+ * no move, so this copies every file (delete + create) — can take a while
+ * for large folders.
+ */
+export async function renameFolder(from: string, to: string): Promise<string> {
+  const src = validFolderName(from)
+  const dest = validFolderName(to)
+  if (src === dest) return dest
+
+  const store = getStore()
+  const files = await store.list(`public/images/${src}`)
+  if (files.length === 0) throw new Error(`Folder images/${src} is empty or does not exist`)
+
+  const destFiles = await store.list(`public/images/${dest}`)
+  if (destFiles.length > 0) throw new Error(`Folder images/${dest} already exists`)
+
+  const renamed: Array<{ from: string; to: string }> = []
+  for (const f of files) {
+    const raw = await store.readRaw(f.path, f.sha)
+    if (!raw) continue
+    const newPath = f.path.replace(`public/images/${src}/`, `public/images/${dest}/`)
+    await store.write(newPath, raw.content, { message: `chore(admin): move ${f.path} → ${newPath}` })
+    await store.remove(f.path, { message: `chore(admin): move ${f.path} → ${newPath}` })
+    renamed.push({ from: f.path, to: newPath })
+  }
+
+  try {
+    await updateMeta(store, `chore(admin): rename media folder images/${src} → images/${dest}`, (meta) => {
+      for (const r of renamed) {
+        if (meta[r.from]) {
+          meta[r.to] = meta[r.from]
+          delete meta[r.from]
+        }
+      }
+    })
+  } catch {
+    // Manifest is advisory; a failed rewrite only loses alt/upload dates.
+  }
+
+  revalidatePath('/media')
+  return dest
+}
+
+/** Delete a top-level folder under public/images/ and every file inside it. */
+export async function deleteFolder(name: string): Promise<number> {
+  const clean = validFolderName(name)
+  const store = getStore()
+  const files = await store.list(`public/images/${clean}`)
+  for (const f of files) {
+    await store.remove(f.path, { message: `chore(admin): delete media folder images/${clean}`, sha: f.sha })
+  }
+  try {
+    await updateMeta(store, `chore(admin): drop media meta for images/${clean}`, (meta) => {
+      for (const key of Object.keys(meta)) {
+        if (key.startsWith(`public/images/${clean}/`)) delete meta[key]
+      }
+    })
+  } catch {
+    // Stale manifest entries are harmless.
+  }
+  revalidatePath('/media')
+  return files.length
 }
 
 function extFromType(t: string): string {

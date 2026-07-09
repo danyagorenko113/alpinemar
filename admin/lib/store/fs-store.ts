@@ -48,6 +48,18 @@ export const fsStore: ContentStore = {
     }
   },
 
+  async readRaw(p: string): Promise<{ content: Buffer; sha?: string } | null> {
+    const abs = path.join(repoRoot(), p)
+    try {
+      const content = await fs.readFile(abs)
+      const stat = await fs.stat(abs)
+      return { content, sha: String(stat.mtimeMs) }
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null
+      throw err
+    }
+  },
+
   async write(p: string, content: string | Buffer, _opts: WriteOptions): Promise<{ sha: string }> {
     const abs = path.join(repoRoot(), p)
     await fs.mkdir(path.dirname(abs), { recursive: true })

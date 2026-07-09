@@ -29,9 +29,10 @@ const empty: Industry = {
   path: '',
   summary: '',
   cover: '',
+  coverAlt: '',
   services: [],
   status: 'published',
-  seo: { title: '', description: '' },
+  seo: { title: '', description: '', canonical: '' },
   body: '',
 }
 
@@ -74,6 +75,7 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
           path: i.path || `/industries/${i.slug}/`,
           summary: i.summary,
           cover: i.cover || undefined,
+          coverAlt: i.coverAlt?.trim() || undefined,
           services: i.services,
           status: i.status,
           seo: i.seo,
@@ -172,6 +174,15 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
               <Label>Meta description</Label>
               <Textarea value={i.seo?.description ?? ''} onChange={(e) => updateSeo('description', e.target.value)} rows={2} />
             </div>
+            <div className="space-y-1.5">
+              <Label>Canonical URL</Label>
+              <Input
+                value={i.seo?.canonical ?? ''}
+                onChange={(e) => updateSeo('canonical', e.target.value)}
+                placeholder={`${SITE_URL}${i.path || `/industries/${i.slug || '…'}/`}`}
+              />
+              <p className="text-xs text-muted-foreground">Leave blank for the self-referencing default shown above.</p>
+            </div>
           </section>
         </div>
 
@@ -192,7 +203,14 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cover image</Label>
-            <ImageUploader value={i.cover ?? ''} onChange={(url) => update('cover', url)} uploadDir="images/industries" />
+            <ImageUploader
+              value={i.cover ?? ''}
+              onChange={(url) => update('cover', url)}
+              uploadDir="images/industries"
+              alt={i.coverAlt ?? ''}
+              onAltChange={(v) => update('coverAlt', v)}
+              altLabel="Cover alt text"
+            />
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
