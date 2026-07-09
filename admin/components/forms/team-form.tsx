@@ -67,11 +67,11 @@ export function TeamForm({ initial }: Props) {
           order: Number(m.order) || 0,
           status: m.status,
         }
-        const res = await saveTeamMember({ slug: m.slug, frontmatter: fm, body: m.body, sha: m.sha })
+        const res = await saveTeamMember({ slug: m.slug, frontmatter: fm, body: m.body, sha: m.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
         if (!initial || res.slug !== initial.slug) router.push(`/team/${res.slug}`)
-        else router.refresh()
+        else { setM((prev) => ({ ...prev, sha: res.sha })); router.refresh() }
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Save failed')
       }

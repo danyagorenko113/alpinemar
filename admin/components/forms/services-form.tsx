@@ -112,11 +112,11 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
           status: s.status,
           seo: s.seo,
         }
-        const res = await saveService({ slug: s.slug, frontmatter: fm, body: s.body, sha: s.sha })
+        const res = await saveService({ slug: s.slug, frontmatter: fm, body: s.body, sha: s.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
         if (!initial || res.slug !== initial.slug) router.push(`/services/${res.slug}`)
-        else router.refresh()
+        else { setS((prev) => ({ ...prev, sha: res.sha })); router.refresh() }
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Save failed')
       }

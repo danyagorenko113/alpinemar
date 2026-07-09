@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import { Plus, X, GripVertical } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -12,6 +13,17 @@ interface StringListProps {
 }
 
 export function StringList({ value, onChange, placeholder, addLabel = 'Add item' }: StringListProps) {
+  // Stable React keys per row so editing/removing/reordering doesn't remount the
+  // wrong input (which would steal focus / edit a different row). Keys are kept
+  // in lockstep with `value` mutations and resynced if `value` changes length
+  // from outside the component.
+  const nextId = useRef(0)
+  const [keys, setKeys] = useState<number[]>(() => value.map(() => nextId.current++))
+  if (keys.length !== value.length) {
+    // External length change (e.g. loaded a different entry) — resync keys.
+    setKeys(value.map((_, i) => keys[i] ?? nextId.current++))
+  }
+
   function setAt(i: number, v: string) {
     const next = [...value]
     next[i] = v
@@ -19,13 +31,21 @@ export function StringList({ value, onChange, placeholder, addLabel = 'Add item'
   }
   function removeAt(i: number) {
     onChange(value.filter((_, idx) => idx !== i))
+    setKeys(keys.filter((_, idx) => idx !== i))
   }
   function move(i: number, dir: -1 | 1) {
     const j = i + dir
     if (j < 0 || j >= value.length) return
     const next = [...value]
     ;[next[i], next[j]] = [next[j], next[i]]
+    const nk = [...keys]
+    ;[nk[i], nk[j]] = [nk[j], nk[i]]
     onChange(next)
+    setKeys(nk)
+  }
+  function add() {
+    onChange([...value, ''])
+    setKeys([...keys, nextId.current++])
   }
 
   return (
@@ -34,7 +54,7 @@ export function StringList({ value, onChange, placeholder, addLabel = 'Add item'
         <p className="text-xs text-muted-foreground italic">No items yet.</p>
       )}
       {value.map((item, i) => (
-        <div key={i} className="flex items-center gap-1.5 group">
+        <div key={keys[i]} className="flex items-center gap-1.5 group">
           <div className="flex flex-col">
             <button
               type="button"
@@ -59,7 +79,7 @@ export function StringList({ value, onChange, placeholder, addLabel = 'Add item'
           </Button>
         </div>
       ))}
-      <Button type="button" variant="outline" size="sm" onClick={() => onChange([...value, ''])}>
+      <Button type="button" variant="outline" size="sm" onClick={add}>
         <Plus className="h-4 w-4" />
         {addLabel}
       </Button>

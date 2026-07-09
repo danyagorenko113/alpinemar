@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import { Plus, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -27,6 +28,14 @@ export function StructList<T extends Record<string, string>>({
   defaultItem,
   addLabel = 'Add item',
 }: StructListProps<T>) {
+  // Stable per-row keys so removing/reordering doesn't remount the wrong row's
+  // inputs (React index keys would edit the row that slid into that position).
+  const nextId = useRef(0)
+  const [keys, setKeys] = useState<number[]>(() => value.map(() => nextId.current++))
+  if (keys.length !== value.length) {
+    setKeys(value.map((_, i) => keys[i] ?? nextId.current++))
+  }
+
   function setAt(i: number, key: keyof T, v: string) {
     const next = [...value]
     next[i] = { ...next[i], [key]: v }
@@ -34,20 +43,28 @@ export function StructList<T extends Record<string, string>>({
   }
   function removeAt(i: number) {
     onChange(value.filter((_, idx) => idx !== i))
+    setKeys(keys.filter((_, idx) => idx !== i))
   }
   function move(i: number, dir: -1 | 1) {
     const j = i + dir
     if (j < 0 || j >= value.length) return
     const next = [...value]
     ;[next[i], next[j]] = [next[j], next[i]]
+    const nk = [...keys]
+    ;[nk[i], nk[j]] = [nk[j], nk[i]]
     onChange(next)
+    setKeys(nk)
+  }
+  function add() {
+    onChange([...value, { ...defaultItem }])
+    setKeys([...keys, nextId.current++])
   }
 
   return (
     <div className="space-y-3">
       {value.length === 0 && <p className="text-xs text-muted-foreground italic">No items yet.</p>}
       {value.map((item, i) => (
-        <div key={i} className="rounded-md border bg-navy-50/40 p-3 space-y-2 relative">
+        <div key={keys[i]} className="rounded-md border bg-navy-50/40 p-3 space-y-2 relative">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
               Item {i + 1}
@@ -102,7 +119,7 @@ export function StructList<T extends Record<string, string>>({
           )}
         </div>
       ))}
-      <Button type="button" variant="outline" size="sm" onClick={() => onChange([...value, { ...defaultItem }])}>
+      <Button type="button" variant="outline" size="sm" onClick={add}>
         <Plus className="h-4 w-4" />
         {addLabel}
       </Button>

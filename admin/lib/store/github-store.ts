@@ -38,6 +38,15 @@ export const githubStore: ContentStore = {
       tree_sha: commit.data.tree.sha,
       recursive: 'true',
     })
+    if (tree.data.truncated) {
+      // GitHub caps recursive trees at ~100k entries / 7MB and silently
+      // truncates. Fail loudly rather than serve a partial listing (which
+      // would hide files and let renames/deletes miss members).
+      throw new Error(
+        'Repository tree is too large to list in one request (GitHub truncated the response). ' +
+          'The media/content folders need pagination — contact the developer.',
+      )
+    }
     const prefix = dir.endsWith('/') ? dir : `${dir}/`
     return tree.data.tree
       .filter((n) => n.type === 'blob' && n.path?.startsWith(prefix))
@@ -113,9 +122,25 @@ export const githubStore: ContentStore = {
       return { sha: res.data.content?.sha ?? '' }
     } catch (err: unknown) {
       const e = err as { status?: number; message?: string }
-      if (e?.status === 409 || e?.status === 422) {
-        throw new Error(
-          'This page was changed by someone else after you started editing. Refresh to load the latest version, then re-apply your changes.',
+      // 409 = sha conflict (someone else changed the file). 422 covers several
+      // cases: a stale/mismatched sha (also a conflict) OR a genuine validation
+      // error (e.g. path too long). Surface the real message for 422 so a
+      // non-conflict validation failure isn't mislabeled as "changed by someone".
+      if (e?.status === 409) {
+        throw Object.assign(
+          new Error(
+            'This page was changed by someone else after you started editing. Refresh to load the latest version, then re-apply your changes.',
+          ),
+          { code: 'conflict' as const },
+        )
+      }
+      if (e?.status === 422) {
+        const detail = e?.message ? ` (${e.message})` : ''
+        throw Object.assign(
+          new Error(
+            `GitHub rejected the save${detail}. If you have another tab open on this page, refresh and try again.`,
+          ),
+          { code: 'conflict' as const },
         )
       }
       if (e?.status === 403) {

@@ -17,6 +17,35 @@ export function slugify(input: string): string {
 }
 
 /**
+ * A single content slug — no path separators or traversal. Delete/read actions
+ * receive a slug directly (not via slugify), so this guards against callers
+ * passing "../../../etc" to escape the collection directory.
+ */
+export function assertSafeSlug(slug: string): string {
+  const s = (slug ?? '').trim()
+  if (!s || s.includes('/') || s.includes('\\') || s.includes('..') || s.startsWith('.')) {
+    throw new Error(`Invalid slug: ${JSON.stringify(slug)}`)
+  }
+  return s
+}
+
+/**
+ * Ensure a repo path stays inside `prefix` (e.g. "public/") after normalizing
+ * away any "../" segments. Returns the normalized path.
+ */
+export function assertRepoPath(repoPath: string, prefix: string): string {
+  const normalized = (repoPath ?? '').replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  // Reject any traversal segment outright — no legitimate media path has one.
+  if (normalized.split('/').some((seg) => seg === '..')) {
+    throw new Error(`Invalid path: ${JSON.stringify(repoPath)}`)
+  }
+  if (!normalized.startsWith(prefix)) {
+    throw new Error(`Path must be within ${prefix}: ${JSON.stringify(repoPath)}`)
+  }
+  return normalized
+}
+
+/**
  * Turns a content-path URL like "/images/team/Pablo.jpeg" into a fully
  * qualified preview URL against the live site (e.g. https://alpinemar.com).
  * Necessary because the admin runs on a different origin than the site,

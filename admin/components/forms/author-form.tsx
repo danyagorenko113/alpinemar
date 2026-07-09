@@ -67,11 +67,11 @@ export function AuthorForm({ initial }: Props) {
           order: Number(a.order) || 0,
           status: a.status,
         }
-        const res = await saveAuthor({ slug: a.slug, frontmatter: fm, body: a.body, sha: a.sha })
+        const res = await saveAuthor({ slug: a.slug, frontmatter: fm, body: a.body, sha: a.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
         if (!initial || res.slug !== initial.slug) router.push(`/authors/${res.slug}`)
-        else router.refresh()
+        else { setA((prev) => ({ ...prev, sha: res.sha })); router.refresh() }
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Save failed')
       }

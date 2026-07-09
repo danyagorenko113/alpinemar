@@ -5,7 +5,7 @@ import sharp from 'sharp'
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import type { ContentStore } from '@/lib/store/types'
-import { slugify } from '@/lib/utils'
+import { slugify, assertRepoPath } from '@/lib/utils'
 
 const VALID_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/svg+xml'])
 const MAX_BYTES = 8 * 1024 * 1024 // 8 MB
@@ -63,11 +63,24 @@ async function writeMeta(store: ContentStore, meta: MediaMeta, sha: string | und
   await store.write(META_PATH, JSON.stringify(sorted, null, 2) + '\n', { message, sha })
 }
 
-/** Apply `mutate` to the manifest and persist it. Best-effort — media files are the source of truth. */
+/**
+ * Apply `mutate` to the manifest and persist it. Best-effort — media files are
+ * the source of truth. Retries on sha conflict so a concurrent upload doesn't
+ * lose the other uploader's entry (read-modify-write race).
+ */
 async function updateMeta(store: ContentStore, message: string, mutate: (meta: MediaMeta) => void): Promise<void> {
-  const { meta, sha } = await readMeta(store)
-  mutate(meta)
-  await writeMeta(store, meta, sha, message)
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const { meta, sha } = await readMeta(store)
+    mutate(meta)
+    try {
+      await writeMeta(store, meta, sha, message)
+      return
+    } catch (err) {
+      const conflict = (err as { code?: string })?.code === 'conflict'
+      if (conflict && attempt < 2) continue // re-read latest and re-apply
+      throw err
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -84,7 +97,11 @@ export async function uploadImage(form: FormData, opts: { dir?: string; alt?: st
   if (!VALID_TYPES.has(file.type)) throw new Error(`Unsupported file type: ${file.type}`)
   if (file.size > MAX_BYTES) throw new Error(`File too large (${Math.round(file.size / 1024 / 1024)}MB > 8MB)`)
 
-  const dir = opts.dir ?? 'images/blog'
+  // Sanitize the destination dir: strip leading/trailing slashes, slugify each
+  // segment so a hostile `dir` can't write outside public/images/.
+  const rawDir = opts.dir ?? 'images/blog'
+  const dirSegments = rawDir.split('/').map((seg) => slugify(seg)).filter(Boolean)
+  const dir = dirSegments.length ? dirSegments.join('/') : 'images/blog'
   const originalExt = path.extname(file.name) || extFromType(file.type)
   const baseName = slugify(path.basename(file.name, originalExt)) || `upload-${Date.now()}`
   const year = new Date().getFullYear()
@@ -184,7 +201,7 @@ export async function listImageFolders(): Promise<string[]> {
 
 /** Set (or clear, when empty) the ALT text stored for an image. */
 export async function setImageAlt(repoPath: string, alt: string): Promise<void> {
-  if (!repoPath.startsWith('public/')) throw new Error('Invalid image path')
+  repoPath = assertRepoPath(repoPath, 'public/images/')
   const store = getStore()
   await updateMeta(store, `chore(admin): alt text for ${path.basename(repoPath)}`, (meta) => {
     const entry = { ...(meta[repoPath] ?? {}) }
@@ -209,7 +226,7 @@ export async function getImageMetaByUrl(url: string): Promise<MediaMetaEntry | n
 // ---------------------------------------------------------------------------
 
 export async function deleteImage(repoPath: string): Promise<void> {
-  if (!repoPath.startsWith('public/')) throw new Error('Refusing to delete outside public/')
+  repoPath = assertRepoPath(repoPath, 'public/images/')
   const store = getStore()
   await store.remove(repoPath, { message: `chore(admin): delete ${path.basename(repoPath)}` })
   try {
@@ -251,35 +268,58 @@ export async function renameFolder(from: string, to: string): Promise<string> {
 
   const store = getStore()
   const files = await store.list(`public/images/${src}`)
-  if (files.length === 0) throw new Error(`Folder images/${src} is empty or does not exist`)
+  const realFiles = files.filter((f) => !f.path.endsWith('/.gitkeep'))
+  if (realFiles.length === 0) throw new Error(`Folder images/${src} is empty or does not exist`)
 
-  const destFiles = await store.list(`public/images/${dest}`)
+  // A .gitkeep-only destination is an "empty" folder (created via createFolder)
+  // and is a legitimate rename target, so ignore it in the collision check.
+  const destFiles = (await store.list(`public/images/${dest}`)).filter((f) => !f.path.endsWith('/.gitkeep'))
   if (destFiles.length > 0) throw new Error(`Folder images/${dest} already exists`)
 
+  // Move each file (copy then delete). Track what actually moved so a mid-loop
+  // failure still leaves the manifest consistent for the files that did move.
   const renamed: Array<{ from: string; to: string }> = []
-  for (const f of files) {
-    const raw = await store.readRaw(f.path, f.sha)
-    if (!raw) continue
-    const newPath = f.path.replace(`public/images/${src}/`, `public/images/${dest}/`)
-    await store.write(newPath, raw.content, { message: `chore(admin): move ${f.path} → ${newPath}` })
-    await store.remove(f.path, { message: `chore(admin): move ${f.path} → ${newPath}` })
-    renamed.push({ from: f.path, to: newPath })
+  let moveError: unknown = null
+  for (const f of realFiles) {
+    try {
+      const raw = await store.readRaw(f.path, f.sha)
+      if (!raw) continue
+      const newPath = f.path.replace(`public/images/${src}/`, `public/images/${dest}/`)
+      const written = await store.write(newPath, raw.content, { message: `chore(admin): move ${f.path} → ${newPath}` })
+      // Pass the source blob sha so remove() never falls back to getContent
+      // (which 403s for files >1 MB) and never deletes a stale revision.
+      await store.remove(f.path, { message: `chore(admin): move ${f.path} → ${newPath}`, sha: f.sha })
+      renamed.push({ from: f.path, to: newPath })
+      void written
+    } catch (err) {
+      moveError = err
+      break
+    }
   }
 
-  try {
-    await updateMeta(store, `chore(admin): rename media folder images/${src} → images/${dest}`, (meta) => {
-      for (const r of renamed) {
-        if (meta[r.from]) {
-          meta[r.to] = meta[r.from]
-          delete meta[r.from]
+  // Always reconcile the manifest for whatever moved — even on partial failure —
+  // so alt text / upload dates don't silently vanish for the moved files.
+  if (renamed.length > 0) {
+    try {
+      await updateMeta(store, `chore(admin): rename media folder images/${src} → images/${dest}`, (meta) => {
+        for (const r of renamed) {
+          if (meta[r.from]) {
+            meta[r.to] = meta[r.from]
+            delete meta[r.from]
+          }
         }
-      }
-    })
-  } catch {
-    // Manifest is advisory; a failed rewrite only loses alt/upload dates.
+      })
+    } catch {
+      // Manifest is advisory; a failed rewrite only loses alt/upload dates.
+    }
   }
 
   revalidatePath('/media')
+  if (moveError) {
+    throw new Error(
+      `Rename stopped after ${renamed.length}/${realFiles.length} files — ${moveError instanceof Error ? moveError.message : 'unknown error'}. Retry to finish moving the rest.`,
+    )
+  }
   return dest
 }
 

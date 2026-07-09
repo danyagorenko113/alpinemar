@@ -60,6 +60,44 @@ export function mergeFrontmatter(
   return next
 }
 
+/**
+ * Write a content entry with collision + rename safety:
+ *  - Create (no sha) or rename (oldPath differs) into an existing path throws
+ *    instead of silently overwriting someone else's file.
+ *  - Rename writes the new path fresh (no stale sha) and removes the old file.
+ */
+export async function writeContentEntry(
+  store: Pick<ContentStore, 'read' | 'write' | 'remove'>,
+  opts: {
+    newPath: string
+    oldPath?: string
+    sha?: string
+    content: string
+    message: string
+  },
+): Promise<{ sha: string }> {
+  const isRename = !!opts.oldPath && opts.oldPath !== opts.newPath
+  const isCreate = !opts.sha && !isRename
+
+  if (isCreate || isRename) {
+    const existing = await store.read(opts.newPath)
+    if (existing) {
+      const name = opts.newPath.split('/').pop()
+      throw new Error(`An entry with this slug already exists (${name}). Choose a different slug.`)
+    }
+  }
+
+  const res = await store.write(opts.newPath, opts.content, {
+    message: opts.message,
+    sha: isRename ? undefined : opts.sha,
+  })
+
+  if (isRename && opts.oldPath) {
+    await store.remove(opts.oldPath, { message: opts.message, sha: opts.sha })
+  }
+  return { sha: res.sha }
+}
+
 export async function readOriginalFrontmatter(
   store: Pick<ContentStore, 'read' | 'list'>,
   path: string,
@@ -80,13 +118,30 @@ export async function readOriginalFrontmatter(
   return {}
 }
 
-/** Convenience: turn a YYYY-MM-DD string into the Date Astro's `z.coerce.date()` accepts. */
+/**
+ * Convenience: turn a YYYY-MM-DD string or Date into a plain calendar date
+ * string. Uses UTC accessors: gray-matter parses bare YAML dates
+ * (`date: 2025-09-03`) as UTC-midnight Date objects, so local-time accessors
+ * would return the previous day on any UTC-negative server (Vercel iad1,
+ * US machines) and each save would decrement the date by one.
+ */
 export function toDateString(input: string | Date | undefined | null): string {
   if (!input) return ''
+  // A bare YYYY-MM-DD string is already the calendar date we want — return it
+  // as-is to avoid any Date parsing/offset round-trip.
+  if (typeof input === 'string') {
+    const m = input.trim().match(/^(\d{4})-(\d{2})-(\d{2})/)
+    if (m) return `${m[1]}-${m[2]}-${m[3]}`
+  }
   const d = typeof input === 'string' ? new Date(input) : input
   if (Number.isNaN(d.getTime())) return ''
-  const yyyy = d.getFullYear()
-  const mm = String(d.getMonth() + 1).padStart(2, '0')
-  const dd = String(d.getDate()).padStart(2, '0')
+  const yyyy = d.getUTCFullYear()
+  const mm = String(d.getUTCMonth() + 1).padStart(2, '0')
+  const dd = String(d.getUTCDate()).padStart(2, '0')
   return `${yyyy}-${mm}-${dd}`
+}
+
+/** Today's calendar date as YYYY-MM-DD (UTC), for save-time stamps. */
+export function todayDateString(): string {
+  return new Date().toISOString().slice(0, 10)
 }

@@ -2,8 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
-import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc } from '@/lib/store/markdown'
-import { slugify } from '@/lib/utils'
+import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc, writeContentEntry } from '@/lib/store/markdown'
+import { slugify, assertSafeSlug } from '@/lib/utils'
 import { cached, invalidatePrefix } from '@/lib/cache'
 
 const COLLECTION_DIR = 'src/content/services'
@@ -141,6 +141,8 @@ export interface SaveServiceInput {
   frontmatter: ServiceFrontmatter
   body: string
   sha?: string
+  /** When renaming, the slug being edited — its old file is removed. */
+  originalSlug?: string
 }
 
 export async function saveService(input: SaveServiceInput): Promise<{ slug: string; sha: string }> {
@@ -151,7 +153,9 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
 
   const fm = input.frontmatter
   const path = pathFromSlug(finalSlug)
-  const original = await readOriginalFrontmatter(store, path, {
+  const oldSlug = input.originalSlug ? slugify(input.originalSlug) : undefined
+  const oldPath = oldSlug && oldSlug !== finalSlug ? pathFromSlug(oldSlug) : undefined
+  const original = await readOriginalFrontmatter(store, oldPath ?? path, {
     collectionDir: COLLECTION_DIR,
     sha: input.sha,
   })
@@ -184,9 +188,12 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
 
   const payload = mergeFrontmatter(original, updates)
   const fileContent = serializeDoc(payload, input.body.trim() + '\n')
-  const res = await store.write(path, fileContent, {
-    message: `content(services): ${input.sha ? 'update' : 'create'} ${finalSlug}`,
+  const res = await writeContentEntry(store, {
+    newPath: path,
+    oldPath,
     sha: input.sha,
+    content: fileContent,
+    message: `content(services): ${oldPath ? 'rename' : input.sha ? 'update' : 'create'} ${finalSlug}`,
   })
   invalidatePrefix('services:')
   revalidatePath('/services')
@@ -195,6 +202,7 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
 }
 
 export async function deleteService(slug: string, sha?: string): Promise<void> {
+  assertSafeSlug(slug)
   const store = getStore()
   await store.remove(pathFromSlug(slug), { message: `content(services): delete ${slug}`, sha })
   invalidatePrefix('services:')

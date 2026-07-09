@@ -17,7 +17,7 @@ import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveBlogPost, deleteBlogPost, type BlogPost, type BlogFrontmatter } from '@/lib/actions/blog'
 import { slugify, formatDate, previewSrc, rewriteRelativeUrls } from '@/lib/utils'
-import { toDateString } from '@/lib/store/markdown'
+import { toDateString, todayDateString } from '@/lib/store/markdown'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
@@ -96,7 +96,7 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
         const fm: BlogFrontmatter = {
           title: post.title.trim(),
           excerpt: post.excerpt.trim(),
-          date: post.date || toDateString(new Date()),
+          date: post.date || todayDateString(),
           author: post.author?.trim() || undefined,
           cover: post.cover?.trim() || undefined,
           coverAlt: post.coverAlt?.trim() || undefined,
@@ -104,15 +104,19 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
           tags: post.tags,
           status: post.status,
           // Only sent when explicitly overridden; server stamps otherwise.
-          updated: updatedOverride ? new Date(`${updatedOverride}T12:00:00`).toISOString() : undefined,
+          // Bare YYYY-MM-DD — no local-time datetime round-trip (Astro coerces it).
+          updated: updatedOverride || undefined,
           seo: post.seo,
         }
-        const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha })
+        const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
         if (!initial || res.slug !== initial.slug) {
           router.push(`/blog/${res.slug}`)
         } else {
+          // Adopt the new blob SHA so a second save in the same session doesn't
+          // 422 against a stale SHA.
+          setPost((p) => ({ ...p, sha: res.sha }))
           router.refresh()
         }
       } catch (err) {
