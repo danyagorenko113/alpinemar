@@ -366,12 +366,17 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">
                 What's included
-                <HelpTip title="Deliverables checklist">
-                  Renders as the checkmark list in the dark &ldquo;What&rsquo;s included&rdquo;
-                  band. If the list is empty the section is hidden automatically.
+                <span className={`ml-2 align-middle rounded-full px-2 py-0.5 text-[10px] font-medium ${s.included.length ? 'bg-emerald-50 text-emerald-700' : 'bg-navy-100 text-navy-500'}`}>
+                  {s.included.length ? 'Optional — showing' : 'Optional — off'}
+                </span>
+                <HelpTip title="Optional deliverables section">
+                  Unlike the other sections, this one has no default — so it&rsquo;s
+                  <strong> hidden on the page until you add at least one deliverable</strong>.
+                  Add items to turn it on for this service; leave empty to keep it off. When on,
+                  it renders as the checkmark list in the dark &ldquo;What&rsquo;s included&rdquo; band.
                 </HelpTip>
               </h2>
-              <span className="text-xs text-muted-foreground">Deliverables list</span>
+              <span className="text-xs text-muted-foreground">Add items to show this section on the page</span>
             </div>
             <SectionHeadingFields
               value={s.sectionCopy?.included}
