@@ -54,7 +54,7 @@ const sc = service.data.sectionCopy ?? {};
 // Landing-style "What you get" — uses takeaways when supplied, otherwise
 // a sensible 4-up default that applies to every Alpine Mar engagement.
 const benefits = takeaways.length
-  ? takeaways.map((t) => ({ title: t, body: '' }))
+  ? takeaways
   : [
       { title: 'Partner Involvement', body: 'A CPA on every engagement. No junior handoff once you sign.' },
       { title: 'Fixed-fee, scoped',   body: 'Scope and price agreed before we start. No hourly meter or surprise invoices.' },

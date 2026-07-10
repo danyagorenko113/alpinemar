@@ -64,8 +64,8 @@ const services = defineCollection({
     pillars: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
     /** Which Google review to feature (index into the global reviews list). */
     reviewIndex: z.number().int().min(0).optional(),
-    /** Optional structured key takeaways — 3–5 bullets surfaced above the body. */
-    takeaways: z.array(z.string()).default([]),
+    /** "What you get" cards — each a title with a supporting line. */
+    takeaways: z.array(z.object({ title: z.string(), body: z.string().default('') })).default([]),
     /** Optional "what's included" deliverables list. */
     included: z.array(z.string()).default([]),
     /** Optional ordered engagement steps (rendered as a numbered process strip). */

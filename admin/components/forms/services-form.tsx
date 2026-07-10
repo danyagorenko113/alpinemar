@@ -27,6 +27,13 @@ import {
   type ServiceSectionKey,
 } from '@/lib/actions/services'
 import { slugify } from '@/lib/utils'
+import {
+  DEFAULT_TAKEAWAYS,
+  DEFAULT_PROCESS,
+  DEFAULT_PILLARS,
+  defaultFaq,
+  equalsDefault,
+} from '@/lib/service-section-defaults'
 
 interface Props {
   initial?: Service
@@ -127,10 +134,26 @@ const empty: Service = {
   body: '',
 }
 
+/**
+ * Prefill the structured sections with the site's default content when empty,
+ * so the editor sees exactly what renders on the live page and can edit it.
+ * `included` has no template default, so it stays empty (that section is
+ * hidden on the page until deliverables are added).
+ */
+function withSectionPrefills(svc: Service): Service {
+  return {
+    ...svc,
+    takeaways: svc.takeaways.length ? svc.takeaways : DEFAULT_TAKEAWAYS.map((t) => ({ ...t })),
+    process: svc.process.length ? svc.process : DEFAULT_PROCESS.map((p) => ({ ...p })),
+    pillars: svc.pillars.length ? svc.pillars : DEFAULT_PILLARS.map((p) => ({ ...p })),
+    faq: svc.faq.length ? svc.faq : defaultFaq(svc.title).map((f) => ({ ...f })),
+  }
+}
+
 export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
-  const [s, setS] = useState<Service>(initial ?? empty)
+  const [s, setS] = useState<Service>(() => withSectionPrefills(initial ?? empty))
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [dirty, setDirty] = useState(false)
@@ -159,6 +182,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
     if (!s.slug.trim()) return toast.error('Slug is required')
     if (!s.summary.trim()) return toast.error('Summary is required')
 
+    // Sections still equal to the site defaults are saved as empty, so the
+    // file stays clean and keeps using the template default — only edited
+    // sections get written to the .md file.
+    const takeaways = equalsDefault(s.takeaways, DEFAULT_TAKEAWAYS) ? [] : s.takeaways
+    const process = equalsDefault(s.process, DEFAULT_PROCESS) ? [] : s.process
+    const pillars = equalsDefault(s.pillars, DEFAULT_PILLARS) ? [] : s.pillars
+    const faq = equalsDefault(s.faq, defaultFaq(s.title)) ? [] : s.faq
+
     startTransition(async () => {
       try {
         const fm: ServiceFrontmatter = {
@@ -171,12 +202,12 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           group: s.group,
           sections: s.sections,
           sectionCopy: s.sectionCopy,
-          pillars: s.pillars,
+          pillars: pillars,
           reviewIndex: s.reviewIndex || undefined,
-          takeaways: s.takeaways,
+          takeaways: takeaways,
           included: s.included,
-          process: s.process,
-          faq: s.faq,
+          process: process,
+          faq: faq,
           industries: s.industries,
           status: s.status,
           seo: s.seo,
@@ -307,17 +338,22 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               <h2 className="text-base font-semibold">
                 Key takeaways
                 <HelpTip title="What you get section">
-                  Each line becomes a numbered card in the &ldquo;What you get&rdquo; section.
-                  Leave the list empty to show the four standard Alpine Mar commitments. Hide
-                  or move the whole section via Page sections in the sidebar.
+                  Each entry is a numbered card in the &ldquo;What you get&rdquo; section — a
+                  title plus a short supporting line. These are pre-filled with the site&rsquo;s
+                  default cards; edit them to make this service specific. Clear all to fall back
+                  to the defaults.
                 </HelpTip>
               </h2>
-              <span className="text-xs text-muted-foreground">"What you get" cards — 4 per row, any count renders</span>
+              <span className="text-xs text-muted-foreground">"What you get" cards — title + line</span>
             </div>
-            <StringList
+            <StructList
               value={s.takeaways}
               onChange={(v) => update('takeaways', v)}
-              placeholder="e.g. Audit-ready financials every quarter"
+              fields={[
+                { key: 'title', label: 'Card title', placeholder: 'e.g. Partner Involvement' },
+                { key: 'body', label: 'Supporting line', textarea: true, placeholder: 'One sentence under the title…' },
+              ]}
+              defaultItem={{ title: '', body: '' }}
               addLabel="Add takeaway"
             />
           </section>
@@ -346,8 +382,9 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               <h2 className="text-base font-semibold">
                 Process
                 <HelpTip title="How we work section">
-                  Each entry is one numbered step card (Step 01, 02…). Leave empty to show
-                  the standard four-step engagement process.
+                  Each entry is one numbered step card (Step 01, 02…). Pre-filled with the
+                  standard four-step process — edit to customize this service, or clear all to
+                  fall back to the default.
                 </HelpTip>
               </h2>
               <span className="text-xs text-muted-foreground">"How we work" — numbered steps</span>
@@ -370,7 +407,8 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
                 FAQ
                 <HelpTip title="Common questions section">
                   Accordion at the bottom of the page (the first question renders open).
-                  Empty = the default set of four engagement questions.
+                  Pre-filled with four default questions — edit to customize, or clear all to
+                  fall back to the default set.
                 </HelpTip>
               </h2>
               <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
@@ -392,8 +430,9 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               <h2 className="text-base font-semibold">
                 Why Alpine Mar
                 <HelpTip title="Pillar cards">
-                  The three white cards in the dark &ldquo;Why Alpine Mar&rdquo; band. Add
-                  your own to replace the firm-wide defaults on this page only.
+                  The three white cards in the dark &ldquo;Why Alpine Mar&rdquo; band.
+                  Pre-filled with the firm-wide pillars — edit to customize this page, or clear
+                  all to fall back to the defaults.
                 </HelpTip>
               </h2>
               <span className="text-xs text-muted-foreground">Empty = default three pillars</span>

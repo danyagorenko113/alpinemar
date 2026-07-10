@@ -43,6 +43,7 @@ export type ServiceSectionCopy = Partial<Record<ServiceCopyKey, SectionCopy>>
 export type ServiceProcessStep = { title: string; body: string }
 export type ServiceFaqItem = { q: string; a: string }
 export type ServicePillar = { title: string; body: string }
+export type ServiceTakeaway = { title: string; body: string }
 
 export interface ServiceSeo {
   title?: string
@@ -69,8 +70,8 @@ export interface ServiceFrontmatter {
   pillars: ServicePillar[]
   /** Which Google review to feature (index into the global reviews list). */
   reviewIndex?: number
-  /** "What you get" bullets surfaced above the body. */
-  takeaways: string[]
+  /** "What you get" cards — title + supporting line. */
+  takeaways: ServiceTakeaway[]
   /** "What's included" deliverables list. */
   included: string[]
   /** Ordered engagement steps (numbered process strip). */
@@ -143,7 +144,13 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
         }))
       : [],
     reviewIndex: typeof data.reviewIndex === 'number' && data.reviewIndex >= 0 ? data.reviewIndex : undefined,
-    takeaways: Array.isArray(data.takeaways) ? (data.takeaways as string[]).map(String) : [],
+    takeaways: Array.isArray(data.takeaways)
+      ? (data.takeaways as Array<Record<string, unknown> | string>).map((t) =>
+          typeof t === 'string'
+            ? { title: t, body: '' }
+            : { title: String(t?.title ?? ''), body: String(t?.body ?? '') },
+        )
+      : [],
     included: Array.isArray(data.included) ? (data.included as string[]).map(String) : [],
     process: Array.isArray(data.process)
       ? (data.process as Array<Record<string, unknown>>).map((p) => ({
@@ -243,7 +250,7 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
     sectionCopy,
     pillars: fm.pillars.filter((p) => p.title.trim() || p.body.trim()),
     reviewIndex: fm.reviewIndex,
-    takeaways: fm.takeaways.map((t) => t.trim()).filter(Boolean),
+    takeaways: fm.takeaways.filter((t) => t.title.trim() || t.body.trim()),
     included: fm.included.map((t) => t.trim()).filter(Boolean),
     process: fm.process.filter((p) => p.title.trim() || p.body.trim()),
     faq: fm.faq.filter((f) => f.q.trim() || f.a.trim()),
