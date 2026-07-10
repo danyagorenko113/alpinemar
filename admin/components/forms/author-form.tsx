@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RichTextEditor } from '@/components/editor/rich-text-editor'
+import { HelpTip } from '@/components/shared/help-tip'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
@@ -156,7 +157,13 @@ export function AuthorForm({ initial }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label className="text-base font-semibold">Bio</Label>
+            <Label className="text-base font-semibold">
+              Bio
+              <HelpTip title="Where the bio shows">
+                Renders in the author block at the bottom of every article credited to this
+                person (picked in the blog post editor), together with the photo and title.
+              </HelpTip>
+            </Label>
             <RichTextEditor
               value={a.body}
               onChange={(html) => update('body', html)}

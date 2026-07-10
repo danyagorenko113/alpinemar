@@ -13,6 +13,7 @@ import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
 import { StringList } from '@/components/shared/string-list'
 import { StructList } from '@/components/shared/struct-list'
+import { HelpTip } from '@/components/shared/help-tip'
 import { SectionOrder, type SectionDef } from '@/components/shared/section-order'
 import { SectionCopyEditor, type CopySectionDef } from '@/components/shared/section-copy-editor'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -232,7 +233,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="hero-title">Hero title (H1)</Label>
+              <Label htmlFor="hero-title">
+                Hero title (H1)
+                <HelpTip title="How this works">
+                  The big headline over the banner image on the live page. Blank = the Title
+                  above. Title is also used for the browser tab, breadcrumb, and cards
+                  linking to this service.
+                </HelpTip>
+              </Label>
               <Input
                 id="hero-title"
                 value={s.heroTitle ?? ''}
@@ -289,7 +297,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">Key takeaways</h2>
+              <h2 className="text-base font-semibold">
+                Key takeaways
+                <HelpTip title="What you get section">
+                  Each line becomes a numbered card in the &ldquo;What you get&rdquo; section.
+                  Leave the list empty to show the four standard Alpine Mar commitments. Hide
+                  or move the whole section via Page sections in the sidebar.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">"What you get" cards — 4 per row, any count renders</span>
             </div>
             <StringList
@@ -302,7 +317,13 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">What's included</h2>
+              <h2 className="text-base font-semibold">
+                What's included
+                <HelpTip title="Deliverables checklist">
+                  Renders as the checkmark list in the dark &ldquo;What&rsquo;s included&rdquo;
+                  band. If the list is empty the section is hidden automatically.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">Deliverables list</span>
             </div>
             <StringList
@@ -315,7 +336,13 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">Process</h2>
+              <h2 className="text-base font-semibold">
+                Process
+                <HelpTip title="How we work section">
+                  Each entry is one numbered step card (Step 01, 02…). Leave empty to show
+                  the standard four-step engagement process.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">"How we work" — numbered steps</span>
             </div>
             <StructList
@@ -332,7 +359,13 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">FAQ</h2>
+              <h2 className="text-base font-semibold">
+                FAQ
+                <HelpTip title="Common questions section">
+                  Accordion at the bottom of the page (the first question renders open).
+                  Empty = the default set of four engagement questions.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
             </div>
             <StructList
@@ -349,7 +382,13 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">Why Alpine Mar</h2>
+              <h2 className="text-base font-semibold">
+                Why Alpine Mar
+                <HelpTip title="Pillar cards">
+                  The three white cards in the dark &ldquo;Why Alpine Mar&rdquo; band. Add
+                  your own to replace the firm-wide defaults on this page only.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">Empty = default three pillars</span>
             </div>
             <StructList
@@ -366,7 +405,15 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">Section headings & intro copy</h2>
+              <h2 className="text-base font-semibold">
+                Section headings & intro copy
+                <HelpTip title="Override any section's copy">
+                  Every section&rsquo;s eyebrow label, big heading, and intro paragraph (plus
+                  CTA button labels) can be overridden per page. Placeholders show exactly
+                  what renders when a field is left blank — type only where you want to
+                  differ.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">Blank = site default (shown as placeholder)</span>
             </div>
             <SectionCopyEditor
@@ -387,7 +434,13 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               <Textarea value={s.seo?.description ?? ''} onChange={(e) => updateSeo('description', e.target.value)} rows={2} />
             </div>
             <div className="space-y-1.5">
-              <Label>Canonical URL</Label>
+              <Label>
+                Canonical URL
+                <HelpTip title="How canonical works">
+                  Every page gets a self-referencing canonical tag automatically. Only fill
+                  this to point search engines at a different URL.
+                </HelpTip>
+              </Label>
               <Input
                 value={s.seo?.canonical ?? ''}
                 onChange={(e) => updateSeo('canonical', e.target.value)}
@@ -414,7 +467,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label>Cover image</Label>
+            <Label>
+              Cover image
+              <HelpTip title="This is the page banner">
+                The full-width banner image at the top of the service page — and the image
+                used for social sharing. Upload or replace it here and set its ALT text in
+                the field below.
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={s.cover ?? ''}
               onChange={(url) => update('cover', url)}
@@ -444,7 +504,15 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label>Page sections</Label>
+            <Label>
+              Page sections
+              <HelpTip title="Hide & reorder sections">
+                Controls the live page layout: uncheck a section to remove it from this page,
+                use the arrows to change the order. All nine sections are controllable —
+                including the body (Deep dive), Industries, Why Alpine Mar, and Related
+                services.
+              </HelpTip>
+            </Label>
             <SectionOrder<ServiceSectionKey>
               defs={SECTION_DEFS}
               value={s.sections}
@@ -457,7 +525,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           {reviewNames.length > 0 && (
             <section className="rounded-lg border bg-card p-5 space-y-3">
-              <Label htmlFor="review-pick">Featured review</Label>
+              <Label htmlFor="review-pick">
+                Featured review
+                <HelpTip title="Per-page review">
+                  Which Google review appears in this page&rsquo;s Reviews section. The
+                  reviews themselves are managed under <strong>Reviews</strong> in the
+                  sidebar; hide the section entirely via Page sections above.
+                </HelpTip>
+              </Label>
               <select
                 id="review-pick"
                 value={s.reviewIndex ?? 0}

@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { RichTextEditor } from '@/components/editor/rich-text-editor'
+import { HelpTip } from '@/components/shared/help-tip'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -201,7 +202,14 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-base font-semibold">Body *</Label>
+              <Label className="text-base font-semibold">
+                Body *
+                <HelpTip title="Tables & formatting">
+                  Tables render here exactly like on the live site. Insert one with the table
+                  button in the toolbar; click inside a table for row/column/header controls.
+                  Pasting from Google Docs keeps headings, lists, links, and tables.
+                </HelpTip>
+              </Label>
               <span className="text-xs text-muted-foreground">
                 Paste from Google Docs — formatting is preserved
               </span>
@@ -239,7 +247,14 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="seo-canonical">Canonical URL</Label>
+              <Label htmlFor="seo-canonical">
+                Canonical URL
+                <HelpTip title="How canonical works">
+                  Every page gets a self-referencing canonical tag automatically. Only fill
+                  this to point search engines at a different URL (e.g. if this article was
+                  first published elsewhere).
+                </HelpTip>
+              </Label>
               <Input
                 id="seo-canonical"
                 value={post.seo?.canonical ?? ''}
@@ -272,7 +287,14 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label>Cover image</Label>
+            <Label>
+              Cover image
+              <HelpTip title="Where this shows">
+                The banner at the top of the article and the image used when the post is
+                shared on social. Set its ALT text right below the upload — it also feeds
+                the Media library.
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={post.cover ?? ''}
               onChange={(url) => update('cover', url)}
@@ -284,7 +306,15 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category">
+              Category
+              <HelpTip title="One category per post">
+                Mirrors the original site: each post belongs to exactly one category
+                (imported from WordPress). It shows as the chip on the article hero and
+                drives the &ldquo;Read next&rdquo; sidebar. Tags below are a separate,
+                optional layer.
+              </HelpTip>
+            </Label>
             <select
               id="category"
               value={newCategory ? NEW_CATEGORY : (post.category ?? '')}
@@ -319,7 +349,13 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label>Tags</Label>
+            <Label>
+              Tags
+              <HelpTip title="Tags vs category">
+                Optional keywords rendered at the bottom of the article; each tag also gets
+                a topic page. Use the single Category above for the primary classification.
+              </HelpTip>
+            </Label>
             <TagInput
               value={post.tags}
               onChange={(tags) => update('tags', tags)}
@@ -333,7 +369,14 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="author">Author</Label>
+              <Label htmlFor="author">
+                Author
+                <HelpTip title="Authors & bios">
+                  Pick from the list managed under <strong>Authors</strong> in the sidebar —
+                  the article automatically renders that author&rsquo;s photo and bio at the
+                  bottom. Add or edit bios on the Authors page.
+                </HelpTip>
+              </Label>
               {authorOptions.length > 0 ? (
                 <>
                   <select
@@ -381,7 +424,14 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="updated-override">Updated date</Label>
+              <Label htmlFor="updated-override">
+                Updated date
+                <HelpTip title="Publish vs updated dates">
+                  The article shows both its publish date and &ldquo;Updated on&rdquo; date.
+                  Updated is stamped automatically on every save; set a date here only to
+                  control what displays instead.
+                </HelpTip>
+              </Label>
               <Input
                 id="updated-override"
                 type="date"

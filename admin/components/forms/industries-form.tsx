@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { RichTextEditor } from '@/components/editor/rich-text-editor'
+import { HelpTip } from '@/components/shared/help-tip'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
@@ -175,7 +176,13 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
               <Textarea value={i.seo?.description ?? ''} onChange={(e) => updateSeo('description', e.target.value)} rows={2} />
             </div>
             <div className="space-y-1.5">
-              <Label>Canonical URL</Label>
+              <Label>
+                Canonical URL
+                <HelpTip title="How canonical works">
+                  Every page gets a self-referencing canonical tag automatically. Only fill
+                  this to point search engines at a different URL.
+                </HelpTip>
+              </Label>
               <Input
                 value={i.seo?.canonical ?? ''}
                 onChange={(e) => updateSeo('canonical', e.target.value)}
@@ -202,7 +209,13 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label>Cover image</Label>
+            <Label>
+              Cover image
+              <HelpTip title="This is the page banner">
+                The banner at the top of the industry page and the social-share image. Set
+                its ALT text in the field below the upload.
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={i.cover ?? ''}
               onChange={(url) => update('cover', url)}

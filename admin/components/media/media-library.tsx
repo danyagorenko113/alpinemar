@@ -32,6 +32,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { HelpTip } from '@/components/shared/help-tip'
 import { cn, previewSrc, slugify, formatDate } from '@/lib/utils'
 
 interface Props {
@@ -249,6 +250,14 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
     <>
       <div className="rounded-lg border bg-card p-4 mb-4 space-y-3">
         {/* Upload row */}
+        <div className="flex items-center gap-1 text-xs font-medium text-navy-600">
+          Upload destination
+          <HelpTip title="Folders & uploads">
+            Pick the folder new uploads go to — or choose &ldquo;New folder…&rdquo; to create
+            one on the fly. Manage folders (create, rename, delete) with the buttons below;
+            click any image to edit its ALT text or rename the file.
+          </HelpTip>
+        </div>
         <div className="grid sm:grid-cols-[1fr_auto] gap-2">
           <div className="flex gap-2">
             <select
@@ -447,7 +456,14 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
                 </Button>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="detail-alt">Alt text</Label>
+                <Label htmlFor="detail-alt">
+                  Alt text
+                  <HelpTip title="One ALT, used everywhere">
+                    Saved to the central media manifest — pages that embed this image pick
+                    the ALT up automatically. Article covers and in-article images can still
+                    override it in their own editors.
+                  </HelpTip>
+                </Label>
                 <div className="flex items-center gap-2">
                   <Input
                     id="detail-alt"
