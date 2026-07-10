@@ -50,7 +50,6 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.a
 /** Detail-page sections in the site's default render order. */
 const SECTION_DEFS: SectionDef<ServiceSectionKey>[] = [
   { key: 'benefits', label: 'What you get', hint: '(takeaways)' },
-  { key: 'included', label: "What's included" },
   { key: 'process', label: 'How we work' },
   { key: 'deepdive', label: 'Deep dive', hint: '(body)' },
   { key: 'reviews', label: 'Reviews' },
@@ -66,11 +65,6 @@ const COPY_DEFS: CopySectionDef<ServiceCopyKey>[] = [
     { key: 'eyebrow', label: 'Eyebrow', placeholder: 'What you get' },
     { key: 'heading', label: 'Heading', placeholder: 'The engagement, in a nutshell.' },
     { key: 'intro', label: 'Intro', placeholder: 'Every Alpine Mar … engagement is built on the same four commitments.', textarea: true },
-  ]},
-  { key: 'included', label: "What's included", fields: [
-    { key: 'eyebrow', label: 'Eyebrow', placeholder: "What's included" },
-    { key: 'heading', label: 'Heading', placeholder: 'A defined scope, not a black box.' },
-    { key: 'intro', label: 'Intro', placeholder: "Engagements are scoped before they start. Here's what a typical … engagement covers.", textarea: true },
   ]},
   { key: 'process', label: 'How we work', fields: [
     { key: 'eyebrow', label: 'Eyebrow', placeholder: 'How we work' },
@@ -133,7 +127,6 @@ const empty: Service = {
   pillars: [],
   reviewIndex: undefined,
   takeaways: [],
-  included: [],
   process: [],
   faq: [],
   industries: [],
@@ -143,14 +136,24 @@ const empty: Service = {
 }
 
 /**
+ * The auto-generated per-service hero the page falls back to when `cover` is
+ * unset: /images/services/<slug>.jpg (derived from the path, same as the site).
+ */
+function autoHeroFor(svc: Service): string {
+  const slug = (svc.path || `/services/${svc.slug}/`).replace(/^\/services\//, '').replace(/\/$/, '')
+  return slug ? `/images/services/${slug}.jpg` : ''
+}
+
+/**
  * Prefill the structured sections with the site's default content when empty,
  * so the editor sees exactly what renders on the live page and can edit it.
- * `included` has no template default, so it stays empty (that section is
- * hidden on the page until deliverables are added).
+ * The cover is prefilled with the auto hero (existing services only) so the
+ * banner shows in the CMS; on save it's stripped back if left unchanged.
  */
 function withSectionPrefills(svc: Service): Service {
   return {
     ...svc,
+    cover: svc.cover || (svc.slug ? autoHeroFor(svc) : ''),
     takeaways: svc.takeaways.length ? svc.takeaways : DEFAULT_TAKEAWAYS.map((t) => ({ ...t })),
     process: svc.process.length ? svc.process : DEFAULT_PROCESS.map((p) => ({ ...p })),
     pillars: svc.pillars.length ? svc.pillars : DEFAULT_PILLARS.map((p) => ({ ...p })),
@@ -214,7 +217,7 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           heroTitle: s.heroTitle?.trim() || undefined,
           path: s.path || `/services/${s.slug}/`,
           summary: s.summary,
-          cover: s.cover || undefined,
+          cover: s.cover && s.cover !== autoHeroFor(s) ? s.cover : undefined,
           coverAlt: s.coverAlt?.trim() || undefined,
           group: s.group,
           sections: s.sections,
@@ -222,7 +225,6 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           pillars: pillars,
           reviewIndex: s.reviewIndex || undefined,
           takeaways: takeaways,
-          included: s.included,
           process: process,
           faq: faq,
           industries: s.industries,
@@ -331,7 +333,7 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           </section>
 
           {/* Sections are ordered to match the live page: What you get →
-              What's included → How we work → Deep dive → Why Alpine Mar → FAQ. */}
+              How we work → Deep dive → Why Alpine Mar → FAQ. */}
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">
@@ -359,35 +361,6 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               ]}
               defaultItem={{ title: '', body: '' }}
               addLabel="Add takeaway"
-            />
-          </section>
-
-          <section className="rounded-lg border bg-card p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">
-                What's included
-                <span className={`ml-2 align-middle rounded-full px-2 py-0.5 text-[10px] font-medium ${s.included.length ? 'bg-emerald-50 text-emerald-700' : 'bg-navy-100 text-navy-500'}`}>
-                  {s.included.length ? 'Optional — showing' : 'Optional — off'}
-                </span>
-                <HelpTip title="Optional deliverables section">
-                  Unlike the other sections, this one has no default — so it&rsquo;s
-                  <strong> hidden on the page until you add at least one deliverable</strong>.
-                  Add items to turn it on for this service; leave empty to keep it off. When on,
-                  it renders as the checkmark list in the dark &ldquo;What&rsquo;s included&rdquo; band.
-                </HelpTip>
-              </h2>
-              <span className="text-xs text-muted-foreground">Add items to show this section on the page</span>
-            </div>
-            <SectionHeadingFields
-              value={s.sectionCopy?.included}
-              fields={copyFieldsFor('included')}
-              onChange={(v) => updateSectionCopy('included', v)}
-            />
-            <StringList
-              value={s.included}
-              onChange={(v) => update('included', v)}
-              placeholder="e.g. Monthly close & reconciliations"
-              addLabel="Add deliverable"
             />
           </section>
 
@@ -571,9 +544,10 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
             <Label>
               Cover image
               <HelpTip title="This is the page banner">
-                The full-width banner image at the top of the service page — and the image
-                used for social sharing. Upload or replace it here and set its ALT text in
-                the field below.
+                The full-width banner at the top of the service page (and the social-share
+                image). Each service ships with an auto-generated hero — shown here — so this
+                is never empty. Upload to replace it; if you leave the default, nothing is
+                written and the auto image keeps rendering.
               </HelpTip>
             </Label>
             <ImageUploader
@@ -584,6 +558,11 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               onAltChange={(v) => update('coverAlt', v)}
               altLabel="Cover alt text"
             />
+            {s.cover === autoHeroFor(s) && (
+              <p className="text-xs text-muted-foreground">
+                Showing the auto-generated hero for this service. Upload above to use your own.
+              </p>
+            )}
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">

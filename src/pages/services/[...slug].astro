@@ -44,7 +44,6 @@ const linkedIndustries = (service.data.industries ?? [])
   .filter((x): x is (typeof industryList)[number] => !!x);
 
 const takeaways = service.data.takeaways ?? [];
-const included = service.data.included ?? [];
 const process = service.data.process ?? [];
 
 // Per-section copy overrides from frontmatter (CMS "Section copy" card).
@@ -87,7 +86,7 @@ const clientView = googleReviews[reviewIndex];
 // ── Section visibility & order (CMS-controlled) ───────────────────────────
 // `sections` frontmatter lists every block to show, in order; omit for the
 // default full layout. All nine blocks are controllable from the CMS.
-const MASTER_ORDER = ['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq'] as const;
+const MASTER_ORDER = ['benefits', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq'] as const;
 type SectionKey = (typeof MASTER_ORDER)[number];
 const customSections = service.data.sections as SectionKey[] | undefined;
 const renderOrder: SectionKey[] = customSections ?? [...MASTER_ORDER];
@@ -185,34 +184,6 @@ const schema = [
 
   
       )}
-      {sectionKey === 'included' && included.length > 0 && (
-    <section class="relative overflow-hidden bg-[#12122D] py-12 text-white md:py-32">
-      <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
-
-      <Container width="wide" class="relative z-10">
-        <div class="mb-8 flex items-center gap-3 text-white/85 md:mb-10">
-          <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">{sc.included?.eyebrow ?? "What's included"}</span>
-        </div>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
-          <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">{sc.included?.heading ?? 'A defined scope, not a black box.'}</h2>
-          <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-            {sc.included?.intro ?? `Engagements are scoped before they start. Here's what a typical ${service.data.title.toLowerCase()} engagement covers.`}
-          </p>
-        </div>
-        <ul class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
-          {included.map((item) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-scooter">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-scooter"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <span class="font-display text-[14px] leading-[1.5] text-white">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
-  )}
       {sectionKey === 'process' && (
   <section class="relative bg-white py-12 md:py-32">
     <Container width="wide">

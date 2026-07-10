@@ -43,13 +43,12 @@ const services = defineCollection({
     /** Section visibility + order for the detail page. Omit for the default
      *  full layout; when set, only the listed sections render, in order. */
     sections: z
-      .array(z.enum(['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq']))
+      .array(z.enum(['benefits', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq']))
       .optional(),
     /** Per-section copy overrides — every string falls back to the built-in default. */
     sectionCopy: z
       .object({
         benefits: sectionCopyBlock,
-        included: sectionCopyBlock,
         process: sectionCopyBlock,
         deepdive: sectionCopyBlock,
         reviews: sectionCopyBlock,
@@ -66,8 +65,6 @@ const services = defineCollection({
     reviewIndex: z.number().int().min(0).optional(),
     /** "What you get" cards — each a title with a supporting line. */
     takeaways: z.array(z.object({ title: z.string(), body: z.string().default('') })).default([]),
-    /** Optional "what's included" deliverables list. */
-    included: z.array(z.string()).default([]),
     /** Optional ordered engagement steps (rendered as a numbered process strip). */
     process: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
     /** Optional cross-link slugs into the industries collection. */

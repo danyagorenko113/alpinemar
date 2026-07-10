@@ -16,7 +16,6 @@ export type ContentStatus = 'draft' | 'published'
 /** Detail-page sections, in the site's default render order. */
 export type ServiceSectionKey =
   | 'benefits'
-  | 'included'
   | 'process'
   | 'deepdive'
   | 'reviews'
@@ -72,8 +71,6 @@ export interface ServiceFrontmatter {
   reviewIndex?: number
   /** "What you get" cards — title + supporting line. */
   takeaways: ServiceTakeaway[]
-  /** "What's included" deliverables list. */
-  included: string[]
   /** Ordered engagement steps (numbered process strip). */
   process: ServiceProcessStep[]
   /** FAQ entries for the detail page. */
@@ -107,7 +104,7 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
     : typeof rawUpdated === 'string' && rawUpdated
       ? rawUpdated
       : undefined
-  const validSections: ServiceSectionKey[] = ['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq']
+  const validSections: ServiceSectionKey[] = ['benefits', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq']
   const sections = Array.isArray(data.sections)
     ? (data.sections.filter((s): s is ServiceSectionKey => validSections.includes(s as ServiceSectionKey)))
     : undefined
@@ -151,7 +148,6 @@ function normalize(data: Record<string, unknown>): ServiceFrontmatter {
             : { title: String(t?.title ?? ''), body: String(t?.body ?? '') },
         )
       : [],
-    included: Array.isArray(data.included) ? (data.included as string[]).map(String) : [],
     process: Array.isArray(data.process)
       ? (data.process as Array<Record<string, unknown>>).map((p) => ({
           title: String(p?.title ?? ''),
@@ -251,7 +247,6 @@ export async function saveService(input: SaveServiceInput): Promise<{ slug: stri
     pillars: fm.pillars.filter((p) => p.title.trim() || p.body.trim()),
     reviewIndex: fm.reviewIndex,
     takeaways: fm.takeaways.filter((t) => t.title.trim() || t.body.trim()),
-    included: fm.included.map((t) => t.trim()).filter(Boolean),
     process: fm.process.filter((p) => p.title.trim() || p.body.trim()),
     faq: fm.faq.filter((f) => f.q.trim() || f.a.trim()),
     industries: fm.industries,
