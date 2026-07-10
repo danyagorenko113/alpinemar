@@ -134,13 +134,13 @@ const schema = [
       <ul data-stagger class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {services.map((s) => (
           <li>
-            <div class="group relative flex h-full min-h-[260px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
+            <div class="group flex h-full min-h-[260px] flex-col rounded-[6px] border border-line bg-white p-7 transition-colors hover:border-[#12122D]">
               <span class="inline-flex size-12 items-center justify-center rounded-[6px] bg-paper">
                 <Icon name={s.icon} class="size-6 text-delft" />
               </span>
               <h3 class="mt-6 font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)]">
-                {/* Anchor text = service title only; ::after keeps the card clickable. */}
-                <a href={s.href} class="after:absolute after:inset-0">{s.title}</a>
+                {/* Anchor text = service title only. No stretched/whole-card link. */}
+                <a href={s.href} class="transition-colors hover:text-scooter group-hover:text-scooter">{s.title}</a>
               </h3>
               <p class="mt-3 line-clamp-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{s.summary}</p>
               <span class="mt-auto inline-flex items-center gap-2 pt-6 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">

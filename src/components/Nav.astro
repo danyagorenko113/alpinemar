@@ -109,12 +109,10 @@ const popularServices = [
             <ul class="mt-5 space-y-2.5 border-t border-line pt-4">
               {group.items.slice(0, 6).map((it) => (
                 <li>
-                  <a href={it.href} class="group/link block">
-                    <span class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors group-hover/link:text-scooter">{it.name}</span>
-                    {'desc' in it && (
-                      <span class="mt-0.5 line-clamp-1 font-display text-[11px] leading-snug text-[var(--color-text-body)]">{(it as any).desc}</span>
-                    )}
-                  </a>
+                  <a href={it.href} class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors hover:text-scooter">{it.name}</a>
+                  {'desc' in it && (
+                    <span class="mt-0.5 line-clamp-1 block font-display text-[11px] leading-snug text-[var(--color-text-body)]">{(it as any).desc}</span>
+                  )}
                 </li>
               ))}
               {group.items.length > 6 && (
@@ -177,10 +175,10 @@ const popularServices = [
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {industryMenu.map((ind, i) => (
-          <div class="group/ind relative flex h-full flex-col gap-2.5 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
+          <div class="group/ind flex h-full flex-col gap-2.5 rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
             <div class="flex items-center justify-between gap-3">
-              {/* Anchor text = industry name only; ::after keeps the whole card clickable. */}
-              <a href={ind.href} class="font-display text-[15px] font-medium leading-tight tracking-[-0.005em] text-[var(--color-text-head)] transition-colors after:absolute after:inset-0 group-hover/ind:text-scooter">{ind.name}</a>
+              {/* Anchor text = industry name only. No stretched/whole-card link. */}
+              <a href={ind.href} class="font-display text-[15px] font-medium leading-tight tracking-[-0.005em] text-[var(--color-text-head)] transition-colors hover:text-scooter group-hover/ind:text-scooter">{ind.name}</a>
               <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)]">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <p class="line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{ind.desc}</p>
