@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   Home,
+  BookOpen,
   FileText,
   Briefcase,
   Building2,
@@ -38,7 +39,10 @@ interface NavGroup {
 const navGroups: NavGroup[] = [
   {
     label: null,
-    items: [{ href: '/dashboard', label: 'Dashboard', icon: Home, title: 'Content overview' }],
+    items: [
+      { href: '/dashboard', label: 'Dashboard', icon: Home, title: 'Content overview' },
+      { href: '/guide', label: 'Guide', icon: BookOpen, title: 'What you can edit & where' },
+    ],
   },
   {
     label: 'Content',

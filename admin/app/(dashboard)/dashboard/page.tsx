@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import {
+  BookOpen,
   FileText,
   Briefcase,
   Building2,
@@ -161,6 +162,26 @@ export default async function DashboardPage() {
           </Button>
         </div>
       </header>
+
+      {/* ── GUIDE CALLOUT ───────────────────────────────────── */}
+      <Link
+        href="/guide"
+        className="group flex items-center gap-4 rounded-lg border border-scooter/40 bg-scooter/5 p-4 transition-colors hover:border-scooter hover:bg-scooter/10"
+      >
+        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-md bg-scooter/15">
+          <BookOpen className="h-5 w-5 text-scooter-dark" />
+        </span>
+        <span className="flex-1">
+          <span className="block text-sm font-semibold text-navy-900">
+            New here? Everything on the live site is editable from this CMS.
+          </span>
+          <span className="block text-xs text-navy-600">
+            Service page sections, banner images, authors &amp; bios, categories, tables, SEO,
+            media folders — the Guide shows where each one lives.
+          </span>
+        </span>
+        <span className="text-xs font-medium text-scooter-dark group-hover:underline">Open the Guide →</span>
+      </Link>
 
       {/* ── OVERVIEW TILES ─────────────────────────────────── */}
       <section>

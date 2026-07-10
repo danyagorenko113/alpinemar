@@ -212,6 +212,14 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 pb-24">
         <div className="space-y-5 min-w-0">
+          <div className="rounded-md border border-scooter/40 bg-scooter/5 px-4 py-2.5 text-xs text-navy-700">
+            Every section of the live page is controlled here — takeaways, process steps, FAQ,
+            pillars, section headings, and the banner. Use <strong>Page sections</strong> (right
+            sidebar) to hide or reorder sections.{' '}
+            <a href="/guide#services" className="font-medium text-scooter-dark hover:underline">
+              See the guide
+            </a>
+          </div>
           <section className="rounded-lg border bg-card p-5 space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="title">Title *</Label>
