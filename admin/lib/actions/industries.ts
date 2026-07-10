@@ -12,6 +12,33 @@ const LIST_TTL_MS = 60_000
 
 export type ContentStatus = 'draft' | 'published'
 
+/** Detail-page sections whose heading/eyebrow/intro can be overridden. */
+export type IndustryCopyKey =
+  | 'benefits'
+  | 'services'
+  | 'deepdive'
+  | 'reviews'
+  | 'pillars'
+  | 'related'
+  | 'faq'
+  | 'cta'
+
+export interface SectionCopy {
+  eyebrow?: string
+  heading?: string
+  intro?: string
+  aside?: string
+  button?: string
+}
+
+export type IndustrySectionCopy = Partial<Record<IndustryCopyKey, SectionCopy>>
+
+// Type aliases (not interfaces) so they satisfy StructList's
+// Record<string, string> constraint via implicit index signatures.
+export type IndustryTakeaway = { title: string; body: string }
+export type IndustryPillar = { title: string; body: string }
+export type IndustryFaqItem = { q: string; a: string }
+
 export interface IndustrySeo {
   title?: string
   description?: string
@@ -27,6 +54,14 @@ export interface IndustryFrontmatter {
   /** Alt text for the cover/banner image. */
   coverAlt?: string
   services: string[]
+  /** "What you get" cards — title + supporting line. */
+  takeaways: IndustryTakeaway[]
+  /** "Why Alpine Mar" cards; empty = the default three pillars. */
+  pillars: IndustryPillar[]
+  /** FAQ entries; empty = the default set. */
+  faq: IndustryFaqItem[]
+  /** Per-section heading/eyebrow/intro overrides; blank = built-in default. */
+  sectionCopy?: IndustrySectionCopy
   status: ContentStatus
   updated?: string
   seo?: IndustrySeo
@@ -55,6 +90,22 @@ function normalize(data: Record<string, unknown>): IndustryFrontmatter {
     : typeof rawUpdated === 'string' && rawUpdated
       ? rawUpdated
       : undefined
+  const validCopyKeys: IndustryCopyKey[] = ['benefits', 'services', 'deepdive', 'reviews', 'pillars', 'related', 'faq', 'cta']
+  const copyFields = ['eyebrow', 'heading', 'intro', 'aside', 'button'] as const
+  let sectionCopy: IndustrySectionCopy | undefined
+  if (data.sectionCopy && typeof data.sectionCopy === 'object') {
+    sectionCopy = {}
+    for (const [key, raw] of Object.entries(data.sectionCopy as Record<string, unknown>)) {
+      if (!validCopyKeys.includes(key as IndustryCopyKey) || !raw || typeof raw !== 'object') continue
+      const entry: SectionCopy = {}
+      for (const f of copyFields) {
+        const v = (raw as Record<string, unknown>)[f]
+        if (typeof v === 'string' && v.trim()) entry[f] = v
+      }
+      if (Object.keys(entry).length) sectionCopy[key as IndustryCopyKey] = entry
+    }
+    if (!Object.keys(sectionCopy).length) sectionCopy = undefined
+  }
   return {
     title: String(data.title ?? ''),
     path: String(data.path ?? ''),
@@ -62,6 +113,26 @@ function normalize(data: Record<string, unknown>): IndustryFrontmatter {
     cover: data.cover ? String(data.cover) : undefined,
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     services: Array.isArray(data.services) ? (data.services as string[]) : [],
+    takeaways: Array.isArray(data.takeaways)
+      ? (data.takeaways as Array<Record<string, unknown> | string>).map((t) =>
+          typeof t === 'string'
+            ? { title: t, body: '' }
+            : { title: String(t?.title ?? ''), body: String(t?.body ?? '') },
+        )
+      : [],
+    pillars: Array.isArray(data.pillars)
+      ? (data.pillars as Array<Record<string, unknown>>).map((p) => ({
+          title: String(p?.title ?? ''),
+          body: String(p?.body ?? ''),
+        }))
+      : [],
+    faq: Array.isArray(data.faq)
+      ? (data.faq as Array<Record<string, unknown>>).map((f) => ({
+          q: String(f?.q ?? ''),
+          a: String(f?.a ?? ''),
+        }))
+      : [],
+    sectionCopy,
     status,
     updated,
     seo: data.seo as IndustryFrontmatter['seo'],
@@ -120,6 +191,20 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
     sha: input.sha,
   })
 
+  // Deep-clean sectionCopy: drop blank strings, empty entries, empty object.
+  let sectionCopy: IndustrySectionCopy | undefined
+  if (fm.sectionCopy) {
+    sectionCopy = {}
+    for (const [key, entry] of Object.entries(fm.sectionCopy)) {
+      if (!entry) continue
+      const clean = Object.fromEntries(
+        Object.entries(entry).filter(([, v]) => typeof v === 'string' && v.trim()),
+      ) as SectionCopy
+      if (Object.keys(clean).length) sectionCopy[key as IndustryCopyKey] = clean
+    }
+    if (!Object.keys(sectionCopy).length) sectionCopy = undefined
+  }
+
   const updates: Record<string, unknown> = {
     title: fm.title,
     path: fm.path || `/industries/${finalSlug}/`,
@@ -127,6 +212,10 @@ export async function saveIndustry(input: SaveIndustryInput): Promise<{ slug: st
     cover: fm.cover,
     coverAlt: fm.coverAlt,
     services: fm.services,
+    takeaways: fm.takeaways.filter((t) => t.title.trim() || t.body.trim()),
+    pillars: fm.pillars.filter((p) => p.title.trim() || p.body.trim()),
+    faq: fm.faq.filter((f) => f.q.trim() || f.a.trim()),
+    sectionCopy,
     status: fm.status === 'draft' ? 'draft' : undefined,
     updated: new Date().toISOString(),
     seo:

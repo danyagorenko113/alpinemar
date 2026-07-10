@@ -12,10 +12,19 @@ import { RichTextEditor } from '@/components/editor/rich-text-editor'
 import { HelpTip } from '@/components/shared/help-tip'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { TagInput } from '@/components/shared/tag-input'
+import { StructList } from '@/components/shared/struct-list'
+import { SectionCopyEditor, type CopySectionDef, type SectionCopy } from '@/components/shared/section-copy-editor'
+import { SectionHeadingFields } from '@/components/shared/section-heading-fields'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
-import { saveIndustry, deleteIndustry, type Industry, type IndustryFrontmatter } from '@/lib/actions/industries'
+import { saveIndustry, deleteIndustry, type Industry, type IndustryFrontmatter, type IndustryCopyKey } from '@/lib/actions/industries'
 import { slugify } from '@/lib/utils'
+import {
+  DEFAULT_TAKEAWAYS,
+  DEFAULT_PILLARS,
+  defaultFaq,
+  equalsDefault,
+} from '@/lib/industry-section-defaults'
 
 interface Props {
   initial?: Industry
@@ -23,6 +32,52 @@ interface Props {
 }
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
+
+/** Placeholders mirror the defaults baked into src/pages/industries/[...slug].astro. */
+const COPY_DEFS: CopySectionDef<IndustryCopyKey>[] = [
+  { key: 'benefits', label: 'What you get', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'What you get' },
+    { key: 'heading', label: 'Heading', placeholder: 'A team that already speaks your language.' },
+    { key: 'intro', label: 'Intro', placeholder: 'The same four commitments on every … engagement.', textarea: true },
+  ]},
+  { key: 'services', label: 'Services we run', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Services we run for …' },
+    { key: 'heading', label: 'Heading', placeholder: 'From day-to-day books to high-stakes transactions.' },
+    { key: 'intro', label: 'Intro', placeholder: 'The most-booked services in this vertical…', textarea: true },
+  ]},
+  { key: 'deepdive', label: 'Industry overview (body)', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Industry overview' },
+    { key: 'heading', label: 'Heading', placeholder: 'What to know before you hire.' },
+  ]},
+  { key: 'reviews', label: 'Client view', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Client view' },
+  ]},
+  { key: 'pillars', label: 'Why Alpine Mar', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Why Alpine Mar' },
+    { key: 'heading', label: 'Heading', placeholder: 'A firm that knows your world, not just your numbers.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Beyond the books: we know the industry mechanics…', textarea: true },
+  ]},
+  { key: 'related', label: 'More industries', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'More industries' },
+    { key: 'heading', label: 'Heading', placeholder: "Industries we're just as fluent in:" },
+    { key: 'button', label: 'Link label', placeholder: 'All industries' },
+  ]},
+  { key: 'faq', label: 'FAQ', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Common questions' },
+    { key: 'heading', label: 'Heading', placeholder: 'Before you book the call.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Quick answers to the things most people ask…', textarea: true },
+  ]},
+  { key: 'cta', label: 'Final CTA', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Ready to start?' },
+    { key: 'heading', label: 'Heading', placeholder: "Let's get on a first name basis." },
+    { key: 'button', label: 'Button label', placeholder: 'Request a Consultation' },
+  ]},
+]
+
+/** Heading fields for one section, embedded inside that section's card. */
+const copyFieldsFor = (key: IndustryCopyKey) => COPY_DEFS.find((d) => d.key === key)?.fields ?? []
+/** Sections with no content card of their own (auto/sidebar-driven). */
+const AUTO_COPY_DEFS = COPY_DEFS.filter((d) => (['services', 'reviews', 'related', 'cta'] as string[]).includes(d.key))
 
 const empty: Industry = {
   slug: '',
@@ -32,15 +87,32 @@ const empty: Industry = {
   cover: '',
   coverAlt: '',
   services: [],
+  takeaways: [],
+  pillars: [],
+  faq: [],
+  sectionCopy: undefined,
   status: 'published',
   seo: { title: '', description: '', canonical: '' },
   body: '',
 }
 
+/**
+ * Prefill the structured sections with the site's default content when empty,
+ * so the editor sees exactly what renders on the live page and can edit it.
+ */
+function withSectionPrefills(ind: Industry): Industry {
+  return {
+    ...ind,
+    takeaways: ind.takeaways.length ? ind.takeaways : DEFAULT_TAKEAWAYS.map((t) => ({ ...t })),
+    pillars: ind.pillars.length ? ind.pillars : DEFAULT_PILLARS.map((p) => ({ ...p })),
+    faq: ind.faq.length ? ind.faq : defaultFaq(ind.title).map((f) => ({ ...f })),
+  }
+}
+
 export function IndustriesForm({ initial, serviceSlugs }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
-  const [i, setI] = useState<Industry>(initial ?? empty)
+  const [i, setI] = useState<Industry>(() => withSectionPrefills(initial ?? empty))
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [dirty, setDirty] = useState(false)
@@ -58,6 +130,15 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
     setI((p) => ({ ...p, seo: { ...(p.seo ?? {}), [k]: v } }))
     setDirty(true)
   }
+  function updateSectionCopy(key: IndustryCopyKey, val: SectionCopy | undefined) {
+    setI((p) => {
+      const next = { ...(p.sectionCopy ?? {}) }
+      if (val) next[key] = val
+      else delete next[key]
+      return { ...p, sectionCopy: Object.keys(next).length ? next : undefined }
+    })
+    setDirty(true)
+  }
 
   function handleTitleChange(v: string) {
     update('title', v)
@@ -69,6 +150,13 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
     if (!i.slug.trim()) return toast.error('Slug is required')
     if (!i.summary.trim()) return toast.error('Summary is required')
 
+    // Sections still equal to the site defaults are saved as empty, so the
+    // file stays clean and keeps using the template default — only edited
+    // sections get written to the .md file.
+    const takeaways = equalsDefault(i.takeaways, DEFAULT_TAKEAWAYS) ? [] : i.takeaways
+    const pillars = equalsDefault(i.pillars, DEFAULT_PILLARS) ? [] : i.pillars
+    const faq = equalsDefault(i.faq, defaultFaq(i.title)) ? [] : i.faq
+
     startTransition(async () => {
       try {
         const fm: IndustryFrontmatter = {
@@ -78,6 +166,10 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
           cover: i.cover || undefined,
           coverAlt: i.coverAlt?.trim() || undefined,
           services: i.services,
+          takeaways,
+          pillars,
+          faq,
+          sectionCopy: i.sectionCopy,
           status: i.status,
           seo: i.seo,
         }
@@ -164,11 +256,125 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
               </h2>
               <span className="text-xs text-muted-foreground">Long-form content</span>
             </div>
+            <SectionHeadingFields
+              value={i.sectionCopy?.deepdive}
+              fields={copyFieldsFor('deepdive')}
+              onChange={(v) => updateSectionCopy('deepdive', v)}
+            />
             <RichTextEditor
               value={i.body}
               onChange={(html) => update('body', html)}
               placeholder="Long-form industry description, regulatory context, our approach…"
               uploadDir="images/industries"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">
+                Key takeaways
+                <HelpTip title="What you get section">
+                  Each entry is a numbered card in the &ldquo;What you get&rdquo; section — a
+                  title plus a short supporting line. Pre-filled with the site&rsquo;s default
+                  cards; edit them to make this industry specific, or clear all to fall back to
+                  the defaults.
+                </HelpTip>
+              </h2>
+              <span className="text-xs text-muted-foreground">"What you get" cards — title + line</span>
+            </div>
+            <SectionHeadingFields
+              value={i.sectionCopy?.benefits}
+              fields={copyFieldsFor('benefits')}
+              onChange={(v) => updateSectionCopy('benefits', v)}
+            />
+            <StructList
+              value={i.takeaways}
+              onChange={(v) => update('takeaways', v)}
+              fields={[
+                { key: 'title', label: 'Card title', placeholder: 'e.g. Industry-fluent partners' },
+                { key: 'body', label: 'Supporting line', textarea: true, placeholder: 'One sentence under the title…' },
+              ]}
+              defaultItem={{ title: '', body: '' }}
+              addLabel="Add takeaway"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">
+                Why Alpine Mar
+                <HelpTip title="Pillar cards">
+                  The three white cards in the dark &ldquo;Why Alpine Mar&rdquo; band.
+                  Pre-filled with the firm-wide pillars — edit to customize this page, or clear
+                  all to fall back to the defaults.
+                </HelpTip>
+              </h2>
+              <span className="text-xs text-muted-foreground">Empty = default three pillars</span>
+            </div>
+            <SectionHeadingFields
+              value={i.sectionCopy?.pillars}
+              fields={copyFieldsFor('pillars')}
+              onChange={(v) => updateSectionCopy('pillars', v)}
+            />
+            <StructList
+              value={i.pillars}
+              onChange={(v) => update('pillars', v)}
+              fields={[
+                { key: 'title', label: 'Pillar title', placeholder: 'e.g. Specialized by vertical' },
+                { key: 'body', label: 'Pillar text', textarea: true, placeholder: 'Why clients pick Alpine Mar…' },
+              ]}
+              defaultItem={{ title: '', body: '' }}
+              addLabel="Add pillar"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">
+                FAQ
+                <HelpTip title="Common questions section">
+                  Accordion at the bottom of the page (the first question renders open).
+                  Pre-filled with four default questions — edit to customize, or clear all to
+                  fall back to the default set.
+                </HelpTip>
+              </h2>
+              <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
+            </div>
+            <SectionHeadingFields
+              value={i.sectionCopy?.faq}
+              fields={copyFieldsFor('faq')}
+              onChange={(v) => updateSectionCopy('faq', v)}
+            />
+            <StructList
+              value={i.faq}
+              onChange={(v) => update('faq', v)}
+              fields={[
+                { key: 'q', label: 'Question', placeholder: 'e.g. How quickly can we start?' },
+                { key: 'a', label: 'Answer', textarea: true, placeholder: 'Answer…' },
+              ]}
+              defaultItem={{ q: '', a: '' }}
+              addLabel="Add question"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">
+                Other section headings
+                <HelpTip title="Headings for the automatic sections">
+                  The sections above each have their heading text right inside their own card.
+                  These sections have no content card because they&rsquo;re built automatically —
+                  the Services strip (from cross-linked services), Reviews, More industries, and
+                  the final call-to-action. Edit their on-page labels/headings here; blank = the
+                  site default shown as placeholder.
+                </HelpTip>
+              </h2>
+              <span className="text-xs text-muted-foreground">Services · Reviews · More industries · Final CTA</span>
+            </div>
+            <SectionCopyEditor
+              defs={AUTO_COPY_DEFS}
+              value={i.sectionCopy}
+              onChange={(v) => update('sectionCopy', v)}
             />
           </section>
 

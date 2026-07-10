@@ -120,7 +120,7 @@ export default function GuidePage() {
             <li><strong>Process</strong> — the &ldquo;How we work&rdquo; numbered steps.</li>
             <li><strong>FAQ</strong> — questions and answers (blank = the default set).</li>
             <li><strong>Why Alpine Mar</strong> — the three pillar cards (blank = firm default).</li>
-            <li><strong>Section headings &amp; intro copy</strong> — override the eyebrow, heading, and intro of every section, plus button labels. Placeholders show what renders when a field is left blank.</li>
+            <li><strong>Section headings</strong> — each section&rsquo;s on-page label, heading, and intro sentence are edited right inside that section&rsquo;s card (the &ldquo;Heading &amp; intro text&rdquo; toggle). Blank fields keep the default shown as the greyed placeholder.</li>
             <li><strong>Page sections</strong> (right sidebar) — hide any of the nine sections with a checkbox or reorder them with arrows, per page.</li>
             <li><strong>Featured review</strong> (right sidebar) — choose which Google review shows on this page.</li>
           </ul>

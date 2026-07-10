@@ -15,7 +15,8 @@ import { StringList } from '@/components/shared/string-list'
 import { StructList } from '@/components/shared/struct-list'
 import { HelpTip } from '@/components/shared/help-tip'
 import { SectionOrder, type SectionDef } from '@/components/shared/section-order'
-import { SectionCopyEditor, type CopySectionDef } from '@/components/shared/section-copy-editor'
+import { SectionCopyEditor, type CopySectionDef, type SectionCopy } from '@/components/shared/section-copy-editor'
+import { SectionHeadingFields } from '@/components/shared/section-heading-fields'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import {
@@ -25,6 +26,7 @@ import {
   type ServiceFrontmatter,
   type ServiceGroup,
   type ServiceSectionKey,
+  type ServiceCopyKey,
 } from '@/lib/actions/services'
 import { slugify } from '@/lib/utils'
 import {
@@ -59,7 +61,7 @@ const SECTION_DEFS: SectionDef<ServiceSectionKey>[] = [
 ]
 
 /** Placeholders mirror the defaults baked into src/pages/services/[...slug].astro. */
-const COPY_DEFS: CopySectionDef[] = [
+const COPY_DEFS: CopySectionDef<ServiceCopyKey>[] = [
   { key: 'benefits', label: 'What you get', fields: [
     { key: 'eyebrow', label: 'Eyebrow', placeholder: 'What you get' },
     { key: 'heading', label: 'Heading', placeholder: 'The engagement, in a nutshell.' },
@@ -110,6 +112,12 @@ const COPY_DEFS: CopySectionDef[] = [
     { key: 'button', label: 'Button label (both CTA buttons)', placeholder: 'Request a Consultation' },
   ]},
 ]
+
+/** Heading fields for one section, embedded inside that section's card. */
+const copyFieldsFor = (key: ServiceCopyKey) => COPY_DEFS.find((d) => d.key === key)?.fields ?? []
+/** Sections with no content card of their own (auto/sidebar-driven) — their
+ *  headings live in one small block instead. */
+const AUTO_COPY_DEFS = COPY_DEFS.filter((d) => (['reviews', 'industries', 'related', 'cta'] as string[]).includes(d.key))
 
 const empty: Service = {
   slug: '',
@@ -169,6 +177,15 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
     v: NonNullable<ServiceFrontmatter['seo']>[K],
   ) {
     setS((p) => ({ ...p, seo: { ...(p.seo ?? {}), [k]: v } }))
+    setDirty(true)
+  }
+  function updateSectionCopy(key: ServiceCopyKey, val: SectionCopy | undefined) {
+    setS((p) => {
+      const next = { ...(p.sectionCopy ?? {}) }
+      if (val) next[key] = val
+      else delete next[key]
+      return { ...p, sectionCopy: Object.keys(next).length ? next : undefined }
+    })
     setDirty(true)
   }
 
@@ -313,26 +330,8 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
             </div>
           </section>
 
-          <section className="rounded-lg border bg-card p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">
-                Body
-                <HelpTip title="The Deep dive section">
-                  Renders as the &ldquo;Deep dive&rdquo; section of the page. Tables work like
-                  on the live site (table button in the toolbar); images ask for ALT text on
-                  upload, and clicking an image shows an &ldquo;Edit alt&rdquo; button.
-                </HelpTip>
-              </h2>
-              <span className="text-xs text-muted-foreground">Long-form content</span>
-            </div>
-            <RichTextEditor
-              value={s.body}
-              onChange={(html) => update('body', html)}
-              placeholder="Long-form service description, methodology, FAQs, etc."
-              uploadDir="images/services"
-            />
-          </section>
-
+          {/* Sections are ordered to match the live page: What you get →
+              What's included → How we work → Deep dive → Why Alpine Mar → FAQ. */}
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">
@@ -346,6 +345,11 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               </h2>
               <span className="text-xs text-muted-foreground">"What you get" cards — title + line</span>
             </div>
+            <SectionHeadingFields
+              value={s.sectionCopy?.benefits}
+              fields={copyFieldsFor('benefits')}
+              onChange={(v) => updateSectionCopy('benefits', v)}
+            />
             <StructList
               value={s.takeaways}
               onChange={(v) => update('takeaways', v)}
@@ -369,6 +373,11 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               </h2>
               <span className="text-xs text-muted-foreground">Deliverables list</span>
             </div>
+            <SectionHeadingFields
+              value={s.sectionCopy?.included}
+              fields={copyFieldsFor('included')}
+              onChange={(v) => updateSectionCopy('included', v)}
+            />
             <StringList
               value={s.included}
               onChange={(v) => update('included', v)}
@@ -389,6 +398,11 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               </h2>
               <span className="text-xs text-muted-foreground">"How we work" — numbered steps</span>
             </div>
+            <SectionHeadingFields
+              value={s.sectionCopy?.process}
+              fields={copyFieldsFor('process')}
+              onChange={(v) => updateSectionCopy('process', v)}
+            />
             <StructList
               value={s.process}
               onChange={(v) => update('process', v)}
@@ -404,24 +418,25 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">
-                FAQ
-                <HelpTip title="Common questions section">
-                  Accordion at the bottom of the page (the first question renders open).
-                  Pre-filled with four default questions — edit to customize, or clear all to
-                  fall back to the default set.
+                Body
+                <HelpTip title="The Deep dive section">
+                  Renders as the &ldquo;Deep dive&rdquo; section of the page. Tables work like
+                  on the live site (table button in the toolbar); images ask for ALT text on
+                  upload, and clicking an image shows an &ldquo;Edit alt&rdquo; button.
                 </HelpTip>
               </h2>
-              <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
+              <span className="text-xs text-muted-foreground">Long-form content</span>
             </div>
-            <StructList
-              value={s.faq}
-              onChange={(v) => update('faq', v)}
-              fields={[
-                { key: 'q', label: 'Question', placeholder: 'e.g. How long does an audit take?' },
-                { key: 'a', label: 'Answer', textarea: true, placeholder: 'Answer…' },
-              ]}
-              defaultItem={{ q: '', a: '' }}
-              addLabel="Add question"
+            <SectionHeadingFields
+              value={s.sectionCopy?.deepdive}
+              fields={copyFieldsFor('deepdive')}
+              onChange={(v) => updateSectionCopy('deepdive', v)}
+            />
+            <RichTextEditor
+              value={s.body}
+              onChange={(html) => update('body', html)}
+              placeholder="Long-form service description, methodology, FAQs, etc."
+              uploadDir="images/services"
             />
           </section>
 
@@ -437,6 +452,11 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
               </h2>
               <span className="text-xs text-muted-foreground">Empty = default three pillars</span>
             </div>
+            <SectionHeadingFields
+              value={s.sectionCopy?.pillars}
+              fields={copyFieldsFor('pillars')}
+              onChange={(v) => updateSectionCopy('pillars', v)}
+            />
             <StructList
               value={s.pillars}
               onChange={(v) => update('pillars', v)}
@@ -452,18 +472,48 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">
-                Section headings & intro copy
-                <HelpTip title="Override any section's copy">
-                  Every section&rsquo;s eyebrow label, big heading, and intro paragraph (plus
-                  CTA button labels) can be overridden per page. Placeholders show exactly
-                  what renders when a field is left blank — type only where you want to
-                  differ.
+                FAQ
+                <HelpTip title="Common questions section">
+                  Accordion at the bottom of the page (the first question renders open).
+                  Pre-filled with four default questions — edit to customize, or clear all to
+                  fall back to the default set.
                 </HelpTip>
               </h2>
-              <span className="text-xs text-muted-foreground">Blank = site default (shown as placeholder)</span>
+              <span className="text-xs text-muted-foreground">Empty = default 4-question set</span>
+            </div>
+            <SectionHeadingFields
+              value={s.sectionCopy?.faq}
+              fields={copyFieldsFor('faq')}
+              onChange={(v) => updateSectionCopy('faq', v)}
+            />
+            <StructList
+              value={s.faq}
+              onChange={(v) => update('faq', v)}
+              fields={[
+                { key: 'q', label: 'Question', placeholder: 'e.g. How long does an audit take?' },
+                { key: 'a', label: 'Answer', textarea: true, placeholder: 'Answer…' },
+              ]}
+              defaultItem={{ q: '', a: '' }}
+              addLabel="Add question"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">
+                Other section headings
+                <HelpTip title="Headings for the automatic sections">
+                  The sections above each have their heading text right inside their own card.
+                  These four sections have no content card because they&rsquo;re built
+                  automatically — Reviews (pulls from your Reviews), Industries and Related
+                  services (auto-linked), and the final call-to-action. Edit their on-page
+                  labels/headings here; blank = the site default shown as placeholder.
+                </HelpTip>
+              </h2>
+              <span className="text-xs text-muted-foreground">Reviews · Industries · Related · Final CTA</span>
             </div>
             <SectionCopyEditor
-              defs={COPY_DEFS}
+              defs={AUTO_COPY_DEFS}
               value={s.sectionCopy}
               onChange={(v) => update('sectionCopy', v)}
             />

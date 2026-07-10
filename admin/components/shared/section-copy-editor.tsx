@@ -4,7 +4,9 @@ import { ChevronRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import type { SectionCopy, ServiceCopyKey, ServiceSectionCopy } from '@/lib/actions/services'
+import type { SectionCopy } from '@/lib/actions/services'
+
+export type { SectionCopy }
 
 export interface CopyFieldDef {
   key: keyof SectionCopy
@@ -14,30 +16,33 @@ export interface CopyFieldDef {
   textarea?: boolean
 }
 
-export interface CopySectionDef {
-  key: ServiceCopyKey
+export interface CopySectionDef<K extends string = string> {
+  key: K
   label: string
   fields: CopyFieldDef[]
 }
 
-interface SectionCopyEditorProps {
-  defs: CopySectionDef[]
-  value?: ServiceSectionCopy
-  onChange: (next: ServiceSectionCopy | undefined) => void
+type SectionCopyMap<K extends string> = Partial<Record<K, SectionCopy>>
+
+interface SectionCopyEditorProps<K extends string> {
+  defs: CopySectionDef<K>[]
+  value?: SectionCopyMap<K>
+  onChange: (next: SectionCopyMap<K> | undefined) => void
 }
 
 /**
  * Per-section heading/eyebrow/intro overrides. Each field's placeholder shows
  * the built-in default; blank fields fall back to it, so the frontmatter only
- * carries what the editor actually customized.
+ * carries what the editor actually customized. Generic over the section-key
+ * union so both services and industries can use it.
  */
-export function SectionCopyEditor({ defs, value, onChange }: SectionCopyEditorProps) {
-  function updateField(section: ServiceCopyKey, field: keyof SectionCopy, v: string) {
+export function SectionCopyEditor<K extends string>({ defs, value, onChange }: SectionCopyEditorProps<K>) {
+  function updateField(section: K, field: keyof SectionCopy, v: string) {
     const entry: SectionCopy = { ...(value?.[section] ?? {}) }
     if (v.trim()) entry[field] = v
     else delete entry[field]
 
-    const next: ServiceSectionCopy = { ...(value ?? {}) }
+    const next: SectionCopyMap<K> = { ...(value ?? {}) }
     if (Object.keys(entry).length) next[section] = entry
     else delete next[section]
 

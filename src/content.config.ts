@@ -98,6 +98,25 @@ const industries = defineCollection({
     kpis: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
     /** Optional cross-link slugs into the services collection. */
     services: z.array(z.string()).default([]),
+    /** "What you get" cards — each a title with a supporting line. */
+    takeaways: z.array(z.object({ title: z.string(), body: z.string().default('') })).default([]),
+    /** "Why Alpine Mar" cards; empty = the default three pillars. */
+    pillars: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
+    /** FAQ entries; empty = the default set. */
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+    /** Per-section heading/eyebrow/intro overrides; blank = built-in default. */
+    sectionCopy: z
+      .object({
+        benefits: sectionCopyBlock,
+        services: sectionCopyBlock,
+        deepdive: sectionCopyBlock,
+        reviews: sectionCopyBlock,
+        pillars: sectionCopyBlock,
+        related: sectionCopyBlock,
+        faq: sectionCopyBlock,
+        cta: sectionCopyBlock,
+      })
+      .optional(),
     status,
     updated,
     seo,
