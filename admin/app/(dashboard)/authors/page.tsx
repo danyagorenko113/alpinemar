@@ -27,7 +27,7 @@ export default async function AuthorsListPage(props: { searchParams: Promise<SP>
     <div>
       <PageHeader
         title="Authors"
-        description={`${all.length} authors in src/content/authors/`}
+        description={`${all.length} authors · used for blog post bylines & bios`}
         actions={
           <Button asChild>
             <Link href="/authors/new"><Plus className="h-4 w-4" />New author</Link>

@@ -37,7 +37,7 @@ export default async function BlogListPage(props: { searchParams: Promise<SP> })
     <div>
       <PageHeader
         title="Blog"
-        description={`${allPosts.length} posts in src/content/insights/`}
+        description={`${allPosts.length} posts · click a row to edit, or use “New post”`}
         actions={
           <Button asChild>
             <Link href="/blog/new">

@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { StringList } from '@/components/shared/string-list'
 import { StructList } from '@/components/shared/struct-list'
+import { HelpTip } from '@/components/shared/help-tip'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import {
   saveSettings,
@@ -73,6 +74,9 @@ export function SettingsForm({ initial }: Props) {
   return (
     <>
       <div className="space-y-5 pb-24 max-w-3xl">
+        <div className="rounded-md border border-scooter/40 bg-scooter/5 px-4 py-2.5 text-xs text-navy-700">
+          Site-wide firm details used across the header, footer, contact page, and search-engine structured data — a change here updates every page at once.
+        </div>
         <section className="rounded-lg border bg-card p-5 space-y-4">
           <h2 className="text-base font-semibold">Firm identity</h2>
           <div className="grid sm:grid-cols-2 gap-3">
@@ -81,7 +85,12 @@ export function SettingsForm({ initial }: Props) {
               <Input id="name" value={site.name} onChange={(e) => updateSite('name', e.target.value)} />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="legalName">Legal name</Label>
+              <Label htmlFor="legalName">
+                Legal name
+                <HelpTip title="Full registered name">
+                  The full legal entity name (e.g. &ldquo;Alpine Mar CPAs &amp; Advisors&rdquo;). Used in the Organization structured data that search engines read. The shorter <strong>Name</strong> field above is the everyday display name shown in the page title, footer copyright, and social shares.
+                </HelpTip>
+              </Label>
               <Input
                 id="legalName"
                 value={site.legalName}
@@ -106,7 +115,12 @@ export function SettingsForm({ initial }: Props) {
             </p>
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="url">Site URL *</Label>
+            <Label htmlFor="url">
+              Site URL *
+              <HelpTip title="Canonical domain">
+                The site&rsquo;s primary domain. Used to build canonical URLs, absolute Open Graph image links, sitemap/llms.txt entries, and structured data. Changing it affects SEO across the whole site, so only edit it if the domain actually changes.
+              </HelpTip>
+            </Label>
             <Input
               id="url"
               value={site.url}
@@ -130,7 +144,12 @@ export function SettingsForm({ initial }: Props) {
           </div>
           <div className="grid sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label htmlFor="phone">Phone (display)</Label>
+              <Label htmlFor="phone">
+                Phone (display)
+                <HelpTip title="Shown to visitors">
+                  The formatted number people see, e.g. (954) 743-0147. Appears in the footer, contact page, homepage, and CTA sections. The field beside it holds the digits that make the number clickable.
+                </HelpTip>
+              </Label>
               <Input
                 id="phone"
                 value={site.phone}
@@ -139,7 +158,12 @@ export function SettingsForm({ initial }: Props) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="phoneHref">Phone (tel: link)</Label>
+              <Label htmlFor="phoneHref">
+                Phone (tel: link)
+                <HelpTip title="Digits for the click-to-call link">
+                  The dialable version used behind the clickable phone link (tel:). Enter it in E.164 format &mdash; a plus sign, country code, then digits only, e.g. +19547430147. It&rsquo;s also the telephone value in the structured data. Keep it in sync with the display number.
+                </HelpTip>
+              </Label>
               <Input
                 id="phoneHref"
                 value={site.phoneHref}
@@ -234,9 +258,14 @@ export function SettingsForm({ initial }: Props) {
         </section>
 
         <section className="rounded-lg border bg-card p-5 space-y-4">
-          <h2 className="text-base font-semibold">Memberships</h2>
+          <h2 className="text-base font-semibold">
+            Memberships
+            <HelpTip title="Professional bodies">
+              The professional associations the firm belongs to, e.g. AICPA, FICPA. Used to convey membership and credibility. Keep the list accurate, as it reflects the firm&rsquo;s standing.
+            </HelpTip>
+          </h2>
           <p className="text-xs text-muted-foreground">
-            Professional bodies (e.g. AICPA, FICPA). Rendered as trust badges.
+            Professional bodies the firm belongs to (e.g. AICPA, FICPA).
           </p>
           <StringList
             value={site.memberships}
@@ -247,7 +276,12 @@ export function SettingsForm({ initial }: Props) {
         </section>
 
         <section className="rounded-lg border bg-card p-5 space-y-4">
-          <h2 className="text-base font-semibold">Portals</h2>
+          <h2 className="text-base font-semibold">
+            Portals
+            <HelpTip title="External login links">
+              Links to the two external portals clients and staff use. The <strong>Client portal</strong> is the secure client login (opens from the top bar and the mobile nav); the <strong>IT portal</strong> links to the sister IT site (it.alpinemar.com) from the top bar. Both open in a new tab.
+            </HelpTip>
+          </h2>
           <div className="space-y-1.5">
             <Label htmlFor="clientPortal">Client portal URL</Label>
             <Input

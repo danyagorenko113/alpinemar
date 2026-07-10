@@ -11,6 +11,7 @@ import { RichTextEditor } from '@/components/editor/rich-text-editor'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { StringList } from '@/components/shared/string-list'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { HelpTip } from '@/components/shared/help-tip'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveTeamMember, deleteTeamMember, type TeamMember, type TeamFrontmatter } from '@/lib/actions/team'
 import { slugify } from '@/lib/utils'
@@ -96,6 +97,10 @@ export function TeamForm({ initial }: Props) {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 pb-24">
         <div className="space-y-5 min-w-0">
+          <div className="rounded-md border border-scooter/40 bg-scooter/5 px-4 py-2.5 text-xs text-navy-700">
+            Team members appear in the <strong>Meet the Team</strong> carousel on the
+            About Us page, sorted by Order. Only members with a Photo are shown.
+          </div>
           <section className="rounded-lg border bg-card p-5 space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="name">Name *</Label>
@@ -109,7 +114,14 @@ export function TeamForm({ initial }: Props) {
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label htmlFor="slug">Slug</Label>
+                <Label htmlFor="slug">
+                  Slug
+                  <HelpTip title="File identifier">
+                    Auto-generated from the Name. It names the member&rsquo;s .md file and
+                    the admin URL for this page — it is not shown on the live site. Change
+                    it only if you need to.
+                  </HelpTip>
+                </Label>
                 <Input
                   id="slug"
                   value={m.slug}
@@ -127,7 +139,15 @@ export function TeamForm({ initial }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label className="text-base font-semibold">Credentials</Label>
+            <Label className="text-base font-semibold">
+              Credentials
+              <HelpTip title="Professional letters">
+                Post-nominal designations like CPA or MBA, one per entry. The card&rsquo;s
+                &ldquo;, CPA&rdquo; label and the page&rsquo;s Person schema are derived
+                from the Name, so put the same letters in the Name (e.g. &ldquo;Cody Mar,
+                CPA&rdquo;) for them to show on the live card.
+              </HelpTip>
+            </Label>
             <StringList
               value={m.credentials}
               onChange={(v) => update('credentials', v)}
@@ -137,7 +157,14 @@ export function TeamForm({ initial }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label className="text-base font-semibold">Bio</Label>
+            <Label className="text-base font-semibold">
+              Bio
+              <HelpTip title="Background notes">
+                Longer background and expertise for this member. The current About Us card
+                only shows the photo, name, and role, so the bio is stored for future use
+                and internal reference — it does not yet render on the live site.
+              </HelpTip>
+            </Label>
             <RichTextEditor
               value={m.body}
               onChange={(html) => update('body', html)}
@@ -149,7 +176,13 @@ export function TeamForm({ initial }: Props) {
 
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status">
+              Status
+              <HelpTip title="Published vs. draft">
+                Draft members are hidden from the About Us team carousel. Set to Published
+                to make the member visible on the live site.
+              </HelpTip>
+            </Label>
             <select
               id="status"
               value={m.status}
@@ -169,7 +202,13 @@ export function TeamForm({ initial }: Props) {
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="order">Order</Label>
+              <Label htmlFor="order">
+                Order
+                <HelpTip title="Sort position">
+                  Sorts the team carousel on About Us — lower numbers appear first. Ties
+                  and members left at 0 fall back to file order.
+                </HelpTip>
+              </Label>
               <Input id="order" type="number" value={m.order ?? 0} onChange={(e) => update('order', Number(e.target.value))} />
               <p className="text-xs text-muted-foreground">Lower numbers appear first on /about-us.</p>
             </div>

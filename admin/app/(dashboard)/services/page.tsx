@@ -33,7 +33,7 @@ export default async function ServicesListPage(props: { searchParams: Promise<SP
     <div>
       <PageHeader
         title="Services"
-        description={`${all.length} services in src/content/services/`}
+        description={`${all.length} service pages · click a row to edit, or add a new one`}
         actions={
           <Button asChild>
             <Link href="/services/new"><Plus className="h-4 w-4" />New service</Link>

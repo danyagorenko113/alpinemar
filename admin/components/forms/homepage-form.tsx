@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { ImageUploader } from '@/components/shared/image-uploader'
 import { StringList } from '@/components/shared/string-list'
+import { HelpTip } from '@/components/shared/help-tip'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import {
   saveHomepage,
@@ -79,11 +80,19 @@ export function HomepageForm({ initial }: Props) {
   return (
     <>
       <div className="space-y-5 pb-24 max-w-4xl">
+        <div className="rounded-md border border-amber-300 bg-amber-50 px-4 py-2.5 text-xs text-amber-900">
+          <strong>Heads up:</strong> these curated lists are saved to the site&rsquo;s data file, but the live homepage
+          currently renders its own fixed content — so edits here won&rsquo;t change the homepage yet. Wiring these lists into
+          the homepage is a pending dev task. (The Services and Industries <em>menus</em> and hub pages are driven from the
+          master service/industry lists, not from these fields.)
+        </div>
+
         <Section
           title="Featured services"
           description="5 pinned service cards on the homepage. Order matters."
           count={h.featuredServices.length}
           defaultOpen
+          help="The curated set of service cards for the homepage 'Our Services' strip. Each card links to a service detail page and shows an icon, a short summary, and a hover-preview thumbnail. List order is the display order, top to bottom."
         >
           <FeaturedServicesEditor
             value={h.featuredServices}
@@ -95,6 +104,7 @@ export function HomepageForm({ initial }: Props) {
           title="Featured industries"
           description="3 pinned industry cards on the homepage."
           count={h.featuredIndustries.length}
+          help="The industry cards highlighted in the homepage 'Industries We Service' strip. Each card shows an image, a short blurb, and links to an industry page. Verbatim copy from the live site — keep it faithful."
         >
           <FeaturedIndustriesEditor
             value={h.featuredIndustries}
@@ -106,6 +116,7 @@ export function HomepageForm({ initial }: Props) {
           title="Value props"
           description="4 pillars shown on the homepage."
           count={h.valueProps.length}
+          help="The 'why Alpine Mar' pillars — short title + body pairs that appear as feature points in the homepage About section. Each has an icon key and a one-line body."
         >
           <ValuePropsEditor value={h.valueProps} onChange={(v) => update('valueProps', v)} />
         </Section>
@@ -114,6 +125,7 @@ export function HomepageForm({ initial }: Props) {
           title="Latest posts"
           description="3 blog cards pinned to the homepage. Temporary until the insights collection is wired up."
           count={h.latestPosts.length}
+          help="A manual fallback list of blog cards for the homepage 'Latest Insights' strip. The live homepage currently auto-pulls the newest posts from the insights collection; this list is a hand-curated stand-in used until that wiring is finalized."
         >
           <LatestPostsEditor
             value={h.latestPosts}
@@ -125,6 +137,7 @@ export function HomepageForm({ initial }: Props) {
           title="Partner logos"
           description="Logos rendered on the services page (also mirrored in the footer treatment)."
           count={h.partnerLogos.length}
+          help="The software-platform logos shown in the 'Trusted Platforms We Work With' marquee (the scrolling logo row). Order sets the marquee sequence. Upload a transparent logo per row; the marquee sizes them to a fixed height."
         >
           <PartnerLogosEditor
             value={h.partnerLogos}
@@ -136,6 +149,7 @@ export function HomepageForm({ initial }: Props) {
           title="Integrations"
           description="Software integrations shown across the site. Plain list of names."
           count={h.integrations.length}
+          help="A plain list of software/tool names (e.g. QuickBooks, NetSuite) used as integration labels across the site. Text only — no images or links here; upload logos under Partner logos instead."
         >
           <StringList
             value={h.integrations}
@@ -179,21 +193,22 @@ interface SectionProps {
   description?: string
   count?: number
   defaultOpen?: boolean
+  /** Optional help popover rendered inline next to the section heading. */
+  help?: ReactNode
   children: ReactNode
 }
 
-function Section({ title, description, count, defaultOpen = false, children }: SectionProps) {
+function Section({ title, description, count, defaultOpen = false, help, children }: SectionProps) {
   const [open, setOpen] = useState(defaultOpen)
   return (
     <section className="rounded-lg border bg-card">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-navy-50/40 transition-colors"
-      >
-        <div className="min-w-0">
+      <div className="flex items-center px-5 py-4 hover:bg-navy-50/40 transition-colors">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-semibold">{title}</h2>
+            <h2 className="text-base font-semibold flex items-center">
+              {title}
+              {help && <HelpTip title={title}>{help}</HelpTip>}
+            </h2>
             {typeof count === 'number' && (
               <span className="text-xs font-mono text-muted-foreground bg-navy-50 px-1.5 py-0.5 rounded">
                 {count}
@@ -202,13 +217,20 @@ function Section({ title, description, count, defaultOpen = false, children }: S
           </div>
           {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
         </div>
-        <ChevronDown
-          className={cn(
-            'h-4 w-4 text-navy-400 shrink-0 transition-transform',
-            open && 'rotate-180',
-          )}
-        />
-      </button>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? `Collapse ${title}` : `Expand ${title}`}
+          className="shrink-0 pl-3 text-left"
+        >
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-navy-400 shrink-0 transition-transform',
+              open && 'rotate-180',
+            )}
+          />
+        </button>
+      </div>
       {open && <div className="px-5 pb-5 pt-1 border-t">{children}</div>}
     </section>
   )
@@ -287,7 +309,30 @@ function useListOps<T>(value: T[], onChange: (next: T[]) => void) {
   }
 }
 
-const ICON_HINT = "lucide-react icon name (kebab-case, e.g. 'trending-up')."
+const ICON_HINT = "lucide-style icon key (kebab-case, e.g. 'trending-up')."
+
+const ICON_HELP = (
+  <>
+    A kebab-case icon key rendered by the site&apos;s <code>Icon.astro</code> component. Only names in that
+    component&apos;s allowlist work (e.g. <code>trending-up</code>, <code>calculator</code>, <code>users</code>,{' '}
+    <code>shield-check</code>, <code>award</code>) — an unknown name renders as a blank icon. To add a new one, a
+    developer must define its SVG path in <code>src/components/Icon.astro</code>.
+  </>
+)
+
+const HREF_HINT = (
+  <>
+    The link target for this card. Use an internal path starting with <code>/</code> and a trailing slash — e.g.{' '}
+    <code>/services/tax-planning-services/</code>. Paths must match an existing page route.
+  </>
+)
+
+const THUMB_HINT = (
+  <>
+    The image that appears as the hover-preview thumbnail on the card. Landscape crop works best. Uploaded to{' '}
+    <code>images/home</code>.
+  </>
+)
 
 // -----------------------------------------------------------------------------
 // Featured services editor
@@ -323,7 +368,12 @@ function FeaturedServicesEditor({ value, onChange }: FeaturedServicesEditorProps
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Href</Label>
+              <Label>
+                Href
+                <HelpTip title="Where the card links">
+                  {HREF_HINT}
+                </HelpTip>
+              </Label>
               <Input
                 value={item.href}
                 onChange={(e) => ops.setAt(i, { ...item, href: e.target.value })}
@@ -332,7 +382,12 @@ function FeaturedServicesEditor({ value, onChange }: FeaturedServicesEditorProps
             </div>
           </div>
           <div className="space-y-1.5">
-            <Label>Icon</Label>
+            <Label>
+              Icon
+              <HelpTip title="Icon key">
+                {ICON_HELP}
+              </HelpTip>
+            </Label>
             <Input
               value={item.icon}
               onChange={(e) => ops.setAt(i, { ...item, icon: e.target.value })}
@@ -349,7 +404,12 @@ function FeaturedServicesEditor({ value, onChange }: FeaturedServicesEditorProps
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Image</Label>
+            <Label>
+              Image
+              <HelpTip title="Hover-preview thumbnail">
+                {THUMB_HINT}
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={item.image}
               onChange={(url) => ops.setAt(i, { ...item, image: url })}
@@ -405,7 +465,12 @@ function FeaturedIndustriesEditor({ value, onChange }: FeaturedIndustriesEditorP
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Href</Label>
+              <Label>
+                Href
+                <HelpTip title="Where the card links">
+                  {HREF_HINT}
+                </HelpTip>
+              </Label>
               <Input
                 value={item.href}
                 onChange={(e) => ops.setAt(i, { ...item, href: e.target.value })}
@@ -422,7 +487,13 @@ function FeaturedIndustriesEditor({ value, onChange }: FeaturedIndustriesEditorP
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Image</Label>
+            <Label>
+              Image
+              <HelpTip title="Card image">
+                The image on the industry card. It renders in a wide landscape crop (roughly 12:5, capped near 250px
+                tall), so use a horizontal photo. Uploaded to <code>images/home</code>.
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={item.image}
               onChange={(url) => ops.setAt(i, { ...item, image: url })}
@@ -478,7 +549,12 @@ function ValuePropsEditor({ value, onChange }: ValuePropsEditorProps) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Icon</Label>
+              <Label>
+                Icon
+                <HelpTip title="Icon key">
+                  {ICON_HELP}
+                </HelpTip>
+              </Label>
               <Input
                 value={item.icon}
                 onChange={(e) => ops.setAt(i, { ...item, icon: e.target.value })}
@@ -543,7 +619,13 @@ function LatestPostsEditor({ value, onChange }: LatestPostsEditorProps) {
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Href</Label>
+              <Label>
+                Href
+                <HelpTip title="Where the card links">
+                  The link to the post. Use the internal blog path with a trailing slash, e.g.{' '}
+                  <code>/blog/your-post-slug/</code>.
+                </HelpTip>
+              </Label>
               <Input
                 value={item.href}
                 onChange={(e) => ops.setAt(i, { ...item, href: e.target.value })}
@@ -615,7 +697,14 @@ function PartnerLogosEditor({ value, onChange }: PartnerLogosEditorProps) {
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Logo</Label>
+            <Label>
+              Logo
+              <HelpTip title="Logo image">
+                The platform logo shown in the homepage marquee. Use a transparent PNG/WebP; the marquee renders it at a
+                fixed small height (~28-32px) and auto-scales the width, so a wide, single-color/mono lockup reads best.
+                Uploaded to <code>images</code>.
+              </HelpTip>
+            </Label>
             <ImageUploader
               value={item.src}
               onChange={(url) => ops.setAt(i, { ...item, src: url })}

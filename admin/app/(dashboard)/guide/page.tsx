@@ -8,6 +8,11 @@ import {
   Search,
   LayoutList,
   ArrowRight,
+  Rocket,
+  Home,
+  Star,
+  Users,
+  Settings as SettingsIcon,
 } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 
@@ -54,6 +59,7 @@ function GoTo({ href, children }: { href: string; children: React.ReactNode }) {
 }
 
 const TOC = [
+  { id: 'publishing', label: 'Saving & publishing (start here)' },
   { id: 'services', label: 'Service pages — every section' },
   { id: 'banners', label: 'Banner images & ALT text' },
   { id: 'authors', label: 'Authors & bios' },
@@ -61,6 +67,10 @@ const TOC = [
   { id: 'tables', label: 'Tables in the editor' },
   { id: 'seo', label: 'SEO & canonical URLs' },
   { id: 'media', label: 'Media manager' },
+  { id: 'homepage', label: 'Homepage' },
+  { id: 'reviews', label: 'Reviews' },
+  { id: 'team', label: 'Team' },
+  { id: 'settings', label: 'Site settings' },
 ]
 
 export default function GuidePage() {
@@ -84,6 +94,21 @@ export default function GuidePage() {
       </nav>
 
       <div className="space-y-5 max-w-3xl">
+        <Section id="publishing" icon={Rocket} title="Saving & publishing — how changes go live">
+          <p>
+            Every editor has a <strong>Save</strong> button in the bar at the bottom. When you
+            save, the change is committed and the live site rebuilds automatically — it appears
+            on alpinemar.com within about a minute. There is no separate &ldquo;publish&rdquo;
+            step.
+          </p>
+          <ul className="list-disc space-y-1.5 pl-5">
+            <li><strong>Draft vs Published</strong> — set in each editor&rsquo;s Status box. Drafts are saved but hidden from the live site; switch to Published to show them.</li>
+            <li><strong>Unsaved changes</strong> — the bottom bar warns you if you try to leave with edits you haven&rsquo;t saved.</li>
+            <li><strong>View on site</strong> — the button in the bottom bar opens the live page so you can check your change after the rebuild.</li>
+            <li><strong>Delete</strong> — the red &ldquo;Danger zone&rdquo; at the bottom of an editor removes that item from the site (asks for confirmation first).</li>
+          </ul>
+        </Section>
+
         <Section id="services" icon={Briefcase} title="Service pages — every section is editable">
           <p>
             Open any service and you control the whole page, not just the body copy:
@@ -167,6 +192,50 @@ export default function GuidePage() {
             destination folder from a dropdown (with a &ldquo;New folder&rdquo; option).
           </p>
           <p><GoTo href="/media">Open Media</GoTo></p>
+        </Section>
+
+        <Section id="homepage" icon={Home} title="Homepage">
+          <p>
+            The <strong>Homepage</strong> editor holds curated lists (featured services and
+            industries, value props, latest posts, partner logos, integrations). <strong>Note:</strong>{' '}
+            the live homepage currently renders fixed content, so edits here don&rsquo;t change
+            the homepage yet — wiring these lists into the homepage is a pending dev task, called
+            out at the top of that editor. The Services/Industries menus and hub pages are driven
+            from the master service and industry lists, not from these fields.
+          </p>
+          <p><GoTo href="/homepage">Open Homepage</GoTo></p>
+        </Section>
+
+        <Section id="reviews" icon={Star} title="Reviews">
+          <p>
+            <strong>Reviews</strong> holds the 5-star Google testimonials. Each service page
+            picks one to feature (the &ldquo;Featured review&rdquo; box in the service editor).
+            Name, initials (the avatar letters), the &ldquo;4 months ago&rdquo;-style date, and
+            the quote are all editable.
+          </p>
+          <p><GoTo href="/reviews">Open Reviews</GoTo></p>
+        </Section>
+
+        <Section id="team" icon={Users} title="Team">
+          <p>
+            <strong>Team</strong> members appear in the &ldquo;Meet the Team&rdquo; carousel on
+            the About page, sorted by the Order field (lower first). The live card shows the
+            photo, name, and role — so a member <strong>must have a photo</strong> to appear,
+            and any letters like &ldquo;CPA&rdquo; should be typed into the Name. Credentials and
+            Bio are stored but not shown on the current card. Set Status to Draft to hide someone
+            without deleting them.
+          </p>
+          <p><GoTo href="/team">Open Team</GoTo></p>
+        </Section>
+
+        <Section id="settings" icon={SettingsIcon} title="Site settings">
+          <p>
+            <strong>Settings</strong> controls site-wide info — firm name, contact details,
+            address, social links, and portal URLs — used in the header, footer, contact page,
+            and structured data. A change here shows up everywhere at once, so double-check
+            before saving.
+          </p>
+          <p><GoTo href="/settings">Open Settings</GoTo></p>
         </Section>
       </div>
     </div>

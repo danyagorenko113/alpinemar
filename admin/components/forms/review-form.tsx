@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
+import { HelpTip } from '@/components/shared/help-tip'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveReview, deleteReview, type GoogleReview } from '@/lib/actions/reviews'
 
@@ -104,6 +105,9 @@ export function ReviewForm({ id, initial }: Props) {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 pb-24">
         <div className="space-y-5 min-w-0">
+          <div className="rounded-md border border-scooter/40 bg-scooter/5 px-4 py-2.5 text-xs text-navy-700">
+            This page manages the 5-star Google review testimonials shown across the site — each service page picks one of these to feature in its &quot;Client view&quot; section.
+          </div>
           <section className="rounded-lg border bg-card p-5 space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="name">Name *</Label>
@@ -117,7 +121,12 @@ export function ReviewForm({ id, initial }: Props) {
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label htmlFor="initials">Initials *</Label>
+                <Label htmlFor="initials">
+                  Initials *
+                  <HelpTip title="Avatar initials">
+                    Shown as the letters inside the round avatar next to the review. There is no photo — these initials are the avatar.
+                  </HelpTip>
+                </Label>
                 <Input
                   id="initials"
                   value={r.initials}
@@ -130,7 +139,12 @@ export function ReviewForm({ id, initial }: Props) {
                 </p>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="date">Date</Label>
+                <Label htmlFor="date">
+                  Date
+                  <HelpTip title="Review date">
+                    Free text, not a real date — copy it as Google shows it (e.g. &quot;4 months ago&quot;). Appears under the quote as &quot;Google review · [your text]&quot;.
+                  </HelpTip>
+                </Label>
                 <Input
                   id="date"
                   value={r.date}
@@ -145,7 +159,12 @@ export function ReviewForm({ id, initial }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
-            <Label htmlFor="quote" className="text-base font-semibold">Quote *</Label>
+            <Label htmlFor="quote" className="text-base font-semibold">
+              Quote *
+              <HelpTip title="Review text">
+                The testimonial body, shown as the large quote in the service page &quot;Client view&quot; section.
+              </HelpTip>
+            </Label>
             <Textarea
               id="quote"
               value={r.quote}
@@ -180,7 +199,12 @@ export function ReviewForm({ id, initial }: Props) {
           </section>
 
           <section className="rounded-lg border bg-card p-5 space-y-2">
-            <h3 className="text-sm font-semibold text-navy-900">Rating</h3>
+            <h3 className="text-sm font-semibold text-navy-900">
+              Rating
+              <HelpTip title="Star rating">
+                Displayed as a fixed row of five stars (★★★★★) above the quote. It is always 5 and cannot be changed here.
+              </HelpTip>
+            </h3>
             <p className="text-sm text-muted-foreground">
               Always 5 stars — Alpine Mar only surfaces 5-star Google reviews.
             </p>

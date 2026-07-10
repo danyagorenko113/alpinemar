@@ -27,7 +27,7 @@ export default async function IndustriesListPage(props: { searchParams: Promise<
     <div>
       <PageHeader
         title="Industries"
-        description={`${all.length} industries in src/content/industries/`}
+        description={`${all.length} industry pages · click a row to edit, or add a new one`}
         actions={
           <Button asChild>
             <Link href="/industries/new"><Plus className="h-4 w-4" />New industry</Link>

@@ -27,7 +27,7 @@ export default async function TeamListPage(props: { searchParams: Promise<SP> })
     <div>
       <PageHeader
         title="Team"
-        description={`${all.length} members in src/content/team/`}
+        description={`${all.length} team members · shown on the About page · click a row to edit`}
         actions={
           <Button asChild>
             <Link href="/team/new"><Plus className="h-4 w-4" />New member</Link>
