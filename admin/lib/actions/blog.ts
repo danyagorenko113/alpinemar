@@ -84,14 +84,13 @@ export async function listBlogPosts(): Promise<BlogSummary[]> {
   return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
     const store = getStore()
     const files = await store.list(COLLECTION_DIR, '.md')
-    const posts = await Promise.all(
-      files.map(async (f): Promise<BlogSummary | null> => {
-        const doc = await store.read(f.path)
-        if (!doc) return null
-        const { data } = parseDoc(doc.content)
-        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-      })
-    )
+    const contents = await store.readManyText(files.map((f) => f.path))
+    const posts = files.map((f): BlogSummary | null => {
+      const doc = contents.get(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
     return posts
       .filter((p): p is BlogSummary => p !== null)
       .sort((a, b) => (a.date < b.date ? 1 : -1))

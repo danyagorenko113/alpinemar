@@ -70,6 +70,32 @@ export const githubStore: ContentStore = {
     }
   },
 
+  async readManyText(paths: string[]): Promise<Map<string, { content: string; sha?: string }>> {
+    const out = new Map<string, { content: string; sha?: string }>()
+    if (paths.length === 0) return out
+    const k = octo()
+    const { owner, repo: r, branch } = repo()
+    // One GraphQL request fetches every file's text + blob oid via aliases,
+    // replacing N REST getContent calls. Chunked to keep the query reasonable.
+    const CHUNK = 100
+    for (let start = 0; start < paths.length; start += CHUNK) {
+      const chunk = paths.slice(start, start + CHUNK)
+      const fields = chunk
+        .map((p, i) => `f${i}: object(expression: ${JSON.stringify(`${branch}:${p}`)}) { ... on Blob { text oid } }`)
+        .join('\n')
+      const query = `query($owner:String!,$name:String!){ repository(owner:$owner,name:$name){ ${fields} } }`
+      const data = await k.graphql<{ repository: Record<string, { text?: string | null; oid?: string } | null> }>(
+        query,
+        { owner, name: r },
+      )
+      chunk.forEach((p, i) => {
+        const node = data.repository?.[`f${i}`]
+        if (node && typeof node.text === 'string') out.set(p, { content: node.text, sha: node.oid })
+      })
+    }
+    return out
+  },
+
   async readRaw(p: string, sha?: string): Promise<{ content: Buffer; sha?: string } | null> {
     const k = octo()
     const { owner, repo: r, branch } = repo()

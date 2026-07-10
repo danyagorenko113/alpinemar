@@ -38,6 +38,12 @@ export interface ContentStore {
   /** Returns null when the file does not exist. */
   read(path: string): Promise<RepoFile | null>
   /**
+   * Batch text read — fetches many files' contents in a single round-trip
+   * (github backend uses one GraphQL query instead of N REST calls). Missing
+   * files are simply absent from the returned map. Text files only.
+   */
+  readManyText(paths: string[]): Promise<Map<string, { content: string; sha?: string }>>
+  /**
    * Binary-safe read (images etc.). Pass the blob sha when known (github
    * backend uses the blobs API which supports files > 1MB).
    */

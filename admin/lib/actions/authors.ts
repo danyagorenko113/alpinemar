@@ -66,14 +66,13 @@ export async function listAuthors(): Promise<AuthorSummary[]> {
   return cached(LIST_CACHE_KEY, LIST_TTL_MS, async () => {
     const store = getStore()
     const files = await store.list(COLLECTION_DIR, '.md')
-    const items = await Promise.all(
-      files.map(async (f): Promise<AuthorSummary | null> => {
-        const doc = await store.read(f.path)
-        if (!doc) return null
-        const { data } = parseDoc(doc.content)
-        return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
-      })
-    )
+    const contents = await store.readManyText(files.map((f) => f.path))
+    const items = files.map((f): AuthorSummary | null => {
+      const doc = contents.get(f.path)
+      if (!doc) return null
+      const { data } = parseDoc(doc.content)
+      return { slug: slugFromPath(f.path), sha: doc.sha, ...normalize(data) }
+    })
     return items
       .filter((a): a is AuthorSummary => a !== null)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name))

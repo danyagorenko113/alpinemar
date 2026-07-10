@@ -48,6 +48,22 @@ export const fsStore: ContentStore = {
     }
   },
 
+  async readManyText(paths: string[]): Promise<Map<string, { content: string; sha?: string }>> {
+    const out = new Map<string, { content: string; sha?: string }>()
+    await Promise.all(
+      paths.map(async (p) => {
+        const abs = path.join(repoRoot(), p)
+        try {
+          const [content, stat] = await Promise.all([fs.readFile(abs, 'utf8'), fs.stat(abs)])
+          out.set(p, { content, sha: String(stat.mtimeMs) })
+        } catch (err) {
+          if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err
+        }
+      }),
+    )
+    return out
+  },
+
   async readRaw(p: string): Promise<{ content: Buffer; sha?: string } | null> {
     const abs = path.join(repoRoot(), p)
     try {
