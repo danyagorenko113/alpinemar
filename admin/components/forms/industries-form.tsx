@@ -425,8 +425,9 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
             <Label>
               Cover image
               <HelpTip title="This is the page banner">
-                The banner at the top of the industry page and the social-share image. Set
-                its ALT text in the field below the upload.
+                The full-width banner at the top of the industry page (and the social-share
+                image) — shown here so you can see and replace it. Upload to change it; set its
+                ALT text in the field below.
               </HelpTip>
             </Label>
             <ImageUploader

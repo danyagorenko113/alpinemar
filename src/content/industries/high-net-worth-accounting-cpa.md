@@ -3,6 +3,7 @@ title: "High Net Worth Accounting & CPA Services"
 heroTitle: "High Net Worth Accounting & CPA Services"
 path: "/industries/high-net-worth-accounting-cpa/"
 summary: "Integrated tax and estate planning for significant wealth. We analyze your entities and income to minimize what you owe, quietly and deliberately."
+cover: "/images/industries/high-net-worth.jpg"
 seo:
  title: "High Net Worth Accounting & CPA Services"
  description: "High Net Worth Accounting & CPA Services. Expertise for Your Financial Success. At Alpine Mar, we understand that high net worth individuals require a unique level of financial expertise and personalized service. Our team of dedicated high net worth tax accountants specializes in serving clients with substantial wealth and"

@@ -3,6 +3,7 @@ title: "Accounting for SaaS Companies"
 heroTitle: "Accounting for SaaS Companies"
 path: "/industries/saas-accounting-services/"
 summary: "ASC 606 revenue recognition, deferred revenue, and the metrics investors actually look at. Accounting built for how software companies grow."
+cover: "/images/industries/saas.jpg"
 seo:
  title: "Accounting Services for SaaS Companies | Alpine Mar"
  description: "Accounting for SaaS Companies. SaaS accounting refers to the specialized practices of recording, analyzing, and managing the financial operations unique to software-as-a-service companies. At Alpine Mar, our CPAs bring their expertise in SaaS accounting to guide your business through essential areas like revenue recognition, cash flow management, key SaaS metrics, and tax planning"

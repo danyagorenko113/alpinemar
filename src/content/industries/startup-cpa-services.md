@@ -3,6 +3,7 @@ title: "CPA Services for Startups"
 heroTitle: "CPA Services for Startups"
 path: "/industries/startup-cpa-services/"
 summary: "Runway, fundraise prep, and modeling for founders. A finance team that scales from pre-seed through Series C."
+cover: "/images/industries/startups.jpg"
 seo:
  title: "CPA Services for Startups | Alpine Mar"
  description: "Startup CPA services — bookkeeping, financial modeling, fundraise prep, R&D credits, and fractional CFO support from pre-seed through Series C."

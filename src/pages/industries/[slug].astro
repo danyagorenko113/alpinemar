@@ -61,7 +61,7 @@ const defaultFaq = [
 ];
 const faq = item.data.faq?.length ? item.data.faq : defaultFaq;
 
-const heroImage = taxonomyEntry?.image || item.data.cover || '/images/about/hero.jpg';
+const heroImage = item.data.cover || taxonomyEntry?.image || '/images/about/hero.jpg';
 const serviceIconByGroup: Record<string, string> = {
   Tax: 'trending-up',
   Accounting: 'file-text',

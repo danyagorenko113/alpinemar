@@ -3,6 +3,7 @@ title: "Crypto CPA Services"
 heroTitle: "Crypto CPA Services"
 path: "/industries/crypto-cpa-services/"
 summary: "On-chain reconciliation and tax-ready reporting for funds, founders, and individuals. We make sense of the wallets, the trades, and the cost basis."
+cover: "/images/industries/crypto.jpg"
 seo:
  title: "Cryptocurrency CPA Services | Crypto Accounting & Taxes"
  description: "Crypto CPA services — on-chain reconciliation, capital gains and DeFi reporting, NFT taxes, and IRS-ready filings for funds, founders, and investors."

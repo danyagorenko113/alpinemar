@@ -3,6 +3,7 @@ title: "Real Estate CPA Services"
 heroTitle: "Real Estate CPA Services"
 path: "/industries/real-estate-cpa-services/"
 summary: "1031 exchanges, cost segregation, and depreciation strategy for owners and operators. We keep more of every deal working for you."
+cover: "/images/industries/real-estate.jpg"
 seo:
  title: "Real Estate CPA & Accounting Services | Alpine Mar"
  description: "Real Estate CPA Services. When it comes to navigating the complex financial landscape of the real estate industry, having the right professionals by your side is paramount. Alpine Mar is your trusted partner for comprehensive real estate CPA services that are tailored to the unique needs of the real estate business."

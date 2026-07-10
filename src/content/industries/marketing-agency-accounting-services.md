@@ -3,6 +3,7 @@ title: "Accounting for Marketing Agencies"
 heroTitle: "Accounting for Marketing Agencies"
 path: "/industries/marketing-agency-accounting-services/"
 summary: "Project-based accounting and S-Corp strategy for agencies and creative shops. We handle the financial side so you can stay focused on the work."
+cover: "/images/industries/marketing-agencies.jpg"
 seo:
  title: "Accounting for Marketing Agencies by Alpine Mar"
  description: "Accounting for Marketing Agencies. Marketing agencies and advertising companies operate in a dynamic landscape that demands meticulous financial management and reporting. With Alpine Mar's specialized accounting services, advertising agencies can gain a competitive edge in this fast-paced industry. Our Accounting Services for Advertising"

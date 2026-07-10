@@ -3,6 +3,7 @@ title: "Family Office Accounting Services"
 heroTitle: "Family Office Accounting Services"
 path: "/industries/family-office-accounting-services/"
 summary: "Consolidated reporting, entity by entity, for families managing real complexity. One clear picture across the businesses, trusts, and investments."
+cover: "/images/industries/family-office.jpg"
 seo:
  title: "Family Office Accounting & Tax Services"
  description: "Family Office Accounting Services. Alpine Mar understands the unique financial needs of high net worth individuals and closely held businesses, which is why we provide comprehensive family office accounting services tailored to your requirements. Our expert team specializes in a wide array of financial aspects, from tax planning to estate, succession"

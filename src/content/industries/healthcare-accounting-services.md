@@ -3,6 +3,7 @@ title: "Healthcare Accounting Services"
 heroTitle: "Healthcare Accounting Services"
 path: "/industries/healthcare-accounting-services/"
 summary: "Practice accounting and benefit plan audits for healthcare, from solo practices to growing groups. The tax complexity navigated, the deductions captured."
+cover: "/images/industries/healthcare.jpg"
 seo:
  title: "Healthcare Accounting & CPA Services | Alpine Mar"
  description: "Healthcare Accounting Services. In the dynamic landscape of the healthcare industry, Alpine Mar specializes in providing financial and accounting services to ensure the stability and growth of your healthcare organization. Our team understands the unique challenges faced by medical practices and medical professionals, and we offer tailored solutions to optimize your"
