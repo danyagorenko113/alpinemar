@@ -43,6 +43,7 @@ const searchIndex = allPosts.map((p) => ({
   e: p.data.excerpt,
   d: new Date(p.data.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
   c: p.data.cover ?? '',
+  a: p.data.coverAlt ?? p.data.title,
   h: `/blog/${slugOf(p.id)}/`,
   g: p.data.tags ?? [],
 }));
@@ -151,7 +152,7 @@ const schema = [
         </div>
         <div class="group relative grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
           <div class="relative aspect-[5/4] overflow-hidden bg-white md:aspect-auto md:min-h-[420px]">
-            <img src={featured.data.cover || '/images/about/collage-1.jpg'} alt={featured.data.title} class="absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            <img src={featured.data.cover || '/images/about/collage-1.jpg'} alt={featured.data.coverAlt ?? featured.data.title} class="absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover:scale-105" loading="lazy" />
           </div>
           <div class="flex flex-col gap-6 p-8 md:p-12">
             <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
@@ -194,7 +195,7 @@ const schema = [
             <div class="group relative flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
               {p.data.cover && (
                 <div class="aspect-[16/10] overflow-hidden bg-white">
-                  <img src={p.data.cover} alt={p.data.title} class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <img src={p.data.cover} alt={p.data.coverAlt ?? p.data.title} class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               )}
               <div class="flex flex-1 flex-col p-6">
@@ -276,7 +277,7 @@ const schema = [
         list.innerHTML = results.map((p) => `
           <li>
             <div class="group relative flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
-              ${p.c ? `<div class="aspect-[16/10] overflow-hidden bg-white"><img src="${p.c}" alt="" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" /></div>` : ''}
+              ${p.c ? `<div class="aspect-[16/10] overflow-hidden bg-white"><img src="${p.c}" alt="${escape(p.a || '')}" class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105" loading="lazy" /></div>` : ''}
               <div class="flex flex-1 flex-col p-6">
                 <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
                   <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5"><span class="block size-1.5 bg-[#12122D]"></span>${escape(p.g[0] || 'Insight')}</span>

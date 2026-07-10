@@ -25,6 +25,7 @@ import {
   Code,
   Minus,
   Table as TableIcon,
+  Captions,
 } from 'lucide-react'
 import { uploadImage } from '@/lib/actions/media'
 import { cn, previewSrc } from '@/lib/utils'
@@ -165,11 +166,12 @@ interface AltDialogProps {
   open: boolean
   previewUrl: string
   suggestedAlt: string
+  confirmLabel?: string
   onCancel: () => void
   onApply: (alt: string) => void
 }
 
-function AltDialog({ open, previewUrl, suggestedAlt, onCancel, onApply }: AltDialogProps) {
+function AltDialog({ open, previewUrl, suggestedAlt, confirmLabel = 'Insert', onCancel, onApply }: AltDialogProps) {
   const [alt, setAlt] = useState(suggestedAlt)
   const [decorative, setDecorative] = useState(false)
 
@@ -221,7 +223,7 @@ function AltDialog({ open, previewUrl, suggestedAlt, onCancel, onApply }: AltDia
         </div>
         <DialogFooter className="gap-2">
           <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
-          <Button type="button" onClick={apply} disabled={!decorative && !alt.trim()}>Insert</Button>
+          <Button type="button" onClick={apply} disabled={!decorative && !alt.trim()}>{confirmLabel}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -235,7 +237,7 @@ function AltDialog({ open, previewUrl, suggestedAlt, onCancel, onApply }: AltDia
 export function RichTextEditor({ value, onChange, placeholder, uploadDir }: RichTextEditorProps) {
   const [uploading, setUploading] = useState(false)
   const [linkDialog, setLinkDialog] = useState<{ open: boolean; url: string; newTab: boolean } | null>(null)
-  const [altDialog, setAltDialog] = useState<{ open: boolean; url: string; suggested: string } | null>(null)
+  const [altDialog, setAltDialog] = useState<{ open: boolean; url: string; suggested: string; mode?: 'insert' | 'edit' } | null>(null)
 
   const insertUploadedImage = useCallback((editor: Editor, url: string, suggestedAlt: string) => {
     setAltDialog({ open: true, url, suggested: suggestedAlt })
@@ -359,12 +361,27 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
   }
 
   function applyAlt(alt: string) {
-    const pendingEditor = (insertUploadedImage as unknown as { pending?: Editor }).pending
-    if (pendingEditor && altDialog) {
-      pendingEditor.chain().focus().setImage({ src: altDialog.url, alt }).run()
+    if (altDialog?.mode === 'edit') {
+      editor?.chain().focus().updateAttributes('image', { alt }).run()
+    } else {
+      const pendingEditor = (insertUploadedImage as unknown as { pending?: Editor }).pending
+      if (pendingEditor && altDialog) {
+        pendingEditor.chain().focus().setImage({ src: altDialog.url, alt }).run()
+      }
     }
     setAltDialog(null)
   }
+
+  const openAltEditor = useCallback(() => {
+    if (!editor || !editor.isActive('image')) return
+    const attrs = editor.getAttributes('image')
+    setAltDialog({
+      open: true,
+      url: (attrs.src as string) ?? '',
+      suggested: (attrs.alt as string) ?? '',
+      mode: 'edit',
+    })
+  }, [editor])
 
   if (!editor) return null
 
@@ -430,6 +447,11 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
         >
           <ImagePlus className="h-4 w-4" />
         </ToolbarBtn>
+        {editor.isActive('image') && (
+          <ToolbarBtn onClick={openAltEditor} title="Edit image alt text">
+            <Captions className="h-4 w-4" />
+          </ToolbarBtn>
+        )}
         <div className="ml-auto flex items-center gap-0.5">
           <ToolbarBtn disabled={!editor.can().undo()} onClick={() => editor.chain().focus().undo().run()} title="Undo (⌘Z)">
             <Undo2 className="h-4 w-4" />
@@ -465,6 +487,7 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
         open={!!altDialog?.open}
         previewUrl={altDialog?.url ?? ''}
         suggestedAlt={altDialog?.suggested ?? ''}
+        confirmLabel={altDialog?.mode === 'edit' ? 'Save' : 'Insert'}
         onCancel={() => setAltDialog(null)}
         onApply={applyAlt}
       />
