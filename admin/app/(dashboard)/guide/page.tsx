@@ -161,10 +161,10 @@ export default function GuidePage() {
         <Section id="media" icon={ImageIcon} title="Media manager">
           <p>
             The Media library supports <strong>folders</strong> (create, rename, delete),
-            <strong> sorting by upload date</strong> (newest / oldest), search, and per-image{' '}
-            <strong>alt text</strong> — click any image to edit its alt or rename the file.
-            Uploads pick their destination folder from a dropdown (with a &ldquo;New
-            folder&rdquo; option).
+            <strong> sorting</strong> by upload date (newest / oldest) or name (A–Z / Z–A),
+            folder filtering, and search. Click any image to edit its <strong>alt text</strong>,
+            copy its URL, or <strong>move it to another folder</strong>. Uploads pick their
+            destination folder from a dropdown (with a &ldquo;New folder&rdquo; option).
           </p>
           <p><GoTo href="/media">Open Media</GoTo></p>
         </Section>

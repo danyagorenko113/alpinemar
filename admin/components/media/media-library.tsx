@@ -16,6 +16,7 @@ import {
   uploadImage,
   deleteImage,
   setImageAlt,
+  moveImage,
   createFolder,
   renameFolder,
   deleteFolder,
@@ -43,7 +44,7 @@ interface Props {
 const PAGE_SIZE = 24
 const NEW_FOLDER = '__new__'
 
-type SortOrder = 'newest' | 'oldest'
+type SortOrder = 'newest' | 'oldest' | 'name-az' | 'name-za'
 
 /**
  * Sortable timestamp for an image: manifest uploadedAt wins, then the /YYYY/
@@ -54,6 +55,11 @@ function timeKey(item: MediaItem): string {
   const m = item.path.match(/\/((?:19|20)\d{2})\//)
   if (m) return `${m[1]}-01-01T00:00:00.000Z`
   return '0000-01-01T00:00:00.000Z'
+}
+
+/** Filename only, for A–Z sorting. */
+function nameKey(item: MediaItem): string {
+  return item.path.slice(item.path.lastIndexOf('/') + 1).toLowerCase()
 }
 
 export function MediaLibrary({ initial, initialFolders }: Props) {
@@ -83,7 +89,8 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
 
   const filtered = useMemo(() => {
     const needle = q.toLowerCase()
-    const dir = sortOrder === 'newest' ? -1 : 1
+    const byName = sortOrder === 'name-az' || sortOrder === 'name-za'
+    const dir = sortOrder === 'newest' || sortOrder === 'name-za' ? -1 : 1
     return items
       .filter((i) => {
         if (needle && !`${i.path} ${i.alt ?? ''}`.toLowerCase().includes(needle)) return false
@@ -91,6 +98,7 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
         return true
       })
       .sort((a, b) => {
+        if (byName) return dir * nameKey(a).localeCompare(nameKey(b))
         const cmp = timeKey(a).localeCompare(timeKey(b))
         if (cmp !== 0) return dir * cmp
         return dir * a.path.localeCompare(b.path)
@@ -172,6 +180,20 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
         toast.success('Alt text saved')
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Save failed')
+      }
+    })
+  }
+
+  function handleMove(item: MediaItem, toFolder: string) {
+    if (!toFolder) return
+    startTransition(async () => {
+      try {
+        const res = await moveImage(item.path, toFolder)
+        setItems((prev) => prev.map((i) => (i.path === item.path ? { ...i, path: res.path, url: res.url } : i)))
+        setDetail((d) => (d?.path === item.path ? { ...d, path: res.path, url: res.url } : d))
+        toast.success(`Moved to images/${toFolder}/`)
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Move failed')
       }
     })
   }
@@ -321,6 +343,8 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
           >
             <option value="newest">Newest first</option>
             <option value="oldest">Oldest first</option>
+            <option value="name-az">Name A–Z</option>
+            <option value="name-za">Name Z–A</option>
           </select>
         </div>
 
@@ -480,6 +504,29 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
                   Stored in src/data/media-meta.json — pre-fills the alt field wherever this image is used.
                 </p>
               </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="detail-move">
+                  Move to folder
+                  <HelpTip title="Reorganize files">
+                    Moves this image to another folder under public/images/. The file&rsquo;s
+                    URL changes, so update any page that hard-codes the old URL. Alt text and
+                    upload date move with it.
+                  </HelpTip>
+                </Label>
+                <select
+                  id="detail-move"
+                  value={detail.path.replace(/^public\/images\/([^/]+)\/.*$/, '$1')}
+                  onChange={(e) => handleMove(detail, e.target.value)}
+                  disabled={pending}
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  {folders.map((f) => (
+                    <option key={f} value={f}>images/{f}/</option>
+                  ))}
+                </select>
+              </div>
+
               <DialogFooter>
                 <Button
                   type="button"

@@ -221,6 +221,48 @@ export async function getImageMetaByUrl(url: string): Promise<MediaMetaEntry | n
   return meta[`public${url}`] ?? null
 }
 
+/**
+ * Move a single image to a different top-level folder under public/images/,
+ * preserving the year segment and filename. GitHub has no move, so this is a
+ * copy (blob read → write) + delete, with the manifest entry (alt / upload
+ * date) carried over.
+ */
+export async function moveImage(repoPath: string, toFolder: string): Promise<{ path: string; url: string }> {
+  repoPath = assertRepoPath(repoPath, 'public/images/')
+  const dest = validFolderName(toFolder)
+
+  // public/images/<srcFolder>/<...rest>  →  public/images/<dest>/<...rest>
+  const rest = repoPath.replace(/^public\/images\/[^/]+\//, '')
+  if (rest === repoPath) throw new Error('Could not parse image path')
+  const newPath = `public/images/${dest}/${rest}`
+  if (newPath === repoPath) return { path: repoPath, url: repoPath.replace(/^public/, '') }
+
+  const store = getStore()
+  // Resolve the blob sha so the read/remove use the blob API (no 1 MB cap,
+  // no stale-revision deletes) — same approach as renameFolder.
+  const parent = repoPath.slice(0, repoPath.lastIndexOf('/'))
+  const entry = (await store.list(parent)).find((f) => f.path === repoPath)
+  const raw = await store.readRaw(repoPath, entry?.sha)
+  if (!raw) throw new Error('Source image not found')
+
+  await store.write(newPath, raw.content, { message: `chore(admin): move ${repoPath} → ${newPath}` })
+  await store.remove(repoPath, { message: `chore(admin): move ${repoPath} → ${newPath}`, sha: entry?.sha })
+
+  try {
+    await updateMeta(store, `chore(admin): move media meta ${path.basename(repoPath)} → images/${dest}`, (meta) => {
+      if (meta[repoPath]) {
+        meta[newPath] = meta[repoPath]
+        delete meta[repoPath]
+      }
+    })
+  } catch {
+    // Manifest is advisory; a failed rewrite only loses alt/upload date.
+  }
+
+  revalidatePath('/media')
+  return { path: newPath, url: newPath.replace(/^public/, '') }
+}
+
 // ---------------------------------------------------------------------------
 // Deletion & folder management
 // ---------------------------------------------------------------------------
