@@ -5,7 +5,6 @@
 @import "@fontsource/poppins/500.css";
 @import "@fontsource/poppins/600.css";          /* SemiBold — headings */
 @import "@fontsource/poppins/700.css";
-@import "@fontsource-variable/geist-mono";      /* mono — eyebrows / meta */
 
 /* Satoshi — client's new homepage design system (Figma dhKIjasZE2UVP719jyW4a3).
    Self-hosted via Fontshare (link tag injected from BaseLayout). */
@@ -46,12 +45,15 @@
   /* Canvas */
   --color-paper: #f9fafb; /* cool off-white — Style Guide canvas */
 
-  /* Typography — Satoshi everywhere (Figma redesign 2026).
-     Lora is dropped; mono kept for technical labels / eyebrows. */
+  /* Typography — Satoshi everywhere (Figma redesign 2026). Lora dropped.
+     The eyebrow/meta "label" look (small, UPPERCASE, letter-spaced) now uses
+     Satoshi too — the token is kept named `--font-mono` only so the many
+     `font-mono` label utilities keep resolving; the site no longer renders
+     any monospace text. */
   --font-heading: "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-body:    "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-serif:   "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+  --font-mono:    "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Satoshi", "Poppins", ui-sans-serif, system-ui, sans-serif;
 
   /* New homepage palette (Figma dhKIjasZE2UVP719jyW4a3) */
