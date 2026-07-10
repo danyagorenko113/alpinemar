@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { TableKit } from '@tiptap/extension-table'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
@@ -23,6 +24,7 @@ import {
   Redo2,
   Code,
   Minus,
+  Table as TableIcon,
 } from 'lucide-react'
 import { uploadImage } from '@/lib/actions/media'
 import { cn, previewSrc } from '@/lib/utils'
@@ -71,6 +73,21 @@ function ToolbarBtn({
 
 function Divider() {
   return <span className="mx-1 h-5 w-px bg-navy-200" />
+}
+
+function TableCtl({ danger, onClick, children }: { danger?: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'rounded px-2 py-1 transition-colors',
+        danger ? 'text-red-600 hover:bg-red-50' : 'text-navy-600 hover:bg-navy-100 hover:text-navy-900',
+      )}
+    >
+      {children}
+    </button>
+  )
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -250,6 +267,9 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] } }),
+      // resizable=false: column widths set in the editor would not survive on
+      // the site anyway, and fixed widths break the responsive front-end table.
+      TableKit.configure({ table: { resizable: false } }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -392,6 +412,14 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
           <Minus className="h-4 w-4" />
         </ToolbarBtn>
         <Divider />
+        <ToolbarBtn
+          active={editor.isActive('table')}
+          onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 2, withHeaderRow: true }).run()}
+          title="Insert table"
+        >
+          <TableIcon className="h-4 w-4" />
+        </ToolbarBtn>
+        <Divider />
         <ToolbarBtn active={editor.isActive('link')} onClick={openLinkDialog} title="Link (⌘K)">
           <LinkIcon className="h-4 w-4" />
         </ToolbarBtn>
@@ -411,6 +439,17 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
           </ToolbarBtn>
         </div>
       </div>
+      {editor.isActive('table') && (
+        <div className="flex flex-wrap items-center gap-1 border-b bg-navy-50/60 px-2 py-1 text-xs">
+          <span className="mr-1 font-medium text-navy-500">Table:</span>
+          <TableCtl onClick={() => editor.chain().focus().addRowAfter().run()}>+ Row</TableCtl>
+          <TableCtl onClick={() => editor.chain().focus().deleteRow().run()}>− Row</TableCtl>
+          <TableCtl onClick={() => editor.chain().focus().addColumnAfter().run()}>+ Column</TableCtl>
+          <TableCtl onClick={() => editor.chain().focus().deleteColumn().run()}>− Column</TableCtl>
+          <TableCtl onClick={() => editor.chain().focus().toggleHeaderRow().run()}>Header row</TableCtl>
+          <TableCtl danger onClick={() => editor.chain().focus().deleteTable().run()}>Delete table</TableCtl>
+        </div>
+      )}
       <EditorContent editor={editor} />
 
       <LinkDialog

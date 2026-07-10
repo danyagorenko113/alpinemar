@@ -172,6 +172,38 @@
 .ProseMirror pre { background: var(--color-navy-900); color: #f4f4f7; padding: 1rem; border-radius: var(--radius-md); overflow-x: auto; }
 .ProseMirror pre code { background: transparent; padding: 0; color: inherit; }
 .ProseMirror hr { border: 0; border-top: 1px solid var(--color-line); margin: 1.5rem 0; }
-.ProseMirror table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-.ProseMirror th, .ProseMirror td { border: 1px solid var(--color-line); padding: 0.4rem 0.6rem; }
-.ProseMirror th { background: var(--color-navy-50); font-weight: 600; }
+/* Tables — mirror the front-end .prose-am table look (site global.css) */
+.ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+  border-top: 2px solid var(--color-navy-900);
+  border-bottom: 1px solid var(--color-line);
+  table-layout: fixed;
+}
+.ProseMirror th, .ProseMirror td {
+  padding: 0.7rem 0.85rem;
+  border: none;
+  border-bottom: 1px solid var(--color-line);
+  text-align: left;
+  vertical-align: top;
+  position: relative;
+}
+.ProseMirror th {
+  background: var(--color-navy-50);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.ProseMirror tbody tr:nth-child(even) { background: rgba(244, 244, 247, 0.55); }
+.ProseMirror td p, .ProseMirror th p { margin: 0; }
+/* ProseMirror cell-selection highlight */
+.ProseMirror .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(51, 187, 220, 0.15);
+  pointer-events: none;
+}
