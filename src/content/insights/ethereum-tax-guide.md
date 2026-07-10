@@ -1,6 +1,7 @@
 ---
 title: "Ethereum Tax Guide for Crypto Investors"
 date: 2025-09-19
+updated: '2026-02-05T12:00:29Z'
 author: "The Alpine Mar editorial team"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Ethereum taxes are triggered by more than simply exchanging your crypto for cash. Actions like staking, swapping tokens, or purchasing goods or services with Ethereum often result in taxable events."

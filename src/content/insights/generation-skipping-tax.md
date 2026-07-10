@@ -1,6 +1,7 @@
 ---
 title: "Generation-Skipping Tax – 11 Things You Must Know"
 date: 2024-08-19
+updated: '2026-03-05T16:55:52Z'
 author: "The Alpine Mar editorial team"
 category: "Taxes"
 excerpt: "The generation-skipping transfer tax (GSTT) targets property transfers to younger generations, adding a layer of complexity beyond standard gift or estate taxes. For high-net-worth individuals, understanding GSTT is crucial for effective estate planning."

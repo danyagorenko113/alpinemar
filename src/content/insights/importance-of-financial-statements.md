@@ -1,6 +1,7 @@
 ---
 title: "Importance of Financial Statements"
 date: 2023-12-19
+updated: '2025-04-10T18:40:14Z'
 author: "The Alpine Mar editorial team"
 category: "Accounting"
 excerpt: "Every business knows that reporting your company’s financial position is an obligation, but why are financial statements important? Essentially, your company’s financial statements provide insight into the business’s financial health and report critical information about…"

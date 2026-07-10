@@ -1,6 +1,7 @@
 ---
 title: "Proposed NYC Pied-à-Terre Tax: What Investors Should Know"
 date: 2026-06-11
+updated: '2026-06-23T13:19:54Z'
 author: "The Alpine Mar editorial team"
 category: "Taxes"
 excerpt: "The \"Pied-à-Terre Tax\" — an annual surcharge on luxury New York City homes used as non-primary residences — has been proposed in various forms by New York State legislators since 2014 and resurfaces most legislative sessions."

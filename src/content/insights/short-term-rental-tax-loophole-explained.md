@@ -1,6 +1,7 @@
 ---
 title: "Short-Term Rental Tax Loophole Explained by Expert CPAs"
 date: 2023-10-05
+updated: '2024-07-10T18:14:54Z'
 author: "The Alpine Mar editorial team"
 category: "Real Estate Accounting & Taxes"
 excerpt: "The short-term rental tax loophole is an often misunderstood and complex issue in the world of real estate investments. As a property owner, understanding the ins and outs of this tax regulation can make a significant difference in your financial bottom line."

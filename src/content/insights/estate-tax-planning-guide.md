@@ -1,6 +1,7 @@
 ---
 title: "Estate Tax Planning Guide"
 date: 2026-03-25
+updated: '2026-05-29T12:34:50Z'
 author: "The Alpine Mar editorial team"
 category: "Taxes"
 excerpt: "Estate tax planning is a strategic financial process used to organize your assets and reduce the tax burden on your heirs after you pass away. Without a clear plan, your taxable estate could face a tax rate as high as 40 percent."

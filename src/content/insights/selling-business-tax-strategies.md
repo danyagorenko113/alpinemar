@@ -1,6 +1,7 @@
 ---
 title: "Business Sale Tax Strategies"
 date: 2025-05-07
+updated: '2025-09-16T17:14:55Z'
 author: "The Alpine Mar editorial team"
 category: "Mergers & Acquisitions"
 excerpt: "Selling your business isn’t just about the sale price, it’s about what you keep after taxes. The IRS may treat parts of your proceeds as capital gains and others as ordinary income. State taxes and depreciation recapture can shrink your profit even more."

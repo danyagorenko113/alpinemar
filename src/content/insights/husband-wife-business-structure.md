@@ -1,6 +1,7 @@
 ---
 title: "Best Business Structure for Husband and Wife"
 date: 2024-10-15
+updated: '2025-07-15T17:51:01Z'
 author: "The Alpine Mar editorial team"
 category: "Resources"
 excerpt: "Starting a business with your spouse is a rewarding experience. However, it comes with important decisions, particularly regarding business structure."

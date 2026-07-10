@@ -1,6 +1,7 @@
 ---
 title: "ERP vs Accounting Software – Key Differences Explained"
 date: 2023-12-05
+updated: '2024-01-18T12:48:29Z'
 author: "The Alpine Mar editorial team"
 category: "Tools"
 excerpt: "Choosing between ERP vs accounting software for your business is an important decision both logistically and financially. While some business owners are drawn to the flashy features offered by ERP systems, accounting software may be enough to handle the everyday operations of…"

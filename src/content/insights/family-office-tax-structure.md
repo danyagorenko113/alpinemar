@@ -1,6 +1,7 @@
 ---
 title: "Optimal Family Office Tax Structure in 2024"
 date: 2024-08-07
+updated: '2025-07-30T11:42:34Z'
 author: "The Alpine Mar editorial team"
 category: "Entity Structuring"
 excerpt: "Structuring a family office for optimal tax efficiency is essential for high-net-worth families. Recent changes to tax laws make it crucial to strategically manage your family’s financial, investment, and personal affairs to minimize liabilities and secure long-term stability."

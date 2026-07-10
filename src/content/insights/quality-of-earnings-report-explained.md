@@ -1,6 +1,7 @@
 ---
 title: "Quality of Earnings Report (QofE Analysis) Overview"
 date: 2024-01-17
+updated: '2024-02-05T17:06:01Z'
 author: "The Alpine Mar editorial team"
 category: "Accounting"
 excerpt: "A quality of earnings report—QoE or QofE—is an important financial document written by a team that includes an independent accounting firm. The report provides an extensive review of a company’s operating and financial information and emphasizes the “earnings before interest,…"

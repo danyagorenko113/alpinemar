@@ -1,6 +1,7 @@
 ---
 title: "How to Offset Capital Gains With Business Losses"
 date: 2024-10-07
+updated: '2025-07-15T17:51:28Z'
 author: "The Alpine Mar editorial team"
 category: "Taxes"
 excerpt: "Business losses, to the extent they are active, can offset capital gains. Capital gains arise from selling capital assets like stocks, bonds, real estate, or mutual funds at a profit."

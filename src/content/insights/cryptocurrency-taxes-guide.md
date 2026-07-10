@@ -1,6 +1,7 @@
 ---
 title: "Guide to Cryptocurrency Taxes"
 date: 2025-01-27
+updated: '2026-02-05T12:07:08Z'
 author: "The Alpine Mar editorial team"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A clear understanding of cryptocurrency taxes is crucial in 2025 as the rise of digital assets continues to reshape how individuals and businesses handle their finances."

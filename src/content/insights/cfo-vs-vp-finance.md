@@ -1,6 +1,7 @@
 ---
 title: "CFO vs VP of Finance"
 date: 2024-06-27
+updated: '2025-07-30T11:45:18Z'
 author: "The Alpine Mar editorial team"
 category: "Resources"
 excerpt: "Chief Financial Officer (CFO) and Vice President of Finance (VP of Finance) are two high-level finance roles. These professionals oversee different aspects of a company’s finances and work to ensure maximum profitability."
