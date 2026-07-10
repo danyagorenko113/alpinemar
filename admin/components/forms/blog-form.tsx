@@ -204,10 +204,12 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
             <div className="flex items-center justify-between">
               <Label className="text-base font-semibold">
                 Body *
-                <HelpTip title="Tables & formatting">
-                  Tables render here exactly like on the live site. Insert one with the table
-                  button in the toolbar; click inside a table for row/column/header controls.
-                  Pasting from Google Docs keeps headings, lists, links, and tables.
+                <HelpTip title="Tables, images & formatting">
+                  Tables render here exactly like on the live site — insert one with the
+                  table button; click inside a table for row/column/header controls. Images
+                  ask for ALT text on upload, and clicking any image shows an &ldquo;Edit
+                  alt&rdquo; button in the toolbar. Pasting from Google Docs keeps headings,
+                  lists, links, and tables.
                 </HelpTip>
               </Label>
               <span className="text-xs text-muted-foreground">

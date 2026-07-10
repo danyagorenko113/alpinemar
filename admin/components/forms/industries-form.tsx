@@ -154,7 +154,14 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold">Body</h2>
+              <h2 className="text-base font-semibold">
+                Body
+                <HelpTip title="Editor features">
+                  Tables work like on the live site (table button in the toolbar); images ask
+                  for ALT text on upload, and clicking an image shows an &ldquo;Edit
+                  alt&rdquo; button.
+                </HelpTip>
+              </h2>
               <span className="text-xs text-muted-foreground">Long-form content</span>
             </div>
             <RichTextEditor

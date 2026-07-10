@@ -107,8 +107,9 @@ export default function GuidePage() {
             Every page type has a <strong>Cover image</strong> card in the right sidebar of its
             editor — that image is the banner at the top of the live page (and the social-share
             image). The same card has the <strong>alt text</strong> field. Images inside article
-            bodies get an alt-text prompt on upload, and any image&rsquo;s alt can be changed later
-            in the Media library.
+            bodies get an alt-text prompt on upload; click an image in the editor for an
+            &ldquo;Edit alt&rdquo; button, or change any file&rsquo;s alt in the Media library —
+            it applies site-wide wherever content didn&rsquo;t set its own.
           </p>
           <p><GoTo href="/services">Services</GoTo> · <GoTo href="/industries">Industries</GoTo> · <GoTo href="/blog">Blog</GoTo></p>
         </Section>
