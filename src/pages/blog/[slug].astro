@@ -105,13 +105,18 @@ const schema = [
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
           <div class="md:col-span-9">
-            <div class="flex flex-wrap items-center gap-x-3 gap-y-2 font-display text-[12px] text-[var(--color-text-body)]">
-              {category && (
-                <a href={`/blog/category/${slugifyTag(category)}/`} class="inline-flex items-center gap-2 rounded-[4px] bg-white px-3 py-1.5 transition-colors hover:text-scooter">
-                  <span class="block size-1.5 bg-[#12122D]"></span>
-                  {category}
-                </a>
-              )}
+            {/* Category chip sits above the H1; the H1 is the first thing under the banner. */}
+            {category && (
+              <a href={`/blog/category/${slugifyTag(category)}/`} class="inline-flex items-center gap-2 rounded-[4px] bg-white px-3 py-1.5 font-display text-[12px] text-[var(--color-text-body)] transition-colors hover:text-scooter">
+                <span class="block size-1.5 bg-[#12122D]"></span>
+                {category}
+              </a>
+            )}
+
+            <h1 class={`${category ? 'mt-5' : ''} font-display text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-text-head)] sm:text-[44px] md:text-[52px]`}>{post.data.title}</h1>
+
+            {/* Publish / updated / reading time / author — below the title. */}
+            <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-display text-[12px] text-[var(--color-text-body)]">
               <span class="font-mono uppercase tracking-[0.12em]">Publish Date: {dateFmt(post.data.date)}</span>
               {post.data.updated && (<>
                 <span class="opacity-55">·</span>
@@ -124,8 +129,6 @@ const schema = [
                 <span class="font-mono uppercase tracking-[0.12em]">{post.data.author}</span>
               </>}
             </div>
-
-            <h1 class="mt-7 font-display text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-text-head)] sm:text-[44px] md:text-[52px]">{post.data.title}</h1>
           </div>
         </div>
       </Container>
