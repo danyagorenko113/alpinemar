@@ -128,10 +128,12 @@ export default function GuidePage() {
           <p>
             Following the original site&rsquo;s convention, every post has exactly{' '}
             <strong>one Category</strong> (dropdown in the post editor — these were imported
-            from the WordPress site). <strong>Tags</strong> are a separate, optional layer.
-            On the live site the category shows on the post hero and drives the
-            &ldquo;Read next&rdquo; sidebar; tags render at the bottom of the article. The post
-            list here can be filtered by category, tag, or search.
+            from the WordPress site). Category is the <strong>primary</strong> way readers
+            browse: it&rsquo;s the chip on every blog card, the filter bar on the blog home,
+            and each category has its own <code>/blog/category/…</code> page — plus it drives
+            the &ldquo;Read next&rdquo; sidebar. <strong>Tags</strong> are a separate, optional
+            layer shown at the bottom of the article. The post list here can be filtered by
+            category, tag, or search.
           </p>
           <p><GoTo href="/blog">Open Blog</GoTo></p>
         </Section>

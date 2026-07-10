@@ -312,9 +312,10 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
               Category
               <HelpTip title="One category per post">
                 Mirrors the original site: each post belongs to exactly one category
-                (imported from WordPress). It shows as the chip on the article hero and
-                drives the &ldquo;Read next&rdquo; sidebar. Tags below are a separate,
-                optional layer.
+                (imported from WordPress). Category is the primary way readers browse — it's
+                the chip on every blog card, the filter bar on the blog home, and its own
+                /blog/category/… page — and it drives the &ldquo;Read next&rdquo; sidebar.
+                Tags below are a separate, optional layer shown at the bottom of the article.
               </HelpTip>
             </Label>
             <select
