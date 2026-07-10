@@ -5,7 +5,7 @@ summary: "AI is not a future technology anymore. It is here, and businesses that
 group: "AI"
 status: "published"
 seo:
- title: "AI Integration Services"
+ title: "AI Integration Services - Alpine Mar IT"
  description: "Our AI integration services set up and manage AI tools in your business to optimize time savings and keep your business information internally secure."
 ---
 <p>Alpine Mar IT delivers AI integration services that bridge that gap between powerful AI tools and real-world business use. We help you identify where AI can genuinely save your team time, reduce errors, and improve the way work gets done. Then we handle the setup, the security, and the ongoing management so you can actually use it without worrying about what is happening behind the scenes.</p>

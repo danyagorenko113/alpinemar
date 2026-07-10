@@ -5,7 +5,7 @@ summary: "Every laptop, desktop, phone, and tablet connected to your network is 
 group: "Cybersecurity"
 status: "published"
 seo:
- title: "Managed Endpoint Security Services"
+ title: "Managed Endpoint Security Services - Alpine Mar IT"
  description: "Our managed endpoint security services ensure every device, including laptops, desktops, cell phones, and tablets, is patched, protected, and accounted for."
 ---
 <p>Alpine Mar IT manages endpoint security across your entire device fleet. We keep every device patched, protected, and accounted for so that a lost laptop or an outdated piece of software does not become your next security incident. This strengthens your overall security posture while reducing exposure to security threats across all devices.</p>

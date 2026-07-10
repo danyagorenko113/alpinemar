@@ -5,7 +5,7 @@ summary: "When a security incident hits, every minute counts. The difference bet
 group: "Cybersecurity"
 status: "published"
 seo:
- title: "Incident Response Services"
+ title: "Incident Response Services - Alpine Mar IT"
  description: "Our incident response services provide a fast and effective response in the first critical minutes and hours to contain threats and restore normal operations."
 ---
 <p>Alpine Mar IT provides expert incident response services for businesses that need immediate, experienced help during a security incident or other active cyber threat. We move fast, communicate clearly, and do not leave until the threat is contained, the damage is understood, and your defenses are stronger than they were before.</p>

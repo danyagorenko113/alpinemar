@@ -5,7 +5,7 @@ summary: "Email is the number one way attackers get into a business. Phishing em
 group: "Cybersecurity"
 status: "published"
 seo:
- title: "Email Security Services"
+ title: "Email Security Services - Alpine Mar IT"
  description: "Our email security services protect your team from email-based attacks with simulation-based training, email filtering, monitoring, and alerts."
 ---
 <p>Alpine Mar IT puts multiple layers of protection between your team and the email threats landing in their inboxes every day. We filter out the dangerous messages before they arrive, use threat intelligence to catch the ones that slip through, and train your team to recognize the ones that still make their way in.</p>

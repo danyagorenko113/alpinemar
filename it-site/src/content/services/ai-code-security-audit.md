@@ -5,7 +5,7 @@ summary: "AI-powered development has changed what’s possible. Teams are shippi
 group: "AI"
 status: "published"
 seo:
- title: "AI Code Security Audit"
+ title: "AI Code Security Audit - Alpine Mar IT"
  description: "A methodical, multi-layered AI code security audit — SCA, SAST, DAST, secrets scanning, penetration testing, and manual review by Alpine Mar IT engineers."
 ---
 <p>When AI generates code at scale, it generates risk at scale too. Security vulnerabilities, dependency issues, exposed secrets, and compliance gaps don’t disappear because a machine wrote the code. They just accumulate faster, and most teams don’t have a process in place to catch them before something goes wrong.</p>
