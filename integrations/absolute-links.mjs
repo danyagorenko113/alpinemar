@@ -5,6 +5,10 @@ import { join } from 'node:path';
  * Rewrites root-relative <a href="/..."> links in the built HTML to absolute
  * URLs (CMS audit requirement: internal links must be absolute). Only anchor
  * tags are touched — asset/link/script URLs stay relative.
+ *
+ * Disabled unless ABSOLUTE_LINKS=true: while staging lives on *.vercel.app,
+ * absolute links would send every click to the live alpinemar.com. Set the
+ * env var in Vercel once the real domain points at this project.
  */
 export default function absoluteLinks() {
   let siteUrl = '';
@@ -12,6 +16,10 @@ export default function absoluteLinks() {
     name: 'absolute-internal-links',
     hooks: {
       'astro:config:done': ({ config }) => {
+        if (process.env.ABSOLUTE_LINKS !== 'true') {
+          console.log('[absolute-links] disabled (set ABSOLUTE_LINKS=true to enable)');
+          return;
+        }
         siteUrl = (config.site ?? '').replace(/\/$/, '');
       },
       'astro:build:done': async ({ dir }) => {
