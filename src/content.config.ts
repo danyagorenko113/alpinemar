@@ -16,6 +16,17 @@ const seo = z
 const status = z.enum(['draft', 'published']).default('published');
 const updated = z.coerce.date().optional();
 
+/** Optional heading/eyebrow/intro overrides for one page section. */
+const sectionCopyBlock = z
+  .object({
+    eyebrow: z.string().optional(),
+    heading: z.string().optional(),
+    intro: z.string().optional(),
+    aside: z.string().optional(),
+    button: z.string().optional(),
+  })
+  .optional();
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/services' }),
   schema: z.object({
@@ -32,8 +43,27 @@ const services = defineCollection({
     /** Section visibility + order for the detail page. Omit for the default
      *  full layout; when set, only the listed sections render, in order. */
     sections: z
-      .array(z.enum(['benefits', 'included', 'process', 'reviews', 'faq']))
+      .array(z.enum(['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq']))
       .optional(),
+    /** Per-section copy overrides — every string falls back to the built-in default. */
+    sectionCopy: z
+      .object({
+        benefits: sectionCopyBlock,
+        included: sectionCopyBlock,
+        process: sectionCopyBlock,
+        deepdive: sectionCopyBlock,
+        reviews: sectionCopyBlock,
+        industries: sectionCopyBlock,
+        pillars: sectionCopyBlock,
+        related: sectionCopyBlock,
+        faq: sectionCopyBlock,
+        cta: sectionCopyBlock,
+      })
+      .optional(),
+    /** "Why Alpine Mar" cards; empty = the default three pillars. */
+    pillars: z.array(z.object({ title: z.string(), body: z.string() })).default([]),
+    /** Which Google review to feature (index into the global reviews list). */
+    reviewIndex: z.number().int().min(0).optional(),
     /** Optional structured key takeaways — 3–5 bullets surfaced above the body. */
     takeaways: z.array(z.string()).default([]),
     /** Optional "what's included" deliverables list. */

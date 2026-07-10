@@ -47,10 +47,14 @@ const takeaways = service.data.takeaways ?? [];
 const included = service.data.included ?? [];
 const process = service.data.process ?? [];
 
+// Per-section copy overrides from frontmatter (CMS "Section copy" card).
+// Every string falls back to the built-in default.
+const sc = service.data.sectionCopy ?? {};
+
 // Landing-style "What you get" — uses takeaways when supplied, otherwise
 // a sensible 4-up default that applies to every Alpine Mar engagement.
 const benefits = takeaways.length
-  ? takeaways.slice(0, 4).map((t) => ({ title: t, body: '' }))
+  ? takeaways.map((t) => ({ title: t, body: '' }))
   : [
       { title: 'Partner Involvement', body: 'A CPA on every engagement. No junior handoff once you sign.' },
       { title: 'Fixed-fee, scoped',   body: 'Scope and price agreed before we start. No hourly meter or surprise invoices.' },
@@ -58,12 +62,17 @@ const benefits = takeaways.length
       { title: 'Modern finance stack', body: 'Cloud books, AI, automation, and secure portals. Work moves faster without losing rigor.' },
     ];
 
-// "Why Alpine Mar" pillars — three reasons we win the engagement
-const pillars = [
-  { title: 'National and international expertise', body: "Single-state, multistate, or cross-border, our CPAs know the complexity and know how to navigate it without leaving money on the table.", icon: '/icons/about/quality.svg' },
-  { title: 'Proactive approach',                   body: "We don't wait for deadlines to find savings. We plan ahead so you're always in a better position than you were last year.", icon: '/icons/about/innovation.svg' },
-  { title: 'Adapted to your needs',                body: 'Individual, small business, S-Corp, or multijurisdictional, your situation is specific and our service should be too.', icon: '/icons/about/collaboration.svg' },
+// "Why Alpine Mar" pillars — CMS-supplied, defaulting to the firm's three.
+const PILLAR_ICONS = ['/icons/about/quality.svg', '/icons/about/innovation.svg', '/icons/about/collaboration.svg'];
+const defaultPillars = [
+  { title: 'National and international expertise', body: "Single-state, multistate, or cross-border, our CPAs know the complexity and know how to navigate it without leaving money on the table." },
+  { title: 'Proactive approach',                   body: "We don't wait for deadlines to find savings. We plan ahead so you're always in a better position than you were last year." },
+  { title: 'Adapted to your needs',                body: 'Individual, small business, S-Corp, or multijurisdictional, your situation is specific and our service should be too.' },
 ];
+const pillars = (service.data.pillars?.length ? service.data.pillars : defaultPillars)
+  .map((p, i) => ({ ...p, icon: PILLAR_ICONS[i % PILLAR_ICONS.length] }));
+
+const ctaLabel = sc.cta?.button ?? 'Request a Consultation';
 
 const defaultFaq = [
   { q: 'How quickly can we start?',                              a: 'We schedule an intro call within a few business days and can begin scoping the same week.' },
@@ -72,24 +81,16 @@ const defaultFaq = [
   { q: 'Are you taking new clients?',                            a: `Yes. We're actively onboarding new clients year-round, and we pace intake so every partner can hold the service standard the firm is known for.` },
 ];
 const faq = (service.data.faq ?? []).length ? service.data.faq! : defaultFaq;
-const clientView = googleReviews[0];
+const reviewIndex = Math.min(service.data.reviewIndex ?? 0, googleReviews.length - 1);
+const clientView = googleReviews[reviewIndex];
 
 // ── Section visibility & order (CMS-controlled) ───────────────────────────
-// `sections` frontmatter lists the client-controllable blocks to show, in
-// order. Fixed blocks (deep dive, industries, pillars, related) keep their
-// slots; the controllable blocks fill the remaining slots in the given order.
-const CONTROLLABLE = ['benefits', 'included', 'process', 'reviews', 'faq'] as const;
+// `sections` frontmatter lists every block to show, in order; omit for the
+// default full layout. All nine blocks are controllable from the CMS.
 const MASTER_ORDER = ['benefits', 'included', 'process', 'deepdive', 'reviews', 'industries', 'pillars', 'related', 'faq'] as const;
 type SectionKey = (typeof MASTER_ORDER)[number];
 const customSections = service.data.sections as SectionKey[] | undefined;
-const renderOrder: SectionKey[] = customSections
-  ? (() => {
-      const queue = [...customSections];
-      return MASTER_ORDER
-        .map((k) => ((CONTROLLABLE as readonly string[]).includes(k) ? queue.shift() ?? null : k))
-        .filter((k): k is SectionKey => k !== null);
-    })()
-  : [...MASTER_ORDER];
+const renderOrder: SectionKey[] = customSections ?? [...MASTER_ORDER];
 
 const schema = [
   serviceSchema({ name: service.data.title, description: service.data.summary, path: service.data.path }),
@@ -145,7 +146,7 @@ const schema = [
         </p>
         <div class="flex flex-col items-start gap-4 md:col-span-4 md:items-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-delft px-6 py-3.5 font-display text-[14px] font-medium text-white transition-colors hover:bg-scooter">
-            Request a Consultation
+            {ctaLabel}
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
@@ -160,14 +161,14 @@ const schema = [
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">What you get</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.benefits?.eyebrow ?? 'What you get'}</span>
       </div>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-          The engagement, in a nutshell.
+          {sc.benefits?.heading ?? 'The engagement, in a nutshell.'}
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          Every Alpine Mar {service.data.title.toLowerCase()} engagement is built on the same four commitments.
+          {sc.benefits?.intro ?? `Every Alpine Mar ${service.data.title.toLowerCase()} engagement is built on the same four commitments.`}
         </p>
       </div>
       <ul class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
@@ -191,12 +192,12 @@ const schema = [
       <Container width="wide" class="relative z-10">
         <div class="mb-8 flex items-center gap-3 text-white/85 md:mb-10">
           <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">What's included</span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">{sc.included?.eyebrow ?? "What's included"}</span>
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
-          <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">A defined scope, not a black box.</h2>
+          <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">{sc.included?.heading ?? 'A defined scope, not a black box.'}</h2>
           <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-            Engagements are scoped before they start. Here's what a typical {service.data.title.toLowerCase()} engagement covers.
+            {sc.included?.intro ?? `Engagements are scoped before they start. Here's what a typical ${service.data.title.toLowerCase()} engagement covers.`}
           </p>
         </div>
         <ul class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">
@@ -217,12 +218,12 @@ const schema = [
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">How we work</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.process?.eyebrow ?? 'How we work'}</span>
       </div>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">From first call to closed loop.</h2>
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">{sc.process?.heading ?? 'From first call to closed loop.'}</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          Four predictable steps. No surprise scope creep, no junior handoffs, no hourly meter ticking on routine questions.
+          {sc.process?.intro ?? 'Four predictable steps. No surprise scope creep, no junior handoffs, no hourly meter ticking on routine questions.'}
         </p>
       </div>
       <ol class="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-2 lg:grid-cols-4">
@@ -249,14 +250,14 @@ const schema = [
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Deep dive</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.deepdive?.eyebrow ?? 'Deep dive'}</span>
       </div>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-          The detail, if you want it.
+          {sc.deepdive?.heading ?? 'The detail, if you want it.'}
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          The full breakdown of how we approach {service.data.title.toLowerCase()} — written for clients who want to see the rigor before signing on.
+          {sc.deepdive?.intro ?? `The full breakdown of how we approach ${service.data.title.toLowerCase()} — written for clients who want to see the rigor before signing on.`}
         </p>
       </div>
 
@@ -270,7 +271,7 @@ const schema = [
           <div class="sticky top-28 rounded-[6px] bg-[#12122D] p-6 text-white md:p-7">
             <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-[var(--color-text-head)]">Quick answer</p>
             <p class="mt-5 font-display text-[15px] leading-[1.55] text-white/85">
-              Skip the long read? The summary above plus the FAQ below cover 90% of what clients ask before booking the intro call.
+              {sc.deepdive?.aside ?? 'Skip the long read? The summary above plus the FAQ below cover 90% of what clients ask before booking the intro call.'}
             </p>
             <a href="#faq" class="mt-6 inline-flex items-center gap-2 font-display text-[13px] font-medium text-scooter transition-colors hover:text-white">
               Jump to FAQ
@@ -289,7 +290,7 @@ const schema = [
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Client view</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.reviews?.eyebrow ?? 'Client view'}</span>
       </div>
       <figure class="grid grid-cols-1 gap-6 rounded-[6px] border border-line bg-paper p-6 md:grid-cols-12 md:gap-16 md:p-14">
         <svg width="48" height="40" viewBox="0 0 32 26" fill="currentColor" aria-hidden="true" class="text-line md:col-span-1">
@@ -324,14 +325,14 @@ const schema = [
       <Container width="wide">
         <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
           <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">Who it's for</span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">{sc.industries?.eyebrow ?? "Who it's for"}</span>
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-            Industries we run this for.
+            {sc.industries?.heading ?? 'Industries we run this for.'}
           </h2>
           <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-            Specialized playbooks for the verticals we know best — benchmarks, deductions, and tax positions that don't need explaining.
+            {sc.industries?.intro ?? "Specialized playbooks for the verticals we know best — benchmarks, deductions, and tax positions that don't need explaining."}
           </p>
         </div>
         <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 lg:grid-cols-4">
@@ -360,14 +361,14 @@ const schema = [
     <Container width="wide" class="relative z-10">
       <div class="mb-8 flex items-center gap-3 text-white/85 md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Why Alpine Mar</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.pillars?.eyebrow ?? 'Why Alpine Mar'}</span>
       </div>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-7">
-          A strategy that works<br />as hard as you do.
+          {sc.pillars?.heading ? sc.pillars.heading : <>A strategy that works<br />as hard as you do.</>}
         </h2>
         <p class="font-display text-[15px] leading-[1.65] text-white/75 md:col-span-5 md:pt-3">
-          You'll hear from us before tax season, not just during it. Our team stays close to your financials year-round, flagging opportunities and managing compliance.
+          {sc.pillars?.intro ?? "You'll hear from us before tax season, not just during it. Our team stays close to your financials year-round, flagging opportunities and managing compliance."}
         </p>
       </div>
       <ul class="mt-8 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-3">
@@ -391,14 +392,14 @@ const schema = [
       <Container width="wide">
         <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
           <span class="block size-2 bg-scooter"></span>
-          <span class="font-display text-[14px] tracking-[-0.005em]">{group ? `More ${group} services` : 'Related services'}</span>
+          <span class="font-display text-[14px] tracking-[-0.005em]">{sc.related?.eyebrow ?? (group ? `More ${group} services` : 'Related services')}</span>
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
           <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">
-            Often booked alongside this one.
+            {sc.related?.heading ?? 'Often booked alongside this one.'}
           </h2>
           <a href="/services/" class="group inline-flex w-fit items-center gap-2 rounded-[6px] bg-delft px-6 py-3.5 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter md:col-span-5 md:justify-self-end md:bg-transparent md:px-0 md:py-0 md:pt-3 md:text-[14px] md:text-[var(--color-text-head)] md:hover:bg-transparent md:hover:text-scooter">
-            All services
+            {sc.related?.button ?? 'All services'}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="shrink-0 transition-transform group-hover:translate-x-1 md:size-[13px]"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
@@ -425,12 +426,12 @@ const schema = [
     <Container width="wide">
       <div class="mb-8 flex items-center gap-3 text-[var(--color-text-head)] md:mb-10">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[14px] tracking-[-0.005em]">Common questions</span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">{sc.faq?.eyebrow ?? 'Common questions'}</span>
       </div>
       <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
-        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">Before you book the call.</h2>
+        <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">{sc.faq?.heading ?? 'Before you book the call.'}</h2>
         <p class="font-display text-[15px] leading-[1.65] text-[var(--color-text-body)] md:col-span-5 md:pt-3">
-          Quick answers to the things most people ask before signing on for {service.data.title.toLowerCase()}.
+          {sc.faq?.intro ?? `Quick answers to the things most people ask before signing on for ${service.data.title.toLowerCase()}.`}
         </p>
       </div>
 
@@ -462,16 +463,16 @@ const schema = [
     <Container width="wide" class="relative z-10">
       <div class="mb-10 flex items-center gap-3 text-white/85 md:mb-24">
         <span class="block size-2 bg-scooter"></span>
-        <span class="font-display text-[15px] tracking-[-0.005em]">Ready to start?</span>
+        <span class="font-display text-[15px] tracking-[-0.005em]">{sc.cta?.eyebrow ?? 'Ready to start?'}</span>
       </div>
 
       <div class="grid grid-cols-1 items-end gap-6 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
-          Let's get on a first name basis.
+          {sc.cta?.heading ?? "Let's get on a first name basis."}
         </h2>
         <div class="md:col-span-4 md:flex md:justify-end">
           <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-scooter px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-white hover:text-navy-950">
-            Request a Consultation
+            {ctaLabel}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>

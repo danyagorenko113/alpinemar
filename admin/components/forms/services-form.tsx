@@ -14,6 +14,7 @@ import { TagInput } from '@/components/shared/tag-input'
 import { StringList } from '@/components/shared/string-list'
 import { StructList } from '@/components/shared/struct-list'
 import { SectionOrder, type SectionDef } from '@/components/shared/section-order'
+import { SectionCopyEditor, type CopySectionDef } from '@/components/shared/section-copy-editor'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import {
@@ -29,6 +30,8 @@ import { slugify } from '@/lib/utils'
 interface Props {
   initial?: Service
   industrySlugs: string[]
+  /** Names of the global Google reviews, in list order — for the review picker. */
+  reviewNames?: string[]
 }
 
 const GROUPS: ServiceGroup[] = ['Tax', 'Accounting', 'Advisory', 'Compliance']
@@ -39,19 +42,80 @@ const SECTION_DEFS: SectionDef<ServiceSectionKey>[] = [
   { key: 'benefits', label: 'What you get', hint: '(takeaways)' },
   { key: 'included', label: "What's included" },
   { key: 'process', label: 'How we work' },
+  { key: 'deepdive', label: 'Deep dive', hint: '(body)' },
   { key: 'reviews', label: 'Reviews' },
+  { key: 'industries', label: 'Industries' },
+  { key: 'pillars', label: 'Why Alpine Mar' },
+  { key: 'related', label: 'Related services' },
   { key: 'faq', label: 'FAQ' },
+]
+
+/** Placeholders mirror the defaults baked into src/pages/services/[...slug].astro. */
+const COPY_DEFS: CopySectionDef[] = [
+  { key: 'benefits', label: 'What you get', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'What you get' },
+    { key: 'heading', label: 'Heading', placeholder: 'The engagement, in a nutshell.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Every Alpine Mar … engagement is built on the same four commitments.', textarea: true },
+  ]},
+  { key: 'included', label: "What's included", fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: "What's included" },
+    { key: 'heading', label: 'Heading', placeholder: 'A defined scope, not a black box.' },
+    { key: 'intro', label: 'Intro', placeholder: "Engagements are scoped before they start. Here's what a typical … engagement covers.", textarea: true },
+  ]},
+  { key: 'process', label: 'How we work', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'How we work' },
+    { key: 'heading', label: 'Heading', placeholder: 'From first call to closed loop.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Four predictable steps. No surprise scope creep, no junior handoffs…', textarea: true },
+  ]},
+  { key: 'deepdive', label: 'Deep dive (body)', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Deep dive' },
+    { key: 'heading', label: 'Heading', placeholder: 'The detail, if you want it.' },
+    { key: 'intro', label: 'Intro', placeholder: 'The full breakdown of how we approach …', textarea: true },
+    { key: 'aside', label: 'Sidebar card text', placeholder: 'Skip the long read? The summary above plus the FAQ below cover 90%…', textarea: true },
+  ]},
+  { key: 'reviews', label: 'Reviews', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Client view' },
+  ]},
+  { key: 'industries', label: 'Industries', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: "Who it's for" },
+    { key: 'heading', label: 'Heading', placeholder: 'Industries we run this for.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Specialized playbooks for the verticals we know best…', textarea: true },
+  ]},
+  { key: 'pillars', label: 'Why Alpine Mar', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Why Alpine Mar' },
+    { key: 'heading', label: 'Heading', placeholder: 'A strategy that works as hard as you do.' },
+    { key: 'intro', label: 'Intro', placeholder: "You'll hear from us before tax season, not just during it…", textarea: true },
+  ]},
+  { key: 'related', label: 'Related services', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'More <group> services' },
+    { key: 'heading', label: 'Heading', placeholder: 'Often booked alongside this one.' },
+    { key: 'button', label: 'Link label', placeholder: 'All services' },
+  ]},
+  { key: 'faq', label: 'FAQ', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Common questions' },
+    { key: 'heading', label: 'Heading', placeholder: 'Before you book the call.' },
+    { key: 'intro', label: 'Intro', placeholder: 'Quick answers to the things most people ask…', textarea: true },
+  ]},
+  { key: 'cta', label: 'Final CTA', fields: [
+    { key: 'eyebrow', label: 'Eyebrow', placeholder: 'Ready to start?' },
+    { key: 'heading', label: 'Heading', placeholder: "Let's get on a first name basis." },
+    { key: 'button', label: 'Button label (both CTA buttons)', placeholder: 'Request a Consultation' },
+  ]},
 ]
 
 const empty: Service = {
   slug: '',
   title: '',
+  heroTitle: '',
   path: '',
   summary: '',
   cover: '',
   coverAlt: '',
   group: undefined,
   sections: undefined,
+  sectionCopy: undefined,
+  pillars: [],
+  reviewIndex: undefined,
   takeaways: [],
   included: [],
   process: [],
@@ -62,7 +126,7 @@ const empty: Service = {
   body: '',
 }
 
-export function ServicesForm({ initial, industrySlugs }: Props) {
+export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [s, setS] = useState<Service>(initial ?? empty)
@@ -98,12 +162,16 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
       try {
         const fm: ServiceFrontmatter = {
           title: s.title,
+          heroTitle: s.heroTitle?.trim() || undefined,
           path: s.path || `/services/${s.slug}/`,
           summary: s.summary,
           cover: s.cover || undefined,
           coverAlt: s.coverAlt?.trim() || undefined,
           group: s.group,
           sections: s.sections,
+          sectionCopy: s.sectionCopy,
+          pillars: s.pillars,
+          reviewIndex: s.reviewIndex || undefined,
           takeaways: s.takeaways,
           included: s.included,
           process: s.process,
@@ -155,6 +223,18 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
                 className="text-lg h-11"
               />
             </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="hero-title">Hero title (H1)</Label>
+              <Input
+                id="hero-title"
+                value={s.heroTitle ?? ''}
+                onChange={(e) => update('heroTitle', e.target.value)}
+                placeholder={s.title || 'Falls back to Title'}
+              />
+              <p className="text-xs text-muted-foreground">
+                The big headline on the page banner. Leave blank to use the Title.
+              </p>
+            </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor="slug">Slug</Label>
@@ -202,7 +282,7 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold">Key takeaways</h2>
-              <span className="text-xs text-muted-foreground">"What you get" — 3–5 bullets above the body</span>
+              <span className="text-xs text-muted-foreground">"What you get" cards — 4 per row, any count renders</span>
             </div>
             <StringList
               value={s.takeaways}
@@ -256,6 +336,35 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
               ]}
               defaultItem={{ q: '', a: '' }}
               addLabel="Add question"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">Why Alpine Mar</h2>
+              <span className="text-xs text-muted-foreground">Empty = default three pillars</span>
+            </div>
+            <StructList
+              value={s.pillars}
+              onChange={(v) => update('pillars', v)}
+              fields={[
+                { key: 'title', label: 'Pillar title', placeholder: 'e.g. Proactive approach' },
+                { key: 'body', label: 'Pillar text', textarea: true, placeholder: 'Why clients pick Alpine Mar…' },
+              ]}
+              defaultItem={{ title: '', body: '' }}
+              addLabel="Add pillar"
+            />
+          </section>
+
+          <section className="rounded-lg border bg-card p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold">Section headings & intro copy</h2>
+              <span className="text-xs text-muted-foreground">Blank = site default (shown as placeholder)</span>
+            </div>
+            <SectionCopyEditor
+              defs={COPY_DEFS}
+              value={s.sectionCopy}
+              onChange={(v) => update('sectionCopy', v)}
             />
           </section>
 
@@ -337,6 +446,25 @@ export function ServicesForm({ initial, industrySlugs }: Props) {
               Uncheck to hide a section; reorder with the arrows. Default arrangement keeps the frontmatter clean.
             </p>
           </section>
+
+          {reviewNames.length > 0 && (
+            <section className="rounded-lg border bg-card p-5 space-y-3">
+              <Label htmlFor="review-pick">Featured review</Label>
+              <select
+                id="review-pick"
+                value={s.reviewIndex ?? 0}
+                onChange={(e) => update('reviewIndex', Number(e.target.value) || undefined)}
+                className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+              >
+                {reviewNames.map((name, i) => (
+                  <option key={i} value={i}>{name}</option>
+                ))}
+              </select>
+              <p className="text-xs text-muted-foreground">
+                Shown in the Reviews section of this page. Manage the reviews themselves under Reviews.
+              </p>
+            </section>
+          )}
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>Cross-link industries</Label>
