@@ -1,12 +1,18 @@
 ---
-title: "Proposed NYC Pied-à-Terre Tax: What Investors Should Know"
-date: 2026-06-11
-updated: '2026-06-23T13:19:54Z'
-author: "The Alpine Mar editorial team"
-category: "Taxes"
-excerpt: "The \"Pied-à-Terre Tax\" — an annual surcharge on luxury New York City homes used as non-primary residences — has been proposed in various forms by New York State legislators since 2014 and resurfaces most legislative sessions."
-cover: "/images/blog/new-york-city-pied-a-terre.jpg"
-tags: ["Estate Planning", "Real Estate", "Tax"]
+title: 'Proposed NYC Pied-à-Terre Tax: What Investors Should Know'
+date: '2026-06-11'
+updated: '2026-07-13T22:51:43.431Z'
+author: Rachel Garber
+category: Taxes
+excerpt: >-
+  The "Pied-à-Terre Tax" — an annual surcharge on luxury New York City homes
+  used as non-primary residences — has been proposed in various forms by New
+  York State legislators since 2014 and resurfaces most legislative sessions.
+cover: /images/blog/new-york-city-pied-a-terre.jpg
+tags:
+  - Estate Planning
+  - Real Estate
+  - Tax
 ---
 <p>The "Pied-à-Terre Tax" — an annual surcharge on luxury New York City homes used as non-primary residences — has been proposed in various forms by New York State legislators since 2014 and resurfaces most legislative sessions. As of publication, no version has been signed into law, but the structure typically discussed is worth understanding for clients with significant New York City real estate exposure who want to plan around the possibility.</p>
 <p><em>Note: legislative status changes. Confirm the current bill text and signing status with a New York-licensed tax attorney before acting on this article.</em></p>
