@@ -40,6 +40,11 @@ const dateFmt = (d: string | Date) =>
   rawTitle={`${categoryName} — Insights | Alpine Mar`}
   description={`Insights on ${categoryName} from Alpine Mar's tax, accounting, and advisory team.`}
 >
+  <Fragment slot="head">
+    {page.url.prev && <link rel="prev" href={new URL(withSlash(page.url.prev)!, Astro.site).href} />}
+    {page.url.next && <link rel="next" href={new URL(withSlash(page.url.next)!, Astro.site).href} />}
+  </Fragment>
+
   <!-- ═════════════ HERO ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] pt-12 pb-16 text-white md:pt-16 md:pb-20">
     <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 72px 72px;"></div>
