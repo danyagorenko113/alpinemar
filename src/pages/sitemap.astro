@@ -13,10 +13,10 @@ const industries = (await getCollection('industries'))
   .filter((i) => i.data.status !== 'draft')
   .sort((a, b) => a.data.title.localeCompare(b.data.title))
   .map((s) => ({ title: s.data.title, href: s.data.path }));
+// List every published post — this is the HTML sitemap, so nothing is capped.
 const insights = (await getCollection('insights'))
   .filter((p) => p.data.status !== 'draft')
   .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
-  .slice(0, 24)
   .map((p) => ({ title: p.data.title, href: `/blog/${p.id.replace(/\.md$/, '').split('/').pop()}/` }));
 
 const sections = [
@@ -33,7 +33,7 @@ const sections = [
   },
   { title: `Services (${services.length})`,    items: services },
   { title: `Industries (${industries.length})`, items: industries },
-  { title: 'Latest Insights',                   items: insights },
+  { title: `Insights (${insights.length})`,     items: [{ title: 'Blog Home', href: '/blog/' }, ...insights] },
   {
     title: 'Tools',
     items: [
