@@ -134,15 +134,15 @@ for (const p of posts) {
       const l = list(); if (!l) return;
       l.innerHTML = filtered.length
         ? filtered.slice(0, 30).map((item, i) => `
-            <a href="${item.href}" data-idx="${i}"
-               class="cmdk-row flex items-center gap-4 border-b border-line px-5 py-3.5 transition-colors ${i === activeIdx ? 'bg-[#12122D] text-white' : 'hover:bg-paper'}">
+            <button type="button" role="option" data-href="${item.href}" data-idx="${i}"
+               class="cmdk-row flex w-full items-center gap-4 border-b border-line px-5 py-3.5 text-left transition-colors ${i === activeIdx ? 'bg-[#12122D] text-white' : 'hover:bg-paper'}">
               <span class="font-mono text-[10px] uppercase tracking-[0.16em] ${i === activeIdx ? 'text-scooter' : 'text-[var(--color-text-body)]'}">${item.kind}</span>
               <span class="flex-1 truncate">
                 <span class="block truncate font-display text-[14px] font-medium ${i === activeIdx ? 'text-white' : 'text-[var(--color-text-head)]'}">${item.title}</span>
                 ${item.summary ? `<span class="mt-0.5 block truncate font-display text-[12px] ${i === activeIdx ? 'text-white/65' : 'text-[var(--color-text-body)]'}">${item.summary}</span>` : ''}
               </span>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" class="${i === activeIdx ? 'text-scooter' : 'text-[var(--color-text-body)]'}"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            </button>
           `).join('')
         : `<div class="px-5 py-14 text-center">
              <p class="font-display text-[14px] text-[var(--color-text-head)]">No results.</p>
@@ -175,6 +175,10 @@ for (const p of posts) {
     document.addEventListener('click', (e) => {
       const t = e.target;
       if (t?.closest?.('#cmdk-launcher')) { e.preventDefault(); open(); return; }
+      // Rows are buttons (not <a>) so crawlers don't see bloated anchor text;
+      // navigate here on click.
+      const row = t?.closest?.('.cmdk-row[data-href]');
+      if (row) { e.preventDefault(); window.location.href = row.getAttribute('data-href'); return; }
       const p = panel();
       if (p && !p.classList.contains('hidden') && e.target === p) close();
     });
