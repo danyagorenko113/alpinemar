@@ -106,8 +106,11 @@ const popularServices = [
               <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
             </a>
             <p class="mt-3 line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{group.blurb}</p>
+            {/* Render every service link directly — no "+ N more" behind a
+                click. Links hidden until interaction are discounted by search
+                engines, so all service pages must be in the crawlable markup. */}
             <ul class="mt-5 space-y-2.5 border-t border-line pt-4">
-              {group.items.slice(0, 6).map((it) => (
+              {group.items.map((it) => (
                 <li>
                   <a href={it.href} class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors hover:text-scooter">{it.name}</a>
                   {'desc' in it && (
@@ -115,14 +118,6 @@ const popularServices = [
                   )}
                 </li>
               ))}
-              {group.items.length > 6 && (
-                <li>
-                  <a href="/services/" class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-body)] transition-colors hover:text-scooter">
-                    + {group.items.length - 6} more
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-                  </a>
-                </li>
-              )}
             </ul>
           </div>
         ))}
@@ -210,30 +205,15 @@ const popularServices = [
           {serviceMenu.map((group) => (
             <div class="mt-5 first:mt-3">
               <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
+              {/* All service links rendered directly — no collapse — so every
+                  page is in the crawlable markup and visible without a click. */}
               <ul class="mt-3 space-y-2 border-l border-line pl-4">
-                {group.items.slice(0, 5).map((it) => (
+                {group.items.map((it) => (
                   <li>
                     <a href={it.href} class="block font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.name}</a>
                   </li>
                 ))}
               </ul>
-              {group.items.length > 5 && (
-                <div class="group/list border-l border-line pl-4">
-                  <input id={`mobile-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-services`} type="checkbox" class="mobile-service-toggle sr-only" />
-                  <ul class="mobile-service-extra mt-2 hidden space-y-2">
-                    {group.items.slice(5).map((it) => (
-                      <li>
-                        <a href={it.href} class="block font-display text-[14px] text-[var(--color-text-body)] transition-colors hover:text-scooter">{it.name}</a>
-                      </li>
-                    ))}
-                  </ul>
-                  <label for={`mobile-${group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-services`} class="mt-3 inline-flex cursor-pointer items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
-                    <span class="mobile-service-more">View all</span>
-                    <span class="mobile-service-less hidden">Show less</span>
-                    <svg class="mobile-service-chevron transition-transform duration-200" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-                  </label>
-                </div>
-              )}
             </div>
           ))}
           <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-display text-[13px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
@@ -291,10 +271,6 @@ const popularServices = [
     height: 16px;
     pointer-events: auto;
   }
-  .mobile-service-toggle:checked ~ .mobile-service-extra { display: block; }
-  .mobile-service-toggle:checked ~ label .mobile-service-more { display: none; }
-  .mobile-service-toggle:checked ~ label .mobile-service-less { display: inline; }
-  .mobile-service-toggle:checked ~ label .mobile-service-chevron { transform: rotate(180deg); }
 </style>
 
 <script>
