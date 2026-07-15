@@ -268,7 +268,10 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit.configure({ heading: { levels: [2, 3] } }),
+      // StarterKit (v3) bundles its own Link mark with openOnClick: true, which
+      // would win the naming conflict and open links in a new tab on click.
+      // Disable it so only our configured Link (openOnClick: false) is active.
+      StarterKit.configure({ heading: { levels: [2, 3] }, link: false }),
       // resizable=false: column widths set in the editor would not survive on
       // the site anyway, and fixed widths break the responsive front-end table.
       TableKit.configure({ table: { resizable: false } }),
@@ -386,8 +389,8 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
   if (!editor) return null
 
   return (
-    <div className="rounded-md border bg-white overflow-hidden">
-      <div className="flex flex-wrap items-center gap-0.5 border-b bg-navy-50/60 px-2 py-1.5">
+    <div className="rounded-md border bg-white">
+      <div className="sticky top-14 md:top-0 z-20 flex flex-wrap items-center gap-0.5 rounded-t-md border-b bg-navy-50/95 backdrop-blur px-2 py-1.5">
         <ToolbarBtn active={editor.isActive('bold')} onClick={() => editor.chain().focus().toggleBold().run()} title="Bold (⌘B)">
           <Bold className="h-4 w-4" />
         </ToolbarBtn>
