@@ -1,0 +1,30 @@
+---
+// Responsive Google Business Profile map embed. Fills its container width and
+// keeps a 4:3 ratio, so it stays mobile-ready. Used in the footer and on the
+// contact page (as a trust seal).
+import { site } from '@/data/site';
+
+interface Props {
+  /** Extra classes for the wrapper (e.g. sizing / rounding). */
+  class?: string;
+  /** Accessible iframe title. */
+  title?: string;
+}
+
+const {
+  class: className,
+  title = `Map to ${site.name} — ${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`,
+} = Astro.props;
+---
+
+<div class:list={['relative w-full overflow-hidden rounded-[6px]', className]} style="aspect-ratio: 4 / 3;">
+  <iframe
+    src={site.maps.embed}
+    title={title}
+    class="absolute inset-0 h-full w-full"
+    style="border:0;"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+  ></iframe>
+</div>

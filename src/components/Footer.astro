@@ -1,5 +1,6 @@
 ---
 import Container from './Container.astro';
+import MapEmbed from './MapEmbed.astro';
 import { site } from '@/data/site';
 
 const year = 2026;
@@ -93,7 +94,10 @@ const footerIndustries = [
             <p class="font-display text-[var(--color-text-body)]">Email: <a href={`mailto:${site.email}`} class="transition-colors hover:text-scooter">{site.email}</a></p>
           </li>
           <li>
-            <p class="font-display text-[var(--color-text-body)]">Address: {site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</p>
+            <p class="font-display text-[var(--color-text-body)]">Address: <a href={site.maps.directions} target="_blank" rel="noopener" class="transition-colors hover:text-scooter">{site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}</a></p>
+          </li>
+          <li>
+            <MapEmbed class="mt-1 max-w-[340px]" />
           </li>
         </ul>
       </div>
