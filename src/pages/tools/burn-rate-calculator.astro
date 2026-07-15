@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const presets = [250000, 500000, 1000000, 2500000, 5000000];
 const growths = [
@@ -131,6 +132,24 @@ const growths = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How to read your burn rate and runway"
+    intro={[
+      "Runway is the number of months your company can operate before it runs out of cash at your current net burn. It is the single most important number for an early-stage founder — it dictates when you need to raise, cut, or change course.",
+      "This calculator uses net burn (expenses minus collected revenue), because that is the rate that actually drains your bank account. It also factors in how fast burn is growing month over month, which is where a lot of runway estimates go wrong.",
+    ]}
+    steps={[
+      { title: "Enter cash on hand", body: "Everything liquid within 30 days — bank, sweep, and treasuries." },
+      { title: "Enter monthly net burn", body: "Expenses minus collected revenue, ideally a three-month average." },
+      { title: "Add your burn growth rate", body: "How fast burn is climbing each month, so the estimate is not flattered by today's number." },
+    ]}
+    faqs={[
+      { q: "Gross burn vs. net burn — which should I use?", a: "Net burn (expenses minus revenue) reflects what is actually leaving your account, so it gives a truer runway. Gross burn ignores incoming revenue and tends to understate how long you have." },
+      { q: "What is a healthy runway?", a: "As a rough guide: under 6 months is a raise-or-cut zone, 6–18 months is planning territory, and over 18 months gives you room to optimize. Fundraises typically take 3–6 months, so plan backward from that." },
+      { q: "Does it account for burn increasing over time?", a: "Yes. The growth-rate input compounds your burn month over month, so a rising burn shortens the runway rather than assuming today's rate holds forever." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">

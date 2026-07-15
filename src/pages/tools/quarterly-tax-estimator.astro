@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const entities = [
   { v: 'sole',    label: 'Sole prop / 1099',     sub: 'Schedule C · SE tax applies' },
@@ -128,6 +129,19 @@ const states = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How quarterly estimated taxes work"
+    intro={[
+      "If you are self-employed or your income is not fully covered by withholding, the IRS expects you to pay tax in four quarterly installments rather than all at once in April. Underpay and you can owe an underpayment penalty — even if you pay in full at filing.",
+      "This estimator gives you a per-quarter target based on your expected income, so you can set money aside and avoid a surprise bill or a penalty.",
+    ]}
+    faqs={[
+      { q: "When are quarterly taxes due?", a: "Generally April 15, June 15, September 15, and January 15 of the following year. Dates shift slightly when they fall on a weekend or holiday." },
+      { q: "How do I avoid an underpayment penalty?", a: "Safe-harbor rules generally protect you if you pay at least 90% of this year's tax or 100% of last year's (110% for higher earners). Paying the calculated amount each quarter keeps you inside that." },
+      { q: "Does this include self-employment tax?", a: "Estimated payments should cover both income tax and self-employment tax. Treat the result as a combined target and confirm the details with your CPA." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">

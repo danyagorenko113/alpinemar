@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const fields = [
   { id: 'price', label: 'Sale price',                sub: 'What buyer is paying for the property.',                                      value: 1500000, presets: [500000, 1000000, 1500000, 3000000, 5000000] },
@@ -117,6 +118,19 @@ const states = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How a 1031 exchange defers your capital gains"
+    intro={[
+      "A Section 1031 'like-kind' exchange lets you sell an investment property and reinvest the proceeds into another, deferring the capital-gains and depreciation-recapture tax you would otherwise owe on the sale. The tax is not erased — it is deferred, potentially indefinitely, as you roll from property to property.",
+      "This calculator compares the tax on a straight sale against a 1031 exchange, using your sale price, adjusted basis, and state, so you can see the size of the deferral before you commit to the timeline.",
+    ]}
+    faqs={[
+      { q: "Does a 1031 eliminate the tax or just defer it?", a: "It defers it. You carry the deferred gain into the replacement property's basis. Many investors keep deferring across exchanges; heirs may receive a stepped-up basis, but that is a planning question for your CPA." },
+      { q: "What are the deadlines?", a: "Strict ones: you have 45 days from the sale to identify replacement property and 180 days to close. Miss either and the exchange fails and the gain becomes taxable." },
+      { q: "What qualifies as like-kind?", a: "For real estate, most investment or business property is like-kind to other investment real estate. Personal residences and property held mainly for resale do not qualify." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const salaryOpts = [
   { v: 40, label: '40% of profit', sub: 'Aggressive' },
@@ -115,6 +116,19 @@ const salaryOpts = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How the S-Corp vs LLC comparison works"
+    intro={[
+      "A default LLC passes all of its profit to you as self-employment income, which is subject to 15.3% self-employment tax on top of income tax. Electing S-Corp status lets you split that profit into a reasonable salary (subject to payroll tax) and distributions (not subject to self-employment tax) — which is where the savings come from.",
+      "This tool models that split at your income level and shows the break-even point where the S-Corp savings start to outweigh the added cost of payroll and a separate return. Below that threshold, an S-Corp usually is not worth the overhead.",
+    ]}
+    faqs={[
+      { q: "When does an S-Corp make sense?", a: "Generally once net profit is high enough that self-employment-tax savings exceed the cost of running payroll and filing a separate 1120-S — often somewhere around $40k–$80k of net profit, depending on your situation." },
+      { q: "What is a 'reasonable salary'?", a: "The IRS requires S-Corp owners to pay themselves a reasonable wage for the work they do before taking distributions. Set it too low and you invite audit risk; the calculator uses a defensible split as a starting point." },
+      { q: "What are the downsides?", a: "An S-Corp adds payroll administration, a separate tax return, and stricter compliance. Those costs are real — which is exactly why the break-even matters." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const claimOpts = [
   { v: 'first',   label: 'Yes · first claim ever',  sub: 'ASC at 6% of QREs' },
@@ -120,6 +121,20 @@ const claimOpts = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How the R&D credit estimate works"
+    intro={[
+      "The federal Research & Development credit rewards companies for qualified work to develop or improve products, software, and processes. This tool estimates the credit under the Alternative Simplified Credit (ASC) method, driven mainly by your qualified engineering and development wages.",
+      "It is a directional estimate. Actual qualified research expenses (QREs) require documenting which projects and activities meet the four-part test — and Section 174 now requires capitalizing and amortizing R&D costs, which changes the cash picture even when the credit applies.",
+    ]}
+    faqs={[
+      { q: "What counts as a qualified research expense?", a: "Primarily wages for employees doing or directly supervising qualified development work, plus supplies and a portion of contract-research costs. The work must meet the IRS four-part test (technological in nature, eliminating uncertainty, process of experimentation, permitted purpose)." },
+      { q: "What is the ASC method?", a: "The Alternative Simplified Credit is 14% of QREs above 50% of your average QREs for the prior three years — simpler than the regular method, and what this estimator uses." },
+      { q: "Can a pre-revenue startup use the credit?", a: "Yes. Qualified small businesses can apply up to $500,000 of the credit against payroll taxes rather than income tax, which is valuable when you are not yet profitable." },
+      { q: "What changed with Section 174?", a: "R&D costs must now be capitalized and amortized (5 years domestic, 15 foreign) rather than deducted immediately. The credit still applies, but the deduction timing affects your cash taxes — worth modeling with a CPA." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">

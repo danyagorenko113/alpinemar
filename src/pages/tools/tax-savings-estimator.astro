@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import ToolExplainer from '@/components/ToolExplainer.astro';
 
 const presets = [100000, 250000, 500000, 1000000, 2500000];
 const entities = [
@@ -162,6 +163,19 @@ const states = [
       </div>
     </Container>
   </section>
+
+  <ToolExplainer
+    heading="How the Tax Savings Estimator works"
+    intro={[
+      "Most owner-operators overpay tax for one reason: planning happens once a year, at filing — after the levers that actually move your effective rate have already closed. This estimator gives you a directional read on what proactive, year-round planning could shift, based on your income and how your business is taxed.",
+      "It is a starting point, not a tax return. Real savings depend on your full picture — state of residence, deductions, retirement contributions, entity structure, and the timing of income and expenses. Treat the number as a signal for whether a deeper conversation is worth your time.",
+    ]}
+    faqs={[
+      { q: "Is this an exact number?", a: "No. It is a directional estimate from a few inputs. Your actual savings depend on your complete return — deductions, credits, state tax, retirement contributions, and how your income is structured." },
+      { q: "What actually reduces my effective rate?", a: "Common levers include choosing the right entity, setting a reasonable S-Corp salary, timing income and expenses, maximizing retirement and HSA contributions, and using available credits. Which ones apply depends on your situation." },
+      { q: "Who is this for?", a: "Self-employed people and owner-operators of small to mid-sized businesses. If you take only a W-2 salary with no side income, standard withholding usually covers you." },
+    ]}
+  />
 
   <!-- ═════════════ FINAL CTA ═════════════ -->
   <section class="relative overflow-hidden bg-[#12122D] py-24 text-white md:py-32">
