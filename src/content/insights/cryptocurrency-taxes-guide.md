@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A clear understanding of cryptocurrency taxes is crucial in 2025 as the rise of digital assets continues to reshape how individuals and businesses handle their finances."
 cover: "/images/blog/cryptocurrency-taxes-guide.jpg"
-tags: ["Crypto", "Compliance", "Estate Planning", "Payroll"]
+tags:
+  - "crypto taxes"
 ---
 <p>A clear understanding of cryptocurrency taxes is crucial in 2025 as the rise of digital assets continues to reshape how individuals and businesses handle their finances. The Internal Revenue Service (IRS) treats cryptocurrency as property, not currency, meaning capital gains and income tax rules apply when you trade, sell, or earn crypto. Staying compliant with tax laws will help you avoid penalties and maximize your financial strategies.</p>
 <h2>How Cryptocurrency Is Taxed</h2>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Flipping houses offers the potential for quick profits, but those profits come with tax implications that every house flipper must understand."
 cover: "/images/blog/taxes-for-flipping-houses.jpg"
-tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]
+tags:
+  - "taxes on flipping houses"
 ---
 <p>Flipping houses offers the potential for quick profits, but those profits come with tax implications that every house flipper must understand. The way your earnings are taxed depends on factors like your total income, business structure, property holding time, and where the house is sold.</p>
 <p>Understanding and managing your tax liability significantly impacts your overall profitability. By learning about the different taxes involved and implementing effective tax strategies, you can safeguard your net profit and keep your business financially healthy.</p>

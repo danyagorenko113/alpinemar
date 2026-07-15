@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A cryptocurrency gift is any transfer of digital assets from one person to another without receiving something of equal value in return. This includes sending Bitcoin, Ethereum, stablecoins, or NFTs to a friend, family member, or anyone else—no strings attached."
 cover: "/images/blog/crypto-gift-tax-considerations.jpg"
-tags: ["Audit", "Crypto", "Compliance", "Estate Planning"]
+tags:
+  - "crypto gift tax"
 ---
 <p>A cryptocurrency gift is any transfer of digital assets from one person to another without receiving something of equal value in return. This includes sending Bitcoin, Ethereum, stablecoins, or NFTs to a friend, family member, or anyone else—no strings attached.</p>
 <p>Crypto gifts are treated like gifts of property under U.S. tax law. They&#8217;re subject to the same gift tax rules as other capital assets such as cash, stocks, or real estate. The Internal Revenue Service expects proper documentation and compliance no matter if you&#8217;re sending $100 in Bitcoin to your nephew or transferring $100,000 worth of Ethereum to a trust for your daughter.</p>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "An accounting system provides the framework for managing the financial activities of a business, encompassing income, expenses, and various other financial transactions."
 cover: "/images/blog/what-is-accounting-system.jpg"
-tags: ["Accounting", "Advisory", "Payroll", "Tax"]
+tags:
+  - "what is an accounting system"
 ---
 <p>An accounting system provides the framework for managing the financial activities of a business, encompassing income, expenses, and various other financial transactions. Understanding the different aspects of accounting systems empowers decision-makers to make well-informed choices aligned with the unique requirements of their business.</p>
 <h2>Accounting System Definition</h2>

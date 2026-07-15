@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structure for your construction company will depend on many factors. The answer will also vary from business to business. That’s why it’s essential to get professional advice on the different business structures and which might be more suitable for you."
 cover: "/images/blog/business-structure-for-construction-company.jpg"
-tags: ["Compliance", "Tax"]
+tags:
+  - "best business structure for construction company"
 ---
 <p>The best business structure for your construction company will depend on many factors. The answer will also vary from business to business. That&#8217;s why it&#8217;s essential to get professional advice on the different business structures and which might be more suitable for you.</p>
 <p>As a business owner, taking the time to define a business model for your construction business will be an essential first step. An expert CPA firm can then help you compare business structures, keeping tax efficiency as a top priority.</p>

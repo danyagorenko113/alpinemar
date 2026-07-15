@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Taxes"
 excerpt: "The jock tax is a unique state income tax rule that requires workers to pay taxes in every state where they earn money—even if they don’t live there."
 cover: "/images/blog/jock-tax-explained.jpg"
-tags: ["Advisory", "Compliance", "Tax"]
+tags:
+  - "jock tax"
 ---
 <p>The jock tax is a unique state income tax rule that requires workers to pay taxes in every state where they earn money—even if they don’t live there. Originally aimed at professional athletes who traveled to compete, it now affects a much wider group: entertainers, keynote speakers, business executives, and anyone whose work crosses state lines.</p>
 <p>Understanding how the jock tax works is essential for staying compliant, avoiding penalties, and planning ahead to keep more of your earnings.</p>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Crypto tax-loss harvesting is a strategy in which investors sell cryptocurrency assets at a loss to offset capital gains and reduce taxable income. Crypto’s volatility creates both opportunities and risks."
 cover: "/images/blog/crypto-tax-loss-harvesting.jpg"
-tags: ["Advisory", "Crypto", "Compliance", "Estate Planning"]
+tags:
+  - "crypto tax loss harvesting"
 ---
 <p>Crypto tax-loss harvesting is a strategy in which investors sell cryptocurrency assets at a loss to offset capital gains and reduce taxable income. Crypto’s volatility creates both opportunities and risks. By harvesting losses strategically, investors can minimize their tax burdens while maintaining long-term investment potential.</p>
 <h2>Benefits and Risks of Crypto Tax-Loss Harvesting</h2>

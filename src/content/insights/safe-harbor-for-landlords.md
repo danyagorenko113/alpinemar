@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Navigating tax regulations can be particularly challenging for landlords due to the unique complexities involved in managing property-related expenses."
 cover: "/images/blog/safe-harbor-for-landlords.jpg"
-tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]
+tags:
+  - "safe harbor for small taxpayers"
 ---
 <p>Navigating tax regulations can be particularly challenging for landlords due to the unique complexities involved in managing property-related expenses. Understanding the concept of safe harbors—provisions designed to simplify compliance and minimize penalties—will empower property owners to optimize their tax strategies effectively.</p>
 <h2>What Is a Safe Harbor?</h2>

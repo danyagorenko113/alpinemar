@@ -10,9 +10,7 @@ excerpt: >-
   York State legislators since 2014 and resurfaces most legislative sessions.
 cover: /images/blog/new-york-city-pied-a-terre.jpg
 tags:
-  - Estate Planning
-  - Real Estate
-  - Tax
+  - "pied-à-terre tax new york city"
 ---
 <p>The "Pied-à-Terre Tax" — an annual surcharge on luxury New York City homes used as non-primary residences — has been proposed in various forms by New York State legislators since 2014 and resurfaces most legislative sessions. As of publication, no version has been signed into law, but the structure typically discussed is worth understanding for clients with significant New York City real estate exposure who want to plan around the possibility.</p>
 <p><em>Note: legislative status changes. Confirm the current bill text and signing status with a New York-licensed tax attorney before acting on this article.</em></p>

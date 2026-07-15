@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Taxes"
 excerpt: "A consolidated tax return is a single tax return filed by a group of affiliated corporations as if it were a single entity. Consolidated filing offers a strategic way for corporate groups to manage their tax liabilities by offsetting the income of profitable members with the…"
 cover: "/images/blog/consolidated-tax-return.jpg"
-tags: ["Advisory", "Compliance", "Estate Planning", "Real Estate"]
+tags:
+  - "consolidated tax return"
 ---
 <p><!-- ######## This is a comment ######## --></p>
 <p><span>A consolidated tax return is a single tax return filed by a group of affiliated corporations as if it were a single entity. Consolidated filing offers a strategic way for corporate groups to manage their tax liabilities by offsetting the income of profitable members with the losses of others.</span></p>

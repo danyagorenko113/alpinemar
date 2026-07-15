@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Ethereum taxes are triggered by more than simply exchanging your crypto for cash. Actions like staking, swapping tokens, or purchasing goods or services with Ethereum often result in taxable events."
 cover: "/images/blog/ethereum-tax-guide.jpg"
-tags: ["Advisory", "Crypto", "Tax"]
+tags:
+  - "ethereum taxes"
 ---
 <p>Ethereum taxes are triggered by more than simply exchanging your crypto for cash. Actions like staking, swapping tokens, or purchasing goods or services with Ethereum often result in taxable events.</p>
 <p>Many investors underestimate how frequently Ethereum transactions intersect with IRS tax rules and the consequences of overlooking them on their tax returns. Consulting an expert in crypto tax planning is the best way to make your moves strategically while remaining compliant.</p>

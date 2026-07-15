@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Crypto staking involves locking up cryptocurrency in a blockchain network to validate transactions and enhance security. In return, participants earn rewards, typically through proof-of-stake (PoS) or similar consensus mechanisms."
 cover: "/images/blog/crypto-staking-taxes.jpg"
-tags: ["Advisory", "Crypto", "Compliance", "Payroll"]
+tags:
+  - "crypto staking taxes"
 ---
 <p>Crypto staking involves locking up cryptocurrency in a blockchain network to validate transactions and enhance security. In return, participants earn rewards, typically through proof-of-stake (PoS) or similar consensus mechanisms. This process allows investors to generate passive income on their holdings.</p>
 <h2>Crypto Staking Taxes</h2>

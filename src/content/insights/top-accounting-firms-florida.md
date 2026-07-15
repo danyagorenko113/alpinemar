@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Accounting"
 excerpt: "Working with one of the top accounting firms in Florida is the best way to optimize your tax bill, stay compliant, and make better business decisions. The following accounting firms are strong options to support your business at every stage of growth."
 cover: "/images/blog/top-accounting-firms-florida.jpg"
-tags: ["Audit", "Accounting", "Advisory", "Compliance"]
+tags:
+  - "top accounting firms in florida"
 ---
 <p>Working with one of the top accounting firms in Florida is the best way to optimize your tax bill, stay compliant, and make better business decisions. The following accounting firms are strong options to support your business at every stage of growth.</p>
 <h2>1. Alpine Mar CPAs &amp; Advisors</h2>

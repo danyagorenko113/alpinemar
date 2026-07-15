@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "DeFi taxes are a rapidly evolving area of cryptocurrency regulation. DeFi, or decentralized finance, refers to blockchain-based financial services like lending, trading, and staking. It is often conducted across multiple wallets and platforms without intermediaries."
 cover: "/images/blog/defi-taxes.jpg"
-tags: ["Audit", "Advisory", "Crypto", "Payroll"]
+tags:
+  - "defi taxes"
 ---
 <p>DeFi taxes are a rapidly evolving area of cryptocurrency regulation. DeFi, or decentralized finance, refers to blockchain-based financial services like lending, trading, and staking. It is often conducted across multiple wallets and platforms without intermediaries.</p>
 <p>Tax treatment of DeFi transactions remains unclear in some cases and may change as Internal Revenue Service (IRS) guidance evolves. Given the complexity of staying on top of a developing regulatory framework, partnering with a crypto-savvy CPA is essential for staying compliant and optimizing your tax position.</p>

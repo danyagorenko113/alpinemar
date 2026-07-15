@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "The Internal Revenue Service (IRS) allows certain gifts to be made tax-free when specific requirements are met. Understanding how these rules work and planning ahead ensures your gifts support others without triggering unexpected taxes."
 cover: "/images/blog/how-to-gift-money-tax-free.jpg"
-tags: ["Crypto", "Compliance", "Estate Planning", "HNW"]
+tags:
+  - "how to gift money tax free"
 ---
 <p>The Internal Revenue Service (IRS) allows certain gifts to be made tax-free when specific requirements are met. Understanding how these rules work and planning ahead ensures your gifts support others without triggering unexpected taxes.</p>
 <h2>Step 1: Know What Counts as a Gift</h2>

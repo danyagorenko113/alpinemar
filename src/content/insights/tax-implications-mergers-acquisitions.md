@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Mergers & Acquisitions"
 excerpt: "Mergers and acquisitions (M&A) involve complex tax considerations that can significantly impact the financial outcomes for both buyers and sellers."
 cover: "/images/blog/tax-implications-mergers-acquisitions.jpg"
-tags: ["Advisory", "Compliance", "Estate Planning", "M&A"]
+tags:
+  - "tax implications of mergers and acquisitions"
 ---
 <p>Mergers and acquisitions (M&amp;A) involve complex tax considerations that can significantly impact the financial outcomes for both buyers and sellers. Understanding the tax implications of different deal structures is crucial for making informed decisions and optimizing your tax position.</p>
 <h2>Tax Implications of Common M&amp;A Structures</h2>

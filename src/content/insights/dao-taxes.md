@@ -6,7 +6,8 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Decentralized autonomous organization (DAO) taxes are a growing concern as these groups continue to blur the lines between tax code and corporate structure. The lack of a centralized authority means tax responsibility often falls directly on individual contributors."
 cover: "/images/blog/dao-taxes.jpg"
-tags: ["Audit", "Advisory", "Crypto", "Compliance"]
+tags:
+  - "dao taxes"
 ---
 <p>Decentralized autonomous organization (DAO) taxes are a growing concern as these groups continue to blur the lines between tax code and corporate structure. The lack of a centralized authority means tax responsibility often falls directly on individual contributors.</p>
 <p>Due to the lack of clear regulatory guidance, governments generally mold DAO taxation to existing entity definitions. As a result, participants often have to navigate complex rules to ensure compliance and avoid costly penalties.</p>

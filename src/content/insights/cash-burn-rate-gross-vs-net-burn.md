@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Startup Accounting & Taxes"
 excerpt: "Cash burn rate determines a startup’s operational lifespan. Precise tracking allows founders to extend their runway, secure investor confidence, and leverage 2026 tax provisions to preserve essential capital."
 cover: "/images/blog/cash-burn-rate-gross-vs-net-burn.jpg"
-tags: ["Audit", "M&A", "Payroll", "Startups"]
+tags:
+  - "cash burn rate"
 ---
 <p>Cash burn rate determines a startup&#8217;s operational lifespan. Precise tracking allows founders to extend their runway, secure investor confidence, and leverage 2026 tax provisions to preserve essential capital.</p>
 <h2>What Is Cash Burn Rate?</h2>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "Every business knows that reporting your company’s financial position is an obligation, but why are financial statements important? Essentially, your company’s financial statements provide insight into the business’s financial health and report critical information about…"
 cover: "/images/blog/importance-of-financial-statements.jpg"
-tags: ["Tax"]
+tags:
+  - "why are financial statements important"
 ---
 <p>Every business knows that reporting your company&#8217;s financial position is an obligation, but why are financial statements important? Essentially, your company&#8217;s financial statements provide insight into the business&#8217;s financial health and report critical information about performance, cash flow, and operations.</p>
 <p>These statements are of great importance to all stakeholders in a business, from investors to employees, as they provide a snapshot of the company&#8217;s financial position with concrete information about expenses, profitability, and debt.</p>

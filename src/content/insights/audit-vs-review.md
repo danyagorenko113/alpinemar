@@ -6,7 +6,8 @@ author: "Derby Norvilus"
 category: "Assurance"
 excerpt: "Businesses often need third-party assurance to meet lender, investor, or regulatory expectations. The two most common options—audits and reviews—offer different levels of scrutiny and credibility."
 cover: "/images/blog/audit-vs-review.jpg"
-tags: ["Audit", "Accounting", "Compliance", "Estate Planning"]
+tags:
+  - "audit vs review"
 ---
 <p>Businesses often need third-party assurance to meet lender, investor, or regulatory expectations. The two most common options—audits and reviews—offer different levels of scrutiny and credibility. Understanding how they differ will help you choose the right fit for your goals and budget.</p>
 <h2>What Is an Audit?</h2>

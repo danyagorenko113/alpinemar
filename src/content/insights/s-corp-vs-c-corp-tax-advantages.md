@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "When establishing a business, choosing between two prominent corporate structures—S corporation (S corp) and C corporation (C corp)—is a pivotal decision."
 cover: "/images/blog/s-corp-vs-c-corp-tax-advantages.jpg"
-tags: ["Advisory", "Compliance", "Startups", "Tax"]
+tags:
+  - "s corp vs c corp tax advantages"
 ---
 <p>When establishing a business, choosing between two prominent corporate structures—S corporation (S corp) and C corporation (C corp)—is a pivotal decision. Entrepreneurs and business owners often find themselves at a crossroads when selecting the corporate structure that best aligns with their financial goals.</p>
 <p>Understanding the distinctions between these business entities and the subsequent implications regarding corporate income taxes and personal income taxes will assist you in making an informed decision regarding the business entity that would be more advantageous for your particular situation.</p>

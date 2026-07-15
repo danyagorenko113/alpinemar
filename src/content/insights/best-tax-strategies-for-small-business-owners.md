@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "Tax strategies for small business owners help you protect as much of your business income as possible so that you can achieve your financial goals. Reducing your tax burden strategically should therefore be a high priority."
 cover: "/images/blog/best-tax-strategies-for-small-business-owners.jpg"
-tags: ["Advisory", "Estate Planning", "Payroll", "Real Estate"]
+tags:
+  - "tax strategies for small business owners"
 ---
 <p>Tax strategies for small business owners help you protect as much of your business income as possible so that you can achieve your financial goals. Reducing your tax burden strategically should therefore be a high priority.</p>
 <p>Reducing your tax liability comes in many forms, including taking advantage of tax deductions, knowing which tax credits are available to your small business, and identifying sources of tax savings. A CPA can help you with the tax planning strategies discussed here and potentially suggest other ways to reduce your tax bill as well.</p>

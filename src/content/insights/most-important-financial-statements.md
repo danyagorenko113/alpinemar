@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "The four basic financial statements every business needs are the income statement, balance sheet, cash flow statement, and statement of retained earnings. Taken together, these four financial statements provide an accurate representation of the company’s overall financial status."
 cover: "/images/blog/most-important-financial-statements.jpg"
-tags: ["M&A", "Real Estate", "Tax"]
+tags:
+  - "4 financial statements"
 ---
 <p>The four basic financial statements every business needs are the income statement, balance sheet, cash flow statement, and statement of retained earnings. Taken together, these four financial statements provide an accurate representation of the company’s overall financial status.</p>
 <p>Understanding the main four types of financial statements is crucial for investors, analysts, and other stakeholders seeking insights into a company&#8217;s financial well-being and future prospects. Furthermore, as a business owner or finance officer, you might be interested in using them to assess the performance of different facets of your operations to identify areas of strength and opportunities for improvement.</p>

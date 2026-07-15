@@ -6,7 +6,8 @@ author: "Kirill Reznik, CPA"
 category: "Taxes"
 excerpt: "Stock options reward employees and key contributors by granting them the right to buy company shares at a fixed price. The two main types—Incentive Stock Options (ISOs) and Non-Qualified Stock Options (NSOs)—have different tax treatments and rules."
 cover: "/images/blog/iso-vs-nso-taxes.jpg"
-tags: ["Advisory", "Compliance", "M&A", "Payroll"]
+tags:
+  - "iso vs nso tax treatment"
 ---
 <p>Stock options reward employees and key contributors by granting them the right to buy company shares at a fixed price. The two main types—Incentive Stock Options (ISOs) and Non-Qualified Stock Options (NSOs)—have different tax treatments and rules. Understanding these differences helps startup founders avoid costly tax mistakes and align compensation with company goals.</p>
 <h2>What Are Incentive Stock Options (ISOs)?</h2>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Transaction Advisory"
 excerpt: "Mergers and acquisitions are often motivated by an expectation of revenue synergy and cost savings. However, the desired outcomes will only be achieved if you take a strategic and comprehensive approach to financial planning and execution before and throughout the…"
 cover: "/images/blog/m-a-integration-finance-checklist.jpg"
-tags: ["Audit", "Advisory", "M&A", "Tax"]
+tags:
+  - "m&a integration finance checklist"
 ---
 <p>Mergers and acquisitions are often motivated by an expectation of revenue synergy and cost savings. However, the desired outcomes will only be achieved if you take a strategic and comprehensive approach to financial planning and execution before and throughout the post-acquisition or post-merger integration process.</p>
 <p>A post-merger integration checklist can help your finance and accounting team ensure they cover all of the bases at each stage of the integration process. This checklist involves specific tasks that need to be completed before Day 1, on Day 1, in the first 30 days, and in the first 100 days of integration.</p>

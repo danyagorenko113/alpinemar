@@ -6,7 +6,8 @@ author: "Brian Fine, CPA"
 category: "Taxes"
 excerpt: "SAFE tax treatment is an important consideration for investors looking to finance startup businesses and their founding members. Simple Agreements for Future Equity, or SAFE notes, offer an alternative to convertible notes by allowing investors to convert their investment into…"
 cover: "/images/blog/safe-notes-tax-treatment.jpg"
-tags: ["Advisory", "Compliance", "Estate Planning", "Payroll"]
+tags:
+  - "safe tax treatment"
 ---
 <p>SAFE tax treatment is an important consideration for investors looking to finance startup businesses and their founding members. Simple Agreements for Future Equity, or SAFE notes, offer an alternative to convertible notes by allowing investors to convert their investment into equity at a later date. However, the tax implications of this investment instrument are complex.</p>
 <p>Understanding the role SAFE notes play in startup funding is essential in order to use them favorably. Work with a tax expert to identify taxable events and ensure compliance.</p>

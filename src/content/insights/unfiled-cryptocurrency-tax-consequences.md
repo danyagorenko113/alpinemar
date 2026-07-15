@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "“What happens if you don’t report cryptocurrency on taxes?” is a crucial question for any trader or small business involved in crypto. Whether you trade Bitcoin, stake Ethereum, or earn crypto income, unreported activity opens you up to the risk of steep fines and even criminal…"
 cover: "/images/blog/unfiled-cryptocurrency-tax-consequences.jpg"
-tags: ["Audit", "Crypto", "Compliance", "Estate Planning"]
+tags:
+  - "what happens if you don’t report cryptocurrency on taxes"
 ---
 <p>“What happens if you don&#8217;t report cryptocurrency on taxes?” is a crucial question for any trader or small business involved in crypto. Whether you trade Bitcoin, stake Ethereum, or earn crypto income, unreported activity opens you up to the risk of steep fines and even criminal charges.</p>
 <p>Staying compliant with ever-evolving crypto tax laws is complex, especially for newcomers to the crypto world. It’s advisable to work with a specialized crypto CPA to help you navigate the rules successfully, remain compliant, and optimize your tax bill.</p>

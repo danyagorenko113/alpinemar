@@ -6,7 +6,8 @@ author: "Brian Fine, CPA"
 category: "Mergers & Acquisitions"
 excerpt: "Selling your business isn’t just about the sale price, it’s about what you keep after taxes. The IRS may treat parts of your proceeds as capital gains and others as ordinary income. State taxes and depreciation recapture can shrink your profit even more."
 cover: "/images/blog/selling-business-tax-strategies.jpg"
-tags: ["Audit", "Accounting", "Advisory", "Compliance"]
+tags:
+  - "selling a business tax strategies"
 ---
 <p>Selling your business isn’t just about the sale price, it’s about what you keep after taxes. The IRS may treat parts of your proceeds as capital gains and others as ordinary income. State taxes and depreciation recapture can shrink your profit even more.</p>
 <p>Early tax planning is key to preserving your profit!</p>

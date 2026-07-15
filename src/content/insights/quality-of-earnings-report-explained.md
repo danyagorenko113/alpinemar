@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "A quality of earnings report—QoE or QofE—is an important financial document written by a team that includes an independent accounting firm. The report provides an extensive review of a company’s operating and financial information and emphasizes the “earnings before interest,…"
 cover: "/images/blog/quality-of-earnings-report-explained.jpg"
-tags: ["Audit", "Advisory", "Compliance", "M&A"]
+tags:
+  - "quality of earnings report"
 ---
 <p>A quality of earnings report—QoE or QofE—is an important financial document written by a team that includes an independent accounting firm. The report provides an extensive review of a company&#8217;s operating and financial information and emphasizes the “earnings before interest, taxes, amortization, and depreciation” (EBITDA) metric.</p>
 <p>The metrics presented in the QofE report are considered a stronger indicator for determining a company&#8217;s value than other metrics like net income. For this reason, QofE reports are fundamental for companies considering mergers and acquisitions.</p>

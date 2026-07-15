@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structure for online business ventures, such as ecommerce businesses, is one that optimizes tax savings, provides liability protection, and supports future growth."
 cover: "/images/blog/best-business-structure-for-ecommerce.jpg"
-tags: ["Compliance", "Payroll", "Tax"]
+tags:
+  - "best business structure for online business"
 ---
 <p>The best business structure for online business ventures, such as ecommerce businesses, is one that optimizes tax savings, provides liability protection, and supports future growth. The business structure that you choose affects everything from your personal liability to your tax obligations.</p>
 <p>Limited liability companies (LLCs) and S corporations (S corps) are two popular business structures for ecommerce businesses. Each offers distinct advantages, but which one is best suited to your ecommerce goals?</p>

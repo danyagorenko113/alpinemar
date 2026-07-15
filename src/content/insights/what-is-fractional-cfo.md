@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Outsourced Services"
 excerpt: "In today’s dynamic business landscape, small and large companies seek innovative ways to optimize their financial strategies while maintaining flexibility and cost-effectiveness. This has led to the rise of fractional Chief Financial Officer (CFO) as a service."
 cover: "/images/blog/what-is-fractional-cfo.jpg"
-tags: ["Audit", "Advisory", "Compliance", "M&A"]
+tags:
+  - "what is a fractional cfo"
 ---
 <p>In today&#8217;s dynamic business landscape, small and large companies seek innovative ways to optimize their financial strategies while maintaining flexibility and cost-effectiveness. This has led to the rise of <a href="/services/fractional-cfo-services/">fractional Chief Financial Officer (CFO) as a service</a>.</p>
 <p>As a business owner, understanding what fractional CFOs are, the services they offer, the advantages of hiring them, and what to look for when considering a fractional CFO will help you determine if your business would benefit from this impactful service.</p>

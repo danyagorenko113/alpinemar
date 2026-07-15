@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "Inheritance tax planning is the process of preparing for taxes that apply in some states when someone receives assets after a death. It focuses on reducing tax exposure for beneficiaries and ensuring assets pass as intended."
 cover: "/images/blog/inheritance-tax-planning.jpg"
-tags: ["Compliance", "Estate Planning", "HNW", "Real Estate"]
+tags:
+  - "inheritance tax planning"
 ---
 <p>Inheritance tax planning is the process of preparing for taxes that apply in some states when someone receives assets after a death. It focuses on reducing tax exposure for beneficiaries and ensuring assets pass as intended. The financial consequences of poor inheritance tax planning fall directly on beneficiaries.</p>
 <h2>Why Does Inheritance Tax Planning Matter?</h2>

@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Transaction Advisory"
 excerpt: "Business acquisition analysis is a comprehensive process that evaluates the financial, operational, and strategic aspects of a potential business acquisition."
 cover: "/images/blog/business-acquisition-analysis.jpg"
-tags: ["Advisory", "Compliance", "M&A", "Tax"]
+tags:
+  - "business acquisition analysis"
 ---
 <p>Business acquisition analysis is a comprehensive process that evaluates the financial, operational, and strategic aspects of a potential business acquisition. It involves a thorough examination of the target company’s financial health to determine its value and potential as an investment.</p>
 <p>This analysis also includes other critical factors such as the target&#8217;s business model, market position, and potential synergies with the acquiring company. Given the complexities involved, understanding the key components of acquisition analysis is essential for a successful acquisition process.</p>

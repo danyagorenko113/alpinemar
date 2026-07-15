@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "The revenue recognition principle is a guiding principle that helps companies identify when they can recognize and record revenue. When a company makes a sale, the revenue earned must be recorded and correctly reflected on the company’s income statement; the question is when to…"
 cover: "/images/blog/revenue-recognition-principle.jpg"
-tags: ["Audit", "Accounting", "Compliance", "Estate Planning"]
+tags:
+  - "revenue recognition principle"
 ---
 <p>The revenue recognition principle is a guiding principle that helps companies identify when they can recognize and record revenue. When a company makes a sale, the revenue earned must be recorded and correctly reflected on the company’s income statement; the question is when to do this.</p>
 <p>Revenue recognition can be less straightforward than it seems because companies can only recognize revenue after it&#8217;s been earned. Businesses must understand the conditions under which they can recognize revenue—depending on the accounting system used—to stay compliant and keep their finances in order.</p>

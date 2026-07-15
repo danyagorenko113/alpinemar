@@ -6,7 +6,8 @@ author: "Pablo Martell, CPA"
 category: "Outsourced Services"
 excerpt: "A fractional CFO (chief financial officer) offers many benefits to small to mid-sized businesses, including improved financial health and streamlined cash-flow management."
 cover: "/images/blog/benefits-of-fractional-cfo.jpg"
-tags: ["Accounting", "Advisory", "Compliance", "M&A"]
+tags:
+  - "benefits of a fractional CFO"
 ---
 <p>A fractional CFO (chief financial officer) offers many benefits to small to mid-sized businesses, including improved financial health and streamlined cash-flow management. Hiring a fractional CFO provides the perfect balance between improving efficiency in your financial operations and gaining access to a financial expert without breaking the bank.</p>
 <p>Fractional CFOs are the perfect solution for small or newly established businesses because they provide invaluable financial experience without the price tag of a full-time CFO. Fractional CFOs work with businesses on a part-time or hourly basis to fit their budgets and specific needs.</p>
