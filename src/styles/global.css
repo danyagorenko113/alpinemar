@@ -71,7 +71,9 @@
     scroll-behavior: smooth;
     color-scheme: light;
     max-width: 100%;
-    overflow-x: hidden;
+    /* clip (not hidden) prevents horizontal overflow without creating a
+       scroll container — so the sticky header keeps working. */
+    overflow-x: clip;
   }
 
   body {
@@ -83,7 +85,9 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     max-width: 100%;
-    overflow-x: hidden;
+    /* clip (not hidden) prevents horizontal overflow without creating a
+       scroll container — so the sticky header keeps working. */
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {
