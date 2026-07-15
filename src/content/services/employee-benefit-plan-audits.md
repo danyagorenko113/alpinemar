@@ -5,7 +5,7 @@ path: "/services/audit-attestation-services/employee-benefit-plan-audits/"
 summary: "401(k) and benefit plan audits under DOL rules, done by a team that does them all year. A niche audit you don't want a generalist for."
 cover: "/images/services/employee-benefit-plan-audits.jpg"
 industries: ["healthcare-accounting-services", "construction-cpa-services", "law-firm-accounting-services"]
-group: Compliance
+group: "Audit & Attestation"
 seo:
   title: "Employee Benefit Plan Audits | Alpine Mar"
   description: "Our expert employee benefit plan auditors keep your company compliant, minimize risk, and help you build trust with your employees."

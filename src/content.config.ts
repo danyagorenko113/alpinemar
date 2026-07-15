@@ -39,7 +39,7 @@ const services = defineCollection({
     coverAlt: z.string().optional(),
     order: z.number().default(0),
     /** Optional category — when set, drives the hero outline numeral & related cross-links. */
-    group: z.enum(['Tax', 'Accounting', 'Advisory', 'Compliance']).optional(),
+    group: z.enum(['Tax', 'Accounting', 'Advisory', 'Compliance', 'Audit & Attestation']).optional(),
     /** Section visibility + order for the detail page. Omit for the default
      *  full layout; when set, only the listed sections render, in order. */
     sections: z

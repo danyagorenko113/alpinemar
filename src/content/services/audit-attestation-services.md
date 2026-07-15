@@ -4,7 +4,7 @@ heroTitle: "For when \"pretty sure\" isn't good enough."
 path: "/services/audit-attestation-services/"
 summary: "Independent audit and assurance that makes your numbers credible. The verification investors, lenders, and regulators trust."
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services", "law-firm-accounting-services"]
-group: Compliance
+group: "Audit & Attestation"
 seo:
   title: "Professional Audit & Attestation Services | Alpine Mar"
   description: "Our attestation services provide a professional audit of financial statements and internal controls, and validate compliance."

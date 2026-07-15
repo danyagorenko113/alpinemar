@@ -6,6 +6,7 @@
 export const serviceMenu = [
   {
     label: 'Tax',
+    href: '/services/tax-advisory-and-compliance/',
     icon: 'trending-up',
     blurb: 'Year-round planning + preparation across federal, state, and multi-jurisdictional tax.',
     items: [
@@ -26,6 +27,7 @@ export const serviceMenu = [
   },
   {
     label: 'Accounting',
+    href: '/services/business-accounting/',
     icon: 'calculator',
     blurb: 'A full back office — books, close, and reporting kept clean and current.',
     items: [
@@ -39,6 +41,7 @@ export const serviceMenu = [
   },
   {
     label: 'Advisory',
+    href: '/services/financial-advisory/',
     icon: 'repeat',
     blurb: 'CFO-level guidance for hires, raises, models, and big decisions.',
     items: [
@@ -50,6 +53,7 @@ export const serviceMenu = [
   },
   {
     label: 'Compliance',
+    href: '/services/financial-compliance/',
     icon: 'shield-check',
     blurb: 'Structure, filings, and payroll — kept current with shifting rules.',
     items: [
@@ -61,6 +65,7 @@ export const serviceMenu = [
   },
   {
     label: 'Audit & Attestation',
+    href: '/services/audit-attestation-services/',
     icon: 'file-text',
     blurb: 'Independent verification for investors, lenders, and regulators.',
     items: [
@@ -71,6 +76,12 @@ export const serviceMenu = [
     ],
   },
 ] as const;
+
+// Category label → its parent service landing page. Mirrors the live site so
+// nav headers and breadcrumbs point at the real category page (not /services/).
+export const serviceGroupParent: Record<string, string> = Object.fromEntries(
+  serviceMenu.map((g) => [g.label, g.href]),
+);
 
 export const industryMenu = [
   { name: 'Construction', href: '/industries/construction-cpa-services/', icon: 'building', desc: 'Job costing, retainage, surety bonds' },

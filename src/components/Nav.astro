@@ -102,7 +102,7 @@ const popularServices = [
       <div class="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
         {serviceMenu.map((group) => (
           <div class="flex flex-col rounded-[6px] border border-line bg-white p-5 transition-colors hover:border-[#12122D]">
-            <a href="/services/" class="flex items-baseline gap-2">
+            <a href={group.href} class="flex items-baseline gap-2">
               <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
             </a>
             <p class="mt-3 line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{group.blurb}</p>
@@ -204,7 +204,7 @@ const popularServices = [
         <div class="pb-5">
           {serviceMenu.map((group) => (
             <div class="mt-5 first:mt-3">
-              <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
+              <a href={group.href} class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter transition-colors hover:text-[#12122D]">{group.label}</a>
               {/* All service links rendered directly — no collapse — so every
                   page is in the crawlable markup and visible without a click. */}
               <ul class="mt-3 space-y-2 border-l border-line pl-4">

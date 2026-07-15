@@ -5,7 +5,7 @@ path: "/services/audit-attestation-services/financial-statement-audits/"
 summary: "Full GAAP and IFRS audits, run by a team that's thorough without being painful. Credibility you can hand to anyone."
 cover: "/images/services/financial-statement-audits.jpg"
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services"]
-group: Compliance
+group: "Audit & Attestation"
 seo:
   title: "Financial Statement Audit Services | Alpine Mar"
   description: "Expert financial statement audit services to give you full confidence when reporting to investors, banks, and other stakeholders."

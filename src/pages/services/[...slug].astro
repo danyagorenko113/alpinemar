@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { allServices, industries as industryList } from '@/data/taxonomy';
+import { serviceGroupParent } from '@/data/navigation';
 import { serviceSchema, breadcrumb } from '@/data/schema';
 import { googleReviews } from '@/data/googleReviews';
 
@@ -24,7 +25,14 @@ const coverSrc = service.data.cover ?? heroImage;
 
 const taxonomyEntry = allServices.find((x) => x.href === service.data.path);
 const group = (service.data.group ?? taxonomyEntry?.group) as
-  | 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | undefined;
+  | 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | 'Audit & Attestation' | undefined;
+
+// Breadcrumb parent = the category's landing page (mirrors the live site).
+// When the current page *is* that landing page, drop the group crumb so it
+// doesn't link to itself.
+const groupParentHref = group ? serviceGroupParent[group] : undefined;
+const isCategoryLanding = groupParentHref === service.data.path;
+const showGroupCrumb = Boolean(group && groupParentHref && !isCategoryLanding);
 
 // Siblings within the same category
 const siblings = group
@@ -96,6 +104,7 @@ const schema = [
   breadcrumb([
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services/' },
+    ...(showGroupCrumb ? [{ name: group as string, path: groupParentHref as string }] : []),
     { name: service.data.title, path: service.data.path },
   ]),
 ];
@@ -120,9 +129,9 @@ const schema = [
             <li><a href="/" class="transition-colors hover:text-scooter">Home</a></li>
             <li aria-hidden="true" class="opacity-55">/</li>
             <li><a href="/services/" class="transition-colors hover:text-scooter">Services</a></li>
-            {group && (<>
+            {showGroupCrumb && (<>
               <li aria-hidden="true" class="opacity-55">/</li>
-              <li><a href="/services/" class="transition-colors hover:text-scooter">{group}</a></li>
+              <li><a href={groupParentHref} class="transition-colors hover:text-scooter">{group}</a></li>
             </>)}
             <li aria-hidden="true" class="hidden opacity-55 sm:inline">/</li>
             <li aria-current="page" class="hidden max-w-[36ch] truncate font-medium sm:inline">{service.data.title}</li>

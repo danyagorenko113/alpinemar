@@ -5,7 +5,7 @@ path: "/services/audit-attestation-services/reviews-compilations/"
 summary: "Limited-assurance reviews and agreed-upon procedures, when a full audit is more than you need. Right-sized credibility."
 cover: "/images/services/reviews-compilations.jpg"
 industries: ["saas-accounting-services", "marketing-agency-accounting-services", "law-firm-accounting-services", "startup-cpa-services"]
-group: Compliance
+group: "Audit & Attestation"
 seo:
   title: "Reviews & Compilations"
   description: "Reviews & Compilations 
