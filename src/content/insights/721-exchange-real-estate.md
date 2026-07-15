@@ -2,7 +2,7 @@
 title: "What Is a 721 Exchange in Real Estate?"
 date: 2024-10-23
 updated: '2026-02-26T12:25:26Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "A 721 exchange allows real estate investors to defer capital gains taxes by exchanging property for operating partnership (OP) units in an Umbrella Partnership Real Estate Investment Trust (UPREIT)."
 cover: "/images/blog/721-exchange-real-estate.jpg"

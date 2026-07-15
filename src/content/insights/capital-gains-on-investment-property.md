@@ -2,7 +2,7 @@
 title: "Investment Property Capital Gains Strategies"
 date: 2025-04-29
 updated: '2025-07-15T17:43:31Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Selling an investment property often triggers a hefty tax bill—especially if you don’t plan ahead. Between federal, state, and depreciation recapture taxes, a large chunk of your profit may go to the IRS."
 cover: "/images/blog/capital-gains-on-investment-property.jpg"

@@ -2,7 +2,7 @@
 title: "S Corp vs LLC – Which is the Right Entity for You?"
 date: 2023-10-23
 updated: '2023-12-22T16:50:22Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "When starting a business, one of the crucial decisions you’ll face is choosing the right legal structure for your company, and two popular options for entrepreneurs and small business owners are S corporations (S corps) and limited liability companies (LLCs)."
 cover: "/images/blog/s-corp-vs-llc-business-structure.jpg"

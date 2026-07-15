@@ -2,7 +2,7 @@
 title: "Tax Considerations With Stock Options for Employees"
 date: 2025-06-17
 updated: '2025-09-11T16:27:48Z'
-author: "The Alpine Mar editorial team"
+author: "Kirill Reznik, CPA"
 category: "Taxes"
 excerpt: "Stock options potentially boost wealth but come with complex tax rules. The type of option you have, when you exercise it, and how long you hold the shares all shape your tax bill. Knowing these basics helps you avoid surprises and keep more of your gains."
 cover: "/images/blog/stock-options-tax-guide.jpg"

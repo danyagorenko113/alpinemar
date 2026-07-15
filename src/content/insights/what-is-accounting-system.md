@@ -2,7 +2,7 @@
 title: "What Is an Accounting System?"
 date: 2023-11-07
 updated: '2025-04-10T18:32:05Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "An accounting system provides the framework for managing the financial activities of a business, encompassing income, expenses, and various other financial transactions."
 cover: "/images/blog/what-is-accounting-system.jpg"

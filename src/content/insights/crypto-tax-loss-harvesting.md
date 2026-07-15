@@ -2,7 +2,7 @@
 title: "Crypto Tax-Loss Harvesting Guide"
 date: 2025-03-27
 updated: '2026-02-05T12:04:08Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Crypto tax-loss harvesting is a strategy in which investors sell cryptocurrency assets at a loss to offset capital gains and reduce taxable income. Crypto’s volatility creates both opportunities and risks."
 cover: "/images/blog/crypto-tax-loss-harvesting.jpg"

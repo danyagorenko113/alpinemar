@@ -2,7 +2,7 @@
 title: "DeFi Taxes & How to Report Them"
 date: 2025-10-09
 updated: '2026-02-05T11:58:31Z'
-author: "The Alpine Mar editorial team"
+author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "DeFi taxes are a rapidly evolving area of cryptocurrency regulation. DeFi, or decentralized finance, refers to blockchain-based financial services like lending, trading, and staking. It is often conducted across multiple wallets and platforms without intermediaries."
 cover: "/images/blog/defi-taxes.jpg"

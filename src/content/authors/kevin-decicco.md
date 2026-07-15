@@ -7,4 +7,4 @@ order: 5
 status: "published"
 ---
 
-Kevin DeCicco is a COO & Managing Tax Partner at Alpine Mar.
+Kevin DeCicco, CPA, is Managing Tax Partner and COO at Alpine Mar. Since beginning his career in 2010, he has developed deep expertise in tax structuring, compliance, and complex tax matters, specializing in serving middle-market companies, privately held businesses, high-net-worth individuals, and their families.

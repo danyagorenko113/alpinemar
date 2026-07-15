@@ -2,7 +2,7 @@
 title: "What Is the Jock Tax?"
 date: 2025-08-27
 updated: '2025-09-16T12:10:06Z'
-author: "The Alpine Mar editorial team"
+author: "Kevin DeCicco, CPA"
 category: "Taxes"
 excerpt: "The jock tax is a unique state income tax rule that requires workers to pay taxes in every state where they earn money—even if they don’t live there."
 cover: "/images/blog/jock-tax-explained.jpg"

@@ -2,7 +2,7 @@
 title: "Unfiled Cryptocurrency Taxes: Consequences & Solutions"
 date: 2025-11-25
 updated: '2026-01-13T19:07:00Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "“What happens if you don’t report cryptocurrency on taxes?” is a crucial question for any trader or small business involved in crypto. Whether you trade Bitcoin, stake Ethereum, or earn crypto income, unreported activity opens you up to the risk of steep fines and even criminal…"
 cover: "/images/blog/unfiled-cryptocurrency-tax-consequences.jpg"

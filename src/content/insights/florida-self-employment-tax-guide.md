@@ -2,7 +2,7 @@
 title: "Guide to Florida Self-Employed Taxes for SMB Owners"
 date: 2024-01-09
 updated: '2024-10-21T11:10:32Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Florida Accounting & Taxes"
 excerpt: "Understanding how the Florida self-employment tax works for small and midsize business (SMB) owners in the state is one of the many considerations to take into account when opening a new business."
 cover: "/images/blog/florida-self-employment-tax-guide.jpg"

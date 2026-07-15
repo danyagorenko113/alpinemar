@@ -2,7 +2,7 @@
 title: "Taxes for Flipping Houses"
 date: 2024-09-23
 updated: '2025-07-30T11:32:30Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Flipping houses offers the potential for quick profits, but those profits come with tax implications that every house flipper must understand."
 cover: "/images/blog/taxes-for-flipping-houses.jpg"

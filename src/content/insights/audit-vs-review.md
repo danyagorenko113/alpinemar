@@ -2,7 +2,7 @@
 title: "Audit vs Review – Differences Explained"
 date: 2025-06-27
 updated: '2025-10-30T10:19:36Z'
-author: "The Alpine Mar editorial team"
+author: "Derby Norvilus"
 category: "Assurance"
 excerpt: "Businesses often need third-party assurance to meet lender, investor, or regulatory expectations. The two most common options—audits and reviews—offer different levels of scrutiny and credibility."
 cover: "/images/blog/audit-vs-review.jpg"

@@ -2,7 +2,7 @@
 title: "ISOs vs NSOs: Important Tax Implications to Know"
 date: 2025-06-05
 updated: '2025-09-11T16:49:32Z'
-author: "The Alpine Mar editorial team"
+author: "Kirill Reznik, CPA"
 category: "Taxes"
 excerpt: "Stock options reward employees and key contributors by granting them the right to buy company shares at a fixed price. The two main types—Incentive Stock Options (ISOs) and Non-Qualified Stock Options (NSOs)—have different tax treatments and rules."
 cover: "/images/blog/iso-vs-nso-taxes.jpg"

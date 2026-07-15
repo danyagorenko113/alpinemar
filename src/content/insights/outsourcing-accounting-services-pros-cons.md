@@ -2,7 +2,7 @@
 title: "Pros and Cons of Outsourcing Accounting Services"
 date: 2023-11-15
 updated: '2025-04-10T18:30:41Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "Many smaller businesses are opting for outsourced accounting services and enjoying the advantages that were once exclusive to mid-market and large enterprises."
 cover: "/images/blog/outsourcing-accounting-services-pros-cons.jpg"

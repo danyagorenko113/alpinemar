@@ -2,7 +2,7 @@
 title: "8 Must-Know Tax Implications of Selling a Business"
 date: 2025-04-07
 updated: '2025-09-16T17:13:34Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "Selling a business triggers federal capital gains tax, ordinary income tax, and potentially steep state income taxes. However, with the right planning, you can reduce or defer capital gains and keep more of your net proceeds."
 cover: "/images/blog/tax-implications-of-selling-business.jpg"

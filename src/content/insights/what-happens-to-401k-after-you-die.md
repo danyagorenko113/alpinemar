@@ -2,7 +2,7 @@
 title: "What Happens to Your 401(k) When You Die?"
 date: 2026-04-09
 updated: '2026-05-27T13:57:41Z'
-author: "The Alpine Mar editorial team"
+author: "Kevin DeCicco, CPA"
 category: "Resources"
 excerpt: "Your 401(k) transfers to your heirs according to the beneficiary forms you filed with your employer rather than the instructions in your last will and testament."
 cover: "/images/blog/what-happens-to-401k-after-you-die.jpg"

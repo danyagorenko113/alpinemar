@@ -2,7 +2,7 @@
 title: "How to Optimize Cash Burn Rate for a Longer Runway"
 date: 2026-05-21
 updated: '2026-05-28T15:05:20Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Startup Accounting & Taxes"
 excerpt: "Cash burn rate determines a startup’s operational lifespan. Precise tracking allows founders to extend their runway, secure investor confidence, and leverage 2026 tax provisions to preserve essential capital."
 cover: "/images/blog/cash-burn-rate-gross-vs-net-burn.jpg"

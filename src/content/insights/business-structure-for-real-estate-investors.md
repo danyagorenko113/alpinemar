@@ -2,7 +2,7 @@
 title: "Best Business Structure for Real Estate Investors"
 date: 2024-06-05
 updated: '2025-07-30T11:46:33Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structure for real estate investors is generally a limited liability company (LLC) because it offers liability protection, tax flexibility, and ease of management."
 cover: "/images/blog/business-structure-for-real-estate-investors.jpg"

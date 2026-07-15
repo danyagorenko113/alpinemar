@@ -2,7 +2,7 @@
 title: "GAAP Audit"
 date: 2025-10-17
 updated: '2025-10-29T16:43:57Z'
-author: "The Alpine Mar editorial team"
+author: "Derby Norvilus"
 category: "Accounting"
 excerpt: "A GAAP audit is a critical process used to verify that a company’s processes align with generally accepted accounting principles (GAAP) when preparing financial statements. This type of audit ensures transparency, accuracy, and compliance in financial reporting."
 cover: "/images/blog/gaap-audit-explained.jpg"

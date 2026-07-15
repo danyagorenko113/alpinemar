@@ -2,7 +2,7 @@
 title: "Rippling vs Gusto for Payroll Compared"
 date: 2025-02-17
 updated: '2026-03-05T16:56:32Z'
-author: "The Alpine Mar editorial team"
+author: "Pablo Martell, CPA"
 category: "Payroll"
 excerpt: "Rippling and Gusto are leading payroll and HR platforms that cater to different business needs. The main difference between Gusto and Rippling is that Gusto is designed for small to midsize businesses needing simple payroll and HR solutions, while Rippling offers a highly…"
 cover: "/images/blog/rippling-vs-gusto-review.jpg"

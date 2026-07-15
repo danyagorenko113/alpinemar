@@ -2,7 +2,7 @@
 title: "Budget vs Actual and Why It Matters"
 date: 2025-10-03
 updated: '2025-10-29T16:29:35Z'
-author: "The Alpine Mar editorial team"
+author: "Emily Bradey"
 category: "Accounting"
 excerpt: "Budget vs actual analysis is a key financial tool that compares project figures to real-world results. It helps businesses understand where plans align or diverge from reality."
 cover: "/images/blog/budget-vs-actual.jpg"
