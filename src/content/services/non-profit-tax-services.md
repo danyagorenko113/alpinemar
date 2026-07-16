@@ -7,11 +7,7 @@ industries: ["healthcare-accounting-services"]
 group: Tax
 seo:
   title: "Non-Profit Tax Services"
-  description: "Non-Profit Tax Services   
-Supporting mission-driven organizations
-Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability. Alpine Mar partners with mission-driven organizations to provide reliable tax guidance that supports transparency and sustainability.
-
-We understand the operational and reporting challenges non-profits face and"
+  description: "Non-Profit Tax Services Supporting mission-driven organizations Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability. Alpine Mar partners with mission-driven organizations to provide reliable tax guidance that supports transparency and sustainability. We understand the operational and reporting challenges non-profits face and"
 ---
 <h2>Supporting mission-driven organizations</h2>
 <p>Non-profit organizations face unique tax and compliance requirements while balancing limited resources and public accountability. Alpine Mar partners with mission-driven organizations to provide reliable tax guidance that supports transparency and sustainability.</p>

@@ -8,6 +8,9 @@ excerpt: "Individuals who hold qualified small business stock (QSBS) may be elig
 cover: "/images/blog/qualified-small-business-stock-qsbs.jpg"
 tags:
   - "qualified small business stock; QSBS"
+seo:
+  description: "Learn what qualified small business stock (QSBS) is, which companies are eligible to issue QSBS, how to acquire and sell it, and the benefits of owning QSBS."
+  title: "Qualified Small Business Stock Overview"
 ---
 <p>Individuals who hold qualified small business stock (QSBS) may be eligible for significant savings on their capital gains tax liability. This is because they can receive up to a 100% exemption on federal gains taxes up to ten times their initial investment or up to a value of $10 million—whichever is greater.</p>
 <p>Knowing how to use this tax advantage can have a substantial impact on your finances. Savvy investors should inform themselves about the potential benefits of holding QSBS and how to maximize the benefits of the QSBS tax exemption.</p>

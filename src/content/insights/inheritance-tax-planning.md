@@ -8,6 +8,9 @@ excerpt: "Inheritance tax planning is the process of preparing for taxes that ap
 cover: "/images/blog/inheritance-tax-planning.jpg"
 tags:
   - "inheritance tax planning"
+seo:
+  description: "Strategic inheritance tax planning prevents heirs from receiving large, unexpected bills. See which taxes apply, exemptions, and how to reduce tax liability."
+  title: "Inheritance Tax Planning to Reduce Beneficiary’s Exposure"
 ---
 <p>Inheritance tax planning is the process of preparing for taxes that apply in some states when someone receives assets after a death. It focuses on reducing tax exposure for beneficiaries and ensuring assets pass as intended. The financial consequences of poor inheritance tax planning fall directly on beneficiaries.</p>
 <h2>Why Does Inheritance Tax Planning Matter?</h2>

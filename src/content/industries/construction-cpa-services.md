@@ -6,7 +6,7 @@ summary: "Job costing, retainage, and surety bonds, handled by a team that knows
 cover: "/images/industries/construction.jpg"
 seo:
  title: "Construction CPA & Accounting Services | Alpine Mar"
- description: "Construction CPA Services. When you're a construction company owner, you understand the unique financial challenges that come with the territory. Accurate financial statements, compliance with tax regulations, managing costs, and ensuring a healthy cash flow are paramount to your success. This is where Alpine Mar, the trusted name in construction accounting,"
+ description: "Our expert construction CPA services ensure accurate financial statements, compliance with tax regulations, and a healthy cash flow."
 services: ["corporate-tax-services", "s-corp-cpa-services", "small-business-tax-services", "multistate-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "audit-attestation-services", "financial-statement-audits", "employee-benefit-plan-audits"]
 ---
 <p>When you're a construction company owner, you understand the unique financial challenges that come with the territory. Accurate financial statements, compliance with tax regulations, managing costs, and ensuring a healthy cash flow are paramount to your success. This is where Alpine Mar, the trusted name in construction accounting, excels at the job.</p>

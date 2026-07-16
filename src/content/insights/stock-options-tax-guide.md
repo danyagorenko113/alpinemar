@@ -8,6 +8,9 @@ excerpt: "Stock options potentially boost wealth but come with complex tax rules
 cover: "/images/blog/stock-options-tax-guide.jpg"
 tags:
   - "how are stock options taxed"
+seo:
+  description: "Understand the tax consequences of exercising stock options, strategies for maximizing profits, and essential tax forms to fill out and file."
+  title: "How Stock Options Are Taxed for Employees & Contributors"
 ---
 <p>Stock options potentially boost wealth but come with complex tax rules. The type of option you have, when you exercise it, and how long you hold the shares all shape your tax bill. Knowing these basics helps you avoid surprises and keep more of your gains.</p>
 <h2>Types of Stock Options</h2>

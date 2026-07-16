@@ -8,6 +8,9 @@ excerpt: "Selling an investment property often triggers a hefty tax bill—espec
 cover: "/images/blog/capital-gains-on-investment-property.jpg"
 tags:
   - "capital gains on investment property"
+seo:
+  description: "Understand how capital gains taxes on investment properties work and learn effective strategies for reducing or eliminating them."
+  title: "Capital Gains on Investment Property - How to Pay Less in Taxes"
 ---
 <p>Selling an investment property often triggers a hefty tax bill—especially if you don’t plan ahead. Between federal, state, and depreciation recapture taxes, a large chunk of your profit may go to the IRS.</p>
 <p>Learning how capital gains taxes work on real estate can help you reduce the amount you owe. With smart planning, it is often possible to keep more of your gains and avoid costly surprises at tax time.</p>

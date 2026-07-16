@@ -8,6 +8,9 @@ excerpt: "You need a comprehensive set of documents to sell your business. These
 cover: "/images/blog/documents-required-for-business-sale.jpg"
 tags:
   - "documents needed to sell a business"
+seo:
+  description: "Documentation needed to sell a business includes financial, tax, legal, operational records and two must-have documents to maximize value."
+  title: "Key Documents Required to Sell a Business"
 ---
 <p>You need a comprehensive set of documents to sell your business. These records prove your company&#8217;s value, build buyer trust, and keep the sale process on track. When everything is organized, the due diligence process goes faster and you avoid last-minute headaches.</p>
 <h2>Financial Documents</h2>

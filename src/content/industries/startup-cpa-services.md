@@ -6,7 +6,7 @@ summary: "Runway, fundraise prep, and modeling for founders. A finance team that
 cover: "/images/industries/startups.jpg"
 seo:
  title: "CPA Services for Startups | Alpine Mar"
- description: "Startup CPA services — bookkeeping, financial modeling, fundraise prep, R&D credits, and fractional CFO support from pre-seed through Series C."
+ description: "Growth-oriented CPA services for startups, focusing on raising capital, financial management, tax planning and compliance."
 services: ["tax-advisory-and-compliance", "corporate-tax-services", "financial-statement-preparation-services", "accounting-software-implementation", "fractional-cfo-services", "transaction-advisory-services", "financial-modeling-services", "reviews-compilations", "tax-planning-services"]
 ---
 <p>CPA services for startups provide essential financial management, strategic planning, and accounting expertise to support new and growing businesses. At Alpine Mar, our startup certified public accountant services are designed to help early-stage and high-growth companies establish solid financial foundations, streamline operations, and prepare for scalable growth.</p>

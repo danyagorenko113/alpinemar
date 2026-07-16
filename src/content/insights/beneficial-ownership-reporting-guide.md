@@ -8,6 +8,9 @@ excerpt: "In 2021, Congress enacted the Corporate Transparency Act (CTA), mandat
 cover: "/images/blog/beneficial-ownership-reporting-guide.jpg"
 tags:
   - "beneficial ownership reporting"
+seo:
+  description: "Learn about beneficial ownership reporting. Who must comply, what information is required, key deadlines, how to avoid penalties, and more."
+  title: "Beneficial Ownership Reporting: Key Details & Deadlines"
 ---
 <p>In 2021, Congress enacted the Corporate Transparency Act (CTA), mandating that companies report their beneficial ownership information (BOI) to the Financial Crimes Enforcement Network (FinCEN). Starting January 1, 2024, non-exempt business entities must comply with this requirement.</p>
 <p>This guide details who needs to report, what information is required, and key compliance deadlines. Understanding these aspects is crucial for avoiding penalties and ensuring adherence to the new regulations.</p>

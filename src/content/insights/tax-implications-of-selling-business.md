@@ -8,6 +8,9 @@ excerpt: "Selling a business triggers federal capital gains tax, ordinary income
 cover: "/images/blog/tax-implications-of-selling-business.jpg"
 tags:
   - "tax implications of selling a business"
+seo:
+  description: "Dive into the tax implications of selling a business depending on how the sale is structured, your entity type, goodwill considerations, and more."
+  title: "8 Must-Know Tax Implications of Selling a Business"
 ---
 <p>Selling a business triggers federal capital gains tax, ordinary income tax, and potentially steep state income taxes. However, with the right planning, you can reduce or defer capital gains and keep more of your net proceeds.</p>
 <h2>1. The Sale Structure Determines Your Tax Liability</h2>

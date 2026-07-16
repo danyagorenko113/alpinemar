@@ -8,6 +8,9 @@ excerpt: "If you’re launching a VC-backed startup, chances are you’ll organi
 cover: "/images/blog/startup-tax-guide.jpg"
 tags:
   - "startup taxes"
+seo:
+  description: "Get an insider view of startup taxes for VC-backed businesses, including fundraising strategies, equity compensation, stock options, and hiring internationally."
+  title: "VC-Backed Startup Taxes: Insights Every Founder Should Know"
 ---
 <p>If you’re launching a VC-backed startup, chances are you’ll organize as a C corporation. Investors prefer this structure because it offers flexibility and some tax advantages, but it also comes with rules you should understand early on. Knowing how VC-backed startups get taxed will save you from surprises and costly mistakes down the road.</p>
 <h2>Federal Tax Treatment of C-Corporations</h2>

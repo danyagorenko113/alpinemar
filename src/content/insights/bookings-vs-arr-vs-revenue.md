@@ -8,6 +8,9 @@ excerpt: "Understanding bookings vs ARR vs revenue is key to making smart decisi
 cover: "/images/blog/bookings-vs-arr-vs-revenue.jpg"
 tags:
   - "bookings vs arr vs revenue"
+seo:
+  description: "Learn the difference between bookings, ARR, and revenue in SaaS finance, what these metrics tell you, and why you should never confuse them."
+  title: "Bookings vs ARR vs Revenue in SaaS Finance"
 ---
 <p>Understanding bookings vs ARR vs revenue is key to making smart decisions in SaaS finance. These terms may sound similar, but each metric tells a very different story about your business.</p>
 <h2>What Are Bookings in SaaS?</h2>

@@ -6,7 +6,7 @@ summary: "Integrated tax and estate planning for significant wealth. We analyze 
 cover: "/images/industries/high-net-worth.jpg"
 seo:
  title: "High Net Worth Accounting & CPA Services"
- description: "High Net Worth Accounting & CPA Services. Expertise for Your Financial Success. At Alpine Mar, we understand that high net worth individuals require a unique level of financial expertise and personalized service. Our team of dedicated high net worth tax accountants specializes in serving clients with substantial wealth and"
+ description: "Our team of CPAs and high net worth accountants specializes in serving clients with substantial wealth and complex financial situations."
 services: ["tax-advisory-and-compliance", "individual-tax-services", "estate-trust-tax-planning", "private-client-services", "international-tax-services", "fractional-cfo-services", "tax-planning-services", "business-tax", "outsourced-accounting-services"]
 ---
 <h2>Expertise for Your Financial Success</h2>

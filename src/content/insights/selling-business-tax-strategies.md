@@ -8,6 +8,9 @@ excerpt: "Selling your business isn’t just about the sale price, it’s about 
 cover: "/images/blog/selling-business-tax-strategies.jpg"
 tags:
   - "selling a business tax strategies"
+seo:
+  description: "Reduce and defer taxes when selling your business with tax strategies like stock sales, QSBS exclusions, installment sales, trusts, QOFs, and wealth transfers."
+  title: "Top Tax Strategies When Selling a Business"
 ---
 <p>Selling your business isn’t just about the sale price, it’s about what you keep after taxes. The IRS may treat parts of your proceeds as capital gains and others as ordinary income. State taxes and depreciation recapture can shrink your profit even more.</p>
 <p>Early tax planning is key to preserving your profit!</p>

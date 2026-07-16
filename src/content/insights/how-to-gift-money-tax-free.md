@@ -8,6 +8,9 @@ excerpt: "The Internal Revenue Service (IRS) allows certain gifts to be made tax
 cover: "/images/blog/how-to-gift-money-tax-free.jpg"
 tags:
   - "how to gift money tax free"
+seo:
+  description: "Learn how much you can gift tax-free, methods for making larger gifts without paying taxes, and gift types to which taxation never applies."
+  title: "How to Gift Money Tax-Free in the United States"
 ---
 <p>The Internal Revenue Service (IRS) allows certain gifts to be made tax-free when specific requirements are met. Understanding how these rules work and planning ahead ensures your gifts support others without triggering unexpected taxes.</p>
 <h2>Step 1: Know What Counts as a Gift</h2>

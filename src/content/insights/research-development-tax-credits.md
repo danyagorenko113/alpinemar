@@ -8,6 +8,9 @@ excerpt: "The research and development tax credit is a federal government incent
 cover: "/images/blog/research-development-tax-credits.jpg"
 tags:
   - "r d tax credits"
+seo:
+  description: "Find out what you must know about the research and development tax credits in the United States to help your startup company save."
+  title: "R&D Tax Credits (Guide for 2026)"
 ---
 <p>The research and development tax credit is a federal government incentive. It provides a dollar-for-dollar tax reduction for companies developing new or improved products, processes, or software in the United States. For startups, this is an important way to reduce federal income tax liability.</p>
 <h2>The Four-Part Test to Qualify for the R&amp;D Tax Credit</h2>

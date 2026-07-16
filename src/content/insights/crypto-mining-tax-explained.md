@@ -8,6 +8,9 @@ excerpt: "Mining rewards may feel like passive earnings, but they come with real
 cover: "/images/blog/crypto-mining-tax-explained.jpg"
 tags:
   - "crypto mining tax"
+seo:
+  description: "Understand crypto mining taxes, including capital gains and losses, hobby vs business mining, and how to maximize your mining deductions."
+  title: "Crypto Mining Taxes - Investors’ Guide for 2025"
 ---
 <p>Mining rewards may feel like passive earnings, but they come with real tax consequences. From recordkeeping and income reporting to deductions and taxes, there’s a lot to track. Here&#8217;s what you need to know in 2025 to stay compliant.</p>
 <h2>How Crypto Mining Is Taxed</h2>

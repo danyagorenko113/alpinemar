@@ -8,6 +8,9 @@ excerpt: "Pre-seed valuations are the estimated value of a startup before it has
 cover: "/images/blog/startup-pre-seed-valuations.jpg"
 tags:
   - "pre seed valuations"
+seo:
+  description: "Find out everything you need to know about pre-seed valuations for new companies with example calculations and the valuation trap explained."
+  title: "Pre-Seed Valuations for Startups (updated for 2026)"
 ---
 <p>Pre-seed valuations are the estimated value of a startup before it has a full product or steady revenue. At this stage, your worth is based on your team&#8217;s skills and the problem you are solving, instead of sales. Setting a fair price today is vital because it determines how much of the company you keep and how venture capital firms will view your progress in the future.</p>
 <h2>What Is a Good Pre-Seed Valuation?</h2>

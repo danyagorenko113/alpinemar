@@ -8,6 +8,9 @@ excerpt: "Amortizing startup costs is the process of spreading your initial busi
 cover: "/images/blog/amortizing-startup-cost.jpg"
 tags:
   - "amortizing startup costs"
+seo:
+  description: "Learn when VC-backed companies must amortize their startup costs, tax-recovery timelines, and when it’s more beneficial to amortize than deduct."
+  title: "Amortizing Startup Costs for VC-Backed Startups"
 ---
 <p>Amortizing startup costs is the process of spreading your initial business expenses over a 15-year period for tax recovery. Most companies deduct up to $5,000 of these costs immediately on their first tax return. This benefit disappears dollar-for-dollar if your total spending exceeds $50,000. Any remaining costs must be capitalized and written off using the straight-line method over 180 months to preserve deductions for future profitable years.</p>
 <h2>How the IRS Defines Amortization for New Businesses</h2>

@@ -8,6 +8,9 @@ excerpt: "One key tax rule that every real estate investor should be familiar wi
 cover: "/images/blog/passive-activity-loss-rule.jpg"
 tags:
   - "passive activity loss rule"
+seo:
+  description: "Learn the passive activity loss rule, how it applies to real estate investors, and how much you can claim against passive & non-passive income."
+  title: "Passive Activity Loss Rule for Real Estate Investors"
 ---
 <p>One key tax rule that every real estate investor should be familiar with is the <strong>passive activity loss rule</strong>. This rule has become particularly pertinent due to the growing prevalence of Florida-based short-term rentals on platforms like Airbnb and Vrbo®.</p>
 <p>The passive activity loss rule dictates how you report income and losses from real estate investments, significantly influencing your overall tax liability. It is important that you understand the intricacies of this rule, its impact on real estate investments, and strategies to make it work in your favor.</p>

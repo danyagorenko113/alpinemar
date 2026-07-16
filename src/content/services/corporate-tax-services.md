@@ -7,11 +7,7 @@ industries: ["saas-accounting-services", "startup-cpa-services", "healthcare-acc
 group: Tax
 seo:
   title: "Corporate Tax Services"
-  description: "Corporate Tax Services   
-Strategic tax planning for growing companies
-Corporate tax compliance and planning play a critical role in overall business strategy. Alpine Mar helps corporations navigate complex tax requirements while identifying opportunities to improve tax efficiency and support long-term growth.
-
-We work closely with leadership teams to ensure tax decisions"
+  description: "Corporate Tax Services Strategic tax planning for growing companies Corporate tax compliance and planning play a critical role in overall business strategy. Alpine Mar helps corporations navigate complex tax requirements while identifying opportunities to improve tax efficiency and support long-term growth. We work closely with leadership teams to ensure tax decisions"
 ---
 <h2>Strategic tax planning for growing companies</h2>
 <p>Corporate tax compliance and planning play a critical role in overall business strategy. Alpine Mar helps corporations navigate complex tax requirements while identifying opportunities to improve tax efficiency and support long-term growth.</p>

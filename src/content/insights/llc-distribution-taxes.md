@@ -8,6 +8,9 @@ excerpt: "Limited liability company (LLC) distributions are taxed based on your 
 cover: "/images/blog/llc-distribution-taxes.jpg"
 tags:
   - "how are llc distributions taxed"
+seo:
+  description: "Find out how LLC distributions are taxed for single-member and multi-member startup founders, plus tax-rule changes for 2026."
+  title: "How Are LLC Distributions Taxed for Startup Founders?"
 ---
 <p>Limited liability company (LLC) distributions are taxed based on your chosen Internal Revenue Service (IRS) classification. Most founders pay ordinary income tax on their share of the business profits.</p>
 <p>Your business structure determines whether you owe income tax, self-employment tax, or dividend tax. Understanding how the IRS views these payments is the only way to accurately track your cash flow and avoid surprise tax bills.</p>

@@ -8,6 +8,9 @@ excerpt: "People who own capital assets in Florida short-term—for less than a 
 cover: "/images/blog/florida-capital-gains-tax-overview.jpg"
 tags:
   - "florida capital gains tax"
+seo:
+  description: "Find out all you need to know about Florida capital gains tax, how short-term and long-term capital gains taxes differ, and how FL property taxes work."
+  title: "Florida Short-Term Capital Gains Tax Explained"
 ---
 <p>People who own capital assets in Florida short-term—for less than a year—and sell them at a higher price won’t pay any Florida capital gains tax on the profit. However, they will need to pay capital gains tax to the Internal Revenue Service (IRS).</p>
 <p>Because Florida doesn&#8217;t tax personal income, it also doesn&#8217;t tax income from capital gains. This is one of the many fiscal advantages available in the state of Florida and part of the reason why the Sunshine State is so appealing to savvy real estate investors.</p>

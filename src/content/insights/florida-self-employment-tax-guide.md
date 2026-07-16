@@ -8,6 +8,9 @@ excerpt: "Understanding how the Florida self-employment tax works for small and 
 cover: "/images/blog/florida-self-employment-tax-guide.jpg"
 tags:
   - "Florida self-employment tax"
+seo:
+  description: "Learn all you need to know about Florida self-employment tax for SMB owners, who pays it, the threshold limits, and other taxes for FL SMB employers."
+  title: "Guide to Florida Self-Employed Tax for SMB Owners"
 ---
 <p>Understanding how the Florida self-employment tax works for small and midsize business (SMB) owners in the state is one of the many considerations to take into account when opening a new business. The good news for entrepreneurs in Florida is that favorable tax laws make the Sunshine State an appealing place to launch a business or supplement your income with a side hustle.</p>
 <p>Because the state of Florida doesn&#8217;t have a self-employment tax, small and medium-sized business owners only pay self-employment taxes to the IRS. Any worker who earns more than $400 in the tax year but doesn&#8217;t pay withholding taxes via an employer must pay the federal self-employment tax.</p>

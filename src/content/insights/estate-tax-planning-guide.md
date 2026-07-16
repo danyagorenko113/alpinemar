@@ -8,6 +8,9 @@ excerpt: "Estate tax planning is a strategic financial process used to organize 
 cover: "/images/blog/estate-tax-planning-guide.jpg"
 tags:
   - "estate tax planning"
+seo:
+  description: "Our expert CPAs show you how to leave your heirs the largest possible inheritance with professional estate tax planning."
+  title: "Estate Tax Planning Guide for 2026"
 ---
 <p>Estate tax planning is a strategic financial process used to organize your assets and reduce the tax burden on your heirs after you pass away. Without a clear plan, your taxable estate could face a tax rate as high as 40 percent. Proactive strategies protect your family&#8217;s financial security and ensure your assets go to your loved ones instead of the government.</p>
 <h2>What Is Included in Your Taxable Estate</h2>

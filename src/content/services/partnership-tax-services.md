@@ -7,11 +7,7 @@ industries: ["real-estate-cpa-services", "law-firm-accounting-services", "market
 group: Tax
 seo:
   title: "Partnership Tax Services"
-  description: "Partnership Tax Services   
-Clarity and compliance for complex ownership structures
-Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth.
-
-We support partnerships across a wide range of industries, from professional services to real estate and"
+  description: "Partnership Tax Services Clarity and compliance for complex ownership structures Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth. We support partnerships across a wide range of industries, from professional services to real estate and"
 ---
 <h2>Clarity and compliance for complex ownership structures</h2>
 <p>Partnership taxation requires careful coordination between the entity and its partners. Alpine Mar helps partnerships manage compliance requirements while planning for distributions, allocations, and growth.</p>

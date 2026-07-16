@@ -8,6 +8,9 @@ excerpt: "Business losses, to the extent they are active, can offset capital gai
 cover: "/images/blog/offset-capital-gains-with-business-losses.jpg"
 tags:
   - "offsetting capital gains with business losses"
+seo:
+  description: "Learn strategies to leverage your capital losses and business losses to minimize your overall tax liability and ensure compliance with IRS tax rules."
+  title: "How to Offset Capital Gains With Business Losses"
 ---
 <p>Business losses, to the extent they are active, can offset capital gains. Capital gains arise from selling capital assets like stocks, bonds, real estate, or mutual funds at a profit. Being able to offset these gains with business losses offers a great opportunity for tax savings.</p>
 <p>There are several ways to use business losses (including ordinary losses, net operating losses, and capital losses) to offset capital gains dollar for dollar and minimize your tax liability. An expert CPA can guide you through the options and help you maximize your savings.</p>

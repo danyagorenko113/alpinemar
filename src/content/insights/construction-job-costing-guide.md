@@ -8,6 +8,9 @@ excerpt: "Construction job costing is a fundamentally important process used in 
 cover: "/images/blog/construction-job-costing-guide.jpg"
 tags:
   - "construction job costing"
+seo:
+  description: "Learn what construction job costing is, the benefits of costing each job meticulously, costs to include, and tips for improving accuracy."
+  title: "Construction Job Costing - Overview & Tips"
 ---
 <p>Construction job costing is a fundamentally important process used in the construction industry. Construction project managers, estimators, accountants, contractors, owners, clients, regulatory authorities, and insurance companies all rely on accurate job costing for their records and for the purpose of making informed decisions.</p>
 <p>Because a construction project has so many variables, it is critical to track progress and material costs meticulously to avoid cost overruns, disputes, and issues with non-compliance. Accounting software and innovations like time-tracking technology can help improve job costing accuracy.</p>

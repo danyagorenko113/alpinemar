@@ -8,6 +8,9 @@ excerpt: "“Is hurricane damage tax deductible?” is an important question for
 cover: "/images/blog/hurricane-damage-tax-deductible.jpg"
 tags:
   - "is hurricane damage tax deductible"
+seo:
+  description: "Find out if and when hurricane damage is tax deductible, who can claim the casualty loss deduction, how to calculate it, and when to consult a tax professional."
+  title: "Is Hurricane Damage Tax Deductible?"
 ---
 <p>“Is hurricane damage tax deductible?” is an important question for businesses and homeowners in hurricane zones. Receiving what you’re entitled to when disaster strikes is a huge help when your home or business premises have suffered damage.</p>
 <p>2024 was a notorious year for hurricanes, with Helene and Milton causing billions of dollars of damage. As the clean-up continues, it&#8217;s vital to understand how to minimize the financial impact of these increasingly severe natural disasters.</p>
