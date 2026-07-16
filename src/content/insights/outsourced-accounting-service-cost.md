@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Outsourced Services"
 excerpt: "Outsourcing accounting services has become a highly effective strategy for businesses to manage their financial tasks while maintaining control over costs."
 cover: "/images/blog/outsourced-accounting-service-cost.jpg"
+coverAlt: "Cost of Outsourcing Accounting Services"
 tags:
   - "cost of outsourcing accounting services"
 seo:

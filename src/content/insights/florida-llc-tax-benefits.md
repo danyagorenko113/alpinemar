@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "If you’re considering forming an LLC (limited liability company) in Florida, it can be helpful to know that there are several tax benefits associated with this business structure."
 cover: "/images/blog/florida-llc-tax-benefits.jpg"
+coverAlt: "Tax Benefits of an LLC in Florida"
 tags:
   - "tax benefits of llc in florida"
 seo:

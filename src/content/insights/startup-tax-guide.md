@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Taxes"
 excerpt: "If you’re launching a VC-backed startup, chances are you’ll organize as a C corporation. Investors prefer this structure because it offers flexibility and some tax advantages, but it also comes with rules you should understand early on."
 cover: "/images/blog/startup-tax-guide.jpg"
+coverAlt: "Startup Taxes"
 tags:
   - "startup taxes"
 seo:

@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Mining rewards may feel like passive earnings, but they come with real tax consequences. From recordkeeping and income reporting to deductions and taxes, there’s a lot to track. Here’s what you need to know in 2025 to stay compliant."
 cover: "/images/blog/crypto-mining-tax-explained.jpg"
+coverAlt: "crypto mining tax"
 tags:
   - "crypto mining tax"
 seo:

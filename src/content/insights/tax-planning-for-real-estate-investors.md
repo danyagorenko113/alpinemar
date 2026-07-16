@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Real estate investing presents a substantial opportunity to build wealth, but it also requires navigating complex tax considerations. Effective tax planning for real estate investors seeks to maximize profits, minimize liabilities, and reduce income taxes."
 cover: "/images/blog/tax-planning-for-real-estate-investors.jpg"
+coverAlt: "Tax Planning Tips for Real Estate Investors"
 tags:
   - "tax planning for real estate investors"
 seo:

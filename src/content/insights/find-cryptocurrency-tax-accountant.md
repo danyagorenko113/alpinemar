@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Finding a reliable crypto tax accountant near you is crucial when taking on the unique challenges cryptocurrency taxes present. Crypto transactions, including trades, staking, and NFTs, trigger different taxable events that require specialized knowledge and reporting to navigate."
 cover: "/images/blog/find-cryptocurrency-tax-accountant.jpg"
+coverAlt: "How to Find a Cryptocurrency Tax Accountant Near You"
 tags:
   - "cryptocurrency tax accountant near me"
 seo:

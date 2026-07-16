@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A clear understanding of cryptocurrency taxes is crucial in 2025 as the rise of digital assets continues to reshape how individuals and businesses handle their finances."
 cover: "/images/blog/cryptocurrency-taxes-guide.jpg"
+coverAlt: "Cryptocurrency Taxes"
 tags:
   - "crypto taxes"
 seo:

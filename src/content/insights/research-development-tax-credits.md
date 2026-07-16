@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Startup Accounting & Taxes"
 excerpt: "The research and development tax credit is a federal government incentive. It provides a dollar-for-dollar tax reduction for companies developing new or improved products, processes, or software in the United States."
 cover: "/images/blog/research-development-tax-credits.jpg"
+coverAlt: "research and development tax credits"
 tags:
   - "r d tax credits"
 seo:

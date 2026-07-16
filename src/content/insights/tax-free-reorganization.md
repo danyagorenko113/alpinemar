@@ -6,6 +6,7 @@ author: "Kirill Reznik, CPA"
 category: "Mergers & Acquisitions"
 excerpt: "A tax-free reorganization allows companies to merge, restructure, or even acquire other companies without taking on immediate tax liability. This type of transaction permits companies and shareholders to defer, transfer, or minimize tax liability if they meet the IRC §368’s…"
 cover: "/images/blog/tax-free-reorganization.jpg"
+coverAlt: "Tax-Free Reorganization"
 tags:
   - "tax-free reorganization"
 seo:

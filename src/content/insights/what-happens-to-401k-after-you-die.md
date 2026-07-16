@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Resources"
 excerpt: "Your 401(k) transfers to your heirs according to the beneficiary forms you filed with your employer rather than the instructions in your last will and testament."
 cover: "/images/blog/what-happens-to-401k-after-you-die.jpg"
+coverAlt: "What happens to 401k when you die"
 tags:
   - "what happens to 401k when you die"
 seo:

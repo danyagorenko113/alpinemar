@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structure for tech startups aiming to scale rapidly and secure substantial investment is typically a C corporation due to its robust liability protection and capacity to attract capital."
 cover: "/images/blog/best-business-structure-for-tech-startup.jpg"
+coverAlt: "Best Business Structure for Tech Startups"
 tags:
   - "best business structure for tech startup"
 seo:

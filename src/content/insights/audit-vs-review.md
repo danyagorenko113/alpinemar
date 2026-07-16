@@ -6,6 +6,7 @@ author: "Derby Norvilus"
 category: "Assurance"
 excerpt: "Businesses often need third-party assurance to meet lender, investor, or regulatory expectations. The two most common options—audits and reviews—offer different levels of scrutiny and credibility."
 cover: "/images/blog/audit-vs-review.jpg"
+coverAlt: "Audit vs Review"
 tags:
   - "audit vs review"
 seo:

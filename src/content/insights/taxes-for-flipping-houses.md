@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Flipping houses offers the potential for quick profits, but those profits come with tax implications that every house flipper must understand."
 cover: "/images/blog/taxes-for-flipping-houses.jpg"
+coverAlt: "Taxes on Flipping Houses"
 tags:
   - "taxes on flipping houses"
 seo:

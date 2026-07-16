@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Resources"
 excerpt: "In 2021, Congress enacted the Corporate Transparency Act (CTA), mandating that companies report their beneficial ownership information (BOI) to the Financial Crimes Enforcement Network (FinCEN)."
 cover: "/images/blog/beneficial-ownership-reporting-guide.jpg"
+coverAlt: "Beneficial Ownership Reporting & Information Guide"
 tags:
   - "beneficial ownership reporting"
 seo:

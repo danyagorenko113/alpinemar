@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "One key tax rule that every real estate investor should be familiar with is the passive activity loss rule. This rule has become particularly pertinent due to the growing prevalence of Florida-based short-term rentals on platforms like Airbnb and Vrbo®."
 cover: "/images/blog/passive-activity-loss-rule.jpg"
+coverAlt: "Passive Activity Loss Rule in Real Estate"
 tags:
   - "passive activity loss rule"
 seo:

@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Accounting"
 excerpt: "Working with one of the top accounting firms in Florida is the best way to optimize your tax bill, stay compliant, and make better business decisions. The following accounting firms are strong options to support your business at every stage of growth."
 cover: "/images/blog/top-accounting-firms-florida.jpg"
+coverAlt: "Top Accounting Firms in Florida"
 tags:
   - "top accounting firms in florida"
 seo:

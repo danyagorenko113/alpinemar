@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "“Is hurricane damage tax deductible?” is an important question for businesses and homeowners in hurricane zones. Receiving what you’re entitled to when disaster strikes is a huge help when your home or business premises have suffered damage."
 cover: "/images/blog/hurricane-damage-tax-deductible.jpg"
+coverAlt: "Is Hurricane Damage Tax Deductible?"
 tags:
   - "is hurricane damage tax deductible"
 seo:

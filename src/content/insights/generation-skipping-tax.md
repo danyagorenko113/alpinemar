@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "The generation-skipping transfer tax (GSTT) targets property transfers to younger generations, adding a layer of complexity beyond standard gift or estate taxes. For high-net-worth individuals, understanding GSTT is crucial for effective estate planning."
 cover: "/images/blog/generation-skipping-tax.jpg"
+coverAlt: "Generation-Skipping Tax"
 tags:
   - "generation skipping tax"
 seo:

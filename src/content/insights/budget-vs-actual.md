@@ -6,6 +6,7 @@ author: "Emily Bradey"
 category: "Accounting"
 excerpt: "Budget vs actual analysis is a key financial tool that compares project figures to real-world results. It helps businesses understand where plans align or diverge from reality."
 cover: "/images/blog/budget-vs-actual.jpg"
+coverAlt: "Budget vs Actual and Why It Matters"
 tags:
   - "budget vs actual"
 seo:

@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Selling an investment property often triggers a hefty tax bill—especially if you don’t plan ahead. Between federal, state, and depreciation recapture taxes, a large chunk of your profit may go to the IRS."
 cover: "/images/blog/capital-gains-on-investment-property.jpg"
+coverAlt: "Capital Gains on Investment Property Explained + Reduction Strategies"
 tags:
   - "capital gains on investment property"
 seo:

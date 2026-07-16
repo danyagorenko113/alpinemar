@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "DeFi taxes are a rapidly evolving area of cryptocurrency regulation. DeFi, or decentralized finance, refers to blockchain-based financial services like lending, trading, and staking. It is often conducted across multiple wallets and platforms without intermediaries."
 cover: "/images/blog/defi-taxes.jpg"
+coverAlt: "DeFi Taxes & How to Report Them"
 tags:
   - "defi taxes"
 seo:

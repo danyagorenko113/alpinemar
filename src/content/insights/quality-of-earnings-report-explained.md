@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "A quality of earnings report—QoE or QofE—is an important financial document written by a team that includes an independent accounting firm. The report provides an extensive review of a company’s operating and financial information and emphasizes the “earnings before interest,…"
 cover: "/images/blog/quality-of-earnings-report-explained.jpg"
+coverAlt: "Quality of Earnings Report (QofE Analysis) Overview"
 tags:
   - "quality of earnings report"
 seo:

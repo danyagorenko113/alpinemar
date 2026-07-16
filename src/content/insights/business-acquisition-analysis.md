@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Transaction Advisory"
 excerpt: "Business acquisition analysis is a comprehensive process that evaluates the financial, operational, and strategic aspects of a potential business acquisition."
 cover: "/images/blog/business-acquisition-analysis.jpg"
+coverAlt: "Business Acquisition Analysis"
 tags:
   - "business acquisition analysis"
 seo:

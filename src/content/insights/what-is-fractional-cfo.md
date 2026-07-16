@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Outsourced Services"
 excerpt: "In today’s dynamic business landscape, small and large companies seek innovative ways to optimize their financial strategies while maintaining flexibility and cost-effectiveness. This has led to the rise of fractional Chief Financial Officer (CFO) as a service."
 cover: "/images/blog/what-is-fractional-cfo.jpg"
+coverAlt: "What Is a Fractional CFO?"
 tags:
   - "what is a fractional cfo"
 seo:

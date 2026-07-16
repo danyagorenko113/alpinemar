@@ -6,6 +6,7 @@ author: "Derby Norvilus"
 category: "Accounting"
 excerpt: "A GAAP audit is a critical process used to verify that a company’s processes align with generally accepted accounting principles (GAAP) when preparing financial statements. This type of audit ensures transparency, accuracy, and compliance in financial reporting."
 cover: "/images/blog/gaap-audit-explained.jpg"
+coverAlt: "GAAP Audit: What It Is, How It Works, and How to Prepare"
 tags:
   - "gaap audit"
 seo:

@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "High-income earners often face substantial income taxes every year. However, with strategic financial planning, it’s possible to significantly reduce taxable income and maximize available tax deductions."
 cover: "/images/blog/best-tax-deductions-for-high-earners.jpg"
+coverAlt: "Tax Deductions for High Earners"
 tags:
   - "best tax deductions for high earners"
 seo:

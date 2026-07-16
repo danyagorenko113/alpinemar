@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Resources"
 excerpt: "S-corp shareholder-employees must pay themselves a reasonable salary and remit the corresponding federal self-employment taxes or risk heavy penalties from the IRS."
 cover: "/images/blog/reasonable-salary-s-corp.jpg"
+coverAlt: "s-corp reasonable salary"
 tags:
   - "s-corp reasonable salary"
 seo:

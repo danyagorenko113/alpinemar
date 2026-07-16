@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Mergers & Acquisitions"
 excerpt: "Mergers and acquisitions (M&A) involve complex tax considerations that can significantly impact the financial outcomes for both buyers and sellers."
 cover: "/images/blog/tax-implications-mergers-acquisitions.jpg"
+coverAlt: "Tax Implications of Mergers and Acquisitions"
 tags:
   - "tax implications of mergers and acquisitions"
 seo:

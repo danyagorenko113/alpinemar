@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "When establishing a business, choosing between two prominent corporate structures—S corporation (S corp) and C corporation (C corp)—is a pivotal decision."
 cover: "/images/blog/s-corp-vs-c-corp-tax-advantages.jpg"
+coverAlt: "s corp vs c corp tax advantages"
 tags:
   - "s corp vs c corp tax advantages"
 seo:

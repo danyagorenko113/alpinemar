@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Resources"
 excerpt: "Starting a business with your spouse is a rewarding experience. However, it comes with important decisions, particularly regarding business structure."
 cover: "/images/blog/husband-wife-business-structure.jpg"
+coverAlt: "Best Business Structure for Husband and Wife"
 tags:
   - "best business structure for husband and wife"
 seo:

@@ -6,6 +6,7 @@ author: "Brian Fine, CPA"
 category: "Taxes"
 excerpt: "Limited liability company (LLC) distributions are taxed based on your chosen Internal Revenue Service (IRS) classification. Most founders pay ordinary income tax on their share of the business profits."
 cover: "/images/blog/llc-distribution-taxes.jpg"
+coverAlt: "LLC distribution taxes"
 tags:
   - "how are llc distributions taxed"
 seo:

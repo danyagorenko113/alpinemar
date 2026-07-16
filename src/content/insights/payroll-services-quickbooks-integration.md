@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Payroll"
 excerpt: "QuickBooks Online payroll software integrations allow businesses to streamline payroll processes, reduce errors, and ensure compliance with ease."
 cover: "/images/blog/payroll-services-quickbooks-integration.jpg"
+coverAlt: "Payroll Integrations With QuickBooks"
 tags:
   - "payroll services that integrate with quickbooks"
 seo:

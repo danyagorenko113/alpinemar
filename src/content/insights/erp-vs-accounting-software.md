@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Tools"
 excerpt: "Choosing between ERP vs accounting software for your business is an important decision both logistically and financially. While some business owners are drawn to the flashy features offered by ERP systems, accounting software may be enough to handle the everyday operations of…"
 cover: "/images/blog/erp-vs-accounting-software.jpg"
+coverAlt: "ERP vs accounting software"
 tags:
   - "ERP vs accounting software"
 seo:

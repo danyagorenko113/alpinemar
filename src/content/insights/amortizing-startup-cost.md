@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Startup Accounting & Taxes"
 excerpt: "Amortizing startup costs is the process of spreading your initial business expenses over a 15-year period for tax recovery. Most companies deduct up to $5,000 of these costs immediately on their first tax return."
 cover: "/images/blog/amortizing-startup-cost.jpg"
+coverAlt: "Startup Costs Amortization"
 tags:
   - "amortizing startup costs"
 seo:

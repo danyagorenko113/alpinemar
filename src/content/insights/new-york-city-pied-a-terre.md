@@ -9,6 +9,7 @@ excerpt: >-
   used as non-primary residences — has been proposed in various forms by New
   York State legislators since 2014 and resurfaces most legislative sessions.
 cover: /images/blog/new-york-city-pied-a-terre.jpg
+coverAlt: "pied-à-terre tax new york city"
 tags:
   - "pied-à-terre tax new york city"
 seo:

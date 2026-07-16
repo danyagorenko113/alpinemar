@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "Many smaller businesses are opting for outsourced accounting services and enjoying the advantages that were once exclusive to mid-market and large enterprises."
 cover: "/images/blog/outsourcing-accounting-services-pros-cons.jpg"
+coverAlt: "Pros and Cons of Outsourcing Accounting Services"
 tags:
   - "pros and cons of outsourcing accounting services"
 seo:

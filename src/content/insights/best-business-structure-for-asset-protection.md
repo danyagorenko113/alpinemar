@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structures for asset protection are limited liability companies—because of their inherent asset protection and flexibility—and corporations due to their more robust asset protection mechanisms."
 cover: "/images/blog/best-business-structure-for-asset-protection.jpg"
+coverAlt: "Business Structure for Asset Protection"
 tags:
   - "best business structure for asset protection"
 seo:

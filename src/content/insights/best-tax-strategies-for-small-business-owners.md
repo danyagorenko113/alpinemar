@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Taxes"
 excerpt: "Tax strategies for small business owners help you protect as much of your business income as possible so that you can achieve your financial goals. Reducing your tax burden strategically should therefore be a high priority."
 cover: "/images/blog/best-tax-strategies-for-small-business-owners.jpg"
+coverAlt: "Money-Saving Tax Strategies for Small Business Owners"
 tags:
   - "tax strategies for small business owners"
 seo:

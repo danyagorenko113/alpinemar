@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "Understanding bookings vs ARR vs revenue is key to making smart decisions in SaaS finance. These terms may sound similar, but each metric tells a very different story about your business."
 cover: "/images/blog/bookings-vs-arr-vs-revenue.jpg"
+coverAlt: "Bookings vs ARR vs Revenue in SaaS Finance"
 tags:
   - "bookings vs arr vs revenue"
 seo:

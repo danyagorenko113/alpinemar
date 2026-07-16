@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "The best business structure for real estate investors is generally a limited liability company (LLC) because it offers liability protection, tax flexibility, and ease of management."
 cover: "/images/blog/business-structure-for-real-estate-investors.jpg"
+coverAlt: "Business Structure for Real Estate Investors"
 tags:
   - "best business structure for real estate investors"
 seo:

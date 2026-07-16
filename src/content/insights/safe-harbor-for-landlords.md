@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Navigating tax regulations can be particularly challenging for landlords due to the unique complexities involved in managing property-related expenses."
 cover: "/images/blog/safe-harbor-for-landlords.jpg"
+coverAlt: "IRS Safe Harbors for Landlords"
 tags:
   - "safe harbor for small taxpayers"
 seo:

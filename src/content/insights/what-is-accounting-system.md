@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Accounting"
 excerpt: "An accounting system provides the framework for managing the financial activities of a business, encompassing income, expenses, and various other financial transactions."
 cover: "/images/blog/what-is-accounting-system.jpg"
+coverAlt: "What Is an Accounting System?"
 tags:
   - "what is an accounting system"
 seo:

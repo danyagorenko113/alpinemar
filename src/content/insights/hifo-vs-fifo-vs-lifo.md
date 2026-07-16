@@ -6,6 +6,7 @@ author: "Emily Bradey"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "When comparing HIFO, FIFO, and LIFO in crypto accounting, understanding how each cost basis method impacts your taxable gains is essential for smart portfolio management. Each approach determines which coins are considered “sold” first."
 cover: "/images/blog/hifo-vs-fifo-vs-lifo.jpg"
+coverAlt: "HIFO vs FIFO vs LIFO for Cryptocurrency Accounting"
 tags:
   - "hifo vs fifo"
 seo:

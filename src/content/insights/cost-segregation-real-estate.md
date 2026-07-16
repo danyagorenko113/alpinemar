@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Real Estate Accounting & Taxes"
 excerpt: "Cost segregation is a powerful tax strategy that allows real estate investors to utilize accelerated depreciation deductions. It results in substantial tax savings, improved cash flow, and enhanced return on investment (ROI) on their real estate investments."
 cover: "/images/blog/cost-segregation-real-estate.jpg"
+coverAlt: "Cost Segregation Guide for Real Estate Investors"
 tags:
   - "cost segregation real estate"
 seo:

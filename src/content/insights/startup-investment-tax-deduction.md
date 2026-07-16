@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Taxes"
 excerpt: "Your investment in a startup is not tax deductible. You can’t write it off like a business expense. But if the investment loses value or becomes worthless, you may be able to claim a loss if it meets certain IRS rules."
 cover: "/images/blog/startup-investment-tax-deduction.jpg"
+coverAlt: "Write off investment in private company"
 tags:
   - "write off investment in private company"
 seo:

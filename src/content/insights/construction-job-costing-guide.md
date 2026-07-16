@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Construction Accounting & Taxes"
 excerpt: "Construction job costing is a fundamentally important process used in the construction industry. Construction project managers, estimators, accountants, contractors, owners, clients, regulatory authorities, and insurance companies all rely on accurate job costing for their…"
 cover: "/images/blog/construction-job-costing-guide.jpg"
+coverAlt: "Construction job costing"
 tags:
   - "construction job costing"
 seo:

@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "A cryptocurrency gift is any transfer of digital assets from one person to another without receiving something of equal value in return. This includes sending Bitcoin, Ethereum, stablecoins, or NFTs to a friend, family member, or anyone else—no strings attached."
 cover: "/images/blog/crypto-gift-tax-considerations.jpg"
+coverAlt: "Crypto Gift Tax Considerations"
 tags:
   - "crypto gift tax"
 seo:

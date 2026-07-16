@@ -6,6 +6,7 @@ author: "Kevin DeCicco, CPA"
 category: "Cryptocurrency Accounting & Taxes"
 excerpt: "Choosing the right state is critical for crypto investors and businesses. State tax rates, regulations, and crypto-specific laws directly affect your bottom line and long-term success."
 cover: "/images/blog/crypto-friendly-states.jpg"
+coverAlt: "Crypto-Friendly States in 2025"
 tags:
   - "crypto friendly states"
 seo:

@@ -6,6 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Transaction Advisory"
 excerpt: "You need a comprehensive set of documents to sell your business. These records prove your company’s value, build buyer trust, and keep the sale process on track. When everything is organized, the due diligence process goes faster and you avoid last-minute headaches."
 cover: "/images/blog/documents-required-for-business-sale.jpg"
+coverAlt: "Documents needed to sell a business"
 tags:
   - "documents needed to sell a business"
 seo:
