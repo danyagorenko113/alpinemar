@@ -1,0 +1,458 @@
+{
+  "public/images/about/mountain.jpg": {
+    "alt": "Alpine peaks"
+  },
+  "public/images/about/ocean.jpg": {
+    "alt": "Ocean surface"
+  },
+  "public/images/blog/721-exchange-real-estate.jpg": {
+    "alt": "What Is a 721 Exchange in Real Estate?"
+  },
+  "public/images/blog/amortizing-startup-cost.jpg": {
+    "alt": "Startup Costs Amortization"
+  },
+  "public/images/blog/audit-vs-review.jpg": {
+    "alt": "Audit vs Review"
+  },
+  "public/images/blog/beneficial-ownership-reporting-guide.jpg": {
+    "alt": "Beneficial Ownership Reporting & Information Guide"
+  },
+  "public/images/blog/benefits-of-fractional-cfo.jpg": {
+    "alt": "Benefits of Having a Fractional CFO"
+  },
+  "public/images/blog/best-business-structure-for-asset-protection.jpg": {
+    "alt": "Business Structure for Asset Protection"
+  },
+  "public/images/blog/best-business-structure-for-ecommerce.jpg": {
+    "alt": "Best Business Structure for Ecommerce"
+  },
+  "public/images/blog/best-business-structure-for-tech-startup.jpg": {
+    "alt": "Best Business Structure for Tech Startups"
+  },
+  "public/images/blog/best-tax-deductions-for-high-earners.jpg": {
+    "alt": "Tax Deductions for High Earners"
+  },
+  "public/images/blog/best-tax-strategies-for-small-business-owners.jpg": {
+    "alt": "Money-Saving Tax Strategies for Small Business Owners"
+  },
+  "public/images/blog/bookings-vs-arr-vs-revenue.jpg": {
+    "alt": "Bookings vs ARR vs Revenue in SaaS Finance"
+  },
+  "public/images/blog/budget-vs-actual.jpg": {
+    "alt": "Budget vs Actual and Why It Matters"
+  },
+  "public/images/blog/business-acquisition-analysis.jpg": {
+    "alt": "Business Acquisition Analysis"
+  },
+  "public/images/blog/business-structure-for-construction-company.jpg": {
+    "alt": "Best Business Structure for a Construction Company"
+  },
+  "public/images/blog/business-structure-for-real-estate-investors.jpg": {
+    "alt": "Business Structure for Real Estate Investors"
+  },
+  "public/images/blog/capital-gains-on-investment-property.jpg": {
+    "alt": "Capital Gains on Investment Property Explained + Reduction Strategies"
+  },
+  "public/images/blog/cash-burn-rate-gross-vs-net-burn.jpg": {
+    "alt": "Cash burn rate gross burn vs net burn"
+  },
+  "public/images/blog/cfo-vs-vp-finance.jpg": {
+    "alt": "Chief Financial Officer vs Vice President of Finance"
+  },
+  "public/images/blog/consolidated-tax-return.jpg": {
+    "alt": "Consolidated Tax Return Overview"
+  },
+  "public/images/blog/construction-job-costing-guide.jpg": {
+    "alt": "Construction job costing"
+  },
+  "public/images/blog/controller-vs-cfo.jpg": {
+    "alt": "controller vs chief financial officer"
+  },
+  "public/images/blog/cost-segregation-real-estate.jpg": {
+    "alt": "Cost Segregation Guide for Real Estate Investors"
+  },
+  "public/images/blog/crypto-friendly-states.jpg": {
+    "alt": "Crypto-Friendly States in 2025"
+  },
+  "public/images/blog/crypto-gift-tax-considerations.jpg": {
+    "alt": "Crypto Gift Tax Considerations"
+  },
+  "public/images/blog/crypto-mining-tax-explained.jpg": {
+    "alt": "crypto mining tax"
+  },
+  "public/images/blog/crypto-staking-taxes.jpg": {
+    "alt": "Crypto Staking Taxes Overview"
+  },
+  "public/images/blog/crypto-tax-form-1099.jpg": {
+    "alt": "crypto tax form 1099"
+  },
+  "public/images/blog/crypto-tax-loss-harvesting.jpg": {
+    "alt": "Crypto Tax-Loss Harvesting Guide"
+  },
+  "public/images/blog/cryptocurrency-taxes-guide.jpg": {
+    "alt": "Cryptocurrency Taxes"
+  },
+  "public/images/blog/dao-taxes.jpg": {
+    "alt": "DAO Taxes: Everything You Need to Know"
+  },
+  "public/images/blog/defi-taxes.jpg": {
+    "alt": "DeFi Taxes & How to Report Them"
+  },
+  "public/images/blog/documents-required-for-business-sale.jpg": {
+    "alt": "Documents needed to sell a business"
+  },
+  "public/images/blog/erp-vs-accounting-software.jpg": {
+    "alt": "ERP vs accounting software"
+  },
+  "public/images/blog/estate-tax-planning-guide.jpg": {
+    "alt": "Estate Tax Planning"
+  },
+  "public/images/blog/ethereum-tax-guide.jpg": {
+    "alt": "Ethereum Tax Guide for Crypto Investors"
+  },
+  "public/images/blog/family-office-tax-structure.jpg": {
+    "alt": "Optimal Family Office Tax Structure in 2024"
+  },
+  "public/images/blog/find-cryptocurrency-tax-accountant.jpg": {
+    "alt": "How to Find a Cryptocurrency Tax Accountant Near You"
+  },
+  "public/images/blog/florida-capital-gains-tax-overview.jpg": {
+    "alt": "Florida Short-Term Capital Gains Tax Explained"
+  },
+  "public/images/blog/florida-llc-tax-benefits.jpg": {
+    "alt": "Tax Benefits of an LLC in Florida"
+  },
+  "public/images/blog/florida-self-employment-tax-guide.jpg": {
+    "alt": "Guide to Florida Self-Employed Taxes for SMB Owners"
+  },
+  "public/images/blog/gaap-audit-explained.jpg": {
+    "alt": "GAAP Audit: What It Is, How It Works, and How to Prepare"
+  },
+  "public/images/blog/generation-skipping-tax.jpg": {
+    "alt": "Generation-Skipping Tax"
+  },
+  "public/images/blog/hifo-vs-fifo-vs-lifo.jpg": {
+    "alt": "HIFO vs FIFO vs LIFO for Cryptocurrency Accounting"
+  },
+  "public/images/blog/how-to-gift-money-tax-free.jpg": {
+    "alt": "Tax-Free Gifting"
+  },
+  "public/images/blog/how-to-increase-company-valuation.jpg": {
+    "alt": "Ways to Increase Company Valuation"
+  },
+  "public/images/blog/hurricane-damage-tax-deductible.jpg": {
+    "alt": "Is Hurricane Damage Tax Deductible?"
+  },
+  "public/images/blog/husband-wife-business-structure.jpg": {
+    "alt": "Best Business Structure for Husband and Wife"
+  },
+  "public/images/blog/importance-of-financial-statements.jpg": {
+    "alt": "why are financial statements important"
+  },
+  "public/images/blog/inheritance-tax-planning.jpg": {
+    "alt": "Inheritance Tax Planning Overview"
+  },
+  "public/images/blog/iso-vs-nso-taxes.jpg": {
+    "alt": "ISOs vs NSOs: Important Tax Implications to Know"
+  },
+  "public/images/blog/jock-tax-explained.jpg": {
+    "alt": "Jock Tax"
+  },
+  "public/images/blog/llc-distribution-taxes.jpg": {
+    "alt": "LLC distribution taxes"
+  },
+  "public/images/blog/m-a-integration-finance-checklist.jpg": {
+    "alt": "M&;A Integration Finance Checklist for Future Success"
+  },
+  "public/images/blog/most-important-financial-statements.jpg": {
+    "alt": "Top Financial Statements"
+  },
+  "public/images/blog/new-york-city-pied-a-terre.jpg": {
+    "alt": "pied-à-terre tax new york city"
+  },
+  "public/images/blog/offset-capital-gains-with-business-losses.jpg": {
+    "alt": "How to Offset Capital Gains With Business Losses"
+  },
+  "public/images/blog/outsourced-accounting-service-cost.jpg": {
+    "alt": "Cost of Outsourcing Accounting Services"
+  },
+  "public/images/blog/outsourcing-accounting-services-pros-cons.jpg": {
+    "alt": "Pros and Cons of Outsourcing Accounting Services"
+  },
+  "public/images/blog/passive-activity-loss-rule.jpg": {
+    "alt": "Passive Activity Loss Rule in Real Estate"
+  },
+  "public/images/blog/payroll-services-quickbooks-integration.jpg": {
+    "alt": "Payroll Integrations With QuickBooks"
+  },
+  "public/images/blog/qualified-small-business-stock-qsbs.jpg": {
+    "alt": "qualified small business stock; QSBS"
+  },
+  "public/images/blog/quality-of-earnings-report-explained.jpg": {
+    "alt": "Quality of Earnings Report (QofE Analysis) Overview"
+  },
+  "public/images/blog/reasonable-salary-s-corp.jpg": {
+    "alt": "s-corp reasonable salary"
+  },
+  "public/images/blog/research-development-tax-credits.jpg": {
+    "alt": "research and development tax credits"
+  },
+  "public/images/blog/revenue-recognition-principle.jpg": {
+    "alt": "Revenue Recognition Principle - Definition & Methods"
+  },
+  "public/images/blog/rippling-vs-gusto-review.jpg": {
+    "alt": "Rippling vs Gusto for Payroll Compared"
+  },
+  "public/images/blog/s-corp-right-for-you.jpg": {
+    "alt": "How to Defer Your 2020 Tax Payments"
+  },
+  "public/images/blog/s-corp-vs-c-corp-tax-advantages.jpg": {
+    "alt": "s corp vs c corp tax advantages"
+  },
+  "public/images/blog/s-corp-vs-llc-business-structure.jpg": {
+    "alt": "s corp vs llc"
+  },
+  "public/images/blog/safe-harbor-for-landlords.jpg": {
+    "alt": "IRS Safe Harbors for Landlords"
+  },
+  "public/images/blog/safe-notes-tax-treatment.jpg": {
+    "alt": "Tax Treatment of SAFE Notes"
+  },
+  "public/images/blog/selling-business-tax-strategies.jpg": {
+    "alt": "Business Sale Tax Strategies"
+  },
+  "public/images/blog/short-term-rental-tax-loophole-explained.jpg": {
+    "alt": "short term rental tax loophole"
+  },
+  "public/images/blog/startup-investment-tax-deduction.jpg": {
+    "alt": "Write off investment in private company"
+  },
+  "public/images/blog/startup-pre-seed-valuations.jpg": {
+    "alt": "Pre-Seed Valuations for Startups"
+  },
+  "public/images/blog/startup-tax-guide.jpg": {
+    "alt": "Startup Taxes"
+  },
+  "public/images/blog/stock-options-tax-guide.jpg": {
+    "alt": "Tax Considerations With Stock Options for Employees"
+  },
+  "public/images/blog/tax-free-reorganization.jpg": {
+    "alt": "Tax-Free Reorganization"
+  },
+  "public/images/blog/tax-implications-mergers-acquisitions.jpg": {
+    "alt": "Tax Implications of Mergers and Acquisitions"
+  },
+  "public/images/blog/tax-implications-of-selling-business.jpg": {
+    "alt": "Tax Implications of Selling a Business"
+  },
+  "public/images/blog/tax-planning-for-real-estate-investors.jpg": {
+    "alt": "Tax Planning Tips for Real Estate Investors"
+  },
+  "public/images/blog/taxes-for-flipping-houses.jpg": {
+    "alt": "Taxes on Flipping Houses"
+  },
+  "public/images/blog/tech-startup-budget-example.jpg": {
+    "alt": "Tech startup budget example"
+  },
+  "public/images/blog/top-accounting-firms-florida.jpg": {
+    "alt": "Top Accounting Firms in Florida"
+  },
+  "public/images/blog/unfiled-cryptocurrency-tax-consequences.jpg": {
+    "alt": "Unfiled Cryptocurrency Taxes: Consequences & Solutions"
+  },
+  "public/images/blog/what-happens-to-401k-after-you-die.jpg": {
+    "alt": "What happens to 401k when you die"
+  },
+  "public/images/blog/what-is-accounting-system.jpg": {
+    "alt": "What Is an Accounting System?"
+  },
+  "public/images/blog/what-is-fractional-cfo.jpg": {
+    "alt": "What Is a Fractional CFO?"
+  },
+  "public/images/brand/aicpa-logo.png": {
+    "alt": "AICPA"
+  },
+  "public/images/brand/alpine-mar-wordmark.svg": {
+    "alt": "Alpine Mar"
+  },
+  "public/images/brand/ficpa-logo.png": {
+    "alt": "FICPA"
+  },
+  "public/images/brand/logo-web.png": {
+    "alt": "Alpine Mar · CPAs & Advisors"
+  },
+  "public/images/home/about-image.png": {
+    "alt": "Alpine Mar partners in a planning conversation"
+  },
+  "public/images/industries/construction-cpa-services.jpg": {
+    "alt": "Construction CPA Services"
+  },
+  "public/images/industries/construction.jpg": {
+    "alt": "Construction CPA Services"
+  },
+  "public/images/industries/crypto-cpa-services.jpg": {
+    "alt": "Crypto CPA Services"
+  },
+  "public/images/industries/crypto.jpg": {
+    "alt": "Crypto CPA Services"
+  },
+  "public/images/industries/family-office-accounting-services.jpg": {
+    "alt": "Family Office Accounting Services"
+  },
+  "public/images/industries/family-office.jpg": {
+    "alt": "Family Office Accounting Services"
+  },
+  "public/images/industries/healthcare-accounting-services-2.jpg": {
+    "alt": "Healthcare Accounting Services"
+  },
+  "public/images/industries/healthcare-accounting-services.jpg": {
+    "alt": "Healthcare Accounting Services"
+  },
+  "public/images/industries/healthcare.jpg": {
+    "alt": "Healthcare Accounting Services"
+  },
+  "public/images/industries/high-net-worth-accounting-cpa.jpg": {
+    "alt": "High Net Worth Accounting CPA Services"
+  },
+  "public/images/industries/high-net-worth.jpg": {
+    "alt": "High Net Worth Accounting & CPA Services"
+  },
+  "public/images/industries/law-firm-accounting-services.jpg": {
+    "alt": "law firm accounting services"
+  },
+  "public/images/industries/law-firms.jpg": {
+    "alt": "Law Firm Accounting Services"
+  },
+  "public/images/industries/marketing-agencies.jpg": {
+    "alt": "Accounting for Marketing Agencies"
+  },
+  "public/images/industries/marketing-agency-accounting-services.jpg": {
+    "alt": "Accounting for Marketing Agencies"
+  },
+  "public/images/industries/real-estate-cpa-services.jpg": {
+    "alt": "Real Estate CPA Services"
+  },
+  "public/images/industries/real-estate.jpg": {
+    "alt": "Real Estate CPA Services"
+  },
+  "public/images/industries/saas-accounting-services.jpg": {
+    "alt": "SAAS Accounting Services"
+  },
+  "public/images/industries/saas.jpg": {
+    "alt": "Accounting for SaaS Companies"
+  },
+  "public/images/industries/sports-accounting-services.jpg": {
+    "alt": "Sports Accountant Services by Alpine Mar"
+  },
+  "public/images/industries/sports-athletes.jpg": {
+    "alt": "Sports Accounting Services"
+  },
+  "public/images/industries/startup-cpa-services.jpg": {
+    "alt": "Startup CPA Services"
+  },
+  "public/images/industries/startups.jpg": {
+    "alt": "CPA Services for Startups"
+  },
+  "public/images/services/accounting-software-implementation.jpg": {
+    "alt": "Accounting Software Implementation Services"
+  },
+  "public/images/services/audit-attestation-services.jpg": {
+    "alt": "Audit & Attestation Services"
+  },
+  "public/images/services/boi-reporting-services.jpg": {
+    "alt": "BOI Reporting Services"
+  },
+  "public/images/services/business-accounting.jpg": {
+    "alt": "Business Accounting Services"
+  },
+  "public/images/services/business-structure-consulting.jpg": {
+    "alt": "Business Structure Consulting"
+  },
+  "public/images/services/business-tax.jpg": {
+    "alt": "Business Tax Services"
+  },
+  "public/images/services/corporate-tax-services.jpg": {
+    "alt": "Corporate Tax Services"
+  },
+  "public/images/services/creacion-de-empresas.jpg": {
+    "alt": "Creación de Empresas"
+  },
+  "public/images/services/employee-benefit-plan-audits.jpg": {
+    "alt": "Employee Benefit Plan Audits"
+  },
+  "public/images/services/estate-trust-tax-planning.jpg": {
+    "alt": "Estate & Trust Tax Planning"
+  },
+  "public/images/services/financial-advisory.jpg": {
+    "alt": "Financial Advisory Services"
+  },
+  "public/images/services/financial-compliance.jpg": {
+    "alt": "Financial Compliance Services"
+  },
+  "public/images/services/financial-modeling-services.jpg": {
+    "alt": "Financial Modeling Services"
+  },
+  "public/images/services/financial-statement-audits.jpg": {
+    "alt": "Financial Statement Audits"
+  },
+  "public/images/services/financial-statement-preparation-services.jpg": {
+    "alt": "Financial Statement Preparation Services"
+  },
+  "public/images/services/fractional-cfo-services.jpg": {
+    "alt": "Fractional CFO Services"
+  },
+  "public/images/services/individual-tax-services.jpg": {
+    "alt": "Individual Tax Services"
+  },
+  "public/images/services/international-tax-services.jpg": {
+    "alt": "International Tax Services"
+  },
+  "public/images/services/multistate-tax-services.jpg": {
+    "alt": "Multistate Tax Services"
+  },
+  "public/images/services/non-profit-tax-services.jpg": {
+    "alt": "Non-Profit Tax Services"
+  },
+  "public/images/services/outsourced-accounting-services.jpg": {
+    "alt": "Outsourced Accounting Services"
+  },
+  "public/images/services/outsourced-bookkeeping-services.jpg": {
+    "alt": "Outsourced Bookkeeping Services"
+  },
+  "public/images/services/partnership-tax-services.jpg": {
+    "alt": "Partnership Tax Services"
+  },
+  "public/images/services/payroll-compliance-services.jpg": {
+    "alt": "Payroll Compliance Services"
+  },
+  "public/images/services/private-client-services.jpg": {
+    "alt": "Private Client Services"
+  },
+  "public/images/services/reviews-compilations.jpg": {
+    "alt": "Reviews & Compilations"
+  },
+  "public/images/services/s-corp-cpa-services.jpg": {
+    "alt": "S Corp CPA & Accounting Services"
+  },
+  "public/images/services/servicios-contables.jpg": {
+    "alt": "Servicios contables y teneduría de libros"
+  },
+  "public/images/services/servicios-tributarios-en-florida.jpg": {
+    "alt": "Servicios tributarios en Florida"
+  },
+  "public/images/services/small-business-tax-services.jpg": {
+    "alt": "Tax Services for Small Business"
+  },
+  "public/images/services/tax-advisory-and-compliance.jpg": {
+    "alt": "Tax Advisory and Compliance"
+  },
+  "public/images/services/tax-planning-services.jpg": {
+    "alt": "Tax Planning & Preparation Services"
+  },
+  "public/images/services/transaction-advisory-services.jpg": {
+    "alt": "Transaction Advisory Services"
+  },
+  "public/images/services/trust-accounting-cpa.jpg": {
+    "alt": "Trust Accounting CPA Services"
+  }
+}
