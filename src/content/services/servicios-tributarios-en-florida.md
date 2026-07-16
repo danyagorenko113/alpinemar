@@ -1,6 +1,7 @@
 ---
 title: "Servicios tributarios en Florida"
 path: "/services/servicios-tributarios-en-florida/"
+coverAlt: "Servicios tributarios en Florida"
 summary: "Servicios tributarios en Florida from Alpine Mar."
 group: Tax
 seo:

@@ -2,6 +2,7 @@
 title: "Trust Accounting CPA Services"
 heroTitle: "Trust Accounting CPA Services"
 path: "/services/trust-accounting-cpa/"
+coverAlt: "Trust Accounting CPA Services"
 summary: "IOLTA and trust ledgers kept clean, compliant, and audit-ready. The kind of accounting you can't afford to get wrong."
 industries: ["law-firm-accounting-services", "real-estate-cpa-services", "family-office-accounting-services"]
 group: Accounting

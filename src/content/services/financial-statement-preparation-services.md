@@ -2,6 +2,7 @@
 title: "Financial Statement Preparation Services"
 heroTitle: "Financial Statement Preparation Services"
 path: "/services/financial-statement-preparation-services/"
+coverAlt: "Financial Statement Preparation Services"
 summary: "Investor- and lender-ready financial statements that hold up to scrutiny. Built to GAAP, built to be trusted."
 industries: ["saas-accounting-services", "startup-cpa-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services", "marketing-agency-accounting-services", "law-firm-accounting-services"]
 group: Accounting

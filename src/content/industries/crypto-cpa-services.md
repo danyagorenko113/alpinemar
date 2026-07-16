@@ -2,6 +2,7 @@
 title: "Crypto CPA Services"
 heroTitle: "Crypto CPA Services"
 path: "/industries/crypto-cpa-services/"
+coverAlt: "Crypto CPA Services"
 summary: "On-chain reconciliation and tax-ready reporting for funds, founders, and individuals. We make sense of the wallets, the trades, and the cost basis."
 cover: "/images/industries/crypto.jpg"
 seo:

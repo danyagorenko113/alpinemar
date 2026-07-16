@@ -2,6 +2,7 @@
 title: "Serious scrutiny, minus the headache"
 heroTitle: "Serious scrutiny, minus the headache"
 path: "/services/audit-attestation-services/financial-statement-audits/"
+coverAlt: "Financial Statement Audits"
 summary: "Full GAAP and IFRS audits, run by a team that's thorough without being painful. Credibility you can hand to anyone."
 cover: "/images/services/financial-statement-audits.jpg"
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services"]

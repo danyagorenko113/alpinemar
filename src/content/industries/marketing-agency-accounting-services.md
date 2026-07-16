@@ -2,6 +2,7 @@
 title: "Accounting for Marketing Agencies"
 heroTitle: "Accounting for Marketing Agencies"
 path: "/industries/marketing-agency-accounting-services/"
+coverAlt: "Accounting for Marketing Agencies"
 summary: "Project-based accounting and S-Corp strategy for agencies and creative shops. We handle the financial side so you can stay focused on the work."
 cover: "/images/industries/marketing-agencies.jpg"
 seo:

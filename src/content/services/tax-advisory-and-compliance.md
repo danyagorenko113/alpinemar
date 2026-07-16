@@ -2,6 +2,7 @@
 title: "Tax Advisory and Compliance"
 heroTitle: "Tax Advisory and Compliance"
 path: "/services/tax-advisory-and-compliance/"
+coverAlt: "Tax Advisory and Compliance"
 summary: "Long-term tax positioning for the big decisions, mapped before you make them. We help you see the consequences while you can still change them."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "real-estate-cpa-services", "crypto-cpa-services", "startup-cpa-services"]
 group: Tax

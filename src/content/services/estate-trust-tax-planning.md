@@ -2,6 +2,7 @@
 title: "Estate & Trust Tax Planning"
 heroTitle: "Estate & Trust Tax Planning"
 path: "/services/estate-trust-tax-planning/"
+coverAlt: "Estate & Trust Tax Planning"
 summary: "Estate and trust tax planning that protects what you've built and the people you're building it for. Quiet, careful, and ahead of the deadlines."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "sports-accounting-services"]
 group: Tax

@@ -2,6 +2,7 @@
 title: "Healthcare Accounting Services"
 heroTitle: "Healthcare Accounting Services"
 path: "/industries/healthcare-accounting-services/"
+coverAlt: "Healthcare Accounting Services"
 summary: "Practice accounting and benefit plan audits for healthcare, from solo practices to growing groups. The tax complexity navigated, the deductions captured."
 cover: "/images/industries/healthcare.jpg"
 seo:

@@ -2,6 +2,7 @@
 title: "Financial Modeling Services"
 heroTitle: "Financial Modeling Services"
 path: "/services/financial-modeling-services/"
+coverAlt: "Financial Modeling Services"
 summary: "Investor- and board-ready models that actually tell you something. Built to forecast, stress-test, and stand up to hard questions."
 industries: ["saas-accounting-services", "startup-cpa-services", "real-estate-cpa-services", "marketing-agency-accounting-services"]
 group: Advisory

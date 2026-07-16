@@ -2,6 +2,7 @@
 title: "Tax Services for Small Business"
 heroTitle: "Tax Services for Small Business"
 path: "/services/small-business-tax-services/"
+coverAlt: "Tax Services for Small Business"
 summary: "Business taxes for owners who'd rather be running the business. Filed right, planned ahead, and explained without the jargon."
 industries: ["marketing-agency-accounting-services", "law-firm-accounting-services", "construction-cpa-services"]
 group: Tax

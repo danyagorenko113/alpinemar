@@ -2,6 +2,7 @@
 title: "S Corp CPA & Accounting Services"
 heroTitle: "S Corp CPA & Accounting Services"
 path: "/services/s-corp-cpa-services/"
+coverAlt: "S Corp CPA & Accounting Services"
 summary: "S-Corp election, reasonable comp, and ongoing filing, set up to actually save you money. Not just a box checked."
 industries: ["marketing-agency-accounting-services", "law-firm-accounting-services", "construction-cpa-services"]
 group: Compliance

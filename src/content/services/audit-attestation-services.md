@@ -2,6 +2,7 @@
 title: "For when \"pretty sure\" isn't good enough."
 heroTitle: "For when \"pretty sure\" isn't good enough."
 path: "/services/audit-attestation-services/"
+coverAlt: "Audit & Attestation Services"
 summary: "Independent audit and assurance that makes your numbers credible. The verification investors, lenders, and regulators trust."
 industries: ["saas-accounting-services", "healthcare-accounting-services", "construction-cpa-services", "real-estate-cpa-services", "law-firm-accounting-services"]
 group: "Audit & Attestation"

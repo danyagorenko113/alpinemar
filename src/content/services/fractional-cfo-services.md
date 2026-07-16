@@ -2,6 +2,7 @@
 title: "Fractional CFO Services"
 heroTitle: "Fractional CFO Services"
 path: "/services/fractional-cfo-services/"
+coverAlt: "Fractional CFO Services"
 summary: "Senior finance leadership, part-time and on demand. The strategic horsepower of a CFO without the full-time salary."
 industries: ["saas-accounting-services", "startup-cpa-services", "marketing-agency-accounting-services", "law-firm-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "family-office-accounting-services"]
 group: Advisory

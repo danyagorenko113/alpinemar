@@ -2,6 +2,7 @@
 title: "Transaction Advisory Services"
 heroTitle: "Transaction Advisory Services"
 path: "/services/transaction-advisory-services/"
+coverAlt: "Transaction Advisory Services"
 summary: "Buy-side and sell-side support for the deals that change everything. Diligence, modeling, and a steady hand from LOI to close."
 industries: ["real-estate-cpa-services", "saas-accounting-services", "startup-cpa-services", "law-firm-accounting-services"]
 group: Advisory

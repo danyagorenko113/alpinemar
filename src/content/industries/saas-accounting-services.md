@@ -2,6 +2,7 @@
 title: "Accounting for SaaS Companies"
 heroTitle: "Accounting for SaaS Companies"
 path: "/industries/saas-accounting-services/"
+coverAlt: "Accounting for SaaS Companies"
 summary: "ASC 606 revenue recognition, deferred revenue, and the metrics investors actually look at. Accounting built for how software companies grow."
 cover: "/images/industries/saas.jpg"
 seo:

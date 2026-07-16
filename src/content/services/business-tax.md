@@ -2,6 +2,7 @@
 title: "Business Tax Services"
 heroTitle: "Business Tax Services"
 path: "/services/business-tax/"
+coverAlt: "Business Tax Services"
 summary: "Whatever your entity, your business tax handled by one senior team. Federal, state, and the planning in between."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Tax

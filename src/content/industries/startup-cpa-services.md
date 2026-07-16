@@ -2,6 +2,7 @@
 title: "CPA Services for Startups"
 heroTitle: "CPA Services for Startups"
 path: "/industries/startup-cpa-services/"
+coverAlt: "CPA Services for Startups"
 summary: "Runway, fundraise prep, and modeling for founders. A finance team that scales from pre-seed through Series C."
 cover: "/images/industries/startups.jpg"
 seo:

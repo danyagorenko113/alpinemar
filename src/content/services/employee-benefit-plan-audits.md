@@ -2,6 +2,7 @@
 title: "Audits that protect your people and your peace of mind"
 heroTitle: "Audits that protect your people and your peace of mind"
 path: "/services/audit-attestation-services/employee-benefit-plan-audits/"
+coverAlt: "Employee Benefit Plan Audits"
 summary: "401(k) and benefit plan audits under DOL rules, done by a team that does them all year. A niche audit you don't want a generalist for."
 cover: "/images/services/employee-benefit-plan-audits.jpg"
 industries: ["healthcare-accounting-services", "construction-cpa-services", "law-firm-accounting-services"]

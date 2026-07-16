@@ -1,6 +1,7 @@
 ---
 title: "Creación de Empresas"
 path: "/services/creacion-de-empresas/"
+coverAlt: "Creación de Empresas"
 summary: "Creación de Empresas from Alpine Mar."
 group: Compliance
 seo:

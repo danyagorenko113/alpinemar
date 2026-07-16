@@ -2,6 +2,7 @@
 title: "Outsourced Accounting Services"
 heroTitle: "Outsourced Accounting Services"
 path: "/services/outsourced-accounting-services/"
+coverAlt: "Outsourced Accounting Services"
 summary: "A full finance back office without the cost of building one. Books, close, and reporting handled, so you get clean numbers every month."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting

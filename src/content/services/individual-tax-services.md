@@ -2,6 +2,7 @@
 title: "Individual Tax Services"
 heroTitle: "Individual Tax Services"
 path: "/services/individual-tax-services/"
+coverAlt: "Individual Tax Services"
 summary: "Personal returns and planning for people with more than a W-2. Investments, equity, multiple states, all handled."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "sports-accounting-services"]
 group: Tax

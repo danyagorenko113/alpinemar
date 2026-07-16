@@ -1,6 +1,7 @@
 ---
 title: "Servicios contables y teneduría de libros"
 path: "/services/servicios-contables/"
+coverAlt: "Servicios contables y teneduría de libros"
 summary: "Servicios contables y teneduría de libros from Alpine Mar."
 group: Accounting
 seo:

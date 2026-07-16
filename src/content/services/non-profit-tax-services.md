@@ -2,6 +2,7 @@
 title: "Non-Profit Tax Services"
 heroTitle: "Non-Profit Tax Services"
 path: "/services/non-profit-tax-services/"
+coverAlt: "Non-Profit Tax Services"
 summary: "Form 990, exemption, and the compliance that keeps your status safe. So you can spend your energy on the mission."
 industries: ["healthcare-accounting-services"]
 group: Tax

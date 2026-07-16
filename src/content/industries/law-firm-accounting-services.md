@@ -2,6 +2,7 @@
 title: "Law Firm Accounting Services"
 heroTitle: "Law Firm Accounting Services"
 path: "/industries/law-firm-accounting-services/"
+coverAlt: "Law Firm Accounting Services"
 summary: "IOLTA discipline and partner allocations for law firms, plaintiff and defense. Trust accounting that survives scrutiny and comp that keeps partners aligned."
 cover: "/images/industries/law-firms.jpg"
 seo:

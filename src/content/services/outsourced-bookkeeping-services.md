@@ -2,6 +2,7 @@
 title: "Outsourced Bookkeeping Services"
 heroTitle: "Outsourced Bookkeeping Services"
 path: "/services/outsourced-bookkeeping-services/"
+coverAlt: "Outsourced Bookkeeping Services"
 summary: "Daily books and reconciliations kept clean and current. The foundation everything else is built on, done right."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting

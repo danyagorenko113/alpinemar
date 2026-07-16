@@ -2,6 +2,7 @@
 title: "Financial Compliance Services"
 heroTitle: "Financial Compliance Services"
 path: "/services/financial-compliance/"
+coverAlt: "Financial Compliance Services"
 summary: "Internal controls and audit-readiness, built before anyone comes asking. Quiet rigor that pays off when it counts."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance

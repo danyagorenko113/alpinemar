@@ -2,6 +2,7 @@
 title: "Multistate Tax Services"
 heroTitle: "Multistate Tax Services"
 path: "/services/multistate-tax-services/"
+coverAlt: "Multistate Tax Services"
 summary: "Tax for businesses that don't stop at the state line. Nexus, apportionment, and filings in every state you actually owe."
 industries: ["real-estate-cpa-services", "saas-accounting-services", "construction-cpa-services"]
 group: Tax

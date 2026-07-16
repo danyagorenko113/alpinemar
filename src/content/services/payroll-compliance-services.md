@@ -2,6 +2,7 @@
 title: "Payroll Compliance Services"
 heroTitle: "Payroll Compliance Services"
 path: "/services/payroll-compliance-services/"
+coverAlt: "Payroll Compliance Services"
 summary: "Payroll tax, filings, and multistate reciprocity handled. So a routine pay run never turns into a notice from the state."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance

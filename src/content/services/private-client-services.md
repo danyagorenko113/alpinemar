@@ -2,6 +2,7 @@
 title: "Private Client Services"
 heroTitle: "Private Client Services"
 path: "/services/private-client-services/"
+coverAlt: "Private Client Services"
 summary: "One team for your taxes, your entities, and your wealth, all talking to each other so you don't have to. Integrated planning for complex personal finances."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "sports-accounting-services"]
 group: Tax

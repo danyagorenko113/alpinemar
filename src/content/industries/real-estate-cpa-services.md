@@ -2,6 +2,7 @@
 title: "Real Estate CPA Services"
 heroTitle: "Real Estate CPA Services"
 path: "/industries/real-estate-cpa-services/"
+coverAlt: "Real Estate CPA Services"
 summary: "1031 exchanges, cost segregation, and depreciation strategy for owners and operators. We keep more of every deal working for you."
 cover: "/images/industries/real-estate.jpg"
 seo:

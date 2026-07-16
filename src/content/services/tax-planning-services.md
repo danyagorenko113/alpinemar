@@ -2,6 +2,7 @@
 title: "Tax Planning & Preparation Services"
 heroTitle: "Tax Planning & Preparation Services"
 path: "/services/tax-planning-services/"
+coverAlt: "Tax Planning & Preparation Services"
 summary: "Year-round tax strategy that lowers what you actually pay. We plan ahead so April is a formality, not a surprise."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Tax

@@ -2,6 +2,7 @@
 title: "Corporate Tax Services"
 heroTitle: "Corporate Tax Services"
 path: "/services/corporate-tax-services/"
+coverAlt: "Corporate Tax Services"
 summary: "C-Corp returns and planning, from the federal filing to the state footprint you didn't know you had. We keep the whole picture in view."
 industries: ["saas-accounting-services", "startup-cpa-services", "healthcare-accounting-services", "construction-cpa-services"]
 group: Tax

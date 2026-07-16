@@ -2,6 +2,7 @@
 title: "Business Structure Consulting"
 heroTitle: "Business Structure Consulting"
 path: "/services/business-structure-consulting/"
+coverAlt: "Business Structure Consulting"
 summary: "Pick the right entity from the start and save yourself years of cleanup. LLC, S-Corp, C-Corp, or something more layered, structured for where you're going."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance

@@ -2,6 +2,7 @@
 title: "Sports Accounting Services"
 heroTitle: "Sports Accounting Services"
 path: "/industries/sports-accounting-services/"
+coverAlt: "Sports Accounting Services"
 summary: "Multi-state residency, NIL income, and post-career planning, handled discreetly end to end. The financial team behind the career."
 cover: "/images/industries/sports-athletes.jpg"
 seo:

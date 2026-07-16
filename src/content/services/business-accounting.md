@@ -2,6 +2,7 @@
 title: "Business Accounting Services"
 heroTitle: "Business Accounting Services"
 path: "/services/business-accounting/"
+coverAlt: "Business Accounting Services"
 summary: "Everyday accounting handled by a team that knows your business. The numbers stay clean while you stay focused on the work."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Accounting

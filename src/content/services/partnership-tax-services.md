@@ -2,6 +2,7 @@
 title: "Partnership Tax Services"
 heroTitle: "Partnership Tax Services"
 path: "/services/partnership-tax-services/"
+coverAlt: "Partnership Tax Services"
 summary: "K-1s, allocations, and the partnership rules most firms get wrong. Done right, on time, and explained in plain English."
 industries: ["real-estate-cpa-services", "law-firm-accounting-services", "marketing-agency-accounting-services"]
 group: Tax

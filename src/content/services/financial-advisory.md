@@ -2,6 +2,7 @@
 title: "Financial Advisory Services"
 heroTitle: "Financial Advisory Services"
 path: "/services/financial-advisory/"
+coverAlt: "Financial Advisory Services"
 summary: "Strategic financial guidance for the decisions that don't fit a tax return. A senior advisor in your corner when it counts."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Advisory

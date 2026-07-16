@@ -2,6 +2,7 @@
 title: "International Tax Services"
 heroTitle: "International Tax Services"
 path: "/services/international-tax-services/"
+coverAlt: "International Tax Services"
 summary: "Cross-border tax for people and businesses with a foot in more than one country. FBAR, FATCA, treaties, and the filings most firms won't touch."
 industries: ["high-net-worth-accounting-cpa", "family-office-accounting-services", "saas-accounting-services", "crypto-cpa-services"]
 group: Tax

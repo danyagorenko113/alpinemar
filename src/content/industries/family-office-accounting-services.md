@@ -2,6 +2,7 @@
 title: "Family Office Accounting Services"
 heroTitle: "Family Office Accounting Services"
 path: "/industries/family-office-accounting-services/"
+coverAlt: "Family Office Accounting Services"
 summary: "Consolidated reporting, entity by entity, for families managing real complexity. One clear picture across the businesses, trusts, and investments."
 cover: "/images/industries/family-office.jpg"
 seo:

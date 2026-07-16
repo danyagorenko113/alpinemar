@@ -2,6 +2,7 @@
 title: "Construction CPA Services"
 heroTitle: "Construction CPA Services"
 path: "/industries/construction-cpa-services/"
+coverAlt: "Construction CPA Services"
 summary: "Job costing, retainage, and surety bonds, handled by a team that knows the build. Accounting that keeps your projects and your bonding capacity healthy."
 cover: "/images/industries/construction.jpg"
 seo:

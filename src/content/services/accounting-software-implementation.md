@@ -2,6 +2,7 @@
 title: Accounting Software Implementation Services
 heroTitle: Accounting Software Implementation Services
 path: /services/accounting-software-implementation/
+coverAlt: "Accounting Software Implementation Services"
 summary: >-
   QuickBooks, NetSuite, and Yardi set up the right way from day one. Built
   around how you actually work.

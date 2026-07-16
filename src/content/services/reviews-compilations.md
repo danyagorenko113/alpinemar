@@ -2,6 +2,7 @@
 title: "Reviews & Compilations"
 heroTitle: "Reviews & Compilations"
 path: "/services/audit-attestation-services/reviews-compilations/"
+coverAlt: "Reviews & Compilations"
 summary: "Limited-assurance reviews and agreed-upon procedures, when a full audit is more than you need. Right-sized credibility."
 cover: "/images/services/reviews-compilations.jpg"
 industries: ["saas-accounting-services", "marketing-agency-accounting-services", "law-firm-accounting-services", "startup-cpa-services"]

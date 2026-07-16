@@ -2,6 +2,7 @@
 title: "High Net Worth Accounting & CPA Services"
 heroTitle: "High Net Worth Accounting & CPA Services"
 path: "/industries/high-net-worth-accounting-cpa/"
+coverAlt: "High Net Worth Accounting & CPA Services"
 summary: "Integrated tax and estate planning for significant wealth. We analyze your entities and income to minimize what you owe, quietly and deliberately."
 cover: "/images/industries/high-net-worth.jpg"
 seo:

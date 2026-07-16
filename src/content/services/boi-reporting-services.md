@@ -2,6 +2,7 @@
 title: "BOI Reporting Services"
 heroTitle: "BOI Reporting Services"
 path: "/services/boi-reporting-services/"
+coverAlt: "BOI Reporting Services"
 summary: "FinCEN beneficial-ownership reporting, filed correctly and on time. A small form with big penalties if it's missed."
 industries: ["construction-cpa-services", "family-office-accounting-services", "healthcare-accounting-services", "high-net-worth-accounting-cpa", "law-firm-accounting-services", "marketing-agency-accounting-services", "real-estate-cpa-services", "sports-accounting-services", "crypto-cpa-services", "saas-accounting-services", "startup-cpa-services"]
 group: Compliance
