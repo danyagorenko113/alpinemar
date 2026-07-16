@@ -77,7 +77,7 @@ const popularServices = [
 
   <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ Services mega panel в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
   <div id="mega-services" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-b border-line bg-white opacity-0 shadow-[0_30px_60px_-30px_rgba(18,18,45,0.25)] transition-[opacity,transform] duration-200" data-mega-panel="services">
-    <Container width="wide" class="py-10">
+    <Container width="wide" class="max-h-[calc(100vh-5.5rem)] overflow-y-auto py-8">
 
       <!-- Header strip -->
       <div class="mb-8 flex flex-wrap items-end justify-between gap-6 border-b border-line pb-5">
@@ -110,7 +110,7 @@ const popularServices = [
             {/* Render every service link directly — no "+ N more" behind a
                 click. Links hidden until interaction are discounted by search
                 engines, so all service pages must be in the crawlable markup. */}
-            <ul class="mt-5 space-y-2.5 border-t border-line pt-4">
+            <ul class="mt-4 space-y-2 border-t border-line pt-3">
               {group.items.map((it) => (
                 <li>
                   <a href={it.href} class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors hover:text-scooter">{it.name}</a>
@@ -153,7 +153,7 @@ const popularServices = [
 
   <!-- в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ Industries mega panel в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ -->
   <div id="mega-industries" class="mega-panel pointer-events-none absolute left-0 right-0 top-full z-40 origin-top -translate-y-1 border-b border-line bg-white opacity-0 shadow-[0_30px_60px_-30px_rgba(18,18,45,0.25)] transition-[opacity,transform] duration-200" data-mega-panel="industries">
-    <Container width="wide" class="py-10">
+    <Container width="wide" class="max-h-[calc(100vh-5.5rem)] overflow-y-auto py-8">
 
       <div class="mb-8 flex flex-wrap items-end justify-between gap-6 border-b border-line pb-5">
         <div>
