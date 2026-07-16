@@ -107,16 +107,13 @@ const popularServices = [
               <span class="font-mono text-[11px] uppercase tracking-[0.14em] text-scooter">{group.label}</span>
             </a>
             <p class="mt-3 line-clamp-2 font-display text-[12.5px] leading-[1.5] text-[var(--color-text-body)]">{group.blurb}</p>
-            {/* Render every service link directly — no "+ N more" behind a
-                click. Links hidden until interaction are discounted by search
-                engines, so all service pages must be in the crawlable markup. */}
-            <ul class="mt-4 space-y-2 border-t border-line pt-3">
+            {/* Every service link rendered directly (no "+ N more" behind a
+                click) so all pages stay in the crawlable markup — names only,
+                so the whole panel fits on one screen without scrolling. */}
+            <ul class="mt-4 space-y-1.5 border-t border-line pt-3">
               {group.items.map((it) => (
                 <li>
                   <a href={it.href} class="block font-display text-[13px] leading-tight text-[var(--color-text-head)] transition-colors hover:text-scooter">{it.name}</a>
-                  {'desc' in it && (
-                    <span class="mt-0.5 line-clamp-1 block font-display text-[11px] leading-snug text-[var(--color-text-body)]">{(it as any).desc}</span>
-                  )}
                 </li>
               ))}
             </ul>
