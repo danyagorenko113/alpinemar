@@ -73,19 +73,22 @@ const schema = [
       <ul class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {industries.map((ind) => (
           <li>
-            <a href={ind.href} class="group flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
+            <div class="group relative flex h-full flex-col overflow-hidden rounded-[6px] border border-line bg-white transition-colors hover:border-[#12122D]">
               <div class="aspect-[5/4] w-full overflow-hidden bg-navy-50">
                 <img src={ind.image} alt={ind.title} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               </div>
               <div class="flex flex-1 flex-col p-6">
-                <h3 class="font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)]">{ind.title}</h3>
+                <h3 class="font-display text-[20px] font-medium leading-[1.25] tracking-[-0.01em] text-[var(--color-text-head)]">
+                  {/* Stretched link: whole card clickable, anchor text = title only. */}
+                  <a href={ind.href} class="transition-colors after:absolute after:inset-0 after:content-[''] hover:text-scooter group-hover:text-scooter">{ind.title}</a>
+                </h3>
                 <p class="mt-3 line-clamp-3 font-display text-[14px] leading-[1.6] text-[var(--color-text-body)]">{ind.summary}</p>
                 <span class="mt-auto inline-flex items-center gap-2 pt-6 font-display text-[14px] font-medium text-[var(--color-text-head)] transition-colors group-hover:text-scooter">
                   Learn more
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
               </div>
-            </a>
+            </div>
           </li>
         ))}
       </ul>
