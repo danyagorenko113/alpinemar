@@ -2,24 +2,8 @@
 import Container from './Container.astro';
 import { site } from '@/data/site';
 
-// Shared bottom contact section — mirrors the live site's
-// "Let's get on a first name basis." block with its embedded form.
-// Field labels and select options verbatim from it.alpinemar.com.
-const serviceOptions = [
-  'Technology & Cybersecurity',
-  'Internet & Network Cybersecurity',
-  'Managed IT Services',
-  'IT Consulting Services',
-  'Remote IT Support',
-  'Artificial Intelligence',
-  'Risk Advisory',
-  'Incident Response',
-];
-
-const inputClass =
-  'mt-2 w-full rounded-[6px] border border-white/15 bg-white/[0.03] px-4 py-3.5 font-display text-[15px] text-white placeholder:text-white/35 transition-colors focus:border-scooter focus:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-scooter/30';
-const labelClass =
-  'font-display text-[11px] font-medium uppercase tracking-[0.14em] text-white/60';
+// Shared bottom contact section — "Let's get on a first name basis." block.
+// The form is embedded from HubSpot (Portal 42958375, region na1).
 ---
 
 <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
@@ -71,89 +55,65 @@ const labelClass =
         </p>
       </div>
 
-      {/* ── Right: form — fields verbatim from the live section ── */}
+      {/* ── Right: HubSpot-embedded consultation form (Portal 42958375) ── */}
       <div data-reveal data-speed="slow" class="lg:col-span-7">
-        <form
-          data-am-cta-form
-          class="relative rounded-[12px] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md shadow-[0_24px_80px_-40px_rgba(0,0,0,0.6)] lg:p-10"
-          novalidate
-        >
-          <div class="pointer-events-none absolute inset-0 am-grid-pattern rounded-[12px] opacity-40"></div>
-
-          <div class="relative">
-            <div class="grid gap-5 sm:grid-cols-2">
-              <label class="block">
-                <span class={labelClass}>First Name <span class="text-scooter">*</span></span>
-                <input class={inputClass} type="text" name="first_name" autocomplete="given-name" required />
-              </label>
-              <label class="block">
-                <span class={labelClass}>Last Name <span class="text-scooter">*</span></span>
-                <input class={inputClass} type="text" name="last_name" autocomplete="family-name" required />
-              </label>
-              <label class="block sm:col-span-2">
-                <span class={labelClass}>Email Address <span class="text-scooter">*</span></span>
-                <input class={inputClass} type="email" name="email" autocomplete="email" required />
-              </label>
-              <label class="block sm:col-span-2">
-                <span class={labelClass}>Company Name</span>
-                <input class={inputClass} type="text" name="company" autocomplete="organization" />
-              </label>
-            </div>
-
-            <label class="mt-5 block">
-              <span class={labelClass}>Service Interest In <span class="text-scooter">*</span></span>
-              <select class={inputClass} name="service" required>
-                <option value="" class="bg-navy-900 text-white">Select a Service</option>
-                {serviceOptions.map((label) => (
-                  <option value={label} class="bg-navy-900 text-white">{label}</option>
-                ))}
-              </select>
-            </label>
-
-            <label class="mt-5 block">
-              <span class={labelClass}>How can we help?</span>
-              <textarea class={`${inputClass} min-h-28 resize-y`} name="message" rows="4"></textarea>
-            </label>
-
-            <div class="mt-8 border-t border-white/10 pt-8">
-              <button
-                type="submit"
-                class="group inline-flex items-center justify-center gap-2.5 rounded-[6px] bg-scooter px-7 py-4 font-display text-[15px] font-medium text-white transition-all duration-200 hover:bg-white hover:text-navy-950 active:scale-[0.98]"
-              >
-                Request a Consultation
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </button>
-            </div>
-
-            <p
-              data-am-cta-success
-              class="mt-5 hidden border-l-2 border-scooter bg-white/5 px-4 py-3 font-display text-sm text-white"
-            >
-              Thanks — we’ve received your request and will be in touch shortly.
-            </p>
+        <div class="rounded-[12px] border border-white/10 bg-white p-7 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.6)] lg:p-10">
+          <div
+            id="it-consult-hs"
+            class="hs-form-target"
+            data-hs-region="na1"
+            data-hs-portal="42958375"
+            data-hs-form="1636ed35-b770-47ad-87c7-127ccaa449d0"
+          >
+            <p class="hs-form-loading font-display text-[14px] text-navy-500">Loading form…</p>
           </div>
-        </form>
+          <noscript>
+            <p class="font-display text-[14px] text-navy-500">
+              Please enable JavaScript to load the form, or email
+              <a href={`mailto:${site.email}`} class="text-scooter underline">{site.email}</a>.
+            </p>
+          </noscript>
+        </div>
       </div>
     </div>
   </Container>
 </section>
 
 <script>
-  function initCtaForms() {
-    document.querySelectorAll<HTMLFormElement>('form[data-am-cta-form]').forEach((form) => {
-      if (form.dataset.bound === '1') return;
-      form.dataset.bound = '1';
-      const ok = form.querySelector('[data-am-cta-success]');
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
-        ok?.classList.remove('hidden');
-        form.querySelectorAll('input, select, textarea, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+  // Load the HubSpot embed script once, then render every form target on the page.
+  function loadHubSpot(): Promise<void> {
+    return new Promise((resolve) => {
+      if ((window as any).hbspt) return resolve();
+      const existing = document.querySelector('script[data-hs-embed]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        return;
+      }
+      const s = document.createElement('script');
+      s.src = 'https://js.hsforms.net/forms/embed/v2.js';
+      s.defer = true;
+      s.setAttribute('data-hs-embed', '');
+      s.addEventListener('load', () => resolve(), { once: true });
+      document.head.appendChild(s);
+    });
+  }
+
+  async function renderHubSpotForms() {
+    const targets = document.querySelectorAll<HTMLElement>('.hs-form-target[data-hs-form]');
+    if (!targets.length) return;
+    await loadHubSpot();
+    targets.forEach((el) => {
+      if (el.dataset.hsRendered === '1' || !el.id) return;
+      el.dataset.hsRendered = '1';
+      (window as any).hbspt.forms.create({
+        region: el.dataset.hsRegion,
+        portalId: el.dataset.hsPortal,
+        formId: el.dataset.hsForm,
+        target: '#' + el.id,
+        onFormReady: () => el.querySelector('.hs-form-loading')?.remove(),
       });
     });
   }
-  initCtaForms();
-  document.addEventListener('astro:page-load', initCtaForms);
+
+  document.addEventListener('astro:page-load', renderHubSpotForms);
 </script>
