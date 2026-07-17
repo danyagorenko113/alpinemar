@@ -115,5 +115,8 @@ import { site } from '@/data/site';
     });
   }
 
+  // IT site has no ClientRouter, so astro:page-load never fires — call
+  // directly on load; the listener covers any future view transitions.
+  renderHubSpotForms();
   document.addEventListener('astro:page-load', renderHubSpotForms);
 </script>

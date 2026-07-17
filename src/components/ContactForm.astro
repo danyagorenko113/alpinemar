@@ -66,5 +66,8 @@ const targetId = `${formId}-hs`;
     });
   }
 
+  // Call directly (initial load) + on view-transition navigations. The
+  // hsRendered guard prevents a double render.
+  renderHubSpotForms();
   document.addEventListener('astro:page-load', renderHubSpotForms);
 </script>

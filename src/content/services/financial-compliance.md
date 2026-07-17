@@ -11,7 +11,6 @@ seo:
   description: "Professional financial compliance services to help you stay on top of changing rules, reporting obligations, and governance demands."
 ---
 <p>Compliance is more than avoiding penalties, it's about establishing trust, protecting your interests, and ensuring your business can operate with regulatory confidence. Alpine Mar's Financial Compliance Services help you stay on top of changing rules, reporting obligations, and governance demands.</p>
-<p>This page presents a grid of linked sub-services, each with a one-line description:</p>
 <p><strong>Strategic Entity Structuring</strong> — Choosing and maintaining the right legal entity so that you're optimized for tax, liability, flexibility, and regulatory obligations.</p>
 <p><strong>BOI (Beneficial Ownership Information) Reporting Services</strong> — Meet the federal and state requirements for disclosing ownership/control, avoiding penalties, maintaining transparency.</p>
 <p><strong>Payroll Compliance Services</strong> — Ensure your payroll practices, withholding, tax deposits, reporting are all accurate, timely, and aligned with labor &amp; tax laws.</p>

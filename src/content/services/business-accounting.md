@@ -11,7 +11,6 @@ seo:
   description: "Professional business accounting services providing real-time financial visibility, operational efficiency, and a foundation for growth."
 ---
 <p>Strong accounting systems are the backbone of healthy businesses. Alpine Mar's Business Accounting Services combine accuracy, technology, and clarity to give you real-time financial visibility, operational efficiency, and a foundation for growth.</p>
-<p>This page presents a grid of linked sub-services, each with a one-line description:</p>
 <p><strong>Outsourced Accounting Services</strong> — Let us manage end-to-end accounting functions so you can focus on what you do best.</p>
 <p><strong>Outsourced Bookkeeping Services</strong> — Detailed, routine financial record keeping, classification, reconciliations, and clean books.</p>
 <p><strong>Financial Statement Preparation Services</strong> — Accurate, timely statements that reflect your performance and support stakeholders, investors, lenders.</p>

@@ -171,7 +171,7 @@ seo:
 <li>Fines up to $250,000</li>
 <li>Up to five years in prison</li>
 </ul>
-<p>Behind on filing? Get up to date with our guide to <a href="http://unfiled%20cryptocurrency%20taxes">unfiled cryptocurrency taxes</a>.</p>
+<p>Behind on filing? Get up to date with our guide to <a href="/blog/unfiled-cryptocurrency-tax-consequences/">unfiled cryptocurrency taxes</a>.</p>
 <h2>Stay Compliant With Crypto Tax Professionals</h2>
 <p>Crypto exchanges like Coinbase and Binance cannot provide accurate tax reports because they lack key details about your transactions. Exchanges lose track of your original cost basis—which is a crucial factor for calculating capital gains or losses—when you transfer crypto between wallets or platforms. This makes it nearly impossible for them to offer precise tax records.</p>
 <p><strong>Example</strong></p>
