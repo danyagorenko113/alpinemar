@@ -6,7 +6,7 @@ author: "Pablo Martell, CPA"
 category: "Entity Structuring"
 excerpt: "Self-employment tax for tax year 2021 is 15.3% and is comprised of two components, social security (12.4%) and Medicare (2.9%). In short, the IRC (Internal Revenue Code) essentially deems all payments made to shareholders of an S corporation as wages that are subject to…"
 cover: "/images/blog/s-corp-right-for-you.jpg"
-coverAlt: "How to Defer Your 2020 Tax Payments"
+coverAlt: "Is an S-Corporation Right for You?"
 tags:
   - "is an s corp right for you"
 seo:

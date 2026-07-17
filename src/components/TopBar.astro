@@ -7,7 +7,7 @@ import { site } from '@/data/site';
 <div class="relative z-50 border-b border-white/10 bg-[#0a0a1c] py-2 text-[12px] tracking-[-0.005em] text-white/85 md:py-3 md:text-[12.5px]">
   <Container width="wide" class="flex items-center justify-between gap-5 overflow-x-auto [scrollbar-width:none] md:gap-6 [&::-webkit-scrollbar]:hidden">
     <div class="flex shrink-0 items-center gap-5 md:gap-7">
-      <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current="page">
+      <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>
         <span class="block size-1.5 rounded-full bg-scooter"></span>
         <span class="whitespace-nowrap">Financial Services</span>
       </a>

@@ -29,7 +29,7 @@ const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
         <span>Financial Services</span>
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
       </a>
-      <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current="page">
+      <a href="/" class="inline-flex items-center gap-2 border-b border-scooter pb-1 font-medium text-white" aria-current={path === '/' ? 'page' : undefined}>
         <span class="block size-1.5 rounded-full bg-scooter"></span>
         <span class="whitespace-nowrap">Information Technology</span>
       </a>

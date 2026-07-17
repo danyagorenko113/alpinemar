@@ -26,13 +26,13 @@ seo:
 <p>Nuestro equipo ofrece una gama amplia de servicios de preparación de impuestos para varias necesidades:</p>
 <ol>
 <li><h3>Preparación de impuestos individuales</h3>
-<p>Nuestro servicio de preparación de impuestos individuales cubre todo desde declaraciones de impuestos sencillas a situaciones financieras complejas. Usted puede contar con nosotros para asegurar que su declaración de impuestos personal se presente de forma puntual y sin errores para que pueda concentrarse en las cosas que sean más importantes para usted.</li>
+<p>Nuestro servicio de preparación de impuestos individuales cubre todo desde declaraciones de impuestos sencillas a situaciones financieras complejas. Usted puede contar con nosotros para asegurar que su declaración de impuestos personal se presente de forma puntual y sin errores para que pueda concentrarse en las cosas que sean más importantes para usted.</p>
 <li><h3>Preparación de impuestos para pequeñas empresas</h3>
-<p>Los dueños de pequeñas empresas tienen requisitos fiscales únicos. Nuestros expertos son muy experimentados en las estrategias fiscales necesarias. Nosotros le ayudaremos a elaborar un plan financiero y a navegar los detalles de los impuestos para pequeñas empresas para asegurar que cumpla con todos los códigos fiscales relevantes.</li>
+<p>Los dueños de pequeñas empresas tienen requisitos fiscales únicos. Nuestros expertos son muy experimentados en las estrategias fiscales necesarias. Nosotros le ayudaremos a elaborar un plan financiero y a navegar los detalles de los impuestos para pequeñas empresas para asegurar que cumpla con todos los códigos fiscales relevantes.</p>
 <li><h3>Preparación de impuestos corporativos</h3>
-<p>Los servicios de preparación de impuestos corporativos que ofrecen nuestros profesionales fiscales proveen apoyo comprensivo para las corporaciones de todo tamaño. Nosotros trabajaremos con su equipo de finanzas para preparar y presentar sus declaraciones de impuestos corporativas sin errores o descuidos.</li>
+<p>Los servicios de preparación de impuestos corporativos que ofrecen nuestros profesionales fiscales proveen apoyo comprensivo para las corporaciones de todo tamaño. Nosotros trabajaremos con su equipo de finanzas para preparar y presentar sus declaraciones de impuestos corporativas sin errores o descuidos.</p>
 <li><h3>Planificación y consultas fiscales</h3>
-<p>Nosotros ofrecemos servicios de planificación fiscal y financiera además de preparar sus declaraciones de impuestos. Nuestros profesionales de gestión patrimonial trabajarán con su empresa durante todo el año para optimizar su estrategia financiera y asegurar que esté bien preparado para lograr sus objetivos financieros esta temporada fiscal.</li>
+<p>Nosotros ofrecemos servicios de planificación fiscal y financiera además de preparar sus declaraciones de impuestos. Nuestros profesionales de gestión patrimonial trabajarán con su empresa durante todo el año para optimizar su estrategia financiera y asegurar que esté bien preparado para lograr sus objetivos financieros esta temporada fiscal.</p>
 </ol>
 <h3>¿Ha llegado recientemente a los Estados Unidos?</h3>
 <p>Nosotros entendemos las necesidades de visitas y nuevos residentes a Florida y estamos aquí para ayudarle a establecer una buena relación fiscal con el Servicio de Impuestos Internos (IRS, por sus siglas en inglés) de los Estados Unidos.</p>

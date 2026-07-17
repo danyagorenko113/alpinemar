@@ -56,6 +56,7 @@ const authorBlurb = author === 'Vanessa Holub' ? 'COO, Alpine Mar' : 'Alpine Mar
   rawTitle={d.seo?.title}
   title={d.seo?.title ? undefined : d.title}
   description={d.seo?.description ?? d.excerpt}
+  ogType="article"
 >
   {/* ══════════════════════ HEADER ══════════════════════
       Reading-width column. Polished meta row (category chip · date · minutes)

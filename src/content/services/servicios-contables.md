@@ -16,13 +16,13 @@ seo:
 <p>Subcontratar servicios contables puede ser un punto de inflexión para su empresa. A continuación, presentamos algunas razones por las cuales es una excelente idea:</p>
 <ol>
 <li><h4>Conocimiento y experiencia</h4>
-<p>Nuestros profesionales de contabilidad tienen mucha destreza y experiencia en la gestión financiera. Cuando usted subcontrata sus procesos contables, se gana un equipo contable externo con una comprensión profunda de los principios, normas y mejores prácticas de la contabilidad. Esto asegura informes financieros correctos.</li>
+<p>Nuestros profesionales de contabilidad tienen mucha destreza y experiencia en la gestión financiera. Cuando usted subcontrata sus procesos contables, se gana un equipo contable externo con una comprensión profunda de los principios, normas y mejores prácticas de la contabilidad. Esto asegura informes financieros correctos.</p>
 <li><h4>Ahorro de costos</h4>
-<p>Subcontratar sus procesos contables muchas veces mejora la rentabilidad. Usted ahorra los costos de contratar y capacitar contadores internos para administrar sus cuentas por pagar y cuentas por cobrar. Elimina los costos de comprar software de contabilidad y mantener espacio adicional en su oficina. Nuestras soluciones personalizadas están diseñadas para manejar su flujo de caja de forma eficaz.</li>
+<p>Subcontratar sus procesos contables muchas veces mejora la rentabilidad. Usted ahorra los costos de contratar y capacitar contadores internos para administrar sus cuentas por pagar y cuentas por cobrar. Elimina los costos de comprar software de contabilidad y mantener espacio adicional en su oficina. Nuestras soluciones personalizadas están diseñadas para manejar su flujo de caja de forma eficaz.</p>
 <li><h4>Concéntrese en sus actividades comerciales principales</h4>
-<p>Subcontratar funciones contables no-principales le permite dirigir su energía y recursos al crecimiento de su negocio. Esta estrategia le permite obtener una mayor eficiencia en sus operaciones y ser más competitivo en el mercado mientras nosotros manejamos su flujo de caja.</li>
+<p>Subcontratar funciones contables no-principales le permite dirigir su energía y recursos al crecimiento de su negocio. Esta estrategia le permite obtener una mayor eficiencia en sus operaciones y ser más competitivo en el mercado mientras nosotros manejamos su flujo de caja.</p>
 <li><h4>Escalabilidad</h4>
-<p>Nuestras soluciones de contabilidad subcontratada son adaptables a las necesidades cambiantes de su empresa. Usted puede subir o bajar de escala con facilidad, dependiendo de sus requisitos financieros y el crecimiento de su negocio.</li>
+<p>Nuestras soluciones de contabilidad subcontratada son adaptables a las necesidades cambiantes de su empresa. Usted puede subir o bajar de escala con facilidad, dependiendo de sus requisitos financieros y el crecimiento de su negocio.</p>
 </ol>
 <h3>¿Es más económico subcontratar la contabilidad?</h3>
 <p>Subcontratar las operaciones de contabilidad muchas veces resulta más económico que mantener un departamento de contabilidad interno. Usted verá que subcontratar ofrece:</p>

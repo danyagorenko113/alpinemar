@@ -466,18 +466,18 @@ const dateFmt = (d: string | Date) =>
         {featured && (
           <a data-reveal href={`/blog/${slugOf(featured.id)}/`} class="group mt-16 grid grid-cols-1 overflow-hidden rounded-[6px] border border-line bg-white md:grid-cols-2">
             <div class="relative aspect-[5/4] overflow-hidden bg-navy-50 md:aspect-auto md:min-h-[480px]">
-              <img src={featured.data.heroImage || '/images/about/collage-1.jpg'} alt={featured.data.title} class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <img src={featured.data.cover || '/images/about/collage-1.jpg'} alt={featured.data.title} class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             </div>
             <div class="flex flex-col gap-6 p-8 md:p-12">
               <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
                 <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
                   <span class="block size-1.5 bg-[#12122d]"></span>
-                  Category
+                  {featured.data.category ?? 'Insight'}
                 </span>
                 <span>{dateFmt(featured.data.date)}</span>
               </div>
               <h3 class="font-display text-[26px] font-medium leading-[1.2] tracking-[-0.01em] text-[var(--color-text-head)] md:text-[32px]">{featured.data.title}</h3>
-              <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{featured.data.description}</p>
+              <p class="font-display text-[14px] leading-[1.65] text-[var(--color-text-body)]">{featured.data.excerpt}</p>
               <div class="mt-auto flex items-center justify-between gap-4">
                 <span class="font-display text-[14px] font-medium text-[var(--color-text-head)]">Read more</span>
                 <span class="inline-flex size-10 items-center justify-center rounded-[4px] bg-delft text-white transition-transform group-hover:translate-x-1">
@@ -495,7 +495,7 @@ const dateFmt = (d: string | Date) =>
               <div class="flex items-center justify-between gap-3 font-display text-[12px] text-[var(--color-text-body)]">
                 <span class="inline-flex items-center gap-2 rounded-[4px] bg-paper px-3 py-1.5">
                   <span class="block size-1.5 bg-[#12122d]"></span>
-                  Category
+                  {p.data.category ?? 'Insight'}
                 </span>
                 <span>{dateFmt(p.data.date)}</span>
               </div>

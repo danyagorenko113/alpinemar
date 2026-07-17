@@ -12,7 +12,7 @@ services: ["corporate-tax-services", "international-tax-services", "multistate-t
 ---
 <p>SaaS accounting refers to the specialized practices of recording, analyzing, and managing the financial operations unique to software-as-a-service companies. At Alpine Mar, our CPAs bring their expertise in SaaS accounting to guide your business through essential areas like revenue recognition, cash flow management, key SaaS metrics, and tax planning and compliance for SaaS businesses.</p>
 <p>Our tailored solutions help SaaS businesses—from early-stage startups to established providers—overcome complex financial challenges and stay compliant. With our support, your company gains clarity, optimizes operations, and scales confidently in a competitive market.</p>
-<img src="/images/industries/saas-accounting-services.jpg" alt="SAAS Accounting Services" loading="lazy" />
+<img src="/images/industries/saas-accounting-services.jpg" alt="SaaS Accounting Services" loading="lazy" />
 <h2>Comprehensive Accounting Services for Startups</h2>
 <p>Running a startup comes with specific accounting and financial needs. Our team understands these unique needs and the financial challenges startups face, from managing tight budgets to preparing for rapid growth. At Alpine Mar, our experienced startup CPAs provide specialized services designed to simplify your startup's financial operations.</p>
 <p>Our accounting services for startups include:</p>

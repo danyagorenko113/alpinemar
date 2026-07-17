@@ -59,5 +59,3 @@ seo:
 <p>A top goal of cybersecurity risk assessments is to find the best risk mitigation strategies for your business. Going through a cybersecurity risk management process not only helps you with managing cybersecurity risks, security controls, and technical and business objectives, but it also helps you defend your valuable assets.</p>
 <p>Stay ahead of the cybersecurity threats by knowing the best mitigation strategies and security measures for your unique business environment. Protect your business with a structured approach, ongoing assessments, and quality documentation.</p>
 <p>Choose the template that best fits your organization’s regulations, goals, and future growth. System failures do not have to be the norm. Stay ahead of the game by implementing proven cybersecurity risk assessment templates.</p>
-<p>Share this post</p>
-<h2>Related Posts</h2>

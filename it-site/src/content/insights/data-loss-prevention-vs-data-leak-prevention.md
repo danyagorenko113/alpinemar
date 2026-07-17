@@ -82,5 +82,3 @@ seo:
 <h2>Build a Strong Data Protection Strategy</h2>
 <p>Data loss prevention and data leak prevention protect inside and outgoing data. Both methods are essential for a robust data security strategy. Reduce the risk of data breaches by implementing layered security controls and policies while watching for common weak data security practices.</p>
 <p>Implement best practices in your company’s fabric while always evaluating your current needs, goals, and budget for future growth and scalability. Continue to protect sensitive data into the future of technology with a confident, comprehensive security strategy.</p>
-<p>Share this post</p>
-<h2>Related Posts</h2>

@@ -67,5 +67,3 @@ seo:
 <h2>Making Cyber Risk Analysis Actionable</h2>
 <p>Understanding the cyber risk formula is essential for the growth and security of small and medium-sized businesses. Being able to use a quantitative risk assessment for your enterprise is a huge first step to scale while prioritizing your unique cyber risk.</p>
 <p>Combine your threat likelihood and impact with your vulnerability severity to find your risk score. Be sure to implement your asset values for more precise financial calculations and greater decision-making abilities. Use the CVSS framework to prioritize risks alongside threat intelligence, active reevaluations, and professional security teams to fit your enterprise with the best, most up-to-date armor against modern cybercrime.</p>
-<p>Share this post</p>
-<h2>Related Posts</h2>
