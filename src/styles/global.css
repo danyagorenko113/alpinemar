@@ -141,14 +141,13 @@
   .prose-am ol::marker, .prose-am ol > li::marker { color: var(--color-teal-700); font-family: var(--font-mono); font-size: 0.85em; }
   .prose-am li + li { margin-top: 0.55rem; }
   .prose-am img { width: 100%; height: auto; border: 1px solid var(--color-line); margin-block: 2.25rem; }
-  /* Industry pages: client-requested 600x250 proportions for in-article
-     images — tall originals (e.g. Construction 1200x1800) get cropped
-     instead of dominating the page. */
+  /* Industry pages: cap in-article images to a 3:2 box. Photos shot at 3:2
+     (most of them) render uncropped; only tall originals (e.g. Construction
+     1200x1800) get cropped to 3:2 so they don't dominate the page. */
   .prose-am--capped-media img {
-    aspect-ratio: 12 / 5;
-    max-height: 250px;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
-    object-position: center 30%;
+    object-position: center;
   }
   .prose-am figure { margin-block: 2.25rem; }
   .prose-am figcaption { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-navy-400); margin-top: 0.75rem; }
