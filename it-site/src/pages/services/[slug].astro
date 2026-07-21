@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection, render } from 'astro:content';
-import { site } from '@/data/site';
+import { site, serviceMenu } from '@/data/site';
 import { businessHours, serviceCta } from '@/data/pages';
 
 export async function getStaticPaths() {
@@ -18,17 +18,37 @@ const { item } = Astro.props;
 const { Content } = await render(item);
 const d = item.data;
 
-// Related — same group, excluding self and any service already teased
-// inside this article's body (avoids the same paragraph twice on one page).
-const allServices = (await getCollection('services'))
-  .filter((s) => s.data.status !== 'draft' && s.id !== item.id);
+const slugFor = (path: string) => path.replace(/^\/services\//, '').replace(/\/$/, '');
 
+const services = (await getCollection('services')).filter((s) => s.data.status !== 'draft');
+const bySlug = new Map(services.map((s) => [slugFor(s.data.path), s]));
+const selfSlug = slugFor(d.path);
+
+// Parent service line — mirrors the live breadcrumb: OUR SERVICES › <line>.
+// Built from the mega-menu grouping (serviceMenu): a sub-service points at its
+// line; a line points at itself.
+const lineOf = new Map<string, string>();
+for (const g of serviceMenu) {
+  lineOf.set(g.line, g.line);
+  for (const c of g.children) lineOf.set(c, g.line);
+}
+const parentLineSlug = lineOf.get(selfSlug);
+const parentLine = parentLineSlug ? bySlug.get(parentLineSlug) : undefined;
+// Line title without the trailing " Services" — for clean "More X services." copy.
+const lineShort = parentLine?.data.title.replace(/\s+Services$/, '') ?? 'related';
+
+// Related — the other services in the same line, excluding self and any
+// service already teased inside this article's body.
 const bodyRaw = item.body ?? '';
-const related = allServices
-  .filter((s) => d.group && s.data.group === d.group)
+const lineGroup = serviceMenu.find((g) => g.line === parentLineSlug);
+const relatedSlugs = parentLineSlug
+  ? [parentLineSlug, ...(lineGroup?.children ?? [])].filter((sl) => sl !== selfSlug)
+  : [];
+const related = relatedSlugs
+  .map((sl) => bySlug.get(sl))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s))
   .filter((s) => !bodyRaw.includes(s.data.title))
   .slice(0, 3);
-
 ---
 
 <BaseLayout
@@ -52,15 +72,23 @@ const related = allServices
       <div class="grid grid-cols-1 gap-12 pt-12 pb-14 md:grid-cols-12 md:gap-16 md:pt-[18vh] md:pb-20">
         {/* Left column */}
         <div class="flex flex-col md:col-span-8">
-          {/* Breadcrumbs + group */}
-          <div data-reveal data-speed="fast" class="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <a href="/services/" class="font-display text-[12.5px] text-navy-500 transition-colors hover:text-navy-900">
-              Services
+          {/* Breadcrumbs — Our Services › parent service line (mirrors the live site). */}
+          <div data-reveal data-speed="fast" class="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <a href="/services/" class="am-eyebrow transition-colors hover:text-navy-900" style="font-size:12.5px;">
+              Our Services
             </a>
-            <span class="text-navy-300">/</span>
-            <span class="am-eyebrow" style="font-size:12.5px;">
-              {d.group ?? 'Services'}
-            </span>
+            {parentLine && (
+              <>
+                <span class="text-navy-300">›</span>
+                <a
+                  href={parentLine.data.path}
+                  class="am-eyebrow text-scooter transition-colors hover:text-navy-900"
+                  style="font-size:12.5px;"
+                >
+                  {parentLine.data.title}
+                </a>
+              </>
+            )}
           </div>
 
           <h1
@@ -196,7 +224,7 @@ const related = allServices
 
       <Container width="wide" class="relative z-10">
         <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3">
-          <span class="am-eyebrow">Related in {d.group}</span>
+          <span class="am-eyebrow">Related in {lineShort}</span>
         </div>
 
         <div
@@ -204,7 +232,7 @@ const related = allServices
           class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16"
         >
           <h2 class="am-h1-display text-navy-900 md:col-span-7">
-            More {d.group}<br />services.
+            More {lineShort}<br />services.
           </h2>
         </div>
 
@@ -216,7 +244,7 @@ const related = allServices
                 class="group flex h-full flex-col rounded-[10px] border border-line bg-white p-7 transition-all hover:-translate-y-0.5 hover:border-navy-900"
               >
                 <span class="am-eyebrow" style="font-size:11px;">
-                  {s.data.group ?? 'Services'}
+                  {lineShort}
                 </span>
                 <h3 class="mt-5 font-display text-[22px] font-medium leading-[1.2] tracking-[-0.01em] text-navy-900 transition-colors group-hover:text-teal-700">
                   {s.data.title}
