@@ -41,6 +41,7 @@ Push to `main` → Vercel rebuilds every affected app (~1–2 min). Always build
 
 ## Docs
 
+- **[DEPLOY.md](./DEPLOY.md)** — first-time deploy: how to stand up the three Vercel projects from this one repo.
 - **[CLAUDE.md](./CLAUDE.md)** / [AGENTS.md](./AGENTS.md) — the AI operating guide (also the best human reference for where content lives).
 - [docs/](./docs/) — design system and migration notes.
 - [admin/README.md](./admin/README.md) — the CMS internals and local setup.
