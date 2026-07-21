@@ -68,12 +68,13 @@ const navGroups: NavGroup[] = [
   },
 ]
 
-// IT-site nav — grows per implementation phase. Phase 1: Blog + Team.
+// IT-site nav — grows per implementation phase.
 const itNavGroups: NavGroup[] = [
   {
     label: null,
     items: [
       { href: '/it/dashboard', label: 'Dashboard', icon: Home, title: 'IT content overview' },
+      { href: '/it/guide', label: 'Guide', icon: BookOpen, title: 'What you can edit & where' },
     ],
   },
   {
@@ -81,6 +82,12 @@ const itNavGroups: NavGroup[] = [
     items: [
       { href: '/it/blog', label: 'Blog', icon: FileText, title: 'IT articles & insights' },
       { href: '/it/team', label: 'Team', icon: Users, title: 'IT team members' },
+    ],
+  },
+  {
+    label: 'Site',
+    items: [
+      { href: '/it/settings', label: 'Settings', icon: Settings, title: 'IT contact info, socials, nav' },
     ],
   },
 ]
