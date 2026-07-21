@@ -17,6 +17,11 @@ import { slugify } from '@/lib/utils'
 
 interface Props {
   initial?: Author
+  /** Per-site overrides. Defaults target the main site. */
+  basePath?: string
+  saveAction?: typeof saveAuthor
+  deleteAction?: typeof deleteAuthor
+  uploadRoot?: string
 }
 
 const empty: Author = {
@@ -32,7 +37,13 @@ const empty: Author = {
   body: '',
 }
 
-export function AuthorForm({ initial }: Props) {
+export function AuthorForm({
+  initial,
+  basePath = '/authors',
+  saveAction = saveAuthor,
+  deleteAction = deleteAuthor,
+  uploadRoot,
+}: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [a, setA] = useState<Author>(initial ?? empty)
@@ -68,10 +79,10 @@ export function AuthorForm({ initial }: Props) {
           order: Number(a.order) || 0,
           status: a.status,
         }
-        const res = await saveAuthor({ slug: a.slug, frontmatter: fm, body: a.body, sha: a.sha, originalSlug: initial?.slug })
+        const res = await saveAction({ slug: a.slug, frontmatter: fm, body: a.body, sha: a.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
-        if (!initial || res.slug !== initial.slug) router.push(`/authors/${res.slug}`)
+        if (!initial || res.slug !== initial.slug) router.push(`${basePath}/${res.slug}`)
         else { setA((prev) => ({ ...prev, sha: res.sha })); router.refresh() }
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Save failed')
@@ -83,10 +94,10 @@ export function AuthorForm({ initial }: Props) {
     if (!initial) return
     startTransition(async () => {
       try {
-        await deleteAuthor(initial.slug, initial.sha)
+        await deleteAction(initial.slug, initial.sha)
         toast.success('Deleted')
         setDirty(false)
-        router.push('/authors')
+        router.push(basePath)
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Delete failed')
       }
@@ -169,6 +180,7 @@ export function AuthorForm({ initial }: Props) {
               onChange={(html) => update('body', html)}
               placeholder="Background, expertise, prior experience…"
               uploadDir="images/team"
+              uploadRoot={uploadRoot}
             />
           </section>
         </div>
@@ -194,6 +206,7 @@ export function AuthorForm({ initial }: Props) {
               value={a.photo ?? ''}
               onChange={(url) => update('photo', url)}
               uploadDir="images/team"
+              uploadRoot={uploadRoot}
               alt={a.photoAlt ?? ''}
               onAltChange={(v) => update('photoAlt', v)}
               altLabel="Photo alt text"

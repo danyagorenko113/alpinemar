@@ -81,7 +81,9 @@ const itNavGroups: NavGroup[] = [
     label: 'IT Content',
     items: [
       { href: '/it/blog', label: 'Blog', icon: FileText, title: 'IT articles & insights' },
+      { href: '/it/services', label: 'Services', icon: Briefcase, title: 'IT service pages' },
       { href: '/it/team', label: 'Team', icon: Users, title: 'IT team members' },
+      { href: '/it/authors', label: 'Authors', icon: PenLine, title: 'IT blog authors & bios' },
     ],
   },
   {

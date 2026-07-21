@@ -2,16 +2,18 @@ export const dynamic = 'force-dynamic'
 
 import { notFound } from 'next/navigation'
 import { getBlogPost, listAllTags, listAllCategories, saveBlogPost, deleteBlogPost } from '@/lib/actions/it/blog'
+import { listAuthorNames } from '@/lib/actions/it/authors'
 import { BlogForm } from '@/components/forms/blog-form'
 import { PageHeader } from '@/components/shared/page-header'
 import { IT_SITE_URL } from '@/lib/it-site'
 
 export default async function EditITBlogPostPage(props: { params: Promise<{ slug: string }> }) {
   const { slug } = await props.params
-  const [post, tags, categories] = await Promise.all([
+  const [post, tags, categories, authorNames] = await Promise.all([
     getBlogPost(slug),
     listAllTags(),
     listAllCategories(),
+    listAuthorNames(),
   ])
   if (!post) notFound()
   return (
@@ -26,7 +28,7 @@ export default async function EditITBlogPostPage(props: { params: Promise<{ slug
         initial={post}
         tagSuggestions={tags}
         categorySuggestions={categories}
-        authorOptions={[]}
+        authorOptions={authorNames}
         basePath="/it/blog"
         siteUrl={IT_SITE_URL}
         saveAction={saveBlogPost}

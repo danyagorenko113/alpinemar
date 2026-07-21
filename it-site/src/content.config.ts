@@ -59,4 +59,19 @@ const insights = defineCollection({
   }),
 });
 
-export const collections = { services, team, insights };
+const authors = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
+  schema: z.object({
+    name: z.string(),
+    title: z.string().optional(),
+    photo: z.string().optional(),
+    photoAlt: z.string().optional(),
+    linkedin: z.string().optional(),
+    email: z.string().optional(),
+    order: z.number().default(0),
+    status,
+    updated,
+  }),
+});
+
+export const collections = { services, team, insights, authors };

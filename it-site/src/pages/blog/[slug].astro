@@ -46,10 +46,11 @@ const bodyWords = (post.body ?? '')
   .filter(Boolean).length;
 const readingTime = Math.max(1, Math.round(bodyWords / 220));
 
-// Author card — only Vanessa Holub appears as author across content. Role
-// matches the live site team roster.
+// Author card — role comes from the Authors collection (editable in the CMS),
+// matched by the post's author name. Falls back to the firm name.
 const author = d.author ?? 'Alpine Mar IT';
-const authorBlurb = author === 'Vanessa Holub' ? 'COO, Alpine Mar IT' : 'Alpine Mar IT';
+const authorRecord = (await getCollection('authors')).find((a) => a.data.name === author);
+const authorBlurb = authorRecord?.data.title ?? 'Alpine Mar IT';
 ---
 
 <BaseLayout
