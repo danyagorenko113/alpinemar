@@ -12,7 +12,7 @@ Monorepo for the Alpine Mar web presence. Three independent apps, all deploying 
 
 **1. The admin CMS (no code).** A web dashboard to edit blog posts, services, team, page copy, navigation, redirects, schema, and more — for both sites via a Main / IT switcher. Every save commits to this repo and the site rebuilds automatically. This is the easiest path for non-developers.
 
-**2. AI assistant (Claude Code, Cursor, etc.).** Point any AI coding assistant at this repo and ask in plain language ("add a blog post about X", "change the phone number", "redirect /old to /new"). The assistant reads **[`CLAUDE.md`](./CLAUDE.md)** — a detailed, fact-checked guide that tells it exactly where everything lives, how to edit it safely, and how to verify. Handy slash commands are pre-installed: `/new-blog-post`, `/new-service`, `/add-team-member`, `/add-redirect`, `/edit-navigation`, `/edit-page-copy`, `/add-schema`, `/verify`, `/publish`.
+**2. AI assistant (Claude Code, Cursor, etc.).** Point any AI coding assistant at this repo and ask in plain language ("add a blog post about X", "change the phone number", "redirect /old to /new"). The assistant reads **[`CLAUDE.md`](./CLAUDE.md)** — a detailed, fact-checked guide that tells it exactly where everything lives, how to edit it safely, and how to verify. Handy slash commands are pre-installed: `/new-blog-post`, `/new-service`, `/add-team-member`, `/add-redirect`, `/edit-navigation`, `/edit-page-copy`, `/add-schema`, `/new-section` (developer: add a homepage section), `/verify`, `/publish`.
 
 ## Run locally (for developers)
 

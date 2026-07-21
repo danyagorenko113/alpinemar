@@ -763,3 +763,76 @@ Main site JS re-registers on `astro:after-swap`. IT site uses `astro:page-load`.
 | IT Site > Settings | `it-site/src/data/site.ts` (site + primaryNav exports) |
 | IT Site > Schema | `it-site/src/data/schema-overrides.json` |
 | IT Site > Redirects | `it-site/vercel.json` |
+
+---
+
+## Building pages & sections (developer tasks)
+
+Adding a **new homepage/landing section**, a new component, or a new page is a code task (editing `.astro` templates), not a content edit. It is well-supported — the sites follow one repeatable section pattern. Match it and the result looks native.
+
+### Where the templates are
+- Main homepage: `src/pages/index.astro` · IT homepage: `it-site/src/pages/index.astro`
+- Any page: `src/pages/**/*.astro` (main) · `it-site/src/pages/**/*.astro` (IT)
+- Layout wrapper (`<head>`, Nav, Footer, scripts): `src/layouts/BaseLayout.astro` · `it-site/src/layouts/BaseLayout.astro`
+- Reusable components: `src/components/**` · `it-site/src/components/**`
+
+An `.astro` page = a `---` frontmatter block (imports + local data) followed by markup. Sections are just sequential `<section>` blocks inside the page.
+
+### Section skeleton (copy this)
+Every homepage section on the main site follows this shape. Reuse it verbatim, changing only the inner content:
+
+```astro
+{/* ── SECTION NAME ────────────────────────────────────────── */}
+<section class="relative overflow-hidden bg-white py-24 md:py-32">
+  <Container width="wide">
+    {/* eyebrow row — MAIN-SITE pattern: square dot + font-display label */}
+    <div data-reveal data-speed="fast" class="mb-10 flex items-center gap-3 text-[var(--color-text-head)]">
+      <span class="block size-2 bg-scooter"></span>
+      <span class="font-display text-[14px] tracking-[-0.005em]">Section label</span>
+    </div>
+    {/* IT-site eyebrow is different: <span class="am-eyebrow">Label</span> beside a
+       <span class="block size-1.5 rounded-full bg-scooter"></span> dot. `am-eyebrow` exists on the IT site only. */}
+    {/* heading grid — 12-col, heading left, intro right */}
+    <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
+      <h2 class="am-hero-display am-gradient-ink md:col-span-7">Section heading.</h2>
+      <p class="font-display text-[16px] leading-relaxed text-[var(--color-text-body)] md:col-span-5">Intro copy.</p>
+    </div>
+    {/* content — cards/list, animate children with data-stagger */}
+    <ul data-stagger class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {items.map((it) => (<li>…</li>))}
+    </ul>
+  </Container>
+</section>
+```
+
+Rules that keep it native:
+- **Vertical rhythm:** sections use `py-24 md:py-32` (or `py-20 md:py-28` for tighter ones). Keep it consistent with neighbours.
+- **Alternate backgrounds:** light sections are `bg-white` or `bg-paper`; dark sections are `bg-[#12122d] text-white` (main) with an optional grid overlay `<div class="grid-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>`. Alternate light/dark down the page as the existing homepage does.
+- **Always wrap content in `<Container width="wide">`** (widths: `reading` | `narrow` | `default` | `wide` | `xl`). `wide` is the homepage standard.
+- **Headings:** `am-hero-display` + `am-gradient-ink` on light, `am-gradient-ink-light` on dark. Never add a `text-*` color to a gradient heading (it sets `color: transparent`).
+- **Animate on scroll:** put `data-reveal` on a block (fade + slide-up), `data-speed="fast"`/`"slow"` to tune, or `data-stagger` on a list to cascade its children. These are wired globally by `BaseLayout.astro` — no JS needed. (IT site uses the same attributes.)
+
+### Reusable components (don't re-implement these)
+| Component | Import | Key props |
+|-----------|--------|-----------|
+| `Container` | `@/components/Container.astro` | `width`, `as`, `class` |
+| `Button` | `@/components/Button.astro` | `href`, `variant` (`primary`\|`secondary`\|`white`\|`ghost`\|`link`), `arrow` |
+| `Eyebrow` | `@/components/Eyebrow.astro` | `align`, `tone` — or use the inline eyebrow pattern above (main) / the `am-eyebrow` class (IT only) |
+| `Icon` | `@/components/Icon.astro` | `name` (key from the SVG set in the file), `class` |
+| `CtaSection` | `@/components/CtaSection.astro` | `variant` — a ready-made contact CTA band |
+
+The IT site has its own equivalents under `it-site/src/components/` (`Container`, `Nav`, `Footer`, `Schema`, `ContactCta`).
+
+### Recipe — add a section to the homepage
+1. Open the homepage template (`src/pages/index.astro` or the IT one).
+2. If the section needs data, add a typed array in the `---` frontmatter (that's how the existing `services`/`industries` arrays are done), **or** — to make it CMS-editable — add it to `src/data/taxonomy.ts` (main homepage data managed by the admin's Homepage editor) and import it.
+3. Paste the **section skeleton** at the right position between existing `<section>` blocks. Pick a background that alternates with its neighbours.
+4. Fill the content with the reusable components + design tokens. Match the class patterns of a nearby section — do not invent new spacing, colors, or fonts.
+5. **Verify:** `npm run build` (main) or `cd it-site && npm run build` (IT), then `npm run dev` and eyeball the section. Check it looks right on mobile (the grids are `grid-cols-1 md:grid-cols-*`).
+6. Commit + deploy (`/publish`).
+
+### Conventions
+- These are **Astro** components — no React, no `'use client'`. Interactivity is plain `<script>` in the component/layout (see how `data-reveal` and the counters are wired in `BaseLayout.astro`).
+- Keep new components small and in `src/components/` (or `it-site/src/components/`); import with the `@/` alias.
+- Do not add a CSS framework or new global styles — everything is Tailwind v4 utilities + the tokens/`am-*` classes already in `global.css`.
+- For a whole **new page**, create `src/pages/<route>.astro`, wrap the body in `<BaseLayout title="…" description="…">`, and it auto-routes to `/<route>/`. Add it to `src/data/sitemap.json` and the nav if it should be discoverable.
