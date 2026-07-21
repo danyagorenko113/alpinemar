@@ -68,6 +68,28 @@ export function previewSrc(path: string | undefined | null): string {
  * HTML string to absolute site URLs — for preview modals inside the
  * admin, where the admin runs on a different origin than the live site.
  */
+/**
+ * Defense-in-depth strip for the admin preview modal. TipTap output can't
+ * contain scripts and the Link extension blocks `javascript:` URLs, but a `.md`
+ * body edited directly in the repo could. Since the preview renders body HTML
+ * via dangerouslySetInnerHTML in the editor's own origin, remove executable
+ * vectors before display. This is not a general-purpose sanitizer — it guards
+ * a trusted-editor preview, not untrusted input.
+ */
+export function sanitizePreviewHtml(html: string): string {
+  if (!html) return html
+  return html
+    // Drop whole executable/embedding elements incl. their content.
+    .replace(/<(script|style|iframe|object|embed|link|meta)\b[\s\S]*?<\/\1\s*>/gi, '')
+    .replace(/<(script|style|iframe|object|embed|link|meta)\b[^>]*\/?>/gi, '')
+    // Strip inline event handlers: on*="…" / on*='…' / on*=value.
+    .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, '')
+    .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, '')
+    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, '')
+    // Neutralize javascript:/vbscript: URLs in href/src.
+    .replace(/(\b(?:href|src)\s*=\s*)(["']?)\s*(?:javascript|vbscript):[^"'>\s]*/gi, '$1$2#')
+}
+
 export function rewriteRelativeUrls(html: string): string {
   if (!html) return html
   const base = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app').replace(/\/$/, '')

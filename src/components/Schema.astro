@@ -9,9 +9,11 @@ interface Props {
 const { data, raw = [] } = Astro.props;
 const items = (Array.isArray(data) ? data : data ? [data] : []).filter(Boolean);
 const rawItems = raw.filter((s) => s && s.trim());
-// Escape `<` so a `</script>` inside any value can't break out of the tag
-// (JSON stays valid — < is a legal escape). Guards against stored XSS.
-const safe = (s: string) => s.replace(/</g, '\\u003c');
+// Escape `<`, `>` and `&` as JSON unicode escapes so nothing inside any value
+// can break out of the <script> tag (`</script>`) or introduce an HTML entity.
+// JSON stays valid — these are all legal string escapes. Guards against stored XSS.
+const safe = (s: string) =>
+  s.replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026');
 ---
 {items.map((d) => <script type="application/ld+json" set:html={safe(JSON.stringify(d))} />)}
 {rawItems.map((s) => <script type="application/ld+json" set:html={safe(s)} />)}

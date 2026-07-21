@@ -159,6 +159,7 @@ export async function listIndustries(): Promise<IndustrySummary[]> {
 }
 
 export async function getIndustry(slug: string): Promise<Industry | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

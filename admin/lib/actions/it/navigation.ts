@@ -18,8 +18,12 @@ export interface ServiceLine {
 }
 
 function assertITPath(p: string): string {
-  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
-  return p
+  const normalized = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  if (normalized.split('/').some((seg) => seg === '..' || seg === '.')) {
+    throw new Error(`Path traversal detected: ${p}`)
+  }
+  if (!normalized.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return normalized
 }
 
 function stripCommentsOutsideStrings(input: string): string {

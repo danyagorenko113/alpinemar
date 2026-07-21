@@ -86,6 +86,7 @@ export async function listAuthorNames(): Promise<string[]> {
 }
 
 export async function getAuthor(slug: string): Promise<Author | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

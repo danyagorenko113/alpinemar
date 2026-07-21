@@ -7,14 +7,40 @@ import { getStore } from '@/lib/store'
 import type { ContentStore } from '@/lib/store/types'
 import { slugify, assertRepoPath } from '@/lib/utils'
 
-const VALID_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/svg+xml'])
+// SVG is intentionally NOT allowed: an SVG can carry <script>/on*/javascript:
+// and, served from our own origin, becomes stored XSS on the public site. Only
+// raster formats are accepted, and each upload is verified by magic bytes below.
+const VALID_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'])
 const MAX_BYTES = 8 * 1024 * 1024 // 8 MB
 const MAX_DIMENSION = 2400 // px; resize larger images down for web use
 const WEBP_QUALITY = 82
 
-// Formats we transcode to WebP for smaller footprint. SVG/GIF/AVIF are kept
-// as-is (SVG is XML, GIF may be animated, AVIF is already efficient).
+// Formats we transcode to WebP for smaller footprint. GIF/AVIF are kept as-is
+// (GIF may be animated, AVIF is already efficient).
 const TRANSCODE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
+
+/**
+ * Detect the real image type from the file's leading bytes. Never trust the
+ * client-supplied Content-Type — a `.js` payload can claim `image/jpeg`.
+ * Returns the detected MIME, or null if the bytes match no allowed raster type.
+ */
+function sniffImageMime(buf: Buffer): string | null {
+  if (buf.length < 12) return null
+  // JPEG: FF D8 FF
+  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'image/jpeg'
+  // PNG: 89 50 4E 47 0D 0A 1A 0A
+  if (buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) return 'image/png'
+  // GIF: "GIF8"
+  if (buf[0] === 0x47 && buf[1] === 0x49 && buf[2] === 0x46 && buf[3] === 0x38) return 'image/gif'
+  // WebP: "RIFF"…"WEBP"
+  if (buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') return 'image/webp'
+  // AVIF: ISO-BMFF "ftyp" box with an avif/avis/mif1 brand
+  if (buf.toString('ascii', 4, 8) === 'ftyp') {
+    const brand = buf.toString('ascii', 8, 12)
+    if (brand === 'avif' || brand === 'avis' || brand === 'mif1') return 'image/avif'
+  }
+  return null
+}
 
 /** Repo path of the media metadata manifest (alt text + upload dates). */
 const META_PATH = 'src/data/media-meta.json'
@@ -115,7 +141,14 @@ export async function uploadImage(
   const year = new Date().getFullYear()
 
   const inputBuf = Buffer.from(await file.arrayBuffer())
-  const { buffer, ext } = await optimize(inputBuf, file.type, originalExt)
+
+  // Verify the actual bytes, not the client-declared Content-Type.
+  const sniffed = sniffImageMime(inputBuf)
+  if (!sniffed || !VALID_TYPES.has(sniffed)) {
+    throw new Error('File content is not a supported image (jpeg, png, webp, gif, avif).')
+  }
+
+  const { buffer, ext } = await optimize(inputBuf, sniffed, originalExt)
 
   const uniqueName = `${baseName}-${Date.now().toString(36)}${ext}`
   const repoPath = `${root}/${dir}/${year}/${uniqueName}`
@@ -407,6 +440,5 @@ function extFromType(t: string): string {
   if (t === 'image/webp') return '.webp'
   if (t === 'image/gif') return '.gif'
   if (t === 'image/avif') return '.avif'
-  if (t === 'image/svg+xml') return '.svg'
   return ''
 }

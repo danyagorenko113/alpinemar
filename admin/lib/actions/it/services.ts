@@ -48,8 +48,12 @@ export interface ITService extends ITServiceFrontmatter {
 export type ITServiceSummary = ITServiceFrontmatter & { slug: string; sha?: string }
 
 function assertITPath(p: string): string {
-  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
-  return p
+  const normalized = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  if (normalized.split('/').some((seg) => seg === '..' || seg === '.')) {
+    throw new Error(`Path traversal detected: ${p}`)
+  }
+  if (!normalized.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return normalized
 }
 
 function slugFromPath(p: string): string {
@@ -100,6 +104,7 @@ export async function listServices(): Promise<ITServiceSummary[]> {
 }
 
 export async function getService(slug: string): Promise<ITService | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

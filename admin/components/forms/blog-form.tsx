@@ -17,7 +17,7 @@ import { TagInput } from '@/components/shared/tag-input'
 import { ConfirmDialog } from '@/components/shared/confirm-dialog'
 import { useUnsavedChanges } from '@/lib/hooks/use-unsaved-changes'
 import { saveBlogPost, deleteBlogPost, type BlogPost, type BlogFrontmatter } from '@/lib/actions/blog'
-import { slugify, formatDate, previewSrc, rewriteRelativeUrls } from '@/lib/utils'
+import { slugify, formatDate, previewSrc, rewriteRelativeUrls, sanitizePreviewHtml } from '@/lib/utils'
 import { toDateString, todayDateString } from '@/lib/store/markdown'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
@@ -587,7 +587,7 @@ export function BlogForm({
                 ))}
               </div>
             )}
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: rewriteRelativeUrls(post.body) || '<p><em>No content yet</em></p>' }} />
+            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: sanitizePreviewHtml(rewriteRelativeUrls(post.body)) || '<p><em>No content yet</em></p>' }} />
           </div>
         </DialogContent>
       </Dialog>

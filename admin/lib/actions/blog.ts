@@ -103,6 +103,7 @@ export async function listBlogPosts(): Promise<BlogSummary[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

@@ -9,8 +9,12 @@ import type { Redirect } from '@/lib/actions/redirects'
 const FILE_PATH = 'it-site/vercel.json'
 
 function assertITPath(p: string): string {
-  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
-  return p
+  const normalized = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  if (normalized.split('/').some((seg) => seg === '..' || seg === '.')) {
+    throw new Error(`Path traversal detected: ${p}`)
+  }
+  if (!normalized.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return normalized
 }
 
 function normalize(list: unknown): Redirect[] {

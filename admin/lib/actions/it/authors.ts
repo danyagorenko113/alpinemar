@@ -14,8 +14,12 @@ const LIST_CACHE_KEY = 'it:authors:list'
 const LIST_TTL_MS = 60_000
 
 function assertITPath(p: string): string {
-  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
-  return p
+  const normalized = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  if (normalized.split('/').some((seg) => seg === '..' || seg === '.')) {
+    throw new Error(`Path traversal detected: ${p}`)
+  }
+  if (!normalized.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return normalized
 }
 
 function slugFromPath(p: string): string {
@@ -71,6 +75,7 @@ export async function listAuthorNames(): Promise<string[]> {
 }
 
 export async function getAuthor(slug: string): Promise<Author | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

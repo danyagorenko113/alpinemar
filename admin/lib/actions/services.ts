@@ -208,6 +208,7 @@ export async function listServiceGroups(): Promise<string[]> {
 }
 
 export async function getService(slug: string): Promise<Service | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

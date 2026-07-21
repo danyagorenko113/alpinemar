@@ -310,7 +310,7 @@ export function MediaLibrary({ initial, initialFolders }: Props) {
             {pending ? 'Working…' : 'Upload image'}
             <input
               type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/svg+xml"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
               className="sr-only"
               onChange={(e) => handleUpload(e.target.files)}
             />

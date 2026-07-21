@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import JSON5 from 'json5'
 import { getStore } from '@/lib/store'
 
 const FILE_PATH = 'src/data/googleReviews.ts'
@@ -26,10 +27,11 @@ interface FileState {
  * Read `src/data/googleReviews.ts` and extract the array literal.
  *
  * The source file is TypeScript with single-quoted keys/values, unquoted keys,
- * trailing commas, curly apostrophes (’) inside quotes, etc. We evaluate the
- * literal in an isolated function scope — inputs come from our own repo, so
- * this is safe. `Function('return ' + text)()` handles TS/JSON5-ish object
- * literals natively without a parser dep.
+ * trailing commas, curly apostrophes (’) inside quotes, etc. We parse the
+ * literal with JSON5, which understands all of that WITHOUT evaluating code.
+ * (Never use `new Function`/`eval` here: the file content comes from the repo,
+ * so an attacker who can write to the repo could otherwise run arbitrary code
+ * inside the server process on the next admin load.)
  */
 async function readState(): Promise<FileState> {
   const store = getStore()
@@ -40,8 +42,7 @@ async function readState(): Promise<FileState> {
   const arrayText = match[1]
   let parsed: unknown
   try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-    parsed = new Function(`"use strict"; return (${arrayText});`)()
+    parsed = JSON5.parse(arrayText)
   } catch (err) {
     throw new Error(`Failed to parse googleReviews array: ${err instanceof Error ? err.message : String(err)}`)
   }

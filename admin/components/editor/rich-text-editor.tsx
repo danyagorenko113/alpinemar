@@ -281,6 +281,9 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir, upload
         openOnClick: false,
         autolink: true,
         HTMLAttributes: { rel: 'noopener', class: 'text-scooter-dark underline' },
+        // Explicitly enforce the protocol allowlist instead of relying on the
+        // library default, so a `javascript:`/`data:` href can never be saved.
+        isAllowedUri: (url, ctx) => ctx.defaultValidate(url),
       }),
       Image.configure({ HTMLAttributes: { class: 'rounded-md max-w-full' } }),
       Underline,

@@ -19,8 +19,12 @@ const LIST_TTL_MS = 60_000
 
 /** Guard: every IT write must stay under it-site/ — never the main collection. */
 function assertITPath(p: string): string {
-  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
-  return p
+  const normalized = p.replace(/\\/g, '/').replace(/\/{2,}/g, '/')
+  if (normalized.split('/').some((seg) => seg === '..' || seg === '.')) {
+    throw new Error(`Path traversal detected: ${p}`)
+  }
+  if (!normalized.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return normalized
 }
 
 function slugFromPath(p: string): string {
@@ -76,6 +80,7 @@ export async function listBlogPosts(): Promise<BlogSummary[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

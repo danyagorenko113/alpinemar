@@ -7,7 +7,29 @@
 @import "@fontsource/poppins/700.css";
 
 /* Satoshi — client's new homepage design system (Figma dhKIjasZE2UVP719jyW4a3).
-   Self-hosted via Fontshare (link tag injected from BaseLayout). */
+   Self-hosted (same woff2 files the IT site uses) so no third-party CDN sits on
+   the critical render path and there's no un-SRI'd remote stylesheet to trust. */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   /* ── Brand palette — source of truth: Figma Style Guide (node 208:799) ──

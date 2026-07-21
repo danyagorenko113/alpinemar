@@ -76,6 +76,7 @@ export async function listTeam(): Promise<TeamSummary[]> {
 }
 
 export async function getTeamMember(slug: string): Promise<TeamMember | null> {
+  assertSafeSlug(slug)
   const store = getStore()
   const doc = await store.read(pathFromSlug(slug))
   if (!doc) return null

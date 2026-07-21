@@ -44,8 +44,9 @@ export async function verifySession(token: string, secret: string): Promise<bool
   if (!/^[0-9a-f]+$/i.test(sigHex)) return false
 
   const key = await keyFromSecret(secret)
+  let sigOk = false
   try {
-    return await crypto.subtle.verify(
+    sigOk = await crypto.subtle.verify(
       'HMAC',
       key,
       fromHex(sigHex),
@@ -54,6 +55,18 @@ export async function verifySession(token: string, secret: string): Promise<bool
   } catch {
     return false
   }
+  if (!sigOk) return false
+
+  // Enforce expiry server-side too — a valid signature is not enough.
+  // Without this, a stolen cookie value replayed directly (bypassing the
+  // browser's maxAge) stays valid until SESSION_SECRET is rotated.
+  const parts = payload.split(':')
+  if (parts.length !== 2 || parts[0] !== 'v1') return false
+  const issuedAt = Number(parts[1])
+  if (!Number.isFinite(issuedAt)) return false
+  if (Date.now() - issuedAt > MAX_AGE_SECONDS * 1000) return false
+
+  return true
 }
 
 export async function issueSession(secret: string): Promise<string> {
