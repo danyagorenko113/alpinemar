@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import type { ContentStore, ListResult, RepoFile, WriteOptions } from './types'
+import type { CommitChange, ContentStore, ListResult, RepoFile, WriteOptions } from './types'
 
 function repoRoot(): string {
   const root = process.env.CONTENT_REPO_ROOT ?? '..'
@@ -95,5 +95,24 @@ export const fsStore: ContentStore = {
     } catch (err) {
       if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err
     }
+  },
+
+  async commit(changes: CommitChange[], _opts: { message: string }): Promise<{ sha: string }> {
+    const root = repoRoot()
+    // Deletes first, then writes — mirrors an atomic rename (old removed, new added).
+    for (const c of changes.filter((x) => x.delete)) {
+      const abs = path.join(root, c.path)
+      try {
+        await fs.unlink(abs)
+      } catch (err) {
+        if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err
+      }
+    }
+    for (const c of changes.filter((x) => !x.delete)) {
+      const abs = path.join(root, c.path)
+      await fs.mkdir(path.dirname(abs), { recursive: true })
+      await fs.writeFile(abs, c.content ?? '', 'utf8')
+    }
+    return { sha: String(Date.now()) }
   },
 }

@@ -67,7 +67,7 @@ export function mergeFrontmatter(
  *  - Rename writes the new path fresh (no stale sha) and removes the old file.
  */
 export async function writeContentEntry(
-  store: Pick<ContentStore, 'read' | 'write' | 'remove'>,
+  store: Pick<ContentStore, 'read' | 'write' | 'commit'>,
   opts: {
     newPath: string
     oldPath?: string
@@ -87,15 +87,19 @@ export async function writeContentEntry(
     }
   }
 
-  const res = await store.write(opts.newPath, opts.content, {
-    message: opts.message,
-    sha: isRename ? undefined : opts.sha,
-  })
-
   if (isRename && opts.oldPath) {
-    await store.remove(opts.oldPath, { message: opts.message, sha: opts.sha })
+    // Atomic: add the new file and remove the old one in a single commit, so a
+    // failure can never leave both files present (orphaned duplicate slug).
+    return store.commit(
+      [
+        { path: opts.newPath, content: opts.content },
+        { path: opts.oldPath, delete: true },
+      ],
+      { message: opts.message },
+    )
   }
-  return { sha: res.sha }
+
+  return store.write(opts.newPath, opts.content, { message: opts.message, sha: opts.sha })
 }
 
 export async function readOriginalFrontmatter(

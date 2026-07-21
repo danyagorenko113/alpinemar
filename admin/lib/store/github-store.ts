@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/rest'
-import type { ContentStore, ListResult, RepoFile, WriteOptions } from './types'
+import type { CommitChange, ContentStore, ListResult, RepoFile, WriteOptions } from './types'
 
 function octo() {
   const token = process.env.GITHUB_TOKEN
@@ -171,6 +171,44 @@ export const githubStore: ContentStore = {
       }
       if (e?.status === 403) {
         throw new Error('GitHub rate limit or permission denied. Try again in a minute.')
+      }
+      throw err
+    }
+  },
+
+  async commit(changes: CommitChange[], opts: { message: string }): Promise<{ sha: string }> {
+    const k = octo()
+    const { owner, repo: r, branch } = repo()
+    const author = commitAuthor()
+    if (changes.length === 0) return { sha: '' }
+
+    // Atomic: build one tree off the current commit that upserts + deletes, then
+    // one commit + ref update. A rename never leaves the old + new file both present.
+    const ref = await k.git.getRef({ owner, repo: r, ref: `heads/${branch}` })
+    const baseCommitSha = ref.data.object.sha
+    const baseCommit = await k.git.getCommit({ owner, repo: r, commit_sha: baseCommitSha })
+
+    const tree = changes.map((c) =>
+      c.delete
+        ? { path: c.path, mode: '100644' as const, type: 'blob' as const, sha: null }
+        : { path: c.path, mode: '100644' as const, type: 'blob' as const, content: c.content ?? '' },
+    )
+
+    try {
+      const newTree = await k.git.createTree({ owner, repo: r, base_tree: baseCommit.data.tree.sha, tree })
+      const newCommit = await k.git.createCommit({
+        owner, repo: r, message: opts.message, tree: newTree.data.sha,
+        parents: [baseCommitSha], author, committer: author,
+      })
+      await k.git.updateRef({ owner, repo: r, ref: `heads/${branch}`, sha: newCommit.data.sha })
+      return { sha: newCommit.data.sha }
+    } catch (err: unknown) {
+      const e = err as { status?: number; message?: string }
+      if (e?.status === 422 || e?.status === 409) {
+        throw Object.assign(
+          new Error('The repository changed while saving (a rename could not be applied atomically). Refresh and try again.'),
+          { code: 'conflict' as const },
+        )
       }
       throw err
     }

@@ -32,6 +32,14 @@ export interface WriteOptions {
   sha?: string
 }
 
+/** One file change in an atomic multi-file commit. */
+export interface CommitChange {
+  path: string
+  /** UTF-8 text to upsert. Omit and set `delete: true` to remove the file. */
+  content?: string
+  delete?: boolean
+}
+
 export interface ContentStore {
   /** Recursive list of all files under `dir` matching the optional extension. */
   list(dir: string, ext?: string): Promise<ListResult[]>
@@ -52,6 +60,12 @@ export interface ContentStore {
   write(path: string, content: string | Buffer, opts: WriteOptions): Promise<{ sha: string }>
   /** Delete a file. Idempotent. */
   remove(path: string, opts: { message: string; sha?: string }): Promise<void>
+  /**
+   * Apply several text upserts/deletes in ONE atomic commit (github backend uses
+   * the Git Data API so a rename can't leave the old + new file both present).
+   * Returns the new commit sha.
+   */
+  commit(changes: CommitChange[], opts: { message: string }): Promise<{ sha: string }>
   /** Backend type, for diagnostics. */
   readonly backend: 'fs' | 'github'
 }
