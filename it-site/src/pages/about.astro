@@ -4,36 +4,13 @@ import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
+import { values } from '@/data/pages';
 
 // Team members — all currently `status: draft` in frontmatter, so we include
 // drafts intentionally here. Bios are TBD; roster + role + optional photo.
 const team = (await getCollection('team'))
   .map((m) => m.data)
   .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
-
-// "What Guides Us" — copy verbatim from it.alpinemar.com/about/.
-const values = [
-  {
-    title: 'Clarity',
-    body: 'Tech doesn’t have to be confusing. We explain everything clearly and make smart solutions feel simple.',
-  },
-  {
-    title: 'Responsiveness',
-    body: 'You won’t wait on hold. You’ll get a person, quickly.',
-  },
-  {
-    title: 'Trust',
-    body: 'We give honest advice, even if it’s not what’s easiest for us.',
-  },
-  {
-    title: 'Proactivity',
-    body: 'We don’t just fix things, we prevent problems before they start.',
-  },
-  {
-    title: 'Partnership',
-    body: 'We see ourselves as an extension of your team, not just another vendor.',
-  },
-];
 
 // Initials helper for photoless members.
 const initials = (name: string) =>

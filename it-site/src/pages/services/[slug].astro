@@ -4,6 +4,7 @@ import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection, render } from 'astro:content';
 import { site } from '@/data/site';
+import { businessHours } from '@/data/pages';
 
 export async function getStaticPaths() {
   const items = await getCollection('services');
@@ -110,7 +111,7 @@ const related = allServices
                 {site.phone}
               </a>
               <p class="mt-1 font-display text-[12px] text-navy-500">
-                Monday–Friday, 9 AM–5 PM ET
+                {businessHours}
               </p>
             </div>
           </div>

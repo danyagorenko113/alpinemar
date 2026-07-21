@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { site } from '@/data/site';
+import { businessHours, hubspot } from '@/data/pages';
 ---
 
 <BaseLayout
@@ -90,7 +91,7 @@ import { site } from '@/data/site';
               <p class="font-display text-[14px] leading-[1.6] text-white/75">
                 Prefer to call? We’re happy to chat. Reach us at
                 <a href={`tel:${site.phoneHref}`} class="text-white underline underline-offset-4 hover:text-scooter">{site.phone}</a>.
-                Monday–Friday, 9 AM–5 PM ET.
+                {businessHours}.
               </p>
             </div>
           </div>
@@ -102,9 +103,9 @@ import { site } from '@/data/site';
             <div
               id="it-contact-hs"
               class="hs-form-target"
-              data-hs-region="na1"
-              data-hs-portal="42958375"
-              data-hs-form="1636ed35-b770-47ad-87c7-127ccaa449d0"
+              data-hs-region={hubspot.region}
+              data-hs-portal={hubspot.portalId}
+              data-hs-form={hubspot.formId}
             >
               <p class="hs-form-loading font-display text-[14px] text-navy-500">Loading form…</p>
             </div>

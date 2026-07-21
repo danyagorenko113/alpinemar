@@ -1,9 +1,10 @@
 ---
 import Container from './Container.astro';
 import { site } from '@/data/site';
+import { businessHours, hubspot } from '@/data/pages';
 
 // Shared bottom contact section — "Let's get on a first name basis." block.
-// The form is embedded from HubSpot (Portal 42958375, region na1).
+// The form is embedded from HubSpot; config lives in src/data/pages.ts.
 ---
 
 <section class="relative overflow-hidden bg-[#12122d] py-24 text-white md:py-32">
@@ -51,7 +52,7 @@ import { site } from '@/data/site';
         <p class="max-w-sm font-display text-[13px] leading-[1.6] text-white/50">
           Prefer to call? We’re happy to chat. Reach us at
           <a href={`tel:${site.phoneHref}`} class="text-white/70 underline underline-offset-4 hover:text-scooter">{site.phone}</a>.
-          Monday–Friday, 9 AM–5 PM ET.
+          {businessHours}.
         </p>
       </div>
 
@@ -61,9 +62,9 @@ import { site } from '@/data/site';
           <div
             id="it-consult-hs"
             class="hs-form-target"
-            data-hs-region="na1"
-            data-hs-portal="42958375"
-            data-hs-form="1636ed35-b770-47ad-87c7-127ccaa449d0"
+            data-hs-region={hubspot.region}
+            data-hs-portal={hubspot.portalId}
+            data-hs-form={hubspot.formId}
           >
             <p class="hs-form-loading font-display text-[14px] text-navy-500">Loading form…</p>
           </div>

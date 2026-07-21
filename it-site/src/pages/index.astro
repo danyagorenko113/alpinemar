@@ -3,48 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { site } from '@/data/site';
-
-// ── Home services — the four real service lines, titles and blurbs
-// verbatim from it.alpinemar.com/services/. The live homepage lists five
-// marketing categories that don't exist as pages; we link the actual
-// services instead so anchors match their target pages (SEO-correct).
-// Five cards, verbatim from the live it.alpinemar.com homepage "IT solutions
-// that move your business forward." section (titles, order, and blurbs match
-// one to one). The three umbrella cards have no dedicated page on the live
-// site, so they point to the full services catalog.
-const homeServices = [
-  {
-    title: 'Technology & Cybersecurity',
-    href: '/services/',
-    blurb:
-      'Our technology consulting services help businesses modernize systems, implement the right tools, and minimize risk without overwhelming your teams. From cloud migrations to endpoint security, we build resilient, flexible infrastructures designed for growth.',
-  },
-  {
-    title: 'Internet & Network Cybersecurity',
-    href: '/services/cybersecurity/',
-    blurb:
-      'Our cybersecurity consulting services are built to outpace today’s threats. We secure your networks, safeguard your data, and keep your operations running with 24/7 visibility and protection.',
-  },
-  {
-    title: 'Managed IT Services',
-    href: '/services/',
-    blurb:
-      'With Alpine Mar’s managed IT services, you get ongoing support, system monitoring, and strategic planning from a team that acts like an extension of yours. Scalable, secure, and backed by real people who pick up the phone when you call.',
-  },
-  {
-    title: 'IT Consulting Services',
-    href: '/services/it-consulting/',
-    blurb:
-      'Technology should drive your business forward, not slow it down. Our IT consulting services help align your tech with your goals, so you can make smarter decisions, avoid costly pitfalls, and plan for what’s next.',
-  },
-  {
-    title: 'Remote IT Support',
-    href: '/services/remote-it-support/',
-    blurb:
-      'Whether you’re remote-first or have satellite offices, our remote IT support team delivers fast, reliable help when and where you need it. We fix issues before they disrupt your business.',
-  },
-];
-
+import { homeServices } from '@/data/pages';
 ---
 
 <BaseLayout

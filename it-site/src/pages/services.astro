@@ -4,6 +4,7 @@ import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
 import { moreServices } from '@/data/site';
+import { serviceLineCards } from '@/data/pages';
 
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
@@ -16,34 +17,8 @@ const bySlug = new Map(
 // Remaining services — live mega-menu order, after the four service lines.
 const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
 
-// Featured service lines — titles and copy verbatim from
-// it.alpinemar.com/services/.
-const serviceLines = [
-  {
-    slug: 'remote-it-support',
-    title: 'Remote IT Support Services',
-    blurb:
-      'Technology problems do not wait for a convenient time. When something breaks, your team needs help fast and they need it from someone who actually knows what they are doing.',
-  },
-  {
-    slug: 'incident-response',
-    title: 'Incident Response Services',
-    blurb:
-      'When a security incident hits, every minute counts. The difference between a manageable disruption and a full-blown crisis often comes down to how fast and how effectively you respond in the first hours.',
-  },
-  {
-    slug: 'cybersecurity',
-    title: 'Cybersecurity Services',
-    blurb:
-      'Cyberthreats are not going away. They are getting more targeted, more sophisticated, and more expensive to recover from.',
-  },
-  {
-    slug: 'it-consulting',
-    title: 'IT Consulting Services',
-    blurb:
-      'Technology is supposed to make your business easier to run. We provide tailored solutions and strategic guidance that align with your business goals and improve operational efficiency.',
-  },
-].map((row) => ({ ...row, service: bySlug.get(row.slug) }));
+// Featured service-line cards — editable copy lives in src/data/pages.ts.
+const serviceLines = serviceLineCards.map((row) => ({ ...row, service: bySlug.get(row.slug) }));
 ---
 
 <BaseLayout
