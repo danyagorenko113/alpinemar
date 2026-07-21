@@ -12,6 +12,8 @@ type SortDir = 'asc' | 'desc'
 
 interface Props {
   posts: BlogSummary[]
+  /** Row link base — '/blog' (main) or '/it/blog' (IT). */
+  basePath?: string
 }
 
 const COLUMNS: Array<{ key: SortKey; label: string; className?: string }> = [
@@ -37,7 +39,7 @@ function sortValue(p: BlogSummary, key: SortKey): string {
   }
 }
 
-export function BlogTable({ posts }: Props) {
+export function BlogTable({ posts, basePath = '/blog' }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>('date')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
@@ -99,7 +101,7 @@ export function BlogTable({ posts }: Props) {
           {sorted.map((p) => (
             <tr key={p.slug} className="hover:bg-navy-50/50 transition-colors">
               <td className="px-4 py-3 align-top">
-                <Link href={`/blog/${p.slug}`} className="block group">
+                <Link href={`${basePath}/${p.slug}`} className="block group">
                   <div className="font-medium text-navy-900 group-hover:text-scooter-dark transition-colors line-clamp-1">
                     {p.title}
                   </div>

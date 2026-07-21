@@ -39,6 +39,8 @@ interface RichTextEditorProps {
   onChange: (html: string) => void
   placeholder?: string
   uploadDir?: string
+  /** Public root for image uploads: 'public' (main) or 'it-site/public' (IT). */
+  uploadRoot?: string
 }
 
 function ToolbarBtn({
@@ -234,7 +236,7 @@ function AltDialog({ open, previewUrl, suggestedAlt, confirmLabel = 'Insert', on
 // Main editor
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function RichTextEditor({ value, onChange, placeholder, uploadDir }: RichTextEditorProps) {
+export function RichTextEditor({ value, onChange, placeholder, uploadDir, uploadRoot }: RichTextEditorProps) {
   const [uploading, setUploading] = useState(false)
   const [linkDialog, setLinkDialog] = useState<{ open: boolean; url: string; newTab: boolean } | null>(null)
   const [altDialog, setAltDialog] = useState<{ open: boolean; url: string; suggested: string; mode?: 'insert' | 'edit' } | null>(null)
@@ -251,7 +253,7 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
       try {
         const fd = new FormData()
         fd.append('file', file)
-        const { url } = await uploadImage(fd, { dir: uploadDir })
+        const { url } = await uploadImage(fd, { dir: uploadDir, root: uploadRoot })
         const base = file.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')
         insertUploadedImage(editor, url, base)
       } catch (err) {
@@ -262,7 +264,7 @@ export function RichTextEditor({ value, onChange, placeholder, uploadDir }: Rich
         setUploading(false)
       }
     },
-    [uploadDir, insertUploadedImage],
+    [uploadDir, uploadRoot, insertUploadedImage],
   )
 
   const editor = useEditor({

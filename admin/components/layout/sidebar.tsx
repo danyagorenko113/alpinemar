@@ -68,11 +68,53 @@ const navGroups: NavGroup[] = [
   },
 ]
 
+// IT-site nav — grows per implementation phase. Phase 1: Blog + Team.
+const itNavGroups: NavGroup[] = [
+  {
+    label: null,
+    items: [
+      { href: '/it/dashboard', label: 'Dashboard', icon: Home, title: 'IT content overview' },
+    ],
+  },
+  {
+    label: 'IT Content',
+    items: [
+      { href: '/it/blog', label: 'Blog', icon: FileText, title: 'IT articles & insights' },
+      { href: '/it/team', label: 'Team', icon: Users, title: 'IT team members' },
+    ],
+  },
+]
+
+/** Two-tab switcher between the main-site admin and the IT-site admin. */
+function SiteSwitcher({ isIt, onNavigate }: { isIt: boolean; onNavigate?: () => void }) {
+  const tab = (href: string, label: string, active: boolean) => (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className={cn(
+        'flex-1 rounded-md px-2.5 py-1.5 text-center text-xs font-medium transition-colors',
+        active ? 'bg-scooter text-navy-900' : 'text-white/70 hover:bg-white/[0.06] hover:text-white',
+      )}
+    >
+      {label}
+    </Link>
+  )
+  return (
+    <div className="mb-4 flex gap-1 rounded-lg bg-white/[0.04] p-1">
+      {tab('/dashboard', 'Main Site', !isIt)}
+      {tab('/it/dashboard', 'IT Site', isIt)}
+    </div>
+  )
+}
+
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname()
+  const isIt = pathname === '/it' || pathname.startsWith('/it/')
+  const groups = isIt ? itNavGroups : navGroups
   return (
     <>
-      {navGroups.map((group, idx) => (
+      <SiteSwitcher isIt={isIt} onNavigate={onNavigate} />
+      {groups.map((group, idx) => (
         <div key={group.label ?? `g-${idx}`} className={idx > 0 ? 'mt-6' : ''}>
           {group.label && (
             <div className="flex items-center gap-2 px-3 pb-2 text-[10px] font-medium uppercase tracking-[0.14em] text-scooter">
@@ -109,6 +151,11 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 
 function FooterLinks() {
   const router = useRouter()
+  const pathname = usePathname()
+  const isIt = pathname === '/it' || pathname.startsWith('/it/')
+  const siteUrl = isIt
+    ? (process.env.NEXT_PUBLIC_IT_SITE_URL ?? 'https://it.alpinemar.com')
+    : (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app')
   async function handleSignOut() {
     await logout()
     router.push('/login')
@@ -117,13 +164,13 @@ function FooterLinks() {
   return (
     <div className="space-y-1">
       <a
-        href={process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'}
+        href={siteUrl}
         target="_blank"
         rel="noopener"
         className="font-display flex items-center gap-3 rounded-md px-3 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white transition-colors"
       >
         <ExternalLink className="h-4 w-4" />
-        View site
+        {isIt ? 'View IT site' : 'View site'}
       </a>
       <button
         type="button"

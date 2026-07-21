@@ -50,6 +50,9 @@ const insights = defineCollection({
     cover: z.string().optional(),
     category: z.string().optional(),
     tags: z.array(z.string()).default([]),
+    // Editor-controlled Featured flag (set in the CMS). When present, it wins
+    // over the automatic newest-Cybersecurity selection on the blog home.
+    featured: z.boolean().optional(),
     status,
     updated,
     seo,

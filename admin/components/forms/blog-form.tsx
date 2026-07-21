@@ -31,6 +31,20 @@ interface BlogFormProps {
   categorySuggestions: string[]
   /** Names from the authors collection. Empty → free-text author input. */
   authorOptions: string[]
+  /**
+   * Per-site overrides. Defaults target the MAIN site so existing callers are
+   * unaffected; the IT admin passes its own base path, site URL, and actions.
+   */
+  basePath?: string
+  siteUrl?: string
+  saveAction?: typeof saveBlogPost
+  deleteAction?: typeof deleteBlogPost
+  /** Public root for image uploads: 'it-site/public' for the IT site. */
+  uploadRoot?: string
+  /** Show the "Featured on the blog home" toggle (IT site only). */
+  showFeatured?: boolean
+  /** Show the canonical-URL override (hidden on IT — no canonical in schema). */
+  showCanonical?: boolean
 }
 
 const empty: BlogPost = {
@@ -48,7 +62,19 @@ const empty: BlogPost = {
   body: '',
 }
 
-export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorOptions }: BlogFormProps) {
+export function BlogForm({
+  initial,
+  tagSuggestions,
+  categorySuggestions,
+  authorOptions,
+  basePath = '/blog',
+  siteUrl = SITE_URL,
+  saveAction = saveBlogPost,
+  deleteAction = deleteBlogPost,
+  uploadRoot,
+  showFeatured = false,
+  showCanonical = true,
+}: BlogFormProps) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [post, setPost] = useState<BlogPost>(initial ?? empty)
@@ -108,12 +134,13 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
           // Bare YYYY-MM-DD — no local-time datetime round-trip (Astro coerces it).
           updated: updatedOverride || undefined,
           seo: post.seo,
+          ...(showFeatured ? { featured: post.featured || undefined } : {}),
         }
-        const res = await saveBlogPost({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha, originalSlug: initial?.slug })
+        const res = await saveAction({ slug: post.slug, frontmatter: fm, body: post.body, sha: post.sha, originalSlug: initial?.slug })
         toast.success(initial ? 'Saved' : 'Created')
         setDirty(false)
         if (!initial || res.slug !== initial.slug) {
-          router.push(`/blog/${res.slug}`)
+          router.push(`${basePath}/${res.slug}`)
         } else {
           // Adopt the new blob SHA so a second save in the same session doesn't
           // 422 against a stale SHA.
@@ -130,10 +157,10 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
     if (!initial) return
     startTransition(async () => {
       try {
-        await deleteBlogPost(initial.slug, initial.sha)
+        await deleteAction(initial.slug, initial.sha)
         toast.success('Deleted')
         setDirty(false)
-        router.push('/blog')
+        router.push(basePath)
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Delete failed')
       }
@@ -145,7 +172,7 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
   if (post.category && !categoryChoices.includes(post.category)) categoryChoices.push(post.category)
   categoryChoices.sort()
 
-  const canonicalPlaceholder = `${SITE_URL}/blog/${post.slug || '…'}/`
+  const canonicalPlaceholder = `${siteUrl}/blog/${post.slug || '…'}/`
 
   return (
     <>
@@ -221,6 +248,7 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
               onChange={(html) => update('body', html)}
               placeholder="Start writing the article…"
               uploadDir="images/blog"
+              uploadRoot={uploadRoot}
             />
           </section>
 
@@ -248,25 +276,27 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
                 placeholder="Falls back to excerpt"
               />
             </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="seo-canonical">
-                Canonical URL
-                <HelpTip title="How canonical works">
-                  Every page gets a self-referencing canonical tag automatically. Only fill
-                  this to point search engines at a different URL (e.g. if this article was
-                  first published elsewhere).
-                </HelpTip>
-              </Label>
-              <Input
-                id="seo-canonical"
-                value={post.seo?.canonical ?? ''}
-                onChange={(e) => updateSeo('canonical', e.target.value)}
-                placeholder={canonicalPlaceholder}
-              />
-              <p className="text-xs text-muted-foreground">
-                Leave blank for the self-referencing default shown above.
-              </p>
-            </div>
+            {showCanonical && (
+              <div className="space-y-1.5">
+                <Label htmlFor="seo-canonical">
+                  Canonical URL
+                  <HelpTip title="How canonical works">
+                    Every page gets a self-referencing canonical tag automatically. Only fill
+                    this to point search engines at a different URL (e.g. if this article was
+                    first published elsewhere).
+                  </HelpTip>
+                </Label>
+                <Input
+                  id="seo-canonical"
+                  value={post.seo?.canonical ?? ''}
+                  onChange={(e) => updateSeo('canonical', e.target.value)}
+                  placeholder={canonicalPlaceholder}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Leave blank for the self-referencing default shown above.
+                </p>
+              </div>
+            )}
           </section>
         </div>
 
@@ -288,6 +318,29 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
             </p>
           </section>
 
+          {showFeatured && (
+            <section className="rounded-lg border bg-card p-5 space-y-3">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!!post.featured}
+                  onChange={(e) => update('featured', e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-input"
+                />
+                <span className="space-y-1">
+                  <span className="block text-sm font-medium">
+                    Featured on the blog home
+                  </span>
+                  <span className="block text-xs text-muted-foreground">
+                    Pins this post to the large Featured card at the top of /blog/.
+                    If several are checked, the newest wins. Leave all off to fall
+                    back to the newest Cybersecurity post.
+                  </span>
+                </span>
+              </label>
+            </section>
+          )}
+
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <Label>
               Cover image
@@ -301,6 +354,7 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
               value={post.cover ?? ''}
               onChange={(url) => update('cover', url)}
               uploadDir="images/blog"
+              uploadRoot={uploadRoot}
               alt={post.coverAlt ?? ''}
               onAltChange={(v) => update('coverAlt', v)}
               altLabel="Cover alt text"
@@ -493,7 +547,7 @@ export function BlogForm({ initial, tagSuggestions, categorySuggestions, authorO
             </Button>
             {initial && (
               <Button asChild variant="outline">
-                <a href={`${SITE_URL}/blog/${initial.slug}/`} target="_blank" rel="noopener noreferrer">
+                <a href={`${siteUrl}/blog/${initial.slug}/`} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4" />
                   View on site
                 </a>

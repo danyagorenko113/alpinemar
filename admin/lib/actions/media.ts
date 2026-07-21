@@ -91,11 +91,19 @@ async function updateMeta(store: ContentStore, message: string, mutate: (meta: M
  * Upload an image. We store under `public/<dir>/<year>/<slug>.<ext>` so the
  * Astro site serves it at `/<dir>/<year>/<slug>.<ext>` after the next build.
  */
-export async function uploadImage(form: FormData, opts: { dir?: string; alt?: string } = {}): Promise<UploadResult> {
+export async function uploadImage(
+  form: FormData,
+  opts: { dir?: string; alt?: string; root?: string } = {},
+): Promise<UploadResult> {
   const file = form.get('file') as File | null
   if (!file) throw new Error('No file provided')
   if (!VALID_TYPES.has(file.type)) throw new Error(`Unsupported file type: ${file.type}`)
   if (file.size > MAX_BYTES) throw new Error(`File too large (${Math.round(file.size / 1024 / 1024)}MB > 8MB)`)
+
+  // Public root — allowlisted so a hostile `root` can't escape the repo. The
+  // main site serves `public/`; the IT site serves `it-site/public/`. The
+  // returned URL is site-relative either way (both roots map to `/`).
+  const root = opts.root === 'it-site/public' ? 'it-site/public' : 'public'
 
   // Sanitize the destination dir: strip leading/trailing slashes, slugify each
   // segment so a hostile `dir` can't write outside public/images/.
@@ -110,7 +118,7 @@ export async function uploadImage(form: FormData, opts: { dir?: string; alt?: st
   const { buffer, ext } = await optimize(inputBuf, file.type, originalExt)
 
   const uniqueName = `${baseName}-${Date.now().toString(36)}${ext}`
-  const repoPath = `public/${dir}/${year}/${uniqueName}`
+  const repoPath = `${root}/${dir}/${year}/${uniqueName}`
 
   const store = getStore()
   await store.write(repoPath, buffer, { message: `chore(admin): upload ${uniqueName}` })

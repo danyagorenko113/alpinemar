@@ -23,9 +23,11 @@ interface ImageUploaderProps {
    */
   onAltChange?: (alt: string) => void
   altLabel?: string
+  /** Public root to upload into: 'public' (main site) or 'it-site/public' (IT site). */
+  uploadRoot?: string
 }
 
-export function ImageUploader({ value, onChange, uploadDir, className, alt, onAltChange, altLabel = 'Alt text' }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, uploadDir, className, alt, onAltChange, altLabel = 'Alt text', uploadRoot }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
 
@@ -36,7 +38,7 @@ export function ImageUploader({ value, onChange, uploadDir, className, alt, onAl
     try {
       const fd = new FormData()
       fd.append('file', file)
-      const { url } = await uploadImage(fd, { dir: uploadDir, alt: alt?.trim() || undefined })
+      const { url } = await uploadImage(fd, { dir: uploadDir, alt: alt?.trim() || undefined, root: uploadRoot })
       onChange(url)
       toast.success('Image uploaded')
     } catch (err) {

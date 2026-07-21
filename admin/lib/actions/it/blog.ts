@@ -1,59 +1,31 @@
 'use server'
 
+/**
+ * IT-site blog (Insights) actions. Mirror of lib/actions/blog.ts but pointed at
+ * the IT site's collection (it-site/src/content/insights) with its own cache
+ * namespace and revalidation paths. Types are shared with the main blog action.
+ */
+
 import { revalidatePath } from 'next/cache'
 import { getStore } from '@/lib/store'
 import { mergeFrontmatter, parseDoc, readOriginalFrontmatter, serializeDoc, toDateString, writeContentEntry } from '@/lib/store/markdown'
 import { slugify, assertSafeSlug } from '@/lib/utils'
 import { cached, invalidatePrefix } from '@/lib/cache'
+import type { BlogFrontmatter, BlogPost, BlogSummary, SaveBlogInput } from '@/lib/actions/blog'
 
-const COLLECTION_DIR = 'src/content/insights'
-const LIST_CACHE_KEY = 'blog:list'
+const COLLECTION_DIR = 'it-site/src/content/insights'
+const LIST_CACHE_KEY = 'it:blog:list'
 const LIST_TTL_MS = 60_000
 
-export type ContentStatus = 'draft' | 'published'
-
-export interface BlogSeo {
-  title?: string
-  description?: string
-  /** Canonical URL override — defaults to the post's own URL on the site. */
-  canonical?: string
-}
-
-export interface BlogFrontmatter {
-  title: string
-  excerpt: string
-  date: string // YYYY-MM-DD
-  author?: string
-  cover?: string
-  /** Alt text for the cover image. */
-  coverAlt?: string
-  /** Single category (original-site convention); tags stay separate. */
-  category?: string
-  tags: string[]
-  status: ContentStatus
-  updated?: string // ISO datetime
-  seo?: BlogSeo
-  /**
-   * IT-site only: marks the manually-chosen Featured post. The main site
-   * features page.data[0] and never writes this field.
-   */
-  featured?: boolean
-}
-
-export interface BlogPost extends BlogFrontmatter {
-  slug: string
-  body: string
-  sha?: string
-}
-
-export interface BlogSummary extends BlogFrontmatter {
-  slug: string
-  sha?: string
+/** Guard: every IT write must stay under it-site/ — never the main collection. */
+function assertITPath(p: string): string {
+  if (!p.startsWith('it-site/')) throw new Error(`Refusing to write outside it-site/: ${p}`)
+  return p
 }
 
 function slugFromPath(p: string): string {
   return p
-    .replace(/^src\/content\/insights\//, '')
+    .replace(/^it-site\/src\/content\/insights\//, '')
     .replace(/\.(md|mdx)$/i, '')
 }
 
@@ -63,7 +35,7 @@ function pathFromSlug(slug: string): string {
 
 function normalize(data: Record<string, unknown>): BlogFrontmatter {
   const rawStatus = data.status
-  const status: ContentStatus = rawStatus === 'draft' ? 'draft' : 'published'
+  const status = rawStatus === 'draft' ? 'draft' : 'published'
   const rawUpdated = data.updated
   const updated = rawUpdated instanceof Date
     ? rawUpdated.toISOString()
@@ -82,6 +54,7 @@ function normalize(data: Record<string, unknown>): BlogFrontmatter {
     status,
     updated,
     seo: data.seo as BlogFrontmatter['seo'],
+    featured: data.featured === true,
   }
 }
 
@@ -110,48 +83,40 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   return { slug, body, sha: doc.sha, ...normalize(data) }
 }
 
-export interface SaveBlogInput {
-  slug: string
-  frontmatter: BlogFrontmatter
-  body: string
-  sha?: string
-  /** When renaming, the slug being edited — its old file is removed. */
-  originalSlug?: string
-}
-
 export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string; sha: string }> {
   const store = getStore()
   const finalSlug = slugify(input.slug || input.frontmatter.title)
   if (!finalSlug) throw new Error('Slug is required')
   if (!input.frontmatter.title) throw new Error('Title is required')
 
-  const path = pathFromSlug(finalSlug)
+  const path = assertITPath(pathFromSlug(finalSlug))
   const oldSlug = input.originalSlug ? slugify(input.originalSlug) : undefined
-  const oldPath = oldSlug && oldSlug !== finalSlug ? pathFromSlug(oldSlug) : undefined
+  const oldPath = oldSlug && oldSlug !== finalSlug ? assertITPath(pathFromSlug(oldSlug)) : undefined
   const original = await readOriginalFrontmatter(store, oldPath ?? path, {
     collectionDir: COLLECTION_DIR,
     sha: input.sha,
   })
 
+  const fm = input.frontmatter
   const updates: Record<string, unknown> = {
-    title: input.frontmatter.title,
-    excerpt: input.frontmatter.excerpt,
-    date: input.frontmatter.date,
-    author: input.frontmatter.author,
-    cover: input.frontmatter.cover,
-    coverAlt: input.frontmatter.coverAlt,
-    category: input.frontmatter.category,
-    tags: input.frontmatter.tags,
-    status: input.frontmatter.status === 'draft' ? 'draft' : undefined,
-    // Explicit override wins; otherwise the CMS stamps the save time.
-    updated: input.frontmatter.updated || new Date().toISOString(),
+    title: fm.title,
+    excerpt: fm.excerpt,
+    date: fm.date,
+    author: fm.author,
+    cover: fm.cover,
+    coverAlt: fm.coverAlt,
+    category: fm.category,
+    tags: fm.tags,
+    status: fm.status === 'draft' ? 'draft' : undefined,
+    updated: fm.updated || new Date().toISOString(),
+    // IT-only: manual Featured flag. Written only when true; cleared otherwise.
+    featured: fm.featured ? true : undefined,
   }
-  const seo = input.frontmatter.seo
-  if (seo && (seo.title || seo.description || seo.canonical)) {
+  const seo = fm.seo
+  if (seo && (seo.title || seo.description)) {
     updates.seo = {
       ...(seo.title ? { title: seo.title } : {}),
       ...(seo.description ? { description: seo.description } : {}),
-      ...(seo.canonical ? { canonical: seo.canonical } : {}),
     }
   } else {
     updates.seo = undefined
@@ -164,21 +129,21 @@ export async function saveBlogPost(input: SaveBlogInput): Promise<{ slug: string
     oldPath,
     sha: input.sha,
     content: fileContent,
-    message: `content(blog): ${oldPath ? 'rename' : input.sha ? 'update' : 'create'} ${finalSlug}`,
+    message: `content(it-blog): ${oldPath ? 'rename' : input.sha ? 'update' : 'create'} ${finalSlug}`,
   })
-  invalidatePrefix('blog:')
-  revalidatePath('/blog')
-  revalidatePath(`/blog/${finalSlug}`)
-  if (oldSlug && oldSlug !== finalSlug) revalidatePath(`/blog/${oldSlug}`)
+  invalidatePrefix('it:blog:')
+  revalidatePath('/it/blog')
+  revalidatePath(`/it/blog/${finalSlug}`)
+  if (oldSlug && oldSlug !== finalSlug) revalidatePath(`/it/blog/${oldSlug}`)
   return { slug: finalSlug, sha: res.sha }
 }
 
 export async function deleteBlogPost(slug: string, sha?: string): Promise<void> {
   assertSafeSlug(slug)
   const store = getStore()
-  await store.remove(pathFromSlug(slug), { message: `content(blog): delete ${slug}`, sha })
-  invalidatePrefix('blog:')
-  revalidatePath('/blog')
+  await store.remove(assertITPath(pathFromSlug(slug)), { message: `content(it-blog): delete ${slug}`, sha })
+  invalidatePrefix('it:blog:')
+  revalidatePath('/it/blog')
 }
 
 export async function listAllTags(): Promise<string[]> {

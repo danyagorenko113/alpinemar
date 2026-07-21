@@ -12,9 +12,12 @@ const slugOf = (id: string) => id.replace(/\.md$/, '').split('/').pop();
 const dateFmt = (d: string | Date) =>
   new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-// Featured = newest Cybersecurity post if available, else newest overall.
+// Featured = the post an editor pinned in the CMS (newest wins if several),
+// else the newest Cybersecurity post, else the newest overall.
 const featured =
-  posts.find((p) => p.data.category === 'Cybersecurity') ?? posts[0];
+  posts.find((p) => p.data.featured) ??
+  posts.find((p) => p.data.category === 'Cybersecurity') ??
+  posts[0];
 const rest = posts.filter((p) => p.id !== featured?.id);
 
 // Distinct categories, sorted by post count.
