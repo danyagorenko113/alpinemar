@@ -38,7 +38,7 @@ alpinemar/                         ← GitHub repo root
 │   ├── data/
 │   │   ├── site.ts                ← Firm identity, contact info, socials (object)
 │   │   ├── navigation.ts          ← serviceMenu, industryMenu, companyMenu
-│   │   ├── taxonomy.ts            ← Homepage + hub cards, logos, integrations
+│   │   ├── taxonomy.ts            ← allServices (Related-services + industry cross-links) & industries (the /industries/ hub). NOTE: its homepage-card exports are edited by the admin but NOT rendered on the live homepage (which uses local consts in index.astro).
 │   │   ├── googleReviews.ts       ← 11 Google reviews (array, order matters)
 │   │   ├── reports.ts             ← 3 live report detail pages
 │   │   ├── about.json             ← About Us page copy
@@ -49,8 +49,8 @@ alpinemar/                         ← GitHub repo root
 │   ├── pages/                     ← Astro page routes
 │   ├── components/                ← Astro components
 │   ├── layouts/BaseLayout.astro
-│   └── styles/global.css          ← @theme tokens + all CSS utilities
-├── content.config.ts              ← Zod schemas for all 5 collections
+│   ├── styles/global.css          ← @theme tokens + all CSS utilities
+│   └── content.config.ts          ← Zod schemas for all 5 collections
 ├── astro.config.mjs               ← site: 'https://alpinemar.com'
 ├── vercel.json                    ← 31 permanent 301 redirects (main site only)
 ├── package.json                   ← scripts: dev (4321), build, preview
@@ -71,8 +71,8 @@ alpinemar/                         ← GitHub repo root
 │   │   │   └── schema-overrides.json
 │   │   ├── components/
 │   │   ├── layouts/BaseLayout.astro  ← NO ClientRouter; uses 'astro:page-load'
-│   │   └── styles/global.css      ← Same @theme tokens; adds .am-* IT-only utilities
-│   ├── content.config.ts          ← 4 collections: services, team, insights, authors (NO industries)
+│   │   ├── styles/global.css      ← Same @theme tokens; adds .am-* IT-only utilities
+│   │   └── content.config.ts      ← 4 collections: services, team, insights, authors (NO industries)
 │   ├── astro.config.mjs           ← site: 'https://it.alpinemar.com'
 │   ├── vercel.json                ← Empty redirects array (IT redirects go HERE, not root)
 │   ├── public/fonts/              ← Self-hosted Satoshi woff2 (satoshi-400/500/700.woff2)
@@ -155,17 +155,25 @@ Required frontmatter: `title`, `path`, `summary`.
 
 Required: `title`, `path`, `summary`. The IT site has no industries collection.
 
-| Field | Type | Default |
-|-------|------|---------|
-| `path` | string | required; e.g. `/industries/crypto-cpa-services/` |
-| `tagline` | string | — |
-| `kpis` | `{value, label}`[] | `[]` |
-| `services` | string[] | `[]` | Slugs of related services |
-| `takeaways` | `{title, body}`[] | `[]` → 4 defaults |
-| `pillars` | `{title, body}`[] | `[]` → 3 defaults |
-| `faq` | `{q, a}`[] | `[]` → 4 defaults |
-| `sectionCopy` | object | — |
-| `seo.canonical` | string | — |
+| Field | Type | Default | Notes |
+|-------|------|---------|-------|
+| `title` | string | — | required |
+| `heroTitle` | string | `title` | `<h1>` override |
+| `path` | string | — | required; e.g. `/industries/crypto-cpa-services/` |
+| `summary` | string | — | required |
+| `cover` | string | — | Hero image |
+| `coverAlt` | string | `''` | |
+| `order` | number | `0` | Sort order on hub |
+| `tagline` | string | — | Short hero metric/tagline |
+| `kpis` | `{value, label}`[] | `[]` | |
+| `services` | string[] | `[]` | Slugs of related services (cross-links) |
+| `takeaways` | `{title, body}`[] | `[]` → 4 defaults | |
+| `pillars` | `{title, body}`[] | `[]` → 3 defaults | |
+| `faq` | `{q, a}`[] | `[]` → 4 defaults | |
+| `sectionCopy` | object | — | Per-section overrides. Keys: `benefits`, `services`, `deepdive`, `reviews`, `pillars`, `related`, `faq`, `cta` |
+| `status` | `draft`\|`published` | `published` | `draft` hides from the hub |
+| `updated` | date | — | |
+| `seo.title` / `seo.description` / `seo.canonical` | string | — | |
 
 #### `src/content/insights/` (88 files)
 
@@ -229,12 +237,12 @@ Structure to preserve:
 
 #### `it-site/src/content/insights/` (19 files)
 
-Same as main site insights minus `seo.canonical`, plus:
+Same as main site insights minus `seo.canonical` and `coverAlt` (neither is in the IT insights schema), plus:
 
 | Field | Type | Notes |
 |-------|------|-------|
 | `featured` | boolean | `true` pins post as hero on `/blog/`. Only one post should have this. Fallback: newest Cybersecurity post. |
-| `category` | string | Special value: `"Media"` (capital M, exact) → post appears on `/media/` listing only, **not** on `/blog/` |
+| `category` | string | Special value: `"Media"` (capital M, exact) → post **also** appears on the `/media/` listing. It still appears on `/blog/` too (the blog index only filters `status: draft`). Use `status: draft` to keep it off `/blog/`. |
 
 Author matching on IT site is **strict equality**: `author:` in the insight must exactly match `name:` in the author file.
 
@@ -255,7 +263,7 @@ IT team has `email` and `linkedin` but **no `credentials` field**. Most entries 
 | Collections | services, industries, insights, team, authors | services, insights, team, authors |
 | Services rich fields | sections, sectionCopy, pillars, takeaways, process, faq, industries, kpis, reviewIndex | none |
 | `insights.featured` | not in schema | boolean, pins blog hero |
-| `category: "Media"` | no special routing | routes to `/media/` listing |
+| `category: "Media"` | no special routing | adds post to `/media/` listing (still on `/blog/` unless `status: draft`) |
 | `seo.canonical` | supported | not in schema; has no effect if added |
 | Author name matching | fuzzy (substring) | strict equality |
 | Team `email`/`linkedin` | not in schema (build error if added) | supported |
@@ -274,7 +282,7 @@ All `.ts` files must stay valid TypeScript. Preserve `as const` at the end of ev
 |------|----------|--------|
 | `site.ts` | Firm name, phone, email, address, maps embed/directions, socials (object), memberships, clientPortal, itPortal; also `primaryNav` | TS |
 | `navigation.ts` | `serviceMenu` (5 groups with items), `industryMenu` (11 entries), `companyMenu`; `serviceGroupParent` is auto-derived — never hand-edit it | TS |
-| `taxonomy.ts` | Homepage/hub cards: `featuredServices`, `featuredIndustries`, `partnerLogos`, `latestPosts`, `valueProps`, `integrations`, `allServices`, `industries`. Texts marked verbatim from live site — do not paraphrase. | TS |
+| `taxonomy.ts` | **`allServices`** → drives the "Related services" panel on service detail pages + service cross-links inside industry pages (entry shape `{title, group, href, image, summary}`). **`industries`** → the cards on the `/industries/` hub. ⚠️ The homepage-card exports (`featuredServices`, `featuredIndustries`, `partnerLogos`, `latestPosts`, `valueProps`, `integrations`) are editable via the admin Homepage form but are **not rendered on the live homepage** — the homepage uses local consts in `src/pages/index.astro` (see below). Keep verbatim texts verbatim. | TS |
 | `googleReviews.ts` | Array of 11 reviews. `rating` field type is literal `5` — any other value is a TS error. Array order matters (slice positions). | TS |
 | `reports.ts` | 3 live report detail pages. Also update `src/pages/reports/index.astro` local stub list when adding a report. | TS |
 | `about.json` | All About Us page copy: heroTitle, journeyHeading, journeyBody[], drives[], journeyPhotos[], CTA | JSON |
@@ -338,7 +346,7 @@ IT Navigation (`serviceMenu` export) and IT Settings (`site` + `primaryNav` expo
 
 1. Create or open `it-site/src/content/insights/{slug}.md`.
 2. Same required fields as main site. Additional optional field: `featured: true` (pins as hero on `/blog/`).
-3. Set `category: "Media"` (capital M) to route the post to `/media/` listing instead of `/blog/`.
+3. Set `category: "Media"` (capital M) to **also** surface the post on the `/media/` listing. This does **not** remove it from `/blog/` — the blog index only filters out `status: draft`, so a Media post appears on **both** `/blog/` and `/media/`. To keep a post off `/blog/` entirely, set `status: draft` (there is no "media-only" flag).
 4. `author:` must **exactly match** the `name:` in `it-site/src/content/authors/`.
 5. Only one post should have `featured: true` at a time.
 6. **Verify:** `cd it-site && npm run build`. Visit `/blog/{slug}/` in dev (port 4322).
@@ -356,7 +364,7 @@ IT Navigation (`serviceMenu` export) and IT Settings (`site` + `primaryNav` expo
    ```
 3. Set `group:` to one of the exact values: `Tax`, `Accounting`, `Advisory`, `Compliance`, `Audit & Attestation`.
 4. To add to the nav mega-menu: add an entry to the correct group's `items` array in `src/data/navigation.ts`.
-5. To add to the services hub grid: add an entry to `allServices` in `src/data/taxonomy.ts`.
+5. The `/services/` hub grid **auto-populates from the collection** — no action needed there. But to make this service appear in the **"Related services" panel** on other service detail pages (and in industry cross-link sections), add a `{title, group, href, image, summary}` entry to `allServices` in `src/data/taxonomy.ts`. Skipping this silently leaves the service out of cross-linking (no build error).
 6. Place a hero image at `public/images/services/{slug}.jpg` (or set `cover:` in frontmatter).
 7. **Verify:** `npm run build`. Visit `/services/{slug}/` in dev.
 
@@ -365,8 +373,12 @@ IT Navigation (`serviceMenu` export) and IT Settings (`site` + `primaryNav` expo
 1. Create or open `it-site/src/content/services/{slug}.md`.
 2. Required: `title`, `path`, `summary`.
 3. Body **must be raw HTML**.
-4. To add to the mega-menu, add the slug to the appropriate `children` array in `it-site/src/data/site.ts` `serviceMenu`, or to `moreServices` for a standalone entry.
-5. To add cross-link cards on a parent service page, edit the parent's `.am-subsvc-grid` block in HTML.
+4. Wire it into `it-site/src/data/site.ts`. Understand the three exports — they serve different surfaces:
+   - **`serviceMenu`** = the mega-menu. Each entry is a top-level **service line** (a parent tab like "Cybersecurity Services") with a `children` array of slugs. To slot a service *under an existing line*, add its slug to that line's `children`.
+   - **`moreServices`** = a flat "more" list for standalone services that don't belong to a line. Use this for a one-off service.
+   - **`serviceLines`** = the data behind the line-level landing/parent pages.
+   - If you're adding a **whole new primary service line** (not just a child), you also add a card for it in `it-site/src/data/pages.ts` → **`serviceLineCards`** (that's what renders the line on the homepage/hub), plus a new `serviceMenu` entry and matching `serviceLines` entry.
+5. To add cross-link cards on a parent service page, edit the parent's `.am-subsvc-grid` block in HTML (see the four files listed under the IT services schema).
 6. **Verify:** `cd it-site && npm run build`. Visit `/services/{slug}/` in dev.
 
 ### Add/edit an industry page — main site only
@@ -408,6 +420,8 @@ Edit `vercel.json` at the repo root:
 ```json
 { "source": "/old-path/", "destination": "/new-path/", "permanent": true }
 ```
+
+`permanent: true` is the right choice for a "301" — but note Vercel serves it as HTTP **308** (Permanent Redirect), not literally 301. Both are permanent and SEO-equivalent; don't be alarmed by the 308. (`permanent: false` → 307.)
 
 **Verify:** Redirects only activate on Vercel deploys, not in local `astro dev`. After pushing, `curl -I https://alpinemar.com/old-path/` should return 308.
 
@@ -480,6 +494,16 @@ Edit `src/data/googleReviews.ts`. Add to the `googleReviews` array:
 4. Search all content for cross-links: `grep -r 'old-slug' src/content/` and update them.
 5. **Verify:** `npm run build`.
 
+### Rename a service slug — IT site
+
+IT service links are hardcoded in several places (no `allServices`-style single source). Update **all** of these or the mega-menu, footer, and cross-links break silently:
+1. Rename `it-site/src/content/services/{slug}.md` and update `path:` in its frontmatter.
+2. `it-site/vercel.json` — add `{ "source": "/services/old-slug/", "destination": "/services/new-slug/", "permanent": true }`.
+3. `it-site/src/data/site.ts` — update the slug wherever it appears in `serviceMenu` (`children` arrays), `serviceLines`, and `moreServices`.
+4. `it-site/src/components/Footer.astro` — update the `serviceLinks` array (around lines 14–19).
+5. Cross-links inside other services' raw HTML bodies: `grep -rn 'old-slug' it-site/src/content/` and fix each `href`.
+6. **Verify:** `cd it-site && npm run build`.
+
 ### Rename a service group label
 
 If you rename a `serviceMenu[].label` in `src/data/navigation.ts` (e.g. `Compliance` → `Regulatory`):
@@ -487,6 +511,29 @@ If you rename a `serviceMenu[].label` in `src/data/navigation.ts` (e.g. `Complia
 2. Update `group:` in every service `.md` file that used the old label.
 3. Update `group:` in every `allServices` entry in `src/data/taxonomy.ts`.
 All three must match or breadcrumbs and related-service panels break silently.
+
+### Undo a change / roll back
+
+Every save is a git commit, so nothing is ever truly lost.
+- **Undo the most recent change:** `git revert HEAD` (creates a new commit that reverses the last one), then push — `/publish`. This is safe: it never rewrites history.
+- **Undo a specific older change:** find it with `git log --oneline`, then `git revert <hash>`.
+- **Non-developer path:** on github.com, open the repo → **Commits**, find the change, and use the "Revert" button on that commit's page (opens a PR that undoes it). Or ask the AI assistant: "undo my last change and publish."
+- Do **not** use `git reset --hard` or force-push to undo — it rewrites shared history and can break the other two Vercel projects. Always prefer `git revert`.
+
+### Preview a change before it goes live
+
+There is no separate staging site; `main` deploys straight to production. To check work before the public sees it:
+- **Local preview (developers):** `npm run build && npm run preview` (main) or `cd it-site && npm run build && npm run preview` (IT) — this renders the real production build at `localhost`.
+- **Hide a not-ready page in production:** set `status: draft` in its frontmatter. Draft pages are dropped from listings/hubs; the detail URL still renders but isn't linked anywhere. Flip to `published` when ready.
+- **Vercel preview deploys:** if you push to a branch other than `main` (instead of committing directly), Vercel builds a private preview URL for that branch. Merging to `main` promotes it to production.
+
+### A deploy failed — now what?
+
+If a build breaks (the site shows the last good version until a build succeeds, so the live site is safe):
+1. Open the Vercel dashboard for the failed project (`alpinemar`, `alpinemar-77xf`, or `alpinemar-qtnx`) → **Deployments** → click the failed one → read the build log for the first error.
+2. If your last change caused it, roll it back: `git revert HEAD` → push (see "Undo a change" above). The site returns to the last working state.
+3. Reproduce locally before re-pushing: run the matching build (`npm run build`, `cd it-site && npm run build`, or `cd admin && npm run build`) and fix the reported error.
+4. Never leave `main` red — either fix forward quickly or revert.
 
 ---
 
@@ -687,6 +734,8 @@ Set on project `alpinemar-qtnx`:
 | `GITHUB_BRANCH` | `main` |
 | `GITHUB_COMMIT_NAME` | Display name for commits (e.g. `Alpine Mar Admin`) |
 | `GITHUB_COMMIT_EMAIL` | **Must be a verified email on a real GitHub account** |
+| `NEXT_PUBLIC_SITE_URL` | `https://alpinemar.com` — base for the admin's "View live" links. If unset it falls back to `https://alpinemar.vercel.app`, so preview links point at the wrong URL. |
+| `NEXT_PUBLIC_IT_SITE_URL` | `https://it.alpinemar.com` — same, for IT-site "View live" links (fallback is the production domain). |
 
 ---
 
@@ -744,7 +793,7 @@ Main site JS re-registers on `astro:after-swap`. IT site uses `astro:page-load`.
 | Main Site > Industries | `src/content/industries/{slug}.md` |
 | Main Site > Team | `src/content/team/{slug}.md` |
 | Main Site > Authors | `src/content/authors/{slug}.md` |
-| Main Site > Homepage | `src/data/taxonomy.ts` (6 managed exports only) |
+| Main Site > Homepage | `src/data/taxonomy.ts` (6 managed exports) — ⚠️ these exports are **not** rendered on the live homepage yet (it uses local consts in `src/pages/index.astro`); editing them here has no visible effect until the homepage is wired to consume them |
 | Main Site > Navigation | `src/data/navigation.ts` (serviceMenu + industryMenu only) |
 | Main Site > Reviews | `src/data/googleReviews.ts` |
 | Main Site > About Page | `src/data/about.json` |
@@ -794,7 +843,7 @@ Every homepage section on the main site follows this shape. Reuse it verbatim, c
        <span class="block size-1.5 rounded-full bg-scooter"></span> dot. `am-eyebrow` exists on the IT site only. */}
     {/* heading grid — 12-col, heading left, intro right */}
     <div data-reveal class="grid grid-cols-1 gap-10 border-b border-line pb-14 md:grid-cols-12 md:gap-16">
-      <h2 class="am-hero-display am-gradient-ink md:col-span-7">Section heading.</h2>
+      <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-7">Section heading.</h2>
       <p class="font-display text-[16px] leading-relaxed text-[var(--color-text-body)] md:col-span-5">Intro copy.</p>
     </div>
     {/* content — cards/list, animate children with data-stagger */}
@@ -809,7 +858,7 @@ Rules that keep it native:
 - **Vertical rhythm:** sections use `py-24 md:py-32` (or `py-20 md:py-28` for tighter ones). Keep it consistent with neighbours.
 - **Alternate backgrounds:** light sections are `bg-white` or `bg-paper`; dark sections are `bg-[#12122d] text-white` (main) with an optional grid overlay `<div class="grid-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>`. Alternate light/dark down the page as the existing homepage does.
 - **Always wrap content in `<Container width="wide">`** (widths: `reading` | `narrow` | `default` | `wide` | `xl`). `wide` is the homepage standard.
-- **Headings:** `am-hero-display` + `am-gradient-ink` on light, `am-gradient-ink-light` on dark. Never add a `text-*` color to a gradient heading (it sets `color: transparent`).
+- **Headings:** section `<h2>`s use **`am-h1-display`** (~56px). `am-hero-display` (~84px) is reserved for the page `<h1>` hero only — do NOT use it for a section heading. Add a gradient with `am-gradient-ink` (on light) or `am-gradient-ink-light` (on dark); a plain heading uses `text-[var(--color-text-head)]` (light) / `text-white` (dark). Never add a `text-*` color to a gradient heading (it sets `color: transparent`).
 - **Animate on scroll:** put `data-reveal` on a block (fade + slide-up), `data-speed="fast"`/`"slow"` to tune, or `data-stagger` on a list to cascade its children. These are wired globally by `BaseLayout.astro` — no JS needed. (IT site uses the same attributes.)
 
 ### Reusable components (don't re-implement these)
@@ -825,7 +874,7 @@ The IT site has its own equivalents under `it-site/src/components/` (`Container`
 
 ### Recipe — add a section to the homepage
 1. Open the homepage template (`src/pages/index.astro` or the IT one).
-2. If the section needs data, add a typed array in the `---` frontmatter (that's how the existing `services`/`industries` arrays are done), **or** — to make it CMS-editable — add it to `src/data/taxonomy.ts` (main homepage data managed by the admin's Homepage editor) and import it.
+2. If the section needs data, add a typed array in the `---` frontmatter — that's how the existing `services`/`industries` arrays on the homepage are done, and it's the reliable path. (Note: `src/data/taxonomy.ts` has homepage-card exports the admin Homepage form edits, but the live homepage does **not** currently import them, so putting data there will NOT make it CMS-editable end-to-end without also wiring the homepage to read it.)
 3. Paste the **section skeleton** at the right position between existing `<section>` blocks. Pick a background that alternates with its neighbours.
 4. Fill the content with the reusable components + design tokens. Match the class patterns of a nearby section — do not invent new spacing, colors, or fonts.
 5. **Verify:** `npm run build` (main) or `cd it-site && npm run build` (IT), then `npm run dev` and eyeball the section. Check it looks right on mobile (the grids are `grid-cols-1 md:grid-cols-*`).

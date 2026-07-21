@@ -57,7 +57,9 @@ npm run dev
 | `GITHUB_REPO` | `alpinemar` |
 | `GITHUB_BRANCH` | `main` |
 | `GITHUB_COMMIT_NAME` | (опц.) Имя коммитера |
-| `GITHUB_COMMIT_EMAIL` | (опц.) Email коммитера |
+| `GITHUB_COMMIT_EMAIL` | **⚠️ ОБЯЗАТЕЛЬНО.** Verified-email на GitHub-аккаунте с write-доступом к репо. Если не задать — Vercel-сборки всех 3 проектов показывают `UNKNOWN`, и **сайт перестаёт обновляться после каждого сохранения в CMS** (тихо, без ошибки). Дефолт `admin@alpinemar.com` не привязан к аккаунту → ломает деплой. |
+| `NEXT_PUBLIC_SITE_URL` | `https://alpinemar.com` — база для ссылок «View live» в админке. Если не задать — фолбэк `https://alpinemar.vercel.app`, и превью-ссылки ведут не туда. |
+| `NEXT_PUBLIC_IT_SITE_URL` | `https://it.alpinemar.com` — то же для ссылок «View live» IT-сайта. |
 | `VERCEL_DEPLOY_HOOK_URL` | (опц.) URL deploy-hook основного сайта, если нужно форсировать ребилд |
 
 ### Поддомен

@@ -42,6 +42,10 @@ export function SettingsForm({ initial }: Props) {
     setSite((p) => ({ ...p, address: { ...p.address, [k]: v } }))
     setDirty(true)
   }
+  function updateMaps(k: 'embed' | 'directions', v: string) {
+    setSite((p) => ({ ...p, maps: { ...p.maps, [k]: v } }))
+    setDirty(true)
+  }
   function updateSocial<K extends keyof SiteSocials>(k: K, v: SiteSocials[K]) {
     setSite((p) => ({ ...p, socials: { ...p.socials, [k]: v } }))
     setDirty(true)
@@ -214,6 +218,25 @@ export function SettingsForm({ initial }: Props) {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="rounded-md border border-amber-300 bg-amber-50/50 px-3 py-2 text-xs text-amber-800">
+            Changing the address? Also update the two Google Maps URLs below, or the
+            footer map keeps pointing at the old location.
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="mapsEmbed">
+              Google Maps embed URL
+              <HelpTip title="Footer map iframe">
+                The <span className="font-mono">src</span> of the embedded map in the footer.
+                In Google Maps: Share → Embed a map → copy the URL inside <span className="font-mono">src=&quot;…&quot;</span>.
+              </HelpTip>
+            </Label>
+            <Textarea id="mapsEmbed" rows={2} value={site.maps.embed} onChange={(e) => updateMaps('embed', e.target.value)} className="font-mono text-xs" placeholder="https://www.google.com/maps/embed?pb=…" />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="mapsDirections">Get-directions URL</Label>
+            <Textarea id="mapsDirections" rows={2} value={site.maps.directions} onChange={(e) => updateMaps('directions', e.target.value)} className="font-mono text-xs" placeholder="https://www.google.com/maps/dir//…" />
           </div>
         </section>
 

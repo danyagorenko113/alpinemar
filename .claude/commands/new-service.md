@@ -11,8 +11,8 @@ Create a new service page. Follow `CLAUDE.md` → "Add/edit a service".
    - Main: set `group:` to one EXACT value from `src/data/navigation.ts` serviceMenu labels (`Tax`, `Accounting`, `Advisory`, `Compliance`, `Audit & Attestation`). A typo silently breaks the breadcrumb.
    - IT: `group` is optional/cosmetic; the parent tab comes from `serviceMenu` in `it-site/src/data/site.ts`.
 4. Wire into navigation:
-   - Main: add an entry to the right group's `items` in `src/data/navigation.ts`, and to `allServices` in `src/data/taxonomy.ts` (to show on the hub).
-   - IT: add the slug to a `children` array (or `moreServices`) in `it-site/src/data/site.ts` `serviceMenu`.
+   - Main: add an entry to the right group's `items` in `src/data/navigation.ts`. The `/services/` hub **auto-populates from the collection** — you do NOT need to touch it for the service to appear there. Add a `{title, group, href, image, summary}` entry to `allServices` in `src/data/taxonomy.ts` only to include it in the **"Related services"** panel on other service pages and in industry cross-links (skipping it silently omits it from cross-linking, no build error).
+   - IT: add the slug to an existing service line's `children` array in `it-site/src/data/site.ts` `serviceMenu`, or to `moreServices` for a standalone service. For a **whole new primary line**, also add a card to `serviceLineCards` in `it-site/src/data/pages.ts` and a matching `serviceLines` entry in `site.ts`.
 5. IT-site bodies: if this is a parent service line, other pages may cross-link it via `.am-subsvc-grid` HTML — preserve that markup exactly (see `CLAUDE.md` gotchas).
 6. Optional hero image at `public/images/services/{slug}.jpg` (main) or `it-site/public/images/services/{slug}.jpg` (IT).
 7. Verify with the site's build; fix errors. Report the URL and offer `/publish`.

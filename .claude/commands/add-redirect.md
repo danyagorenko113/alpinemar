@@ -15,4 +15,4 @@ Add a 301 redirect. Follow `CLAUDE.md` → "Add a 301 redirect".
    ```
    Keep the file valid JSON (double-quoted keys, no trailing commas). Do not touch other keys like `$schema`.
 4. Verify the JSON parses: `node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8'))" && echo OK` (use the right path).
-5. Note: redirects only activate after a Vercel deploy (not in local dev). Offer `/publish`.
+5. Note: redirects only activate after a Vercel deploy (not in local dev). `permanent: true` is served by Vercel as HTTP **308** (a permanent redirect, SEO-equivalent to 301) — so a verifying `curl -I` returns 308, not 301; that's expected. Offer `/publish`.
