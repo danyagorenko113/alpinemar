@@ -87,6 +87,7 @@ const itNavGroups: NavGroup[] = [
   {
     label: 'Site',
     items: [
+      { href: '/it/homepage', label: 'Pages', icon: LayoutTemplate, title: 'Homepage, About & Services copy' },
       { href: '/it/settings', label: 'Settings', icon: Settings, title: 'IT contact info, socials, nav' },
     ],
   },
