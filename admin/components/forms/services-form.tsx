@@ -42,9 +42,11 @@ interface Props {
   industrySlugs: string[]
   /** Names of the global Google reviews, in list order — for the review picker. */
   reviewNames?: string[]
+  /** Existing group names (mega-menu categories + groups already in use). */
+  groupOptions?: string[]
 }
 
-const GROUPS: ServiceGroup[] = ['Tax', 'Accounting', 'Advisory', 'Compliance', 'Audit & Attestation']
+const NEW_GROUP = '__new_group__'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
 /** Detail-page sections in the site's default render order. */
@@ -161,15 +163,23 @@ function withSectionPrefills(svc: Service): Service {
   }
 }
 
-export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props) {
+export function ServicesForm({ initial, industrySlugs, reviewNames = [], groupOptions = [] }: Props) {
   const router = useRouter()
   const [pending, startTransition] = useTransition()
   const [s, setS] = useState<Service>(() => withSectionPrefills(initial ?? empty))
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [dirty, setDirty] = useState(false)
+  const [newGroup, setNewGroup] = useState(
+    () => !!initial?.group && groupOptions.length > 0 && !groupOptions.includes(initial.group),
+  )
 
   useUnsavedChanges(dirty)
+
+  // Current group may not be in the options list yet — keep it selectable.
+  const groupChoices = [...groupOptions]
+  if (s.group && !groupChoices.includes(s.group)) groupChoices.push(s.group)
+  groupChoices.sort()
 
   function update<K extends keyof Service>(k: K, v: Service[K]) {
     setS((p) => ({ ...p, [k]: v }))
@@ -567,18 +577,42 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [] }: Props
 
           <section className="rounded-lg border bg-card p-5 space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="group">Group</Label>
+              <Label htmlFor="group">
+                Group
+                <HelpTip title="Service category">
+                  Categorizes the service on the hub and drives the breadcrumb + related links.
+                  Pick an existing group or choose <strong>+ New group…</strong> to create one.
+                  Mega-menu categories are the canonical groups (edit them under Navigation).
+                </HelpTip>
+              </Label>
               <select
                 id="group"
-                value={s.group ?? ''}
-                onChange={(e) => update('group', (e.target.value || undefined) as ServiceGroup | undefined)}
+                value={newGroup ? NEW_GROUP : (s.group ?? '')}
+                onChange={(e) => {
+                  if (e.target.value === NEW_GROUP) {
+                    setNewGroup(true)
+                    update('group', undefined)
+                  } else {
+                    setNewGroup(false)
+                    update('group', (e.target.value || undefined) as ServiceGroup | undefined)
+                  }
+                }}
                 className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
               >
                 <option value="">— None —</option>
-                {GROUPS.map((g) => (
+                {groupChoices.map((g) => (
                   <option key={g} value={g}>{g}</option>
                 ))}
+                <option value={NEW_GROUP}>+ New group…</option>
               </select>
+              {newGroup && (
+                <Input
+                  value={s.group ?? ''}
+                  onChange={(e) => update('group', (e.target.value || undefined) as ServiceGroup | undefined)}
+                  placeholder="New group name"
+                  autoFocus
+                />
+              )}
               <p className="text-xs text-muted-foreground">Categorizes the service on the hub.</p>
             </div>
           </section>

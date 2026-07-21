@@ -10,7 +10,8 @@ const COLLECTION_DIR = 'src/content/services'
 const LIST_CACHE_KEY = 'services:list'
 const LIST_TTL_MS = 60_000
 
-export type ServiceGroup = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | 'Audit & Attestation'
+/** Free-form group name — the canonical set lives in the mega-menu (navigation.ts). */
+export type ServiceGroup = string
 export type ContentStatus = 'draft' | 'published'
 
 /** Detail-page sections, in the site's default render order. */
@@ -184,6 +185,26 @@ export async function listServices(): Promise<ServiceSummary[]> {
       .filter((s): s is ServiceSummary => s !== null)
       .sort((a, b) => a.title.localeCompare(b.title))
   })
+}
+
+/**
+ * Group options for the service form: the mega-menu category labels (the
+ * canonical set) merged with any group already used by a service. Editors can
+ * still type a brand-new group in the form.
+ */
+export async function listServiceGroups(): Promise<string[]> {
+  const store = getStore()
+  const set = new Set<string>()
+  const services = await listServices()
+  services.forEach((s) => { if (s.group) set.add(s.group) })
+  const nav = await store.read('src/data/navigation.ts')
+  if (nav) {
+    const m = /export const serviceMenu = ([\s\S]*?) as const;/.exec(nav.content)
+    if (m) {
+      for (const lm of m[1].matchAll(/\blabel:\s*'((?:\\.|[^'])*)'/g)) set.add(lm[1])
+    }
+  }
+  return [...set].sort()
 }
 
 export async function getService(slug: string): Promise<Service | null> {

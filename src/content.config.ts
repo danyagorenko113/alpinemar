@@ -38,8 +38,9 @@ const services = defineCollection({
     /** Alt text for the cover/banner image. */
     coverAlt: z.string().optional(),
     order: z.number().default(0),
-    /** Optional category — when set, drives the hero outline numeral & related cross-links. */
-    group: z.enum(['Tax', 'Accounting', 'Advisory', 'Compliance', 'Audit & Attestation']).optional(),
+    /** Optional category — when set, drives the hero outline numeral & related cross-links.
+     *  Free-form string (managed in the CMS); mega-menu categories are the canonical set. */
+    group: z.string().optional(),
     /** Section visibility + order for the detail page. Omit for the default
      *  full layout; when set, only the listed sections render, in order. */
     sections: z

@@ -6,7 +6,7 @@ import Icon from '@/components/Icon.astro';
 import { collectionPageSchema, breadcrumb } from '@/data/schema';
 import { googleReviews } from '@/data/googleReviews';
 
-type Group = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance';
+type Group = string;
 
 const SPANISH = new Set([
   'creacion-de-empresas',

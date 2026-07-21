@@ -24,8 +24,7 @@ const heroImage = `/images/services/${slug}.jpg`;
 const coverSrc = service.data.cover ?? heroImage;
 
 const taxonomyEntry = allServices.find((x) => x.href === service.data.path);
-const group = (service.data.group ?? taxonomyEntry?.group) as
-  | 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | 'Audit & Attestation' | undefined;
+const group = (service.data.group ?? taxonomyEntry?.group) as string | undefined;
 
 // Breadcrumb parent = the category's landing page (mirrors the live site).
 // When the current page *is* that landing page, drop the group crumb so it

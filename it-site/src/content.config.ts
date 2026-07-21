@@ -19,7 +19,7 @@ const services = defineCollection({
     path: z.string(),
     summary: z.string(),
     cover: z.string().optional(),
-    group: z.enum(['Cybersecurity', 'Cloud & Infrastructure', 'Advisory', 'AI']).optional(),
+    group: z.string().optional(),
     status,
     updated,
     seo,
