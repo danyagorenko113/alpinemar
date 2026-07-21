@@ -377,8 +377,9 @@ export function BlogForm({
               value={newCategory ? NEW_CATEGORY : (post.category ?? '')}
               onChange={(e) => {
                 if (e.target.value === NEW_CATEGORY) {
+                  // Keep the current category until the user types a replacement,
+                  // so selecting "New category" and saving doesn't wipe it.
                   setNewCategory(true)
-                  update('category', '')
                 } else {
                   setNewCategory(false)
                   update('category', e.target.value)

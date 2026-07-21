@@ -19,6 +19,11 @@ export interface SiteSocials {
   twitter: string
 }
 
+export interface SiteMaps {
+  embed: string
+  directions: string
+}
+
 export interface SiteConfig {
   name: string
   legalName: string
@@ -29,6 +34,8 @@ export interface SiteConfig {
   phone: string
   phoneHref: string
   address: SiteAddress
+  /** Preserved through save even though it's not edited in the form (Footer map). */
+  maps: SiteMaps
   socials: SiteSocials
   memberships: string[]
   clientPortal: string
@@ -151,6 +158,7 @@ function parseNav(fileContent: string): NavItem[] {
 function normalizeSite(input: Partial<SiteConfig>): SiteConfig {
   const address = input.address ?? ({} as Partial<SiteAddress>)
   const socials = input.socials ?? ({} as Partial<SiteSocials>)
+  const maps = input.maps ?? ({} as Partial<SiteMaps>)
   return {
     name: String(input.name ?? ''),
     legalName: String(input.legalName ?? ''),
@@ -165,6 +173,10 @@ function normalizeSite(input: Partial<SiteConfig>): SiteConfig {
       city: String(address.city ?? ''),
       state: String(address.state ?? ''),
       zip: String(address.zip ?? ''),
+    },
+    maps: {
+      embed: String(maps.embed ?? ''),
+      directions: String(maps.directions ?? ''),
     },
     socials: {
       facebook: String(socials.facebook ?? ''),

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { ExternalLink, Save, Trash2 } from 'lucide-react'
@@ -116,6 +116,9 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
   const [slugTouched, setSlugTouched] = useState(!!initial)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [dirty, setDirty] = useState(false)
+  // Snapshot the FAQ default at mount so a title rename doesn't write the stale
+  // (old-title) default FAQ into the .md file at save time.
+  const initialFaqDefault = useRef(defaultFaq((initial ?? empty).title))
 
   useUnsavedChanges(dirty)
 
@@ -155,7 +158,7 @@ export function IndustriesForm({ initial, serviceSlugs }: Props) {
     // sections get written to the .md file.
     const takeaways = equalsDefault(i.takeaways, DEFAULT_TAKEAWAYS) ? [] : i.takeaways
     const pillars = equalsDefault(i.pillars, DEFAULT_PILLARS) ? [] : i.pillars
-    const faq = equalsDefault(i.faq, defaultFaq(i.title)) ? [] : i.faq
+    const faq = equalsDefault(i.faq, initialFaqDefault.current) ? [] : i.faq
 
     startTransition(async () => {
       try {

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Users, Settings as SettingsIcon, Star, ArrowRight, Rocket } from 'lucide-react'
+import { FileText, Users, Settings as SettingsIcon, Briefcase, PenLine, LayoutTemplate, ArrowRight, Rocket } from 'lucide-react'
 import { PageHeader } from '@/components/shared/page-header'
 
 function Section({
@@ -44,9 +44,11 @@ export default function ITGuidePage() {
         {[
           ['it-overview', 'Overview'],
           ['it-blog', 'Blog & Featured'],
+          ['it-services', 'Services'],
           ['it-team', 'Team'],
+          ['it-authors', 'Authors'],
+          ['it-pages', 'Pages & Navigation'],
           ['it-settings', 'Settings'],
-          ['it-later', 'Coming next'],
         ].map(([id, label]) => (
           <a key={id} href={`#${id}`} className="rounded-full border px-3 py-1 text-navy-600 hover:border-scooter hover:text-scooter-dark">
             {label}
@@ -83,11 +85,37 @@ export default function ITGuidePage() {
           </p>
         </Section>
 
+        <Section id="it-services" icon={Briefcase} title="Services">
+          <p>
+            <GoTo href="/it/services">IT Services</GoTo> manages the service pages. Each has a
+            title, hero title, path, summary, group, cover, SEO, and the article body edited as
+            raw HTML — leave the <span className="font-mono">am-subsvc-grid</span> block intact.
+          </p>
+        </Section>
+
         <Section id="it-team" icon={Users} title="Team">
           <p>
             <GoTo href="/it/team">IT Team</GoTo> manages the members shown on the IT About page,
-            sorted by Order. Each has a name, role, photo, email, and (stored for later) a
-            LinkedIn URL. Only members with a photo appear on the live site.
+            sorted by Order. Each has a name, role, photo, email, and a LinkedIn URL. Only
+            members with a photo appear on the live site.
+          </p>
+        </Section>
+
+        <Section id="it-authors" icon={PenLine} title="Authors">
+          <p>
+            <GoTo href="/it/authors">IT Authors</GoTo> manages blog author profiles (name, title,
+            photo, bio). The IT Blog author field is a dropdown fed by this collection, and the
+            author&rsquo;s role on a post is looked up here.
+          </p>
+        </Section>
+
+        <Section id="it-pages" icon={LayoutTemplate} title="Pages & Navigation">
+          <p>
+            <GoTo href="/it/homepage">IT Pages</GoTo> edits the homepage cards, About values,
+            service-line blurbs, business hours, the service-page CTA, and HubSpot config.{' '}
+            <GoTo href="/it/navigation">IT Navigation</GoTo> edits the Services mega-menu (primary
+            tabs and their sub-services). <GoTo href="/it/schema">IT Schema</GoTo> manages JSON-LD,
+            and <GoTo href="/it/redirects">IT Redirects</GoTo> the 301s.
           </p>
         </Section>
 
@@ -99,18 +127,9 @@ export default function ITGuidePage() {
           </p>
           <p className="text-xs text-muted-foreground">
             The footer renders social icons <strong>by position</strong> — keep the order
-            Facebook · X · Instagram · LinkedIn. The Services menu structure is intentionally
-            not editable here (it&rsquo;s slug-level wiring for the mega-menu).
+            Facebook · X · Instagram · LinkedIn. The Services mega-menu is edited under
+            <strong> IT Navigation</strong>, not here.
           </p>
-        </Section>
-
-        <Section id="it-later" icon={Star} title="Coming next">
-          <p>Not yet editable from the CMS — being added in later phases:</p>
-          <ul className="list-disc pl-5 space-y-1">
-            <li>Homepage / About page copy (the marketing cards and value blurbs)</li>
-            <li>Service pages (the detail articles)</li>
-            <li>Blog authors as a managed collection (currently a free-text field)</li>
-          </ul>
         </Section>
       </div>
     </div>

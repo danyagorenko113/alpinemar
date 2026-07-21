@@ -22,7 +22,7 @@ function normalize(list: unknown): Redirect[] {
       const source = String(o.source ?? '').trim()
       const destination = String(o.destination ?? '').trim()
       if (!source || !destination) return null
-      return { source, destination, permanent: o.permanent !== false }
+      return { source, destination, permanent: o.permanent === true }
     })
     .filter((r): r is Redirect => r !== null)
 }
@@ -42,7 +42,16 @@ export async function getRedirects(): Promise<Redirect[]> {
 export async function saveRedirects(list: Redirect[]): Promise<{ sha: string }> {
   const store = getStore()
   const doc = await store.read(FILE_PATH)
-  const base = doc ? (JSON.parse(doc.content) as Record<string, unknown>) : { $schema: 'https://openapi.vercel.sh/vercel.json' }
+  let base: Record<string, unknown>
+  if (doc) {
+    try {
+      base = JSON.parse(doc.content) as Record<string, unknown>
+    } catch {
+      throw new Error('Could not parse it-site/vercel.json — fix the JSON before saving.')
+    }
+  } else {
+    base = { $schema: 'https://openapi.vercel.sh/vercel.json' }
+  }
 
   const clean = normalize(list)
   const seen = new Set<string>()

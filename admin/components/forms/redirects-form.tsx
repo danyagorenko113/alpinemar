@@ -30,6 +30,7 @@ export function RedirectsForm({ initial, saveAction, filePath }: Props) {
     setDirty(true)
   }
   function add() {
+    setQ('') // clear any active filter so the new (empty) row is visible
     setRows((p) => [{ source: '', destination: '', permanent: true }, ...p])
     setDirty(true)
   }

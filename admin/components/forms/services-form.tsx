@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { ExternalLink, Save, Trash2 } from 'lucide-react'
@@ -173,6 +173,9 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [], groupOp
   const [newGroup, setNewGroup] = useState(
     () => !!initial?.group && groupOptions.length > 0 && !groupOptions.includes(initial.group),
   )
+  // Snapshot the FAQ default at mount so renaming the title doesn't cause the
+  // save-time default-diff to write the stale (old-title) default into the file.
+  const initialFaqDefault = useRef(defaultFaq((initial ?? empty).title))
 
   useUnsavedChanges(dirty)
 
@@ -218,7 +221,7 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [], groupOp
     const takeaways = equalsDefault(s.takeaways, DEFAULT_TAKEAWAYS) ? [] : s.takeaways
     const process = equalsDefault(s.process, DEFAULT_PROCESS) ? [] : s.process
     const pillars = equalsDefault(s.pillars, DEFAULT_PILLARS) ? [] : s.pillars
-    const faq = equalsDefault(s.faq, defaultFaq(s.title)) ? [] : s.faq
+    const faq = equalsDefault(s.faq, initialFaqDefault.current) ? [] : s.faq
 
     startTransition(async () => {
       try {
@@ -590,8 +593,9 @@ export function ServicesForm({ initial, industrySlugs, reviewNames = [], groupOp
                 value={newGroup ? NEW_GROUP : (s.group ?? '')}
                 onChange={(e) => {
                   if (e.target.value === NEW_GROUP) {
+                    // Keep the current group until the user types a replacement,
+                    // so selecting "New group" and saving doesn't wipe the group.
                     setNewGroup(true)
-                    update('group', undefined)
                   } else {
                     setNewGroup(false)
                     update('group', (e.target.value || undefined) as ServiceGroup | undefined)

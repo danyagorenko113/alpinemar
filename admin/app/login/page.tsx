@@ -18,7 +18,9 @@ export default function LoginPage() {
 function LoginInner() {
   const router = useRouter()
   const params = useSearchParams()
-  const next = params.get('next') || '/dashboard'
+  // Only allow same-origin relative paths (guard against open redirect).
+  const rawNext = params.get('next') || '/dashboard'
+  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/dashboard'
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

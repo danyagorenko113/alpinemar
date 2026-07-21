@@ -20,9 +20,11 @@ const featured =
   posts[0];
 const rest = posts.filter((p) => p.id !== featured?.id);
 
-// Distinct categories, sorted by post count.
+// Distinct categories, sorted by post count. Counts come from `rest` (the
+// filterable grid) — the featured post is shown separately, so counting it here
+// would overstate chip counts and cause an empty grid for a featured-only tag.
 const categoryCounts = new Map<string, number>();
-for (const p of posts) {
+for (const p of rest) {
   const c = p.data.category ?? 'Uncategorized';
   categoryCounts.set(c, (categoryCounts.get(c) ?? 0) + 1);
 }
@@ -192,7 +194,7 @@ const spotlight = spotlightPool[Math.floor(Math.random() * spotlightPool.length)
         >
           <span>All</span>
           <span class="rounded-full bg-navy-100 px-1.5 py-0.5 font-display text-[11px] tabular-nums text-navy-500">
-            {posts.length}
+            {rest.length}
           </span>
         </button>
         {categories.map(({ label, count }) => (

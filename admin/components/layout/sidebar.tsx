@@ -209,8 +209,10 @@ function FooterLinks() {
 }
 
 function Brand() {
+  const pathname = usePathname()
+  const href = pathname === '/it' || pathname.startsWith('/it/') ? '/it/dashboard' : '/dashboard'
   return (
-    <Link href="/dashboard" className="flex items-center gap-2.5">
+    <Link href={href} className="flex items-center gap-2.5">
       <span className="flex h-7 w-7 items-center justify-center bg-white text-navy-900 text-[11px] font-semibold tracking-tight">
         AM
       </span>

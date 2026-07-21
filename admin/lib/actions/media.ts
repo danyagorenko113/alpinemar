@@ -124,15 +124,22 @@ export async function uploadImage(
   await store.write(repoPath, buffer, { message: `chore(admin): upload ${uniqueName}` })
 
   // Record upload metadata (best-effort — the image itself is already saved).
-  try {
-    await updateMeta(store, `chore(admin): media meta for ${uniqueName}`, (meta) => {
-      meta[repoPath] = {
-        ...(opts.alt?.trim() ? { alt: opts.alt.trim() } : {}),
-        uploadedAt: new Date().toISOString(),
-      }
-    })
-  } catch {
-    // Ignore manifest write races; alt can be set later from the media library.
+  // The alt manifest is keyed by main-site `public/…` paths and read back by
+  // getImageMetaByUrl; IT images live under it-site/public and would never be
+  // found by that lookup, so we skip the manifest for them (their alt is still
+  // saved into the content frontmatter by the form). This also avoids polluting
+  // the main manifest with it-site keys.
+  if (root === 'public') {
+    try {
+      await updateMeta(store, `chore(admin): media meta for ${uniqueName}`, (meta) => {
+        meta[repoPath] = {
+          ...(opts.alt?.trim() ? { alt: opts.alt.trim() } : {}),
+          uploadedAt: new Date().toISOString(),
+        }
+      })
+    } catch {
+      // Ignore manifest write races; alt can be set later from the media library.
+    }
   }
 
   revalidatePath('/media')
