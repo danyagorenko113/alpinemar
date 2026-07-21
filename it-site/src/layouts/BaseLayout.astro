@@ -1,8 +1,11 @@
 ---
 import '@/styles/global.css';
 import SEO from '@/components/SEO.astro';
+import Schema from '@/components/Schema.astro';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
+import { orgSchema, websiteSchema } from '@/data/schema';
+import { schemaOverrides } from '@/data/schema-overrides';
 
 interface Props {
   title?: string;
@@ -10,8 +13,19 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  ogType?: string;
+  /** Per-page raw JSON-LD (from CMS frontmatter). Injected at end of <body>. */
+  rawSchema?: string;
 }
-const { title, rawTitle, description, image, noindex, ogType } = Astro.props;
+const { title, rawTitle, description, image, noindex, ogType, rawSchema } = Astro.props;
+
+// CMS-managed JSON-LD, injected at the end of <body> (global + path + per-page).
+const path = Astro.url.pathname;
+const rawCustom = [
+  schemaOverrides.global,
+  schemaOverrides.byPath[path] ?? schemaOverrides.byPath[path.replace(/\/$/, '')] ?? '',
+  rawSchema ?? '',
+].filter((s) => s && s.trim());
 ---
 
 <!doctype html>
@@ -56,5 +70,8 @@ const { title, rawTitle, description, image, noindex, ogType } = Astro.props;
       initReveals();
       document.addEventListener('astro:page-load', initReveals);
     </script>
+
+    {/* Structured data — baseline Organization/WebSite + CMS overrides, at end of <body>. */}
+    <Schema data={[orgSchema, websiteSchema]} raw={rawCustom} />
   </body>
 </html>

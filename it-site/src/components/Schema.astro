@@ -1,14 +1,13 @@
 ---
 // Renders one <script type="application/ld+json"> per item. Accepts structured
-// objects (stringified here) and/or raw JSON-LD strings (passed through, used
-// for CMS-managed schema overrides).
+// objects (stringified here) and/or raw JSON-LD strings (passed through).
 interface Props {
   data?: unknown | unknown[];
   raw?: string[];
 }
 const { data, raw = [] } = Astro.props;
-const items = (Array.isArray(data) ? data : data ? [data] : []).filter(Boolean);
+const objects = (Array.isArray(data) ? data : data ? [data] : []).filter(Boolean);
 const rawItems = raw.filter((s) => s && s.trim());
 ---
-{items.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+{objects.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
 {rawItems.map((s) => <script type="application/ld+json" set:html={s} />)}

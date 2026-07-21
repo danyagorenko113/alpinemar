@@ -10,6 +10,7 @@ import DeadlineTicker from '@/components/DeadlineTicker.astro';
 import CmdKSearch from '@/components/CmdKSearch.astro';
 import Glossary from '@/components/Glossary.astro';
 import { orgSchema, websiteSchema } from '@/data/schema';
+import { schemaOverrides } from '@/data/schema-overrides';
 
 interface Props {
   title?: string;
@@ -20,9 +21,19 @@ interface Props {
   canonical?: string;
   ogType?: string;
   schema?: unknown | unknown[];
+  /** Per-page raw JSON-LD (from CMS frontmatter). Injected at end of <body>. */
+  rawSchema?: string;
 }
-const { title, rawTitle, description, image, noindex, canonical, schema, ogType } = Astro.props;
+const { title, rawTitle, description, image, noindex, canonical, schema, ogType, rawSchema } = Astro.props;
 const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+
+// CMS-managed JSON-LD, injected at the end of <body> (global + path + per-page).
+const path = Astro.url.pathname;
+const rawCustom = [
+  schemaOverrides.global,
+  schemaOverrides.byPath[path] ?? schemaOverrides.byPath[path.replace(/\/$/, '')] ?? '',
+  rawSchema ?? '',
+].filter((s) => s && s.trim());
 ---
 
 <!doctype html>
@@ -209,5 +220,8 @@ const pageSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       initCounters();
       document.addEventListener('astro:after-swap', initCounters);
     </script>
+
+    {/* CMS-managed JSON-LD — injected at the end of <body> (global + per-path + per-page). */}
+    {rawCustom.length > 0 && <Schema data={[]} raw={rawCustom} />}
   </body>
 </html>
