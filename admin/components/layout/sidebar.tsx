@@ -17,6 +17,7 @@ import {
   Settings,
   Signpost,
   Code2,
+  ListTree,
   LogOut,
   Menu,
   ExternalLink,
@@ -60,6 +61,7 @@ const navGroups: NavGroup[] = [
     label: 'Site',
     items: [
       { href: '/homepage', label: 'Homepage', icon: LayoutTemplate, title: 'Pinned cards, logos, value props' },
+      { href: '/navigation', label: 'Navigation', icon: ListTree, title: 'Services & Industries mega-menu' },
       { href: '/reviews', label: 'Reviews', icon: Star, title: 'Google review testimonials' },
       { href: '/schema', label: 'Schema', icon: Code2, title: 'JSON-LD structured data' },
       { href: '/redirects', label: 'Redirects', icon: Signpost, title: '301/302 URL redirects' },
@@ -94,6 +96,7 @@ const itNavGroups: NavGroup[] = [
     label: 'Site',
     items: [
       { href: '/it/homepage', label: 'Pages', icon: LayoutTemplate, title: 'Homepage, About & Services copy' },
+      { href: '/it/navigation', label: 'Navigation', icon: ListTree, title: 'IT Services mega-menu' },
       { href: '/it/schema', label: 'Schema', icon: Code2, title: 'IT JSON-LD structured data' },
       { href: '/it/redirects', label: 'Redirects', icon: Signpost, title: 'IT 301/302 URL redirects' },
       { href: '/it/settings', label: 'Settings', icon: Settings, title: 'IT contact info, socials, nav' },
