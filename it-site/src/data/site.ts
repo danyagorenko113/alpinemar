@@ -58,3 +58,38 @@ export const moreServices = [
   'it-risk-management',
   'ai-code-security-audit',
 ] as const;
+
+// Grouped Services mega menu — mirrors the live it.alpinemar.com dropdown, where
+// each primary service line owns its own sub-services (shown when that tab is
+// active) instead of a single flat list. Verified against the live site markup.
+export const serviceMenu = [
+  {
+    line: 'remote-it-support',
+    children: [
+      'it-compliance',
+      'cloud-management',
+      'network-security-monitoring',
+      'remote-monitoring-and-management',
+    ],
+  },
+  { line: 'incident-response', children: [] },
+  {
+    line: 'cybersecurity',
+    children: [
+      'data-protection-and-data-security',
+      'email-security',
+      'managed-cloud-security',
+      'managed-endpoint-security',
+      'ai-security',
+    ],
+  },
+  {
+    line: 'it-consulting',
+    children: [
+      'ai-integration',
+      'vulnerability-management',
+      'it-risk-management',
+      'ai-code-security-audit',
+    ],
+  },
+] as const;

@@ -1,20 +1,29 @@
 ---
 import Container from './Container.astro';
 import { getCollection } from 'astro:content';
-import { primaryNav, site, serviceLines, moreServices } from '@/data/site';
+import { primaryNav, site, serviceMenu } from '@/data/site';
 
 const path = Astro.url.pathname;
 
-// Services menu — same order as the live site's mega menu:
-// four primary service lines, then the remaining services.
+// Services menu — grouped exactly like the live it.alpinemar.com mega menu:
+// each primary line is a tab that reveals its own sub-services.
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
   .map((s) => s.data);
 const bySlug = new Map(
   services.map((s) => [s.path.replace(/^\/services\//, '').replace(/\/$/, ''), s]),
 );
-const lineItems = serviceLines.map((slug) => bySlug.get(slug)).filter(Boolean);
-const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
+
+const menuGroups = serviceMenu
+  .map((g) => {
+    const line = bySlug.get(g.line);
+    if (!line) return null;
+    return {
+      line,
+      children: g.children.map((slug) => bySlug.get(slug)).filter(Boolean),
+    };
+  })
+  .filter(Boolean) as { line: (typeof services)[number]; children: (typeof services)[number][] }[];
 ---
 
 {/* ═══════ TOP BAR — mirrors the main site's TopBar.astro (division tabs).
@@ -80,36 +89,86 @@ const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
           </svg>
         </a>
 
-        <div class="invisible absolute left-1/2 top-full z-50 w-[760px] -translate-x-1/2 pt-0 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-          <div class="rounded-b-[12px] border border-white/10 bg-[#12122d] p-8 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.7)]">
-            <div class="grid grid-cols-[220px_1fr] gap-x-10">
-              {/* Primary service lines — as on the live mega menu */}
+        <div class="invisible absolute left-1/2 top-full z-50 w-[880px] -translate-x-1/2 pt-0 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+          <div data-services-mega class="rounded-b-[12px] border border-white/10 bg-[#12122d] p-8 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.7)]">
+            <div class="grid grid-cols-[260px_1fr_240px] gap-x-8">
+              {/* Zone 1 — primary service lines (tabs). Hovering one reveals its sub-services. */}
               <ul class="flex flex-col gap-1 border-r border-white/10 pr-8">
-                {lineItems.map((svc) => (
+                {menuGroups.map((g, i) => (
                   <li>
                     <a
-                      href={svc!.path}
-                      class="block py-2 font-display text-[14px] font-medium leading-[1.35] text-white transition-colors hover:text-scooter"
+                      href={g.line.path}
+                      data-mega-tab={i}
+                      class:list={[
+                        'flex items-center justify-between gap-2 rounded-[8px] px-3 py-2.5 font-display text-[14px] font-medium leading-[1.3] transition-colors',
+                        i === 0 ? 'bg-white/[0.06] text-scooter' : 'text-white/85 hover:text-white',
+                      ]}
                     >
-                      {svc!.title}
+                      {g.line.title}
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" class="shrink-0 opacity-0 -translate-x-1 transition-all data-[active]:opacity-100 data-[active]:translate-x-0">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
                     </a>
                   </li>
                 ))}
               </ul>
-              {/* Remaining services — live menu order */}
-              <ul class="grid grid-cols-2 gap-x-8 gap-y-0.5 content-start">
-                {moreItems.map((svc) => (
-                  <li>
-                    <a
-                      href={svc!.path}
-                      class="block py-1.5 font-display text-[13px] leading-[1.4] text-white/70 transition-colors hover:text-white"
-                    >
-                      {svc!.title}
-                    </a>
-                  </li>
+
+              {/* Zone 2 — sub-services of the active line */}
+              <div class="min-h-[220px]">
+                {menuGroups.map((g, i) => (
+                  <div data-mega-panel={i} class:list={['h-full', i === 0 ? '' : 'hidden']}>
+                    {g.children.length > 0 ? (
+                      <ul class="grid grid-cols-2 gap-x-8 gap-y-0.5 content-start">
+                        {g.children.map((svc) => (
+                          <li>
+                            <a
+                              href={svc.path}
+                              class="block py-2 font-display text-[13px] leading-[1.4] text-white/70 transition-colors hover:text-scooter"
+                            >
+                              {svc.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <a
+                        href={g.line.path}
+                        class="inline-flex items-center gap-2 py-2 font-display text-[13px] font-medium text-white/70 transition-colors hover:text-scooter"
+                      >
+                        View {g.line.title}
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 5 7 7-7 7" /></svg>
+                      </a>
+                    )}
+                  </div>
                 ))}
-              </ul>
+              </div>
+
+              {/* Zone 3 — image + blurb card for the active line */}
+              <div class="border-l border-white/10 pl-8">
+                <div class="overflow-hidden rounded-[10px]">
+                  <img
+                    src="/images/home/services-mega.webp"
+                    alt=""
+                    width="268"
+                    height="256"
+                    class="h-[132px] w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                {menuGroups.map((g, i) => (
+                  <p
+                    data-mega-blurb={i}
+                    class:list={[
+                      'mt-4 font-display text-[12.5px] leading-[1.55] text-white/60',
+                      i === 0 ? '' : 'hidden',
+                    ]}
+                  >
+                    {g.line.summary}
+                  </p>
+                ))}
+              </div>
             </div>
+
             <a
               href="/services/"
               class="group/all mt-7 inline-flex items-center gap-2 border-t border-white/10 pt-5 font-display text-[13px] font-medium text-white transition-colors hover:text-scooter"
@@ -179,22 +238,23 @@ const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
           </span>
         </summary>
         <div class="pb-5">
-          {/* Primary service lines — as on the live mobile menu */}
-          <ul class="mt-2 space-y-2">
-            {lineItems.map((svc) => (
-              <li>
-                <a href={svc!.path} class="block font-display text-[14px] font-medium text-navy-900 transition-colors hover:text-scooter">{svc!.title}</a>
-              </li>
+          {/* Grouped by primary line — each category with its own sub-services. */}
+          <div class="mt-2 space-y-5">
+            {menuGroups.map((g) => (
+              <div>
+                <a href={g.line.path} class="block font-display text-[14px] font-medium text-navy-900 transition-colors hover:text-scooter">{g.line.title}</a>
+                {g.children.length > 0 && (
+                  <ul class="mt-2 space-y-2 border-l border-line pl-4">
+                    {g.children.map((svc) => (
+                      <li>
+                        <a href={svc.path} class="block font-display text-[14px] text-navy-500 transition-colors hover:text-scooter">{svc.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             ))}
-          </ul>
-          {/* Remaining services */}
-          <ul class="mt-4 space-y-2 border-l border-line pl-4">
-            {moreItems.map((svc) => (
-              <li>
-                <a href={svc!.path} class="block font-display text-[14px] text-navy-500 transition-colors hover:text-scooter">{svc!.title}</a>
-              </li>
-            ))}
-          </ul>
+          </div>
           <a href="/services/" class="mt-5 inline-flex items-center gap-2 font-display text-[13px] font-medium text-navy-900 transition-colors hover:text-scooter">
             Explore all Our Services
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
@@ -247,4 +307,39 @@ const moreItems = moreServices.map((slug) => bySlug.get(slug)).filter(Boolean);
   }
   initMobileMenu();
   document.addEventListener('astro:page-load', initMobileMenu);
+
+  // Services mega menu — hovering a primary line switches the active tab
+  // (sub-services + blurb), mirroring the live it.alpinemar.com dropdown.
+  function initServicesMega() {
+    document.querySelectorAll<HTMLElement>('[data-services-mega]').forEach((mega) => {
+      if (mega.dataset.bound === '1') return;
+      mega.dataset.bound = '1';
+
+      const tabs = Array.from(mega.querySelectorAll<HTMLElement>('[data-mega-tab]'));
+      const panels = Array.from(mega.querySelectorAll<HTMLElement>('[data-mega-panel]'));
+      const blurbs = Array.from(mega.querySelectorAll<HTMLElement>('[data-mega-blurb]'));
+
+      const activate = (idx: number) => {
+        tabs.forEach((t) => {
+          const active = t.dataset.megaTab === String(idx);
+          t.classList.toggle('bg-white/[0.06]', active);
+          t.classList.toggle('text-scooter', active);
+          t.classList.toggle('text-white/85', !active);
+          const chevron = t.querySelector('svg');
+          if (chevron) chevron.toggleAttribute('data-active', active);
+        });
+        panels.forEach((p) => p.classList.toggle('hidden', p.dataset.megaPanel !== String(idx)));
+        blurbs.forEach((b) => b.classList.toggle('hidden', b.dataset.megaBlurb !== String(idx)));
+      };
+
+      tabs.forEach((t) => {
+        const idx = Number(t.dataset.megaTab);
+        t.addEventListener('mouseenter', () => activate(idx));
+        t.addEventListener('focus', () => activate(idx));
+      });
+      activate(0);
+    });
+  }
+  initServicesMega();
+  document.addEventListener('astro:page-load', initServicesMega);
 </script>
