@@ -37,13 +37,13 @@ seo:
 <p>Accounting software is focused on the financial side of a business. It typically handles the recording of financial transactions as well as common accounting and bookkeeping processes like payroll and tax calculations. Businesses can use accounting systems to record, analyze, and report financial information as well as keep transaction records well-organized for bookkeeping purposes.</p>
 <p>While you can find accounting software included in other systems like ERPs, some vendors sell accounting software as a standalone product. You can find the following common features in many accounting software packages:</p>
 <ul>
-<li><strong>General ledger:</strong> works as an archive to record debits, credits, and balances</li>
-<li><strong>Accounts payable:</strong> tracks money owed to suppliers or vendors</li>
-<li><strong>Accounts receivable:</strong> tracks money owed to the business</li>
-<li><strong>Financial reporting:</strong> generates balance sheets and cash flow statements</li>
-<li><strong>Expense tracking:</strong> simplifies expense categorization, expense tracking, reimbursement processes, and expense reporting</li>
-<li><strong>Tax management:</strong> calculates taxes and generates tax-related reports</li>
-<li aria-level="1"><strong>Payroll: generates pay slips and facilitates electronic employee payments and tax withholding</strong></li>
+<li><strong>General ledger:</strong> works as an archive to record debits, credits, and balances.</li>
+<li><strong>Accounts payable:</strong> tracks money owed to suppliers or vendors.</li>
+<li><strong>Accounts receivable:</strong> tracks money owed to the business.</li>
+<li><strong>Financial reporting:</strong> generates balance sheets and cash flow statements.</li>
+<li><strong>Expense tracking:</strong> simplifies expense categorization, expense tracking, reimbursement processes, and expense reporting.</li>
+<li><strong>Tax management:</strong> calculates taxes and generates tax-related reports.</li>
+<li aria-level="1"><strong>Payroll: generates pay slips and facilitates electronic employee payments and tax withholding.</strong></li>
 </ul>
 <h2>Types of Accounting Software</h2>
 <p>There are three main types of accounting software. Each caters to different types of businesses with distinct needs:</p>
