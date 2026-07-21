@@ -29,3 +29,8 @@ pnpm-debug.log*
 # local client feedback / source materials
 Client Feedback 26.06/
 .vercel
+# stray working files — screenshots, exports, drafts (root-level only; never commit)
+/photos/
+/*.pdf
+/Снимок экрана*.png
+/About us.*
