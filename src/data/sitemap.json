@@ -1,0 +1,32 @@
+{
+  "heroTitle": "Sitemap",
+  "heroTagline": "Every page on alpinemar.com, organized by section.",
+  "customSections": [
+    {
+      "title": "Company",
+      "items": [
+        { "title": "Home", "href": "/" },
+        { "title": "About Us", "href": "/about-us/" },
+        { "title": "In the Media", "href": "/in-the-media/" },
+        { "title": "Find Your Service", "href": "/find-your-service/" },
+        { "title": "Contact", "href": "/contact/" },
+        { "title": "Privacy Policy", "href": "/privacy-policy/" }
+      ]
+    },
+    {
+      "title": "Tools",
+      "items": [
+        { "title": "All Tools", "href": "/tools/" },
+        { "title": "1031 Exchange Savings", "href": "/tools/1031-exchange-savings/" },
+        { "title": "Burn Rate Calculator", "href": "/tools/burn-rate-calculator/" },
+        { "title": "R&D Credit", "href": "/tools/r-and-d-credit/" },
+        { "title": "S-Corp vs LLC", "href": "/tools/s-corp-vs-llc/" },
+        { "title": "Tax Savings Estimator", "href": "/tools/tax-savings-estimator/" }
+      ]
+    },
+    {
+      "title": "Reports",
+      "items": [{ "title": "All Reports", "href": "/reports/" }]
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
+import sitemapData from '@/data/sitemap.json';
 
 const SPANISH = new Set(['creacion-de-empresas', 'servicios-contables', 'servicios-tributarios-en-florida']);
 const services = (await getCollection('services'))
@@ -19,33 +20,16 @@ const insights = (await getCollection('insights'))
   .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
   .map((p) => ({ title: p.data.title, href: `/blog/${p.id.replace(/\.md$/, '').split('/').pop()}/` }));
 
+// Custom (editable) sections live in src/data/sitemap.json; the Services /
+// Industries / Insights sections are generated from the collections. Company
+// renders first, then the auto sections, then the remaining custom sections.
+const custom = sitemapData.customSections;
 const sections = [
-  {
-    title: 'Company',
-    items: [
-      { title: 'Home', href: '/' },
-      { title: 'About Us', href: '/about-us/' },
-      { title: 'In the Media', href: '/in-the-media/' },
-      { title: 'Find Your Service', href: '/find-your-service/' },
-      { title: 'Contact', href: '/contact/' },
-      { title: 'Privacy Policy', href: '/privacy-policy/' },
-    ],
-  },
+  ...(custom[0] ? [custom[0]] : []),
   { title: `Services (${services.length})`,    items: services },
   { title: `Industries (${industries.length})`, items: industries },
   { title: `Insights (${insights.length})`,     items: [{ title: 'Blog Home', href: '/blog/' }, ...insights] },
-  {
-    title: 'Tools',
-    items: [
-      { title: 'All Tools', href: '/tools/' },
-      { title: '1031 Exchange Savings', href: '/tools/1031-exchange-savings/' },
-      { title: 'Burn Rate Calculator', href: '/tools/burn-rate-calculator/' },
-      { title: 'R&D Credit', href: '/tools/r-and-d-credit/' },
-      { title: 'S-Corp vs LLC', href: '/tools/s-corp-vs-llc/' },
-      { title: 'Tax Savings Estimator', href: '/tools/tax-savings-estimator/' },
-    ],
-  },
-  { title: 'Reports', items: [{ title: 'All Reports', href: '/reports/' }] },
+  ...custom.slice(1),
 ];
 ---
 
@@ -56,8 +40,8 @@ const sections = [
 
     <Container width="wide" class="relative z-10">
       <div class="mx-auto max-w-[64ch] text-center">
-        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">Sitemap</h1>
-        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">Every page on alpinemar.com, organized by section.</p>
+        <h1 class="font-display text-[32px] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-[36px] md:text-[40px]">{sitemapData.heroTitle}</h1>
+        <p class="mt-3 font-display text-[14px] leading-[1.55] text-white/70 md:text-[15px]">{sitemapData.heroTagline}</p>
       </div>
     </Container>
   </section>

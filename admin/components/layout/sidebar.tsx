@@ -59,6 +59,7 @@ const navGroups: NavGroup[] = [
       { href: '/authors', label: 'Authors', icon: PenLine, title: 'Blog authors & bios' },
       { href: '/about-page', label: 'About Page', icon: Info, title: 'About Us page copy' },
       { href: '/press', label: 'In the Media', icon: Newspaper, title: 'Press mentions' },
+      { href: '/sitemap-page', label: 'HTML Sitemap', icon: ListTree, title: 'Sitemap link sections' },
     ],
   },
   {
