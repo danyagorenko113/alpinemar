@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { Save } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { StructList } from '@/components/shared/struct-list'
 import { HelpTip } from '@/components/shared/help-tip'
@@ -119,6 +120,42 @@ export function ITHomepageForm({ initial }: Props) {
             defaultItem={{ slug: '', title: '', blurb: '' }}
             addLabel="Add service-line card"
           />
+        </section>
+
+        <section className="rounded-lg border bg-card p-5 space-y-3">
+          <h2 className="text-base font-semibold">
+            Service page CTA band
+            <HelpTip title="Bottom of every service page">
+              The &ldquo;Ready to Secure What&rsquo;s Next?&rdquo; block shown near the bottom
+              of every service page, with two buttons.
+            </HelpTip>
+          </h2>
+          <div className="space-y-1.5">
+            <Label htmlFor="cta-heading">Heading</Label>
+            <Input id="cta-heading" value={state.serviceCta.heading} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, heading: e.target.value } })} />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="cta-body">Body</Label>
+            <Textarea id="cta-body" rows={3} value={state.serviceCta.body} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, body: e.target.value } })} />
+          </div>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="cta-plabel">Primary button label</Label>
+              <Input id="cta-plabel" value={state.serviceCta.primaryLabel} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, primaryLabel: e.target.value } })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cta-phref">Primary button link</Label>
+              <Input id="cta-phref" value={state.serviceCta.primaryHref} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, primaryHref: e.target.value } })} placeholder="/contact/" />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cta-slabel">Secondary button label</Label>
+              <Input id="cta-slabel" value={state.serviceCta.secondaryLabel} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, secondaryLabel: e.target.value } })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="cta-shref">Secondary button link</Label>
+              <Input id="cta-shref" value={state.serviceCta.secondaryHref} onChange={(e) => patch({ serviceCta: { ...state.serviceCta, secondaryHref: e.target.value } })} placeholder="/services/" />
+            </div>
+          </div>
         </section>
 
         <section className="rounded-lg border bg-card p-5 space-y-3">

@@ -37,10 +37,20 @@ export interface HubspotConfig {
   formId: string
 }
 
+export interface ServiceCta {
+  heading: string
+  body: string
+  primaryLabel: string
+  primaryHref: string
+  secondaryLabel: string
+  secondaryHref: string
+}
+
 export interface ITPagesPayload {
   homeServices: HomeServiceCard[]
   values: ValueCard[]
   serviceLineCards: ServiceLineCard[]
+  serviceCta: ServiceCta
   businessHours: string
   hubspot: HubspotConfig
 }
@@ -48,6 +58,7 @@ export interface ITPagesPayload {
 const HOME_RE = /export const homeServices = (\[[\s\S]*?\]);/
 const VALUES_RE = /export const values = (\[[\s\S]*?\]);/
 const CARDS_RE = /export const serviceLineCards = (\[[\s\S]*?\]);/
+const CTA_RE = /export const serviceCta = (\{[\s\S]*?\});/
 const HOURS_RE = /export const businessHours = ('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*");/
 const HUBSPOT_RE = /export const hubspot = (\{[\s\S]*?\});/
 
@@ -132,6 +143,14 @@ export async function getPages(): Promise<ITPagesPayload> {
     serviceLineCards: parseArray<ServiceLineCard>(c, CARDS_RE, 'serviceLineCards').map((x) => ({
       slug: String(x.slug ?? ''), title: String(x.title ?? ''), blurb: String(x.blurb ?? ''),
     })),
+    serviceCta: (() => {
+      const x = parseObject<ServiceCta>(c, CTA_RE, 'serviceCta')
+      return {
+        heading: String(x.heading ?? ''), body: String(x.body ?? ''),
+        primaryLabel: String(x.primaryLabel ?? ''), primaryHref: String(x.primaryHref ?? ''),
+        secondaryLabel: String(x.secondaryLabel ?? ''), secondaryHref: String(x.secondaryHref ?? ''),
+      }
+    })(),
     businessHours: parseString(c, HOURS_RE, 'businessHours'),
     hubspot: (() => {
       const h = parseObject<HubspotConfig>(c, HUBSPOT_RE, 'hubspot')
@@ -148,6 +167,11 @@ export async function savePages(input: ITPagesPayload): Promise<{ sha: string }>
   const home = input.homeServices.map((x) => ({ title: x.title, href: x.href, blurb: x.blurb }))
   const values = input.values.map((x) => ({ title: x.title, body: x.body }))
   const cards = input.serviceLineCards.map((x) => ({ slug: x.slug, title: x.title, blurb: x.blurb }))
+  const cta = {
+    heading: input.serviceCta.heading, body: input.serviceCta.body,
+    primaryLabel: input.serviceCta.primaryLabel, primaryHref: input.serviceCta.primaryHref,
+    secondaryLabel: input.serviceCta.secondaryLabel, secondaryHref: input.serviceCta.secondaryHref,
+  }
   const hubspot = { region: input.hubspot.region, portalId: input.hubspot.portalId, formId: input.hubspot.formId }
 
   let next = doc.content
@@ -159,6 +183,7 @@ export async function savePages(input: ITPagesPayload): Promise<{ sha: string }>
   replace(HOME_RE, 'homeServices', `export const homeServices = ${JSON.stringify(home, null, 2)};`)
   replace(VALUES_RE, 'values', `export const values = ${JSON.stringify(values, null, 2)};`)
   replace(CARDS_RE, 'serviceLineCards', `export const serviceLineCards = ${JSON.stringify(cards, null, 2)};`)
+  replace(CTA_RE, 'serviceCta', `export const serviceCta = ${JSON.stringify(cta, null, 2)};`)
   replace(HOURS_RE, 'businessHours', `export const businessHours = ${JSON.stringify(input.businessHours)};`)
   replace(HUBSPOT_RE, 'hubspot', `export const hubspot = ${JSON.stringify(hubspot, null, 2)};`)
 

@@ -96,6 +96,19 @@ export const serviceLineCards = [
   },
 ];
 
+/**
+ * Per-service CTA band — the "Ready to Secure What's Next?" block shown near the
+ * bottom of every service page on the live site (static, same on all services).
+ */
+export const serviceCta = {
+  heading: 'Ready to Secure What’s Next?',
+  body: 'Get a free IT assessment and see how our remote IT support services strengthen your systems, reduce risk, and keep your business running without disruption or on-site visits.',
+  primaryLabel: 'Book a Free IT Assessment',
+  primaryHref: '/contact/',
+  secondaryLabel: 'Explore Our Services',
+  secondaryHref: '/services/',
+};
+
 /** Business hours line shown next to the phone number across the site. */
 export const businessHours = 'Monday–Friday, 9 AM–5 PM ET';
 
