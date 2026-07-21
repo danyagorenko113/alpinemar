@@ -14,9 +14,14 @@ pnpm-debug.log*
 .codex-tunnel.*.log
 .codex-cloudflare-tunnel.*.log
 .codex-cloudflare-tunnel*.log
-# environment variables
+# environment variables (never commit secrets)
 .env
 .env.production
+.env.local
+.env*.local
+# Claude Code — personal/session files only (settings.json, commands/, agents/ ARE committed)
+.claude/settings.local.json
+.claude/*.lock
 # macOS-specific files
 .DS_Store
 # jetbrains setting folder

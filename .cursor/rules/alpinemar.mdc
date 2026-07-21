@@ -1,0 +1,35 @@
+---
+description: Alpine Mar repo — how to edit the two Astro sites safely
+alwaysApply: true
+---
+
+# Alpine Mar — AI editing rules
+
+**Read `CLAUDE.md` (repo root) in full before any edit.** It is the authoritative guide; this file is the short version.
+
+This repo has three units that auto-deploy on push to `main`:
+- **Main site** (`alpinemar.com`) — Astro, at the repo root (`src/`).
+- **IT site** (`it.alpinemar.com`) — Astro, under `it-site/`.
+- **Admin CMS** — Next.js, under `admin/`.
+
+## Golden rules
+1. **Always build before committing.** `npm run build` at the repo root for main-site changes; `cd it-site && npm run build` for IT; `cd admin && npx tsc --noEmit && npm run build` for admin. Never commit a red build.
+2. **The two Astro sites are separate.** Never make one import from the other; they have separate `public/`, `node_modules/`, and content collections. IT-site files live under `it-site/`.
+3. **`.md` bodies are raw HTML**, not Markdown. IT service pages may contain `am-subsvc-grid` HTML blocks — preserve them exactly.
+4. **`.ts` data files must stay valid TypeScript** (keep commas, quotes, and the trailing `as const`). **`.json` files must stay valid JSON** (double-quoted keys, no trailing commas).
+5. **Match the exact frontmatter schema** for each collection (`CLAUDE.md` → "Content collections"). Field sets differ between the two sites — a wrong field is a build error.
+6. **Renaming a slug changes the live URL** → add a 301 in the right `vercel.json` (main → root `vercel.json`, IT → `it-site/vercel.json`) and update cross-links.
+7. **Don't write `status: published`** (omit it); only write `status: draft` to hide something.
+8. **Keep styling consistent** — use existing color/font tokens from `global.css`; never invent hex values or new components.
+
+## Where content lives (quick map)
+- Blog: `src/content/insights/` (main) · `it-site/src/content/insights/` (IT)
+- Services: `src/content/services/` · `it-site/src/content/services/`
+- Industries: `src/content/industries/` (main only)
+- Team: `src/content/team/` · `it-site/src/content/team/`
+- Site identity / nav: `src/data/site.ts` + `navigation.ts` · `it-site/src/data/site.ts`
+- Page copy: `src/data/{about,press,sitemap}.json`, `taxonomy.ts` · `it-site/src/data/pages.ts`
+- Redirects: `vercel.json` · `it-site/vercel.json`
+- Schema (JSON-LD): `src/data/schema-overrides.json` · `it-site/src/data/schema-overrides.json`
+
+See `CLAUDE.md` for the full field-by-field schemas, the "How do I…" recipes, and the complete gotchas / do-not-touch list.
