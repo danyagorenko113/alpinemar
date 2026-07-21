@@ -1,0 +1,27 @@
+{
+  "heroTitle": "About Us",
+  "journeyHeading": "Breaking molds. Building relationships.",
+  "journeyBody": [
+    "Alpine Mar CPAs & Advisors was founded in 2020 by a group of CPAs that bring experience from some of the world's largest and most sophisticated organizations. The team prides itself on providing an unmatched level of expertise and service to individuals and businesses of all sizes.",
+    "Since our inception, Alpine Mar has focused on using technology and experience to deliver industry leading results, service, and guidance."
+  ],
+  "drivesHeading": "Valuing what matters most.",
+  "drivesIntro": "As Certified Public Accountants, and champions of entrepreneurship, we're focused on the numbers and the people behind them. Their stories are challenges faced, and obstacles overcome. We've created an innovative, people-driven business to bring our clients some of the best the industry has to offer.",
+  "drives": [
+    { "title": "Quality", "icon": "/icons/about/quality.svg" },
+    { "title": "Trust & Integrity", "icon": "/icons/about/trust.svg" },
+    { "title": "Innovation", "icon": "/icons/about/innovation.svg" },
+    { "title": "Collaboration", "icon": "/icons/about/collaboration.svg" }
+  ],
+  "journeyPhotos": [
+    "/images/about/collage-1.jpg",
+    "/images/about/collage-2.jpg",
+    "/images/about/collage-3.jpg",
+    "/images/about/collage-4.jpg",
+    "/images/about/collage-5.jpg",
+    "/images/about/alpine-301.jpg"
+  ],
+  "ctaHeading": "Let's talk. The right financial partner makes all the difference.",
+  "ctaButtonLabel": "Request a Consultation",
+  "ctaHref": "/contact/"
+}

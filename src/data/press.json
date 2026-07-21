@@ -1,0 +1,25 @@
+{
+  "title": "In the Media",
+  "tagline": "Where Alpine Mar shows up in tax-industry press, podcasts, and conference programs.",
+  "ctaHeading": "Writing about CPA-industry trends? We're happy to comment.",
+  "ctaButtonLabel": "Press inquiries",
+  "ctaHref": "/contact/",
+  "mentions": [
+    { "outlet": "Business Insider", "date": "2025", "headline": "Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division", "href": "https://markets.businessinsider.com/news/stocks/alpine-mar-cpa-advisors-expands-globally-with-new-offshore-advisory-division-1034650336" },
+    { "outlet": "International Business Times", "date": "2025", "headline": "Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division", "href": "https://www.ibtimes.com/alpine-mar-cpa-advisors-expands-globally-new-offshore-advisory-division-3769874" },
+    { "outlet": "GlobeNewswire", "date": "2025", "headline": "Alpine Mar CPA & Advisors Expands Globally with New Offshore Advisory Division", "href": "https://www.globenewswire.com/news-release/2025/04/29/3069915/0/en/Alpine-Mar-CPA-Advisors-Expands-Globally-with-New-Offshore-Advisory-Division.html" },
+    { "outlet": "Bloomberg Tax", "date": "2024", "headline": "The Impact of the 2024 Election on Business Tax Landscape", "href": "https://news.bloombergtax.com/tax-insights-and-commentary/the-impact-of-the-2024-election-on-business-tax-landscape" },
+    { "outlet": "Chicago Construction News", "date": "2024", "headline": "Accounting and Tax Services for Construction Companies: How Alpine Mar CPAs & Advisors Fuels Growth", "href": "https://chicagoconstructionnews.com/accounting-and-tax-services-for-construction-companies-how-alpine-mar-cpas-advisors-fuels-growth/" },
+    { "outlet": "VCWire.tech", "date": "2024", "headline": "Fintech Startup Team Announces Major Expansion", "href": "https://vcwire.tech/2024/07/11/fintech-startup-team-announces-major-expansion/" },
+    { "outlet": "The Real Deal", "date": "2024", "headline": "What's Trending in New York", "href": "https://therealdeal.com/new-york/2024/03/18/whats-trending-in-new-york/" },
+    { "outlet": "Finsmes", "date": "2024", "headline": "Fintech Startup Team Announces Major Expansion", "href": "https://www.finsmes.com/2024/07/fintech-startup-team-announces-major-expansion.html" },
+    { "outlet": "Hypepotamus", "date": "2024", "headline": "Fintech Startup Team Announces Major Expansion", "href": "https://hypepotamus.com/startup-news/fintech-startup-team-announces-major-expansion/" },
+    { "outlet": "EstatePlanning.com", "date": "2024", "headline": "A Spotlight on Alpine Mar CPAs & Advisors and the Art of Tax-Efficient Wealth Transfer", "href": "https://www.estateplanning.com/a-spotlight-on-alpine-mar-cpas-advisors-and-the-art-of-tax-efficient-wealth-transfer" },
+    { "outlet": "Research & Development Tax Credit", "date": "2025", "headline": "Increase of the R&D Tax Credit in 2025", "href": "https://research-development-tax-credit.com/news/insights-increase-of-the-rd-tax-credit-in-2025/" },
+    { "outlet": "Accounting Today", "date": "2025", "headline": "Trump administration's policies are stressing accounting professionals", "href": "https://www.accountingtoday.com/news/trump-administrations-policies-are-stressing-accounting-professionals" },
+    { "outlet": "Inman", "date": "2025", "headline": "What real estate pros should know about the new tax bill", "href": "https://www.inman.com/2025/08/27/what-real-estate-pros-should-know-about-the-new-tax-bill/" },
+    { "outlet": "CPA Practice Advisor", "date": "2025", "headline": "Key Tax Changes in Trump's Spending Bill for Accounting Professionals", "href": "https://www.cpapracticeadvisor.com/2025/07/02/key-tax-changes-in-trumps-spending-bill-for-accounting-professionals/163279/" },
+    { "outlet": "Accounting Today", "date": "2025", "headline": "Finding growth in times of uncertainty", "href": "https://www.accountingtoday.com/opinion/finding-growth-in-times-of-uncertainty" },
+    { "outlet": "Research & Development Tax Credit", "date": "2024", "headline": "Going Green with the Federal R&D Tax Credit", "href": "https://research-development-tax-credit.com/going-green-with-the-federal-rd-tax-credit/" }
+  ]
+}

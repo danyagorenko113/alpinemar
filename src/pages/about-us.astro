@@ -4,6 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import { personGraph } from '@/data/schema';
 import { site } from '@/data/site';
+import about from '@/data/about.json';
 
 const teamMembers = (await getCollection('team'))
   .filter((m) => m.data.status !== 'draft')
@@ -12,16 +13,8 @@ const teamMembers = (await getCollection('team'))
 
 const schema = personGraph(teamMembers);
 
-// Photos for the drag-to-scroll gallery under "Breaking molds. Building relationships."
-// 6 photos — 4 fully visible at a time on desktop, edges cropped per Figma.
-const journeyPhotos = [
-  '/images/about/collage-1.jpg',
-  '/images/about/collage-2.jpg',
-  '/images/about/collage-3.jpg',
-  '/images/about/collage-4.jpg',
-  '/images/about/collage-5.jpg',
-  '/images/about/alpine-301.jpg',
-];
+// Editable page copy lives in src/data/about.json (CMS → About Page).
+const { journeyPhotos, drives } = about;
 
 // Carousel: members with photos
 const teamCards = teamMembers.filter((m) => m.photo);
@@ -33,13 +26,6 @@ const emailFor = (name: string) => {
   const first = name.split(' ')[0].toLowerCase();
   return `mailto:${first}@alpinemar.com`;
 };
-
-const drives = [
-  { title: 'Quality',           icon: '/icons/about/quality.svg' },
-  { title: 'Trust & Integrity', icon: '/icons/about/trust.svg' },
-  { title: 'Innovation',        icon: '/icons/about/innovation.svg' },
-  { title: 'Collaboration',     icon: '/icons/about/collaboration.svg' },
-];
 ---
 
 <BaseLayout
@@ -54,7 +40,7 @@ const drives = [
       <!-- Subtle gradient at bottom to ensure title legibility -->
       <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-white/55 to-white"></div>
       <Container width="wide" class="relative z-10 flex h-full flex-col justify-end pb-10 md:pb-14">
-        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink">About Us</h1>
+        <h1 data-reveal data-speed="slow" class="am-hero-display am-gradient-ink">{about.heroTitle}</h1>
       </Container>
     </div>
   </section>
@@ -118,15 +104,10 @@ const drives = [
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-[var(--color-text-head)] md:col-span-6">
-          Breaking molds. Building relationships.
+          {about.journeyHeading}
         </h2>
         <div class="flex flex-col gap-5 font-display text-[16.5px] leading-relaxed text-[var(--color-text-body)] md:col-span-6 md:pt-2">
-          <p>
-            Alpine Mar CPAs &amp; Advisors was founded in 2020 by a group of CPAs that bring experience from some of the world's largest and most sophisticated organizations. The team prides itself on providing an unmatched level of expertise and service to individuals and businesses of all sizes.
-          </p>
-          <p>
-            Since our inception, Alpine Mar has focused on using technology and experience to deliver industry leading results, service, and guidance.
-          </p>
+          {about.journeyBody.map((p) => <p>{p}</p>)}
         </div>
       </div>
 
@@ -165,10 +146,10 @@ const drives = [
 
       <div data-reveal class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display text-white md:col-span-6">
-          Valuing what matters most.
+          {about.drivesHeading}
         </h2>
         <p class="font-display text-[16.5px] leading-relaxed text-white/75 md:col-span-6 md:pt-2">
-          As Certified Public Accountants, and champions of entrepreneurship, we're focused on the numbers and the people behind them. Their stories are challenges faced, and obstacles overcome. We've created an innovative, people-driven business to bring our clients some of the best the industry has to offer.
+          {about.drivesIntro}
         </p>
       </div>
 
@@ -278,11 +259,11 @@ const drives = [
 
       <div data-reveal class="grid grid-cols-1 items-end gap-10 md:grid-cols-12 md:gap-16">
         <h2 class="am-h1-display am-gradient-ink-light md:col-span-8">
-          Let's talk. The right financial partner makes all the difference.
+          {about.ctaHeading}
         </h2>
         <div class="md:col-span-4 md:flex md:justify-end">
-          <a href="/contact/" class="group inline-flex items-center gap-2 rounded-[6px] bg-delft px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter hover:text-white">
-            Request a Consultation
+          <a href={about.ctaHref} class="group inline-flex items-center gap-2 rounded-[6px] bg-delft px-6 py-4 font-display text-[15px] font-medium text-white transition-colors hover:bg-scooter hover:text-white">
+            {about.ctaButtonLabel}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" class="transition-transform group-hover:translate-x-1"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>

@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import { Plus, X, GripVertical } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 
 interface StringListProps {
@@ -10,9 +11,11 @@ interface StringListProps {
   onChange: (next: string[]) => void
   placeholder?: string
   addLabel?: string
+  /** Render each row as a multi-line textarea instead of a single-line input. */
+  multiline?: boolean
 }
 
-export function StringList({ value, onChange, placeholder, addLabel = 'Add item' }: StringListProps) {
+export function StringList({ value, onChange, placeholder, addLabel = 'Add item', multiline = false }: StringListProps) {
   // Stable React keys per row so editing/removing/reordering doesn't remount the
   // wrong input (which would steal focus / edit a different row). Keys are kept
   // in lockstep with `value` mutations and resynced if `value` changes length
@@ -66,8 +69,12 @@ export function StringList({ value, onChange, placeholder, addLabel = 'Add item'
               <GripVertical className="h-3.5 w-3.5" />
             </button>
           </div>
-          <span className="font-mono text-[10px] text-muted-foreground w-5">{i + 1}.</span>
-          <Input value={item} onChange={(e) => setAt(i, e.target.value)} placeholder={placeholder} />
+          <span className="font-mono text-[10px] text-muted-foreground w-5 pt-2 self-start">{i + 1}.</span>
+          {multiline ? (
+            <Textarea value={item} onChange={(e) => setAt(i, e.target.value)} placeholder={placeholder} rows={2} className="flex-1" />
+          ) : (
+            <Input value={item} onChange={(e) => setAt(i, e.target.value)} placeholder={placeholder} />
+          )}
           <Button
             type="button"
             variant="ghost"

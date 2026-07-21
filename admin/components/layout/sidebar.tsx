@@ -18,6 +18,8 @@ import {
   Signpost,
   Code2,
   ListTree,
+  Newspaper,
+  Info,
   LogOut,
   Menu,
   ExternalLink,
@@ -55,6 +57,8 @@ const navGroups: NavGroup[] = [
       { href: '/industries', label: 'Industries', icon: Building2, title: 'Industry pages' },
       { href: '/team', label: 'Team', icon: Users, title: 'Team members' },
       { href: '/authors', label: 'Authors', icon: PenLine, title: 'Blog authors & bios' },
+      { href: '/about-page', label: 'About Page', icon: Info, title: 'About Us page copy' },
+      { href: '/press', label: 'In the Media', icon: Newspaper, title: 'Press mentions' },
     ],
   },
   {
