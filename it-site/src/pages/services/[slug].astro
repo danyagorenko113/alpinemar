@@ -122,20 +122,47 @@ const related = allServices
   {/* ══════════════════════ BODY ══════════════════════
       Long-form content — reading width, Satoshi 17px body, breathing space.
   ══════════════════════════════════════════════════════════ */}
-  <section class="relative bg-white py-20 md:py-28">
-    <Container width="reading">
-      <article
-        class="prose prose-lg max-w-none
-          [&_h2]:font-display [&_h2]:text-[28px] [&_h2]:font-medium [&_h2]:tracking-[-0.01em] [&_h2]:text-navy-900 [&_h2]:mt-14 [&_h2]:mb-5 [&_h2]:pt-4 [&_h2]:border-t [&_h2]:border-line-soft [&_h2]:relative
-          [&_h3]:font-display [&_h3]:text-[20px] [&_h3]:font-medium [&_h3]:text-navy-900 [&_h3]:mt-10 [&_h3]:mb-3
-          [&_p]:font-display [&_p]:text-[17px] [&_p]:leading-[1.72] [&_p]:text-navy-700 [&_p]:my-5
-          [&_ul]:font-display [&_ul]:text-[17px] [&_ul]:text-navy-700 [&_ul]:my-6 [&_ul]:pl-1 [&_ul]:list-none [&_ul>li]:relative [&_ul>li]:pl-6 [&_ul>li]:my-2.5
-          [&_ol]:font-display [&_ol]:text-[17px] [&_ol]:text-navy-700 [&_ol]:my-6 [&_ol]:pl-6 [&_ol>li]:my-2.5
-          [&_strong]:text-navy-900 [&_strong]:font-medium
-          [&_a]:text-teal-700 [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-1 hover:[&_a]:decoration-2"
-      >
-        <Content />
-      </article>
+  <section class="relative bg-paper py-16 md:py-28">
+    <Container width="wide">
+      <div class="mb-8 flex items-center gap-3 text-navy-900 md:mb-10">
+        <span class="block size-2 bg-scooter"></span>
+        <span class="font-display text-[14px] tracking-[-0.005em]">Deep dive</span>
+      </div>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-16">
+        <h2 class="am-h1-display text-navy-900 md:col-span-7">The detail, if you want it.</h2>
+        <p class="font-display text-[15px] leading-[1.65] text-navy-500 md:col-span-5 md:pt-3">
+          The full breakdown of how we approach {item.data.title.toLowerCase()} — written for teams who want to see the rigor before signing on.
+        </p>
+      </div>
+
+      <div class="mt-8 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-12 md:gap-16">
+        <div class="rounded-[6px] border border-line bg-white p-6 md:col-span-9 md:p-12">
+          <article
+            class="prose prose-lg max-w-none
+              [&_h2]:font-display [&_h2]:text-[28px] [&_h2]:font-medium [&_h2]:tracking-[-0.01em] [&_h2]:text-navy-900 [&_h2]:mt-14 [&_h2]:mb-5 [&_h2]:pt-4 [&_h2]:border-t [&_h2]:border-line-soft [&_h2]:relative
+              [&_h3]:font-display [&_h3]:text-[20px] [&_h3]:font-medium [&_h3]:text-navy-900 [&_h3]:mt-10 [&_h3]:mb-3
+              [&_p]:font-display [&_p]:text-[17px] [&_p]:leading-[1.72] [&_p]:text-navy-700 [&_p]:my-5
+              [&_ul]:font-display [&_ul]:text-[17px] [&_ul]:text-navy-700 [&_ul]:my-6 [&_ul]:pl-1 [&_ul]:list-none [&_ul>li]:relative [&_ul>li]:pl-6 [&_ul>li]:my-2.5
+              [&_ol]:font-display [&_ol]:text-[17px] [&_ol]:text-navy-700 [&_ol]:my-6 [&_ol]:pl-6 [&_ol>li]:my-2.5
+              [&_strong]:text-navy-900 [&_strong]:font-medium
+              [&_a]:text-teal-700 [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-1 hover:[&_a]:decoration-2"
+          >
+            <Content />
+          </article>
+        </div>
+        <aside class="md:col-span-3">
+          <div class="sticky top-28 rounded-[6px] bg-[#12122d] p-6 text-white md:p-7">
+            <p class="font-display text-[13px] font-medium uppercase tracking-[0.08em] text-scooter">Get in touch</p>
+            <p class="mt-5 font-display text-[15px] leading-[1.55] text-white/85">
+              Start with a free IT assessment — no obligations, just insights.
+            </p>
+            <a href="/contact/" class="mt-6 inline-flex items-center gap-2 font-display text-[13px] font-medium text-scooter transition-colors hover:text-white">
+              Request a Consultation
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </aside>
+      </div>
     </Container>
 
     {/* Custom bullet markers — teal dash */}
