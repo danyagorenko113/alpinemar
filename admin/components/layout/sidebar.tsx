@@ -15,6 +15,7 @@ import {
   LayoutTemplate,
   Star,
   Settings,
+  Signpost,
   LogOut,
   Menu,
   ExternalLink,
@@ -59,6 +60,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/homepage', label: 'Homepage', icon: LayoutTemplate, title: 'Pinned cards, logos, value props' },
       { href: '/reviews', label: 'Reviews', icon: Star, title: 'Google review testimonials' },
+      { href: '/redirects', label: 'Redirects', icon: Signpost, title: '301/302 URL redirects' },
       { href: '/settings', label: 'Settings', icon: Settings, title: 'Contact info, socials, nav' },
     ],
   },
@@ -90,6 +92,7 @@ const itNavGroups: NavGroup[] = [
     label: 'Site',
     items: [
       { href: '/it/homepage', label: 'Pages', icon: LayoutTemplate, title: 'Homepage, About & Services copy' },
+      { href: '/it/redirects', label: 'Redirects', icon: Signpost, title: 'IT 301/302 URL redirects' },
       { href: '/it/settings', label: 'Settings', icon: Settings, title: 'IT contact info, socials, nav' },
     ],
   },

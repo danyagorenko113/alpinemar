@@ -44,7 +44,7 @@ interface Props {
   reviewNames?: string[]
 }
 
-const GROUPS: ServiceGroup[] = ['Tax', 'Accounting', 'Advisory', 'Compliance']
+const GROUPS: ServiceGroup[] = ['Tax', 'Accounting', 'Advisory', 'Compliance', 'Audit & Attestation']
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alpinemar.vercel.app'
 
 /** Detail-page sections in the site's default render order. */

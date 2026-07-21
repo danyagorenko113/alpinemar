@@ -10,7 +10,7 @@ const COLLECTION_DIR = 'src/content/services'
 const LIST_CACHE_KEY = 'services:list'
 const LIST_TTL_MS = 60_000
 
-export type ServiceGroup = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance'
+export type ServiceGroup = 'Tax' | 'Accounting' | 'Advisory' | 'Compliance' | 'Audit & Attestation'
 export type ContentStatus = 'draft' | 'published'
 
 /** Detail-page sections, in the site's default render order. */
