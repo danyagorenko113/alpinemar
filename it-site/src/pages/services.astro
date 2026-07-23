@@ -2,9 +2,19 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
+import Icon from '@/components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { moreServices } from '@/data/site';
 import { serviceLineCards } from '@/data/pages';
+
+// Icon per service line (replaces the old "01" number treatment), using the
+// lucide-style Icon set — consistent with the About Us values change.
+const lineIcons: Record<string, string> = {
+  'remote-it-support': 'phone',
+  'incident-response': 'zap',
+  'cybersecurity': 'shield-check',
+  'it-consulting': 'cpu',
+};
 
 const services = (await getCollection('services'))
   .filter((s) => s.data.status !== 'draft')
@@ -70,22 +80,17 @@ const serviceLines = serviceLineCards.map((row) => ({ ...row, service: bySlug.ge
   <section class="relative border-t border-line bg-white py-24 md:py-32">
     <Container width="wide">
       <ul data-stagger class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
-        {serviceLines.map((row, i) => (
+        {serviceLines.map((row) => (
           <li>
             <a
               href={row.service?.path ?? `/services/${row.slug}/`}
               class="group flex h-full flex-col justify-between gap-10 rounded-[10px] border border-line bg-paper p-8 transition-colors hover:border-navy-900 md:p-10"
             >
               <div>
-                <div class="flex items-start justify-between">
-                  <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-navy-400">
-                    Service line 0{i + 1}
-                  </span>
-                  <span class="font-display text-[54px] font-medium leading-[0.9] tracking-[-0.03em] text-navy-100 transition-colors group-hover:text-scooter/40 md:text-[72px]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <h2 class="mt-8 font-display text-[24px] font-medium tracking-[-0.01em] text-navy-900 md:text-[28px]">
+                <span class="inline-flex size-14 items-center justify-center rounded-[12px] bg-scooter/10 text-scooter transition-colors group-hover:bg-scooter group-hover:text-white">
+                  <Icon name={lineIcons[row.slug] ?? 'layers'} class="size-7" />
+                </span>
+                <h2 class="mt-7 font-display text-[24px] font-medium tracking-[-0.01em] text-navy-900 md:text-[28px]">
                   {row.title}
                 </h2>
                 <p class="mt-4 max-w-[52ch] font-display text-[15px] leading-[1.65] text-navy-500">
