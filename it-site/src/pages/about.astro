@@ -3,8 +3,13 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { getCollection } from 'astro:content';
+import Icon from '@/components/Icon.astro';
 import { site } from '@/data/site';
 import { values } from '@/data/pages';
+
+// Icon per value (by order), replacing the old "01" number treatment. Uses the
+// same lucide-style Icon set established on the accounting site.
+const valueIcons = ['sparkles', 'zap', 'shield-check', 'target', 'users'];
 
 // Team members — all currently `status: draft` in frontmatter, so we include
 // drafts intentionally here. Bios are TBD; roster + role + optional photo.
@@ -144,15 +149,10 @@ const initials = (name: string) =>
       >
         {values.map((v, i) => (
           <li class="group relative overflow-hidden rounded-[10px] border border-line bg-paper p-8 transition-colors hover:border-navy-900 md:p-10">
-            <div class="flex items-start justify-between">
-              <span class="font-display text-[11px] font-medium uppercase tracking-[0.14em] text-navy-400">
-                Value 0{i + 1}
-              </span>
-              <span class="font-display text-[54px] font-medium leading-[0.9] tracking-[-0.03em] text-navy-100 transition-colors group-hover:text-scooter/40 md:text-[72px]">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-            </div>
-            <h3 class="mt-8 font-display text-[24px] font-medium tracking-[-0.01em] text-navy-900 md:text-[28px]">
+            <span class="inline-flex size-14 items-center justify-center rounded-[12px] bg-scooter/10 text-scooter transition-colors group-hover:bg-scooter group-hover:text-white">
+              <Icon name={valueIcons[i] ?? 'sparkles'} class="size-7" />
+            </span>
+            <h3 class="mt-7 font-display text-[24px] font-medium tracking-[-0.01em] text-navy-900 md:text-[28px]">
               {v.title}
             </h3>
             <p class="mt-4 max-w-[46ch] font-display text-[15px] leading-[1.65] text-navy-500">
