@@ -22,7 +22,7 @@ const serviceLinks = [
 <footer class="relative overflow-hidden bg-[#12122d] text-white">
   <div class="pointer-events-none absolute inset-0" style="background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 72px 72px;"></div>
 
-  <Container width="wide" class="relative z-10 py-16 md:py-24">
+  <Container width="wide" class="relative z-10 pt-16 pb-8 md:pt-24">
     <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
       {/* Brand + contact details */}
       <div class="md:col-span-5">
@@ -111,4 +111,16 @@ const serviceLinks = [
       </ul>
     </div>
   </Container>
+
+  {/* Big "Alpine Mar" wordmark banner — mirrors the accounting footer's big-logo
+      treatment, flipped to solid white for this dark-blue footer. */}
+  <div class="relative z-10 pb-8">
+    <div class="relative left-1/2 mt-8 w-screen -translate-x-1/2 overflow-hidden">
+      <img
+        src="/images/brand/alpine-mar-wordmark.svg"
+        alt="Alpine Mar"
+        class="block w-full [filter:brightness(0)_invert(1)]"
+      />
+    </div>
+  </div>
 </footer>
