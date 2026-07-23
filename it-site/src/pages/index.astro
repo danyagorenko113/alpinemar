@@ -3,7 +3,17 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/Container.astro';
 import ContactCta from '@/components/ContactCta.astro';
 import { site } from '@/data/site';
-import { homeServices } from '@/data/pages';
+
+// Home services list — mirrors the accounting site's rollover section: primary
+// service lines with a hover preview image, plus a "Not sure where to start?"
+// row into Contact. Numbers are plain 1–4 (no leading zero), matching accounting.
+const services = [
+  { num: '1', name: 'Remote IT Support Services', href: '/services/remote-it-support/', img: '/images/home/service-remote-it-support.jpg' },
+  { num: '2', name: 'Incident Response Services',  href: '/services/incident-response/',  img: '/images/home/service-incident-response.jpg' },
+  { num: '3', name: 'Cybersecurity Services',      href: '/services/cybersecurity/',      img: '/images/home/service-cybersecurity.jpg' },
+  { num: '4', name: 'IT Consulting Services',      href: '/services/it-consulting/',      img: '/images/home/service-it-consulting.jpg' },
+  { num: '5', name: 'Not sure where to start?',    href: '/contact/',                     img: '/images/home/service-contact.jpg' },
+];
 ---
 
 <BaseLayout
@@ -186,69 +196,33 @@ import { homeServices } from '@/data/pages';
       </div>
 
       <ul class="border-t border-line">
-        {homeServices.map((row, idx) => (
-          <li class="am-svc-row group relative border-b border-line">
-            <a
-              href={row.href}
-              data-reveal
-              data-speed="fast"
-              class="relative grid grid-cols-[auto_1fr_auto] items-start gap-6 py-7 md:grid-cols-12 md:items-center md:gap-8 md:py-11"
-            >
-              <span class="font-display text-[24px] font-medium tabular-nums text-navy-900 md:col-span-1 md:pl-4 md:text-[34px]">
-                {String(idx + 1).padStart(2, '0')}
-              </span>
-              <span class="md:col-span-10">
-                <span class="block font-display text-[20px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[24px] md:text-[32px]">
-                  {row.title}
-                </span>
-                <span class="mt-3 block max-w-[86ch] font-display text-[14px] leading-[1.6] text-navy-500 md:text-[15px]">
-                  {row.blurb}
-                </span>
-              </span>
-
-              <span class="md:col-span-1 md:justify-self-end md:pr-4">
+        {services.map((s) => (
+          <li data-reveal class="group relative border-b border-line">
+            <a href={s.href} class="relative grid grid-cols-3 items-center py-7 md:py-12">
+              <span class="justify-self-start pl-2 font-display text-[28px] font-medium tabular-nums text-navy-900 md:pl-6 md:text-[40px]">{s.num}</span>
+              <span class="justify-self-center text-center font-display text-[20px] font-medium tracking-[-0.01em] text-navy-900 sm:text-[26px] md:min-w-[440px] md:text-[34px] lg:min-w-[540px] lg:text-[40px]">{s.name}</span>
+              <span class="justify-self-end pr-2 md:pr-6">
                 {/* Default ↗ arrow */}
-                <svg
-                  width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="1.8"
-                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                  class="block text-navy-900 group-hover:hidden"
-                >
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="block text-navy-900 group-hover:hidden">
                   <path d="M7 17 17 7" /><path d="M7 7h10v10" />
                 </svg>
-                {/* Hover → arrow, scooter */}
-                <svg
-                  width="26" height="26" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                  class="hidden text-scooter group-hover:block"
-                >
+                {/* Hover → arrow (scooter) */}
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="hidden text-scooter group-hover:block">
                   <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
                 </svg>
               </span>
+
+              {/* Hover preview image (positioned right of the centered name) */}
+              <img
+                src={s.img}
+                alt=""
+                aria-hidden="true"
+                class="pointer-events-none absolute right-[12%] top-1/2 hidden h-[160px] w-[280px] -translate-y-1/2 rounded-[4px] object-cover opacity-0 shadow-[0_18px_48px_-18px_rgba(18,18,45,0.45)] transition-opacity duration-300 group-hover:opacity-90 md:block lg:h-[200px] lg:w-[340px]"
+                loading="lazy"
+              />
             </a>
           </li>
         ))}
-
-        {/* Sentinel row — label verbatim from the live site. */}
-        <li class="border-b border-line">
-          <a
-            href="/services/"
-            class="group flex items-center justify-between py-7 md:py-9 md:pl-4 md:pr-4"
-          >
-            <span class="font-display text-[16px] font-medium tracking-[-0.005em] text-navy-500 transition-colors group-hover:text-navy-900">
-              Explore All Our Services
-            </span>
-            <svg
-              width="22" height="22" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-              class="text-navy-500 transition-colors group-hover:text-navy-900"
-            >
-              <path d="M5 12h14" /><path d="m13 5 7 7-7 7" />
-            </svg>
-          </a>
-        </li>
       </ul>
     </Container>
   </section>
