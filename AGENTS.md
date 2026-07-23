@@ -815,6 +815,29 @@ Main site JS re-registers on `astro:after-swap`. IT site uses `astro:page-load`.
 
 ---
 
+## Admin CMS vs Claude Code — which changes go where
+
+The admin CMS is built for **content**. A few of its sections touch **structure** that is coupled across many files, or is code-driven — those are safer done by an AI assistant (Claude Code) that can update every linked file in one pass. The admin shows a one-time "prefer your AI assistant" popup on those pages (`admin/components/structural-notice.tsx`, rendered on Navigation, Redirects, Homepage, and Schema for both sites). This section is the authoritative explanation of that split.
+
+### Safe to do in the admin (self-contained content)
+
+Blog posts, services & industries copy/SEO/hero images, team, authors, reviews, About Page, In the Media, media library, **adding a single simple redirect**, and per-page schema values. None of these cascade into other files.
+
+### Better done via Claude Code (structural / coupled / code-driven)
+
+| Task | Why it's not a clean admin edit | What Claude Code does |
+|------|--------------------------------|-----------------------|
+| **Rename a page's URL (slug)** | One rename must change the `.md` `path`, the redirect in `vercel.json`, the mega-menu (`serviceMenu`) + `serviceLines` + `moreServices` in `site.ts`, the footer `serviceLinks`, and every cross-link in other bodies — **atomically**. The admin edits one place at a time, so a rename done piecemeal leaves dead links and broken breadcrumbs with no error. | Follows the "Rename a service slug — IT site" playbook and updates all coupling points + the redirect in one commit. |
+| **Menu / mega-menu structure** (add, remove, reorder **top-level service lines** or their sub-services) | Menu items are keyed to page slugs and cross-links. Adding/removing a line usually also means creating/renaming/redirecting pages and regrouping sub-services — a multi-file change. Simple label/URL tweaks in the admin Navigation form are fine. | Restructures `serviceMenu`/`serviceLines`/`moreServices`, the service-line cards, the affected `.md` pages, footer, redirects, and homepage together (e.g. the "3 service lines" restructure). |
+| **Redirects tied to a rename** | A redirect on its own is fine in the admin. But a redirect that exists *because* a URL changed is only half the job — the other half is the rename coupling above. | Adds the redirect as part of the rename, so old and new never drift apart. |
+| **Homepage tiles / layout** | The **main-site** homepage is assembled from local consts in `src/pages/index.astro`, not from the admin Homepage form (which writes `taxonomy.ts`, currently not consumed on the live homepage). Editing the Homepage form there has no visible effect. IT homepage tiles/hero are likewise built in `it-site/src/pages/index.astro`. | Edits the actual homepage template (`index.astro`) so the change appears live. |
+| **JSON-LD schema** | The per-page schema field must be valid, **escaped** JSON-LD (double-encoded string). It's easy to break by hand and hard to spot when wrong. | Writes/validates the escaped JSON-LD and confirms it builds. |
+| **New pages, sections, or components** | These are `.astro` template/code changes, not content fields. | Builds them per "Building pages & sections" below. |
+
+**One-line rule for non-developers:** *words, images, posts, people → admin; URLs/slugs, what's in the menu, the set of service lines, new pages → ask Claude Code.*
+
+---
+
 ## Building pages & sections (developer tasks)
 
 Adding a **new homepage/landing section**, a new component, or a new page is a code task (editing `.astro` templates), not a content edit. It is well-supported — the sites follow one repeatable section pattern. Match it and the result looks native.
