@@ -55,7 +55,7 @@ const popularServices = [
 
       <a href="/blog/" class:list={['font-display text-[15px] font-medium tracking-[-0.005em] transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/blog/') ? 'text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter')]}>Insights</a>
       <a href="/about-us/" class:list={['font-display text-[15px] font-medium tracking-[-0.005em] transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/about-us/') ? 'text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter')]}>About Us</a>
-      <a href="/tools/" class:list={['font-display text-[15px] font-medium tracking-[-0.005em] transition-colors', onDark ? 'text-white/90 hover:text-scooter' : (isActive('/tools/') ? 'text-scooter' : 'text-[var(--color-text-head)] hover:text-scooter')]}>Tools</a>
+      {/* Tools — temporarily hidden from the nav (page still lives at /tools/) */}
     </nav>
 
     <div class="flex items-stretch gap-0">
@@ -240,7 +240,7 @@ const popularServices = [
       <a href="/find-your-service/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Find your service quiz</a>
       <a href="/blog/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Insights</a>
       <a href="/about-us/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">About Us</a>
-      <a href="/tools/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Tools</a>
+      {/* Tools — temporarily hidden from the mobile menu (page still lives at /tools/) */}
       <a href="/contact/" class="border-b border-line py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">Contact</a>
       <a href={site.clientPortal} target="_blank" rel="noopener" class="flex items-center justify-between py-3.5 font-display text-[15px] font-medium text-[var(--color-text-head)] transition-colors hover:text-scooter">
         Client Portal
