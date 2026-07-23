@@ -6,8 +6,8 @@ export const site = {
     'Modern IT services tailored to how you really work, backed by Alpine Mar’s proven approach to trusted guidance and real results.',
   url: 'https://it.alpinemar.com',
   email: 'hello@alpinemar.com',
-  phone: '(954) 208 4040',
-  phoneHref: '+19542084040',
+  phone: '(954) 743 0147',
+  phoneHref: '+19547430147',
   address: {
     street: '515 E Las Olas Blvd, Suite 120',
     city: 'Fort Lauderdale',
