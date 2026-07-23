@@ -74,7 +74,7 @@ export const serviceLineCards = [
     slug: 'remote-it-support',
     title: 'Remote IT Support Services',
     blurb:
-      'Technology problems do not wait for a convenient time. When something breaks, your team needs help fast and they need it from someone who actually knows what they are doing.',
+      'Technical issues do not wait for a convenient time. When something breaks, your team needs help fast, and they need it from someone who actually knows what they are doing.',
   },
   {
     slug: 'incident-response',
@@ -86,13 +86,13 @@ export const serviceLineCards = [
     slug: 'cybersecurity',
     title: 'Cybersecurity Services',
     blurb:
-      'Cyberthreats are not going away. They are getting more targeted, more sophisticated, and more expensive to recover from.',
+      'Cyber threats are not going away. They are getting more targeted, more sophisticated, and more expensive to recover from.',
   },
   {
     slug: 'it-consulting',
     title: 'IT Consulting Services',
     blurb:
-      'Technology is supposed to make your business easier to run. We provide tailored solutions and strategic guidance that align with your business goals and improve operational efficiency.',
+      'Technology is supposed to make your business easier to run. When it does the opposite, our IT consulting services fix that by aligning your systems with your business goals and long-term growth.',
   },
 ];
 
