@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [],
+  "redirects": [
+    { "source": "/services/remote-it-support/", "destination": "/services/workspace-it-support/", "permanent": true },
+    { "source": "/services/it-consulting/", "destination": "/services/custom-solutions/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

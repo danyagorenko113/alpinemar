@@ -71,28 +71,22 @@ export const values = [
  */
 export const serviceLineCards = [
   {
-    slug: 'remote-it-support',
-    title: 'Remote IT Support Services',
-    blurb:
-      'Technical issues do not wait for a convenient time. When something breaks, your team needs help fast, and they need it from someone who actually knows what they are doing.',
-  },
-  {
-    slug: 'incident-response',
-    title: 'Incident Response Services',
-    blurb:
-      'When a security incident hits, every minute counts. The difference between a manageable disruption and a full-blown crisis often comes down to how fast and how effectively you respond in the first hours.',
-  },
-  {
     slug: 'cybersecurity',
-    title: 'Cybersecurity Services',
+    title: 'Ongoing Cybersecurity Protection',
     blurb:
-      'Cyber threats are not going away. They are getting more targeted, more sophisticated, and more expensive to recover from.',
+      "Most attacks don't target your computer anymore. They target your email and your cloud drive, because that's where your business actually lives now. We get inside your Workspace or 365 environment as an admin, watch for anyone trying to get in who shouldn't, and shut it down before it becomes a real problem.",
   },
   {
-    slug: 'it-consulting',
-    title: 'IT Consulting Services',
+    slug: 'workspace-it-support',
+    title: 'Workspace IT Support',
     blurb:
-      'Technology is supposed to make your business easier to run. When it does the opposite, our IT consulting services fix that by aligning your systems with your business goals and long-term growth.',
+      "Computers, printers, scanners, the software your team touches every day. We handle setup, troubleshooting, and the small stuff that eats up your afternoon, backed by a curated list of hardware we already know works with everything else you use.",
+  },
+  {
+    slug: 'custom-solutions',
+    title: 'Custom Solutions',
+    blurb:
+      "Some requests don't fit a standard plan. A legacy server you can't retire. A custom app. A specialty integration. We bring in the right specialists and scope it properly instead of forcing it into a box it doesn't belong in.",
   },
 ];
 

@@ -10,10 +10,9 @@ import { serviceLineCards } from '@/data/pages';
 // Icon per service line (replaces the old "01" number treatment), using the
 // lucide-style Icon set — consistent with the About Us values change.
 const lineIcons: Record<string, string> = {
-  'remote-it-support': 'phone',
-  'incident-response': 'zap',
   'cybersecurity': 'shield-check',
-  'it-consulting': 'cpu',
+  'workspace-it-support': 'cpu',
+  'custom-solutions': 'layers',
 };
 
 const services = (await getCollection('services'))

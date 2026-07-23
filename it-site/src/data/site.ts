@@ -35,61 +35,58 @@ export const primaryNav = [
 ] as const;
 
 // Service navigation — order mirrors the live it.alpinemar.com mega menu:
-// four primary service lines first, then the remaining services.
+// Three primary service lines, then the remaining detail services.
 export const serviceLines = [
-  'remote-it-support',
-  'incident-response',
   'cybersecurity',
-  'it-consulting',
+  'workspace-it-support',
+  'custom-solutions',
 ] as const;
 
+// Flat "Explore All Our Services" list on the Services page — every detail
+// service. Incident Response is now a detail service under Cybersecurity;
+// AI Integration is kept here (not under a line) pending a decision.
 export const moreServices = [
+  'incident-response',
   'it-compliance',
-  'cloud-management',
   'network-security-monitoring',
-  'remote-monitoring-and-management',
   'data-protection-and-data-security',
   'email-security',
   'managed-cloud-security',
   'managed-endpoint-security',
   'ai-security',
-  'ai-integration',
   'vulnerability-management',
   'it-risk-management',
   'ai-code-security-audit',
+  'cloud-management',
+  'remote-monitoring-and-management',
+  'ai-integration',
 ] as const;
 
-// Grouped Services mega menu — mirrors the live it.alpinemar.com dropdown, where
-// each primary service line owns its own sub-services (shown when that tab is
-// active) instead of a single flat list. Verified against the live site markup.
+// Grouped Services mega menu — three primary lines, each owning its detail
+// services (shown when that tab is active).
 export const serviceMenu = [
-  {
-    line: 'remote-it-support',
-    children: [
-      'it-compliance',
-      'cloud-management',
-      'network-security-monitoring',
-      'remote-monitoring-and-management',
-    ],
-  },
-  { line: 'incident-response', children: [] },
   {
     line: 'cybersecurity',
     children: [
+      'incident-response',
+      'it-compliance',
+      'network-security-monitoring',
       'data-protection-and-data-security',
       'email-security',
       'managed-cloud-security',
       'managed-endpoint-security',
       'ai-security',
-    ],
-  },
-  {
-    line: 'it-consulting',
-    children: [
-      'ai-integration',
       'vulnerability-management',
       'it-risk-management',
       'ai-code-security-audit',
     ],
   },
+  {
+    line: 'workspace-it-support',
+    children: [
+      'cloud-management',
+      'remote-monitoring-and-management',
+    ],
+  },
+  { line: 'custom-solutions', children: [] },
 ] as const;
